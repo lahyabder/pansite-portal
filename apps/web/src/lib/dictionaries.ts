@@ -174,10 +174,32 @@ export type Dictionary = {
             subtitle: string;
             categories: { title: string; details: string[] }[];
         };
-        stopovers: { title: string; subtitle: string };
+        stopovers: {
+            title: string;
+            subtitle: string;
+            recent: {
+                title: string;
+                items: { name: string; type: string; date: string; time: string; status: string }[];
+            };
+            planning: {
+                title: string;
+                desc: string;
+            };
+        };
         tenders: { title: string; subtitle: string };
         documentation: { title: string; subtitle: string };
-        media: { title: string; subtitle: string };
+        media: {
+            title: string;
+            subtitle: string;
+            news: {
+                title: string;
+                items: { title: string; date: string; category: string; excerpt: string }[];
+            };
+            gallery: {
+                title: string;
+                desc: string;
+            };
+        };
         contact: { title: string; subtitle: string };
         search: { title: string; subtitle: string; noResults: string; resultsFor: string };
     };
@@ -483,7 +505,19 @@ const dictionaries: Record<Locale, Dictionary> = {
             },
             stopovers: {
                 title: 'Escales',
-                subtitle: 'Informations sur les escales de navires et le planning portuaire.',
+                subtitle: 'Informations en temps réel sur les mouvements des navires au port.',
+                recent: {
+                    title: 'Dernières Escales',
+                    items: [
+                        { name: 'MSC JOANNA', type: 'Porte-conteneurs', date: '2024-03-05', time: '08:30', status: 'À quai' },
+                        { name: 'SEA LADY', type: 'Pétrolier', date: '2024-03-05', time: '14:15', status: 'En attente' },
+                        { name: 'ATLANTIC STAR', type: 'Navire de pêche', date: '2024-03-04', time: '22:00', status: 'Parti' },
+                    ],
+                },
+                planning: {
+                    title: 'Planning Hebdomadaire',
+                    desc: 'Accédez au planning complet des arrivées prévues pour les 7 prochains jours.',
+                },
             },
             tenders: {
                 title: 'Appels d\'Offres',
@@ -495,7 +529,18 @@ const dictionaries: Record<Locale, Dictionary> = {
             },
             media: {
                 title: 'Médias',
-                subtitle: 'Actualités, communiqués de presse et galerie photos du PAN.',
+                subtitle: 'Restez informé de l\'actualité portuaire et des événements majeurs.',
+                news: {
+                    title: 'Actualités Récentes',
+                    items: [
+                        { title: 'Inauguration du nouveau terminal', date: '2024-02-28', category: 'Infrastructure', excerpt: 'Le PAN franchit une nouvelle étape avec l\'ouverture d\'un terminal moderne...' },
+                        { title: 'Signature d\'un partenariat logistique', date: '2024-02-15', category: 'Partenariat', excerpt: 'Un accord stratégique a été signé pour renforcer les capacités de stockage...' },
+                    ],
+                },
+                gallery: {
+                    title: 'Galerie Photos',
+                    desc: 'Découvrez en images la vie quotidienne au port et nos installations.',
+                },
             },
             contact: {
                 title: 'Contact',
@@ -847,7 +892,19 @@ const dictionaries: Record<Locale, Dictionary> = {
             },
             stopovers: {
                 title: 'الرسو',
-                subtitle: 'معلومات حول رسو السفن وجدول الميناء.',
+                subtitle: 'معلومات مباشرة حول حركة السفن داخل الميناء.',
+                recent: {
+                    title: 'آخر عمليات الرسو',
+                    items: [
+                        { name: 'MSC JOANNA', type: 'حاملة حاويات', date: '2024-03-05', time: '08:30', status: 'في الرصيف' },
+                        { name: 'SEA LADY', type: 'ناقلة نفط', date: '2024-03-05', time: '14:15', status: 'في الانتظار' },
+                        { name: 'ATLANTIC STAR', type: 'سفينة صيد', date: '2024-03-04', time: '22:00', status: 'مغادر' },
+                    ],
+                },
+                planning: {
+                    title: 'التخطيط الأسبوعي',
+                    desc: 'اطلع على الجدول الكامل للوصول المتوقع خلال الأيام الـ 7 القادمة.',
+                },
             },
             tenders: {
                 title: 'المناقصات',
@@ -859,7 +916,18 @@ const dictionaries: Record<Locale, Dictionary> = {
             },
             media: {
                 title: 'الإعلام',
-                subtitle: 'الأخبار والبيانات الصحفية ومعرض صور الميناء.',
+                subtitle: 'ابق على اطلاع بآخر أخبار الميناء والفعاليات الكبرى.',
+                news: {
+                    title: 'أهم الأخبار',
+                    items: [
+                        { title: 'تدشين المحطة الجديدة للحاويات', date: '2024-02-28', category: 'البنية التحتية', excerpt: 'يخطو ميناء نواذيبو خطوة جديدة نحو العصرنة عبر تدشين مجمع مجهز...' },
+                        { title: 'توقيع شراكة لوجستية استراتيجية', date: '2024-02-15', category: 'شراكات', excerpt: 'تم توقيع اتفاقية لتعزيز القدرات الاستيعابية والتخزينية للميناء...' },
+                    ],
+                },
+                gallery: {
+                    title: 'معرض الصور',
+                    desc: 'اكتشف بالصور الحياة اليومية ومنشآت ميناء نواذيبو المستقل.',
+                },
             },
             contact: {
                 title: 'اتصل بنا',
