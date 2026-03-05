@@ -623,6 +623,29 @@ export const mockContents: Content[] = [
         createdAt: '2025-03-05T09:00:00Z',
         updatedAt: '2025-03-05T11:00:00Z',
     },
+    {
+        id: 'cnt-014',
+        slug: 'formation-maritime-2025',
+        title: {
+            fr: "Session de formation pour les jeunes marins",
+            ar: 'دورة تدريبية للبحارة الشباب',
+        },
+        body: {
+            fr: "Le PAN lance une nouvelle session de formation technique pour 50 jeunes marins locaux, en partenariat avec l'académie navale.",
+            ar: 'يطلق الميناء دورة تدريبية تقنية جديدة لـ 50 بحاراً شاباً محلياً، بالشراكة مع الأكاديمية البحرية.',
+        },
+        excerpt: {
+            fr: "Formation technique au profit de 50 jeunes marins.",
+            ar: 'تدريب تقني لصالح 50 بحاراً شاباً.',
+        },
+        category: 'communique',
+        tags: ['formation', 'social', 'jeunesse'],
+        status: 'published',
+        authorId: 'usr-002',
+        publishedAt: '2025-03-06T09:00:00Z',
+        createdAt: '2025-03-06T09:00:00Z',
+        updatedAt: '2025-03-06T09:00:00Z',
+    },
 ];
 
 // ─── Mock Audit Log ───────────────────────────────────────
@@ -1332,6 +1355,21 @@ export const mockRequests: Request[] = [
         ],
         createdAt: '2025-03-04T16:00:00Z',
         updatedAt: '2025-03-04T16:00:00Z',
+    },
+    {
+        id: 'req-007',
+        reference: 'PAN-REQ-2025-007',
+        type: 'information',
+        subject: 'Demande accès quai n°3',
+        message: 'Nous souhaitons obtenir un badge d\'accès temporaire pour le quai n°3.',
+        senderName: 'Sidi Baba',
+        senderEmail: 'sbaba@transit.mr',
+        status: 'new',
+        priority: 'normal',
+        attachments: [],
+        statusHistory: [],
+        createdAt: '2025-03-05T14:00:00Z',
+        updatedAt: '2025-03-05T14:00:00Z',
     },
 ];
 

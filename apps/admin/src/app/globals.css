@@ -23,6 +23,11 @@
   --color-foreground: var(--color-admin-text);
 
   --font-sans: var(--font-inter);
+  --font-arabic: inherit;
+}
+
+[dir="rtl"] {
+  font-family: var(--font-arabic), var(--font-sans), sans-serif;
 }
 
 body {

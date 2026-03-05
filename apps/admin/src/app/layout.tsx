@@ -1,11 +1,18 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { Inter, IBM_Plex_Sans_Arabic } from 'next/font/google';
 import './globals.css';
 import { AuthProvider } from '@/lib/auth';
 
 const inter = Inter({
   variable: '--font-inter',
   subsets: ['latin'],
+  display: 'swap',
+});
+
+const ibmPlexArabic = IBM_Plex_Sans_Arabic({
+  variable: '--font-arabic',
+  subsets: ['arabic'],
+  weight: ['300', '400', '500', '600', '700'],
   display: 'swap',
 });
 
@@ -23,8 +30,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="fr">
-      <body className={`${inter.variable} font-sans antialiased`}>
+    <html lang="fr" dir="ltr">
+      <body className={`${inter.variable} ${ibmPlexArabic.variable} font-sans antialiased bg-admin-bg text-admin-text`}>
         <AuthProvider>
           {children}
         </AuthProvider>
