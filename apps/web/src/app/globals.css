@@ -52,8 +52,9 @@ body {
 }
 
 /* ─── RTL Support ─────────────────────────────────────── */
-[dir="rtl"] {
+[dir="rtl"] body {
   --font-sans: var(--font-arabic), var(--font-inter), sans-serif;
+  font-family: var(--font-arabic), var(--font-inter), sans-serif !important;
 }
 
 /* ─── Smooth Scrolling ────────────────────────────────── */
