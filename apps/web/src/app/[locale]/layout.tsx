@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     const locale = (localeParam === 'ar' ? 'ar' : 'fr') as Locale;
     const dict = getDictionary(locale);
 
-    const title = locale === 'ar' ? 'سلطة منطقة نواذيبو الحرة - ميناء نواذيبو المستقل' : 'Port Autonome de Nouadhibou (PAN)';
+    const title = locale === 'ar' ? 'ميناء نواذيبو المستقل' : 'Port Autonome de Nouadhibou (PAN)';
     const description = locale === 'ar'
         ? 'البوابة الرسمية للميناء المستقل بنواذيبو، المركز الملاحي والتجاري في موريتانيا وغرب إفريقيا.'
         : 'Ouverture sur le monde, pôle économique et hub logistique majeur en Mauritanie et en Afrique de l\'Ouest.';
