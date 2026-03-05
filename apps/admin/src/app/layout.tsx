@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Inter, IBM_Plex_Sans_Arabic } from 'next/font/google';
+import { Inter, Tajawal } from 'next/font/google';
 import './globals.css';
 import { AuthProvider } from '@/lib/auth';
 
@@ -9,10 +9,10 @@ const inter = Inter({
   display: 'swap',
 });
 
-const ibmPlexArabic = IBM_Plex_Sans_Arabic({
+const tajawal = Tajawal({
   variable: '--font-arabic',
   subsets: ['arabic'],
-  weight: ['300', '400', '500', '600', '700'],
+  weight: ['200', '300', '400', '500', '700', '800', '900'],
   display: 'swap',
 });
 
@@ -31,7 +31,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="fr" dir="ltr">
-      <body className={`${inter.variable} ${ibmPlexArabic.variable} font-sans antialiased bg-admin-bg text-admin-text`}>
+      <body className={`${inter.variable} ${tajawal.variable} font-sans antialiased bg-admin-bg text-admin-text`}>
         <AuthProvider>
           {children}
         </AuthProvider>
