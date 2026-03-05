@@ -1,6 +1,6 @@
 import type { Locale } from '@pan/shared';
 import { getDir } from '@pan/shared';
-import { Inter, Noto_Sans_Arabic } from 'next/font/google';
+import { Inter, Cairo } from 'next/font/google';
 import { getDictionary } from '@/lib/dictionaries';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
@@ -15,8 +15,8 @@ const inter = Inter({
     display: 'swap',
 });
 
-const notoArabic = Noto_Sans_Arabic({
-    variable: '--font-noto-arabic',
+const cairo = Cairo({
+    variable: '--font-cairo',
     subsets: ['arabic'],
     display: 'swap',
 });
@@ -98,7 +98,7 @@ export default async function LocaleLayout({
                 />
             </head>
             <body
-                className={`${inter.variable} ${notoArabic.variable} font-sans antialiased bg-pan-white text-pan-gray-900`}
+                className={`${inter.variable} ${cairo.variable} font-sans antialiased bg-pan-white text-pan-gray-900`}
             >
                 <Header locale={locale} dict={dict} />
                 <main className="min-h-screen">{children}</main>

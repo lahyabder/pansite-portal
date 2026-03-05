@@ -12,7 +12,7 @@ export function t(localized: LocalizedString, locale: Locale): string {
  */
 export function formatDate(dateStr: string, locale: Locale): string {
     const date = new Date(dateStr);
-    return date.toLocaleDateString(locale === 'ar' ? 'ar-MR' : 'fr-FR', {
+    return date.toLocaleDateString(locale === 'ar' ? 'en-US' : 'fr-FR', {
         year: 'numeric',
         month: 'long',
         day: 'numeric',

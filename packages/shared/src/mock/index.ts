@@ -267,6 +267,42 @@ export const mockServices: Service[] = [
         createdAt: '2024-01-10T10:00:00Z',
         updatedAt: '2024-01-10T10:00:00Z',
     },
+    {
+        id: 'svc-005',
+        slug: 'securite-portuaire',
+        name: { fr: 'Sécurité & Sûreté', ar: 'الأمن والسلامة' },
+        description: {
+            fr: "Surveillance et protection de la zone portuaire selon les normes ISPS.",
+            ar: 'مراقبة وحماية المنطقة المينائية وفقاً لمعايير ISPS.',
+        },
+        longDescription: {
+            fr: "Le service de sécurité du PAN assure la protection des installations, des navires et des marchandises 24h/24. Nous appliquons strictement le code ISPS pour garantir un environnement portuaire sûr.",
+            ar: 'تضمن مصلحة الأمن في الميناء حماية المنشآت والسفن والبضائع على مدار الساعة. نطبق بصرامة مدونة ISPS لضمان بيئة مينائية آمنة.',
+        },
+        icon: 'shield',
+        features: [
+            { fr: 'Vidéosurveillance 24/7', ar: 'رقابة بالكاميرات 24/7' },
+            { fr: 'Contrôle d\'accès biométrique', ar: 'تحكم في الوصول بيومتري' },
+            { fr: 'Patrouilles mobiles', ar: 'دوريات متنقلة' },
+        ],
+        beneficiaries: [
+            { fr: 'Tous les usagers du port', ar: 'جميع مستخدمي الميناء' },
+            { fr: 'Compagnies maritimes', ar: 'شركات الملاحة' },
+        ],
+        steps: [
+            { title: { fr: 'Demande de badge', ar: 'طلب بطاقة دخول' }, description: { fr: 'Soumettre une demande d\'accès temporaire ou permanent', ar: 'تقديم طلب وصول مؤقت أو دائم' } },
+        ],
+        deadline: { fr: 'Badges délivrés sous 24h', ar: 'تصاريح الدخول خلال 24 ساعة' },
+        costs: { fr: 'Gratuit pour les partenaires officiels', ar: 'مجاني للشركاء الرسميين' },
+        contactPoints: [
+            { name: { fr: 'Service Sécurité', ar: 'مصلحة الأمن' }, phone: '+222 45 74 51 30', email: 'securite@pan.mr' },
+        ],
+        direction: 'securite',
+        order: 5,
+        isActive: true,
+        createdAt: '2024-01-15T10:00:00Z',
+        updatedAt: '2024-01-15T10:00:00Z',
+    },
 ];
 
 // ─── Mock Contents (actualités, communiqués, événements, alertes) ──
@@ -540,6 +576,52 @@ export const mockContents: Content[] = [
         publishedAt: '2025-03-03T10:00:00Z',
         createdAt: '2025-03-02T10:00:00Z',
         updatedAt: '2025-03-03T10:00:00Z',
+    },
+    {
+        id: 'cnt-012',
+        slug: 'conference-environnement-2025',
+        title: {
+            fr: "Le PAN s'engage pour l'environnement",
+            ar: 'الميناء يلتزم بحماية البيئة',
+        },
+        body: {
+            fr: "Une conférence sur la protection marine s'est tenue au siège du PAN, réunissant des experts internationaux. Le port s'engage à réduire son empreinte carbone de 30% d'ici 2030.\n\nParmi les mesures phares : l'installation de panneaux solaires, la gestion stricte des déchets marins et la protection de la biodiversité locale.",
+            ar: 'عقد مؤتمر حول حماية البيئة البحرية في مقر الميناء، ضم خبراء دوليين. يلتزم الميناء بخفض انبعاثات الكربون بنسبة 30% بحلول عام 2030.\n\nمن بين الإجراءات البارزة: تركيب الألواح الشمسية، الإدارة الصارمة للنفايات البحرية وحماية التنوع البيولوجي المحلي.',
+        },
+        excerpt: {
+            fr: "Le PAN annonce un plan ambitieux pour la protection de l'environnement marin.",
+            ar: 'الميناء يعلن عن خطة طموحة لحماية البيئة البحرية.',
+        },
+        category: 'evenement',
+        tags: ['environnement', 'développement durable'],
+        status: 'published',
+        authorId: 'usr-001',
+        publishedAt: '2025-03-04T10:00:00Z',
+        createdAt: '2025-03-03T10:00:00Z',
+        updatedAt: '2025-03-04T10:00:00Z',
+    },
+    {
+        id: 'cnt-013',
+        slug: 'visite-delegation-europeenne',
+        title: {
+            fr: "Visite d'une délégation de l'Union Européenne",
+            ar: 'زيارة وفد من الاتحاد الأوروبي',
+        },
+        body: {
+            fr: "Une délégation de haut niveau de l'UE a visité les installations du PAN pour discuter de nouveaux projets de coopération dans le domaine de la logistique verte.",
+            ar: 'قام وفد رفيع المستوى من الاتحاد الأوروبي بزيارة منشآت الميناء لمناقشة مشاريع تعاون جديدة في مجال اللوجستيك الأخضر.',
+        },
+        excerpt: {
+            fr: "L'UE et le PAN renforcent leur coopération logistique.",
+            ar: 'الاتحاد الأوروبي والميناء يعززان تعاونهما اللوجستي.',
+        },
+        category: 'actualite',
+        tags: ['coopération', 'UE', 'logistique'],
+        status: 'published',
+        authorId: 'usr-002',
+        publishedAt: '2025-03-05T11:00:00Z',
+        createdAt: '2025-03-05T09:00:00Z',
+        updatedAt: '2025-03-05T11:00:00Z',
     },
 ];
 

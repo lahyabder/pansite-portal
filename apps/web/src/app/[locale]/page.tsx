@@ -99,7 +99,7 @@ export default async function HomePage({
                                     <BarChartIcon i={i} />
                                 </div>
                                 <div className="text-3xl sm:text-4xl font-bold text-pan-navy mb-2 group-hover:scale-105 transition-transform duration-300">
-                                    {stat.value.toLocaleString(locale === 'ar' ? 'ar-SA' : 'fr-FR')}
+                                    {stat.value.toLocaleString('en-US')}
                                     {stat.unit && (
                                         <span className="text-lg text-pan-gray-500 ms-1">{stat.unit}</span>
                                     )}
