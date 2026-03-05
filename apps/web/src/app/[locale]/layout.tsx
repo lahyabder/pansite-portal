@@ -1,6 +1,6 @@
 import type { Locale } from '@pan/shared';
 import { getDir } from '@pan/shared';
-import { Inter, Cairo } from 'next/font/google';
+import { Inter, IBM_Plex_Sans_Arabic } from 'next/font/google';
 import { getDictionary } from '@/lib/dictionaries';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
@@ -15,9 +15,10 @@ const inter = Inter({
     display: 'swap',
 });
 
-const cairo = Cairo({
-    variable: '--font-cairo',
+const ibmPlexArabic = IBM_Plex_Sans_Arabic({
+    variable: '--font-arabic',
     subsets: ['arabic'],
+    weight: ['300', '400', '500', '600', '700'],
     display: 'swap',
 });
 
@@ -98,7 +99,7 @@ export default async function LocaleLayout({
                 />
             </head>
             <body
-                className={`${inter.variable} ${cairo.variable} font-sans antialiased bg-pan-white text-pan-gray-900`}
+                className={`${inter.variable} ${ibmPlexArabic.variable} font-sans antialiased bg-pan-white text-pan-gray-900`}
             >
                 <Header locale={locale} dict={dict} />
                 <main className="min-h-screen">{children}</main>
