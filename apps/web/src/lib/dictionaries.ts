@@ -114,7 +114,39 @@ export type Dictionary = {
         };
     };
     pages: {
-        port: { title: string; subtitle: string };
+        port: {
+            title: string;
+            subtitle: string;
+            role: {
+                title: string;
+                description: string;
+                points: string[];
+            };
+            geography: {
+                title: string;
+                description: string;
+            };
+            history: {
+                title: string;
+                milestones: { year: string; event: string }[];
+            };
+            evolution: {
+                title: string;
+                description: string;
+            };
+            equipment: {
+                title: string;
+                list: string[];
+            };
+            impact: {
+                title: string;
+                description: string;
+            };
+            services: {
+                title: string;
+                list: string[];
+            };
+        };
         infrastructure: { title: string; subtitle: string };
         services: { title: string; subtitle: string };
         procedures: { title: string; subtitle: string };
@@ -321,7 +353,63 @@ const dictionaries: Record<Locale, Dictionary> = {
         pages: {
             port: {
                 title: 'Le Port',
-                subtitle: 'Découvrez le Port Autonome de Nouadhibou, son histoire, sa mission et sa vision stratégique.',
+                subtitle: 'Découvrez l\'histoire, les infrastructures et la vision du Port Autonome de Nouadhibou.',
+                role: {
+                    title: 'Rôle Stratégique',
+                    description: 'Le Port Autonome de Nouadhibou (PAN) se situe dans une baie naturellement protégée. C\'est le pivot de toutes les activités de pêche et le moteur du développement de Nouadhibou.',
+                    points: [
+                        'Porte d\'entrée et de sortie de la capitale économique du pays.',
+                        'Centre de services pour le transport, l\'industrie et le commerce international.',
+                        'Passerelle stratégique pour l\'industrie halieutique nationale.',
+                    ],
+                },
+                geography: {
+                    title: 'Situation Géographique',
+                    description: 'Situé à 20°54 N et 17°03 O, le port bénéficie d\'un abri naturel exceptionnel contre les houles de l\'Atlantique, au carrefour des grandes routes maritimes.',
+                },
+                history: {
+                    title: 'Historique & Jalons',
+                    milestones: [
+                        { year: '1955', event: 'Premier petit quai construit par SIGP.' },
+                        { year: '1960', event: 'Construction d\'un quai commercial de 60m et 3 quais de pêche.' },
+                        { year: '1968', event: 'Extension du quai de pêche à 300m (FED).' },
+                        { year: '1976', event: 'Expansion commerciale et nouveaux bâtiments administratifs (Fonds Koweïtien).' },
+                        { year: '1998', event: 'Décret officiel d\'extension du domaine portuaire.' },
+                        { year: '2014', event: 'Nouveau quai de 660m, rampe RO-RO et plateforme de 12 hectares.' },
+                        { year: '2025', event: 'Modernisation globale et transformation digitale.' },
+                    ],
+                },
+                evolution: {
+                    title: 'Évolution du Site',
+                    description: 'D\'un modeste quai de pêche, le site est devenu un complexe industriel et commercial intégré disposant d\'usines de transformation, de chambres froides, de zones de stockage et de systèmes de gestion modernes.',
+                },
+                equipment: {
+                    title: 'Équipements & Sécurité',
+                    list: [
+                        'Système de guidage dans le chenal d\'accès et phares terrestres',
+                        'Éclairage complet des quais et du périmètre portuaire',
+                        'Vidéosurveillance (CCTV) aux entrées et à l\'intérieur du port',
+                        'Système de surveillance des navires par AIS',
+                        'Points d\'avitaillement en eau et carburant sur les quais de pêche',
+                    ],
+                },
+                impact: {
+                    title: 'Impact Économique & Social',
+                    description: 'Poumon économique de la région et plus grand employeur de la ville, le port favorise l\'intégration du secteur privé et assure une stabilité sociale à travers des partenariats durables.',
+                },
+                services: {
+                    title: 'Services Portuaires',
+                    list: [
+                        'Accostage pour tous types de navires',
+                        'Aide à la navigation et guidage',
+                        'Manutention et stockage de marchandises',
+                        'Logistique intégrée et transport multimodal',
+                        'Espaces d\'entreposage modernes et sécurisés',
+                        'Services de pilotage professionnel',
+                        'Remorquage et assistance en mer',
+                        'Terminal à conteneurs de dernière génération',
+                    ],
+                },
             },
             infrastructure: {
                 title: 'Infrastructures',
@@ -598,7 +686,63 @@ const dictionaries: Record<Locale, Dictionary> = {
         pages: {
             port: {
                 title: 'الميناء',
-                subtitle: 'اكتشف الميناء المستقل لنواذيبو، تاريخه ومهمته ورؤيته الاستراتيجية.',
+                subtitle: 'تعرف على تاريخ، منشآت ورؤية ميناء نواذيبو المستقل.',
+                role: {
+                    title: 'الدور الاستراتيجي',
+                    description: 'يقع ميناء نواذيبو المستقل (PAN) في خليج محمي طبيعياً، وهو مركز لجميع الأنشطة المتعلقة بالصيد، والمحرك الأساسي لتنمية مدينة نواذيبو.',
+                    points: [
+                        'بوابة الدخول والخروج للعاصمة الاقتصادية للبلاد.',
+                        'مركز خدمات في مجالات النقل، الصناعة، والاستيراد والتصدير.',
+                        'بوابة استراتيجية لتزويد شمال موريتانيا بالمنتجات والأسماك.',
+                    ],
+                },
+                geography: {
+                    title: 'الموقع الجغرافي',
+                    description: 'يقع الميناء عند خط عرض 20°54 شمالاً وخط طول 17°03 غرباً، ويتميز بحماية طبيعية من أمواج المحيط الأطلسي عند ملتقى الطرق البحرية.',
+                },
+                history: {
+                    title: 'تاريخ الإنشاءات',
+                    milestones: [
+                        { year: '1955', event: 'إنشاء أول رصيف صغير من طرف شركة SIGP.' },
+                        { year: '1960', event: 'بناء رصيف تجاري بطول 60م و3 أرصفة صيد.' },
+                        { year: '1968', event: 'توسعة رصيف الصيد ليصل إلى 300م بتمويل أوروبي.' },
+                        { year: '1976', event: 'توسعة الرصيف التجاري وبناء مبان إدارية بتمويل كويتي ودولي.' },
+                        { year: '1998', event: 'قرار رسمي بتوسعة المجال البري للميناء.' },
+                        { year: '2014', event: 'رصيف جديد بطول 660م، منحدرات RO-RO ومنصة بمساحة 12 هكتاراً.' },
+                        { year: '2025', event: 'مشروع تحديث شامل وإدخال أدوات التسيير الرقمي.' },
+                    ],
+                },
+                evolution: {
+                    title: 'تطور الموقع',
+                    description: 'انتقل الميناء من مجرد رصيف لتفريغ الأسماك إلى مجمع صناعي وتجاري متكامل يضم مصانع تحويل، مجمعات تبريد، ساحات تخزين وأنظمة تسيير حديثة.',
+                },
+                equipment: {
+                    title: 'التجهيزات والأمان',
+                    list: [
+                        'نظام إرشاد في قناة الدخول ومنارات برية',
+                        'نظام إنارة على الأرصفة وفي محيط الميناء',
+                        'نظام مراقبة بالكاميرات عند المداخل وداخل الميناء',
+                        'نظام مراقبة للسفن عبر AIS',
+                        'منافذ للتزود بالمياه والوقود عند رصيف الصيد',
+                    ],
+                },
+                impact: {
+                    title: 'الاندماج الاجتماعي والاقتصادي',
+                    description: 'يُعتبر الميناء الرئة الاقتصادية لنواذيبو وأكبر مشغل في المدينة، حيث يفتح المجال للقطاع الخاص ويضمن الاستقرار الاجتماعي عبر شراكات قوية.',
+                },
+                services: {
+                    title: 'الخدمات المينائية',
+                    list: [
+                        'الرسو لجميع أنواع السفن',
+                        'مساعدة الملاحة والإرشاد',
+                        'مناولة وتخزين البضائع',
+                        'حلول لوجستية متكاملة ونقل متعدد الوسائط',
+                        'مساحات تخزين حديثة وآمنة',
+                        'خدمات إرشاد احترافية',
+                        'القطر والمساعدة البحرية',
+                        'محطة حاويات بإدارة حديثة',
+                    ],
+                },
             },
             infrastructure: {
                 title: 'البنية التحتية',
