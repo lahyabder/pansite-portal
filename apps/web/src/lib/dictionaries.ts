@@ -147,10 +147,33 @@ export type Dictionary = {
                 list: string[];
             };
         };
-        infrastructure: { title: string; subtitle: string };
-        services: { title: string; subtitle: string };
-        procedures: { title: string; subtitle: string };
-        tariffs: { title: string; subtitle: string };
+        infrastructure: {
+            title: string;
+            subtitle: string;
+            quais: {
+                title: string;
+                items: { name: string; info: string; length: string; draft: string }[];
+            };
+            zones: {
+                title: string;
+                items: { name: string; area: string; purpose: string }[];
+            };
+        };
+        services: {
+            title: string;
+            subtitle: string;
+            list: { title: string; desc: string; icon: string }[];
+        };
+        procedures: {
+            title: string;
+            subtitle: string;
+            steps: { title: string; desc: string }[];
+        };
+        tariffs: {
+            title: string;
+            subtitle: string;
+            categories: { title: string; details: string[] }[];
+        };
         stopovers: { title: string; subtitle: string };
         tenders: { title: string; subtitle: string };
         documentation: { title: string; subtitle: string };
@@ -414,18 +437,49 @@ const dictionaries: Record<Locale, Dictionary> = {
             infrastructure: {
                 title: 'Infrastructures',
                 subtitle: 'Découvrez nos installations portuaires modernes et nos équipements de pointe.',
+                quais: {
+                    title: 'Quais & Terminaux',
+                    items: [
+                        { name: 'Quai de Pêche', info: 'Dédié aux navires de pêche hauturière et artisanale.', length: '300m', draft: '6.0m' },
+                        { name: 'Quai Commercial', info: 'Polyvalent pour le fret général et les conteneurs.', length: '660m', draft: '10.5m' },
+                        { name: 'Terminal Pétrolier', info: 'Installations sécurisées pour le déchargement d\'hydrocarbures.', length: '200m', draft: '12.0m' },
+                    ],
+                },
+                zones: {
+                    title: 'Zones Dédiées',
+                    items: [
+                        { name: 'Zone sous douane', area: '12 Hectares', purpose: 'Stockage temporaire et logistique.' },
+                        { name: 'Zone Industrielle', area: '15 Hectares', purpose: 'Unités de transformation de poisson.' },
+                        { name: 'Zone Franche', area: 'Extension en cours', purpose: 'Incitations fiscales et export.' },
+                    ],
+                },
             },
             services: {
                 title: 'Services Portuaires',
-                subtitle: 'Une gamme complète de services pour répondre à tous vos besoins logistiques et maritimes.',
+                subtitle: 'Nos solutions maritimes et logistiques pour vos opérations.',
+                list: [
+                    { title: 'Pilotage', desc: 'Assistance obligatoire pour l\'entrée et la sortie du port.', icon: 'ship' },
+                    { title: 'Manutention', desc: 'Chargement et déchargement de tous types de cargaisons.', icon: 'crane' },
+                    { title: 'Remorquage', desc: 'Assistance aux navires lors des manœuvres portuaires.', icon: 'tow' },
+                ],
             },
             procedures: {
                 title: 'Procédures',
-                subtitle: 'Guide des procédures administratives et opérationnelles du port.',
+                subtitle: 'Guide des formalités administratives et opérationnelles.',
+                steps: [
+                    { title: 'Déclaration Arrivée', desc: 'Soumission des documents via le guichet unique 24h avant.' },
+                    { title: 'Contrôle Sanitaire', desc: 'Inspection obligatoire pour les navires de pêche.' },
+                    { title: 'Dédouanement', desc: 'Traitement électronique des déclarations de marchandises.' },
+                ],
             },
             tariffs: {
                 title: 'Tarifs',
-                subtitle: 'Consultez la grille tarifaire des services portuaires.',
+                subtitle: 'Consultez les barèmes des redevances portuaires.',
+                categories: [
+                    { title: 'Redevances Navires', details: ['Pilotage', 'Remorquage', 'Amarrage'] },
+                    { title: 'Redevances Marchandises', details: ['Passage portuaire', 'Stationnement', 'Pesage'] },
+                    { title: 'Services Annexes', details: ['Eau potable', 'Électricité', 'Évacuation déchets'] },
+                ],
             },
             stopovers: {
                 title: 'Escales',
@@ -747,18 +801,49 @@ const dictionaries: Record<Locale, Dictionary> = {
             infrastructure: {
                 title: 'البنية التحتية',
                 subtitle: 'اكتشف منشآتنا المينائية الحديثة ومعداتنا المتطورة.',
+                quais: {
+                    title: 'الأرصفة والمحطات',
+                    items: [
+                        { name: 'رصيف الصيد', info: 'مخصص لسفن الصيد بأعالي البحار والصيد التقليدي.', length: '300م', draft: '6.0م' },
+                        { name: 'الرصيف التجاري', info: 'متعدد الاختصاصات للبضائع العامة والحاويات.', length: '660م', draft: '10.5م' },
+                        { name: 'محطة النفط', info: 'منشآت آمنة لتفريغ المحروقات والمواد البترولية.', length: '200م', draft: '12.0م' },
+                    ],
+                },
+                zones: {
+                    title: 'المناطق المتخصصة',
+                    items: [
+                        { name: 'المنطقة الجمركية', area: '12 هكتاراً', purpose: 'التخزين المؤقت والخدمات اللوجستية.' },
+                        { name: 'المنطقة الصناعية', area: '15 هكتاراً', purpose: 'وحدات معالجة وتصنيع الأسماك.' },
+                        { name: 'المنطقة الحرة', area: 'قيد التوسعة', purpose: 'حوافز ضريبية ودعم التصدير.' },
+                    ],
+                },
             },
             services: {
                 title: 'الخدمات المينائية',
-                subtitle: 'مجموعة كاملة من الخدمات لتلبية جميع احتياجاتكم اللوجستية والبحرية.',
+                subtitle: 'حلولنا البحرية واللوجستية لعملياتكم المينائية.',
+                list: [
+                    { title: 'الإرشاد', desc: 'مساعدة إلزامية لدخول وخروج السفن من الميناء.', icon: 'ship' },
+                    { title: 'المناولة', desc: 'شحن وتفريغ جميع أنواع الحمولات بفعالية.', icon: 'crane' },
+                    { title: 'القطر', desc: 'مساعدة السفن أثناء المناورات داخل الميناء.', icon: 'tow' },
+                ],
             },
             procedures: {
                 title: 'الإجراءات',
                 subtitle: 'دليل الإجراءات الإدارية والتشغيلية للميناء.',
+                steps: [
+                    { title: 'إعلان الوصول', desc: 'تقديم المستندات عبر الشباك الموحد قبل 24 ساعة.' },
+                    { title: 'الرقابة الصحية', desc: 'تفتيش إلزامي لسفن الصيد والمنتجات البحرية.' },
+                    { title: 'التخليص الجمركي', desc: 'المعالجة الإلكترونية لتصاريح البضائع.' },
+                ],
             },
             tariffs: {
                 title: 'التعريفات',
                 subtitle: 'اطلع على جدول تعريفات الخدمات المينائية.',
+                categories: [
+                    { title: 'رسوم السفن', details: ['الإرشاد', 'القطر', 'الرسو'] },
+                    { title: 'رسوم البضائع', details: ['العبور المينائي', 'التخزين', 'الوزن'] },
+                    { title: 'خدمات ملحقة', details: ['المياه الصالحة للشرب', 'الكهرباء', 'إخلاء النفايات'] },
+                ],
             },
             stopovers: {
                 title: 'الرسو',
