@@ -52,6 +52,11 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
             description,
             siteName: title,
         },
+        twitter: {
+            card: 'summary_large_image',
+            title,
+            description,
+        },
         robots: {
             index: true,
             follow: true,
@@ -77,12 +82,6 @@ export default async function LocaleLayout({
         name: 'Port Autonome de Nouadhibou',
         url: process.env.NEXT_PUBLIC_SITE_URL || 'https://www.pan.mr',
         logo: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://www.pan.mr'}/icon.png`,
-        contactPoint: {
-            '@type': 'ContactPoint',
-            telephone: '+222 45 74 51 34',
-            contactType: 'customer service',
-            email: 'contact@pan.mr',
-        },
     };
 
     return (
