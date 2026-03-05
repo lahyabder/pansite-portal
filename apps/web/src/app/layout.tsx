@@ -22,6 +22,10 @@ export const metadata: Metadata = {
   description:
     "Site officiel du Port Autonome de Nouadhibou — Porte d'entrée stratégique de la Mauritanie sur l'Atlantique.",
   keywords: ['port', 'Nouadhibou', 'Mauritanie', 'PAN', 'maritime', 'logistique'],
+  icons: {
+    icon: '/favicon.ico',
+    apple: '/favicon.ico',
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

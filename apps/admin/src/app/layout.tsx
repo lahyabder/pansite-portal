@@ -22,6 +22,10 @@ export const metadata: Metadata = {
     template: '%s | PAN Admin',
   },
   description: "Espace d'administration du Port Autonome de Nouadhibou",
+  icons: {
+    icon: '/favicon.ico',
+    apple: '/favicon.ico',
+  },
 };
 
 export default function RootLayout({
