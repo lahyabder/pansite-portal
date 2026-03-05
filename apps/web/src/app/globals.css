@@ -1,0 +1,85 @@
+@import "tailwindcss";
+
+/* ─── PAN Design Tokens ──────────────────────────────── */
+@theme inline {
+  /* Institutional Colors */
+  --color-pan-navy: #1c4f8a;
+  /* Deep Port Blue */
+  --color-pan-blue: #2e5fa4;
+  /* Marine Blue */
+  --color-pan-sky: #1fa04a;
+  /* Ocean Green, remapped from sky for the vibrant accents */
+  --color-pan-light: #e6f0f9;
+  --color-pan-pale: #f7f9fc;
+  /* Light Background */
+
+  /* Accents */
+  --color-pan-gold: #cfe600;
+  /* Light Accent Green, replacing gold */
+  --color-pan-gold-light: #e0f240;
+  --color-pan-gold-dark: #9eb000;
+
+  --color-pan-green: #1fa04a;
+  /* Ocean Green */
+
+  /* Neutrals */
+  --color-pan-white: #ffffff;
+  --color-pan-gray-50: #f8fafc;
+  --color-pan-gray-100: #f1f5f9;
+  --color-pan-gray-200: #e2e8f0;
+  --color-pan-gray-300: #cbd5e1;
+  --color-pan-gray-400: #94a3b8;
+  --color-pan-gray-500: #64748b;
+  --color-pan-gray-600: #475569;
+  --color-pan-gray-700: #334155;
+  --color-pan-gray-800: #1e293b;
+  --color-pan-gray-900: #0f172a;
+
+  /* Background / Foreground */
+  --color-background: var(--color-pan-white);
+  --color-foreground: var(--color-pan-gray-900);
+
+  /* Fonts */
+  --font-sans: var(--font-inter);
+  --font-arabic: var(--font-noto-arabic);
+}
+
+/* ─── Base ────────────────────────────────────────────── */
+body {
+  background: var(--color-background);
+  color: var(--color-foreground);
+}
+
+/* ─── RTL Support ─────────────────────────────────────── */
+[dir="rtl"] {
+  font-family: var(--font-arabic), var(--font-sans), sans-serif;
+}
+
+/* ─── Smooth Scrolling ────────────────────────────────── */
+html {
+  scroll-behavior: smooth;
+}
+
+/* ─── Selection ───────────────────────────────────────── */
+::selection {
+  background: var(--color-pan-sky);
+  color: white;
+}
+
+/* ─── Scrollbar ───────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-pan-gray-100);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-pan-gray-400);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-pan-gray-500);
+}

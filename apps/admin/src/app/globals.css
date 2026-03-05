@@ -1,0 +1,49 @@
+@import "tailwindcss";
+
+@theme inline {
+  /* Admin palette — darker, professional */
+  --color-admin-bg: #0f172a;
+  --color-admin-surface: #1e293b;
+  --color-admin-surface-alt: #334155;
+  --color-admin-border: #475569;
+  --color-admin-text: #f1f5f9;
+  --color-admin-text-muted: #94a3b8;
+  --color-admin-primary: #1c4f8a;
+  /* Deep Port Blue */
+  --color-admin-primary-light: #2e5fa4;
+  /* Marine Blue */
+  --color-admin-accent: #cfe600;
+  /* Light Accent Green */
+  --color-admin-success: #1fa04a;
+  /* Ocean Green */
+  --color-admin-warning: #f59e0b;
+  --color-admin-danger: #ef4444;
+
+  --color-background: var(--color-admin-bg);
+  --color-foreground: var(--color-admin-text);
+
+  --font-sans: var(--font-inter);
+}
+
+body {
+  background: var(--color-background);
+  color: var(--color-foreground);
+}
+
+::selection {
+  background: var(--color-admin-primary);
+  color: white;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-admin-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-admin-border);
+  border-radius: 3px;
+}

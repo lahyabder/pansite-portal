@@ -1,0 +1,21 @@
+{
+  "name": "pansite",
+  "private": true,
+  "scripts": {
+    "dev": "pnpm --parallel -r run dev",
+    "dev:web": "pnpm --filter @pan/web dev",
+    "dev:admin": "pnpm --filter @pan/admin dev",
+    "build": "pnpm --filter @pan/shared build && pnpm --parallel --filter @pan/web --filter @pan/admin build",
+    "start": "pnpm --parallel -r run start",
+    "preview": "pnpm build && pnpm start",
+    "lint": "pnpm -r run lint",
+    "clean": "pnpm -r exec rm -rf .next node_modules"
+  },
+  "engines": {
+    "node": ">=20",
+    "pnpm": ">=9"
+  },
+  "devDependencies": {
+    "lucide-react": "^0.577.0"
+  }
+}
