@@ -59,8 +59,8 @@ export default function LoginPage() {
             <div className="relative w-full max-w-md">
                 {/* Logo */}
                 <div className="text-center mb-8">
-                    <div className="inline-flex items-center justify-center w-16 h-16 bg-[#d4a843] rounded-2xl shadow-xl mb-4">
-                        <span className="text-[#0c2340] font-bold text-3xl">P</span>
+                    <div className="inline-flex items-center justify-center w-20 h-20 bg-white rounded-2xl shadow-xl mb-4 overflow-hidden p-2">
+                        <img src="/logo-pan.png" alt="PAN Logo" className="w-full h-full object-contain" />
                     </div>
                     <h1 className="text-2xl font-bold text-white">PAN Admin</h1>
                     <p className="text-[#aed6f1] text-sm mt-1">Port Autonome de Nouadhibou</p>

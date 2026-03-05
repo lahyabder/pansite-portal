@@ -69,8 +69,8 @@ export function AdminSidebar() {
             {/* Logo */}
             <div className="p-5 border-b border-admin-border">
                 <Link href="/" className="flex items-center gap-3 group">
-                    <div className="w-9 h-9 bg-admin-accent rounded-lg flex items-center justify-center group-hover:shadow-lg transition-shadow">
-                        <span className="text-admin-bg font-bold">P</span>
+                    <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center group-hover:shadow-md transition-shadow overflow-hidden p-1">
+                        <img src="/logo-pan.png" alt="PAN" className="w-full h-full object-contain" />
                     </div>
                     <div>
                         <div className="text-admin-text font-bold text-sm">PAN Admin</div>

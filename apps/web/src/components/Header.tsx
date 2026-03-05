@@ -92,7 +92,7 @@ export function Header({ locale, dict }: HeaderProps) {
                         </Link>
 
                         {/* Desktop Nav */}
-                        <nav className="hidden lg:flex items-center gap-0.5 mx-4">
+                        <nav className="hidden lg:flex items-center gap-0.5 xl:gap-1 lg:mx-2 xl:mx-4">
                             {navGroups.map((group) => (
                                 <div
                                     key={group.href}
@@ -102,7 +102,7 @@ export function Header({ locale, dict }: HeaderProps) {
                                 >
                                     <Link
                                         href={group.href}
-                                        className={`px-3 xl:px-3 py-2 text-[12px] xl:text-[13px] font-medium rounded-lg transition-all duration-200 flex items-center gap-1 whitespace-nowrap ${isActive(group.href)
+                                        className={`px-1.5 xl:px-3 py-2 text-[10px] xl:text-[13px] font-medium rounded-lg transition-all duration-200 flex items-center gap-1 whitespace-nowrap ${isActive(group.href)
                                             ? 'text-pan-sky bg-pan-pale'
                                             : 'text-pan-gray-600 hover:text-pan-navy hover:bg-pan-gray-50'
                                             }`}
@@ -161,7 +161,7 @@ export function Header({ locale, dict }: HeaderProps) {
 
                             {/* CTA Accès Port */}
                             <a
-                                href="http://admin.localhost:3000"
+                                href="https://admin.pan.afrikyia.com"
                                 className="hidden sm:inline-flex items-center gap-2 px-4 py-2 bg-pan-gold text-pan-navy text-xs font-bold rounded-lg hover:bg-pan-gold-light transition-all shadow-sm shrink-0"
                             >
                                 {locale === 'ar' ? 'بوابة الميناء' : 'Accès Port'}
