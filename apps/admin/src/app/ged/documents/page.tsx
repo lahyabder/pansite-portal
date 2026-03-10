@@ -140,7 +140,7 @@ export default function AdminDocumentsPage() {
                     </div>
                     {can('documents', 'create') && (
                         <Link
-                            href="/documents/create"
+                            href="/ged/documents/create"
                             className="px-5 py-2.5 bg-admin-primary text-white text-sm font-medium rounded-xl hover:bg-admin-primary/80 transition-colors"
                         >
                             + Nouveau document

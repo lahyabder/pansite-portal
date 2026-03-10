@@ -3,6 +3,7 @@ import { t, formatDate, getContentBySlug, getContentsByCategory } from '@pan/sha
 import { getDictionary } from '@/lib/dictionaries';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import { Calendar } from 'lucide-react';
 
 export default async function ContentDetailPage({
     params,
@@ -38,50 +39,66 @@ export default async function ContentDetailPage({
     return (
         <>
             {/* Hero / Header */}
-            <div className="bg-gradient-to-br from-pan-navy via-pan-blue to-pan-sky text-white">
-                <div className="max-w-4xl mx-auto px-6 py-20">
+            <div className="relative bg-pan-navy text-white overflow-hidden min-h-[400px] flex items-center">
+                {/* Background Image */}
+                {(content.images?.[0] || content.coverImage) && (
+                    <div className="absolute inset-0 z-0">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                            src={content.images?.[0] || content.coverImage}
+                            alt={t(content.title, locale)}
+                            className="w-full h-full object-cover opacity-30"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-pan-navy via-pan-navy/60 to-transparent" />
+                    </div>
+                )}
+
+                <div className="relative z-10 max-w-4xl mx-auto px-6 py-20 w-full">
                     {/* Breadcrumbs */}
-                    <nav className="flex items-center gap-2 text-sm text-pan-light/70 mb-6">
-                        <Link href={`/${locale}`} className="hover:text-white transition-colors">
+                    <nav className="flex items-center gap-2 text-sm text-pan-light/70 mb-6 font-medium">
+                        <Link href={`/${locale}`} className="hover:text-pan-gold transition-colors">
                             {dict.nav.home}
                         </Link>
-                        <span>›</span>
-                        <Link href={`/${locale}/${categoryRoute}`} className="hover:text-white transition-colors">
+                        <span className="opacity-40">›</span>
+                        <Link href={`/${locale}/${categoryRoute}`} className="hover:text-pan-gold transition-colors">
                             {categoryLabel}
                         </Link>
                     </nav>
 
-                    <div className="flex items-center gap-3 mb-4">
-                        <span className="text-xs font-semibold px-3 py-1 rounded-full bg-white/20 text-white">
+                    <div className="flex items-center gap-3 mb-6">
+                        <span className="text-[10px] font-bold tracking-widest uppercase px-3 py-1 rounded-full bg-pan-gold text-pan-navy">
                             {categoryLabel}
                         </span>
                         {priorityBadge && (
-                            <span className={`text-xs font-semibold px-3 py-1 rounded-full ${priorityBadge}`}>
+                            <span className={`text-[10px] font-bold tracking-widest uppercase px-3 py-1 rounded-full ${priorityBadge}`}>
                                 {content.priority === 'urgent' ? '🚨 Urgent' : '⚡ Important'}
                             </span>
                         )}
                     </div>
 
-                    <h1 className="text-3xl sm:text-4xl font-bold leading-tight mb-6">
+                    <h1 className="text-3xl sm:text-5xl font-bold leading-tight mb-8">
                         {t(content.title, locale)}
                     </h1>
 
-                    <div className="flex flex-wrap items-center gap-4 text-sm text-pan-light/80">
+                    <div className="flex flex-wrap items-center gap-6 text-sm text-pan-light/80 font-medium">
                         {content.publishedAt && (
-                            <span>
+                            <div className="flex items-center gap-2">
+                                <Calendar className="w-4 h-4 text-pan-gold" />
                                 {dict.content.detail.publishedOn} {formatDate(content.publishedAt, locale)}
-                            </span>
+                            </div>
                         )}
                         {content.eventDate && (
-                            <span className="flex items-center gap-1">
-                                📅 {dict.content.detail.eventDate}: {formatDate(content.eventDate, locale)}
+                            <div className="flex items-center gap-2">
+                                <span className="text-pan-gold">📅</span>
+                                {dict.content.detail.eventDate}: {formatDate(content.eventDate, locale)}
                                 {content.eventEndDate && ` — ${formatDate(content.eventEndDate, locale)}`}
-                            </span>
+                            </div>
                         )}
                         {content.eventLocation && (
-                            <span className="flex items-center gap-1">
-                                📍 {content.eventLocation}
-                            </span>
+                            <div className="flex items-center gap-2">
+                                <span className="text-pan-gold">📍</span>
+                                {content.eventLocation}
+                            </div>
                         )}
                     </div>
                 </div>
@@ -101,11 +118,73 @@ export default async function ContentDetailPage({
                     )}
 
                     {/* Main content */}
-                    <div className="prose prose-lg max-w-none text-pan-gray-700 leading-relaxed">
+                    <div className="prose prose-lg max-w-none text-pan-gray-700 leading-relaxed mb-12">
                         {t(content.body, locale).split('\n\n').map((para, i) => (
                             <p key={i}>{para}</p>
                         ))}
                     </div>
+
+                    {/* Media: External Link */}
+                    {content.externalLink && (
+                        <div className="mb-10">
+                            <a
+                                href={content.externalLink}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex items-center justify-between p-6 bg-pan-navy text-white rounded-2xl hover:bg-pan-blue transition-all group shadow-xl"
+                            >
+                                <div className="flex items-center gap-4">
+                                    <div className="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                                        🔗
+                                    </div>
+                                    <div>
+                                        <div className="font-bold text-lg">{['ar'].includes(locale) ? 'رابط خارجي / ملف' : 'Lien externe / Document'}</div>
+                                        <div className="text-white/60 text-sm truncate max-w-sm">{content.externalLink}</div>
+                                    </div>
+                                </div>
+                                <span className="text-pan-gold font-bold">Voir →</span>
+                            </a>
+                        </div>
+                    )}
+
+                    {/* Media: Video */}
+                    {content.videoLink && (
+                        <div className="mb-10 aspect-video rounded-3xl overflow-hidden border border-pan-gray-100 shadow-2xl">
+                            {content.videoLink.includes('youtube.com') || content.videoLink.includes('youtu.be') ? (
+                                <iframe
+                                    className="w-full h-full"
+                                    src={`https://www.youtube.com/embed/${content.videoLink.split('v=')[1] || content.videoLink.split('/').pop()}`}
+                                    title="YouTube video player"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowFullScreen
+                                />
+                            ) : (
+                                <a href={content.videoLink} target="_blank" rel="noopener noreferrer" className="w-full h-full flex items-center justify-center bg-pan-gray-50 text-pan-sky font-bold">
+                                    Regarder la vidéo ↗
+                                </a>
+                            )}
+                        </div>
+                    )}
+
+                    {/* Media: Gallery */}
+                    {content.images && content.images.length > 0 && (
+                        <div className="mb-12 space-y-6">
+                            <h3 className="text-xl font-bold text-pan-navy flex items-center gap-2">
+                                📸 Galerie Photos
+                            </h3>
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                {content.images.map((img, i) => (
+                                    <div key={i} className="aspect-[4/3] rounded-2xl overflow-hidden bg-pan-gray-50 border border-pan-gray-100 hover:shadow-xl transition-shadow group">
+                                        <img
+                                            src={img}
+                                            alt={`Image ${i + 1}`}
+                                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                        />
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
 
                     {/* Tags */}
                     {content.tags.length > 0 && (

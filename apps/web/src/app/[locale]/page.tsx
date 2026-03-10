@@ -1,6 +1,9 @@
 import type { Locale } from '@pan/shared';
 import { t, formatDate } from '@pan/shared';
 import { mockServices, mockStatistics, getLatestContents } from '@pan/shared';
+
+export const dynamic = 'force-dynamic';
+
 import { getDictionary } from '@/lib/dictionaries';
 import Link from 'next/link';
 import { AlertBar } from '@/components/AlertBar';
@@ -167,8 +170,26 @@ export default async function HomePage({
                                 className="group bg-pan-pale rounded-2xl overflow-hidden border border-pan-gray-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
                             >
                                 <div className="h-48 bg-pan-navy relative overflow-hidden flex items-center justify-center">
-                                    <div className="absolute inset-0 bg-pan-blue/20 group-hover:bg-pan-blue/10 transition-colors duration-300" />
-                                    <ShipWheel className="w-20 h-20 text-white/10" />
+                                    <div className="absolute inset-0 bg-pan-blue/20 group-hover:bg-pan-blue/10 transition-colors duration-300 z-10" />
+
+                                    {/* Image Rendering */}
+                                    {article.images && article.images.length > 0 ? (
+                                        // eslint-disable-next-line @next/next/no-img-element
+                                        <img
+                                            src={article.images[0]}
+                                            alt={t(article.title, locale)}
+                                            className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-all duration-700"
+                                        />
+                                    ) : article.coverImage ? (
+                                        // eslint-disable-next-line @next/next/no-img-element
+                                        <img
+                                            src={article.coverImage}
+                                            alt={t(article.title, locale)}
+                                            className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-all duration-700"
+                                        />
+                                    ) : (
+                                        <ShipWheel className="w-20 h-20 text-white/10" />
+                                    )}
 
                                     {article.priority === 'urgent' && (
                                         <div className="absolute top-3 end-3 bg-red-500 text-white text-[10px] font-bold px-3 py-1.5 rounded-full animate-pulse uppercase tracking-wider">

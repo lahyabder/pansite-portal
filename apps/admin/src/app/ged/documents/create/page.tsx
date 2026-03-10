@@ -93,7 +93,7 @@ export default function CreateDocumentPage() {
             },
         });
 
-        router.push('/documents');
+        router.push('/ged/documents');
     }
 
     const inputClass = 'w-full px-4 py-2.5 bg-admin-surface border border-admin-border rounded-xl text-admin-text text-sm placeholder:text-admin-text-muted focus:outline-none focus:ring-2 focus:ring-admin-primary/30';
@@ -218,7 +218,7 @@ export default function CreateDocumentPage() {
                 {/* Action buttons */}
                 <div className="flex items-center gap-3 justify-end">
                     <button
-                        onClick={() => router.push('/documents')}
+                        onClick={() => router.push('/ged/documents')}
                         className="px-5 py-2.5 border border-admin-border text-admin-text-muted text-sm rounded-xl hover:bg-admin-surface-alt transition-colors"
                     >
                         Annuler

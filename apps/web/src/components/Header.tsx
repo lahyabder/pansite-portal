@@ -179,18 +179,8 @@ export function Header({ locale, dict }: HeaderProps) {
                                 ))}
                             </div>
 
-                            {/* CTA Accès Port */}
-                            <a
-                                href="https://admin.pan.afrikyia.com"
-                                className="hidden sm:inline-flex items-center gap-2 px-4 py-2 bg-pan-gold text-pan-navy text-xs font-bold rounded-lg hover:bg-pan-gold-light transition-all shadow-sm shrink-0"
-                            >
-                                {({
-                                    ar: 'بوابة الميناء',
-                                    fr: 'Accès Port',
-                                    en: 'Port Portal',
-                                    es: 'Portal del Puerto'
-                                } as Record<string, string>)[locale]}
-                            </a>
+                            {/* CTA Accès Port - REMOVED FOR INVISIBILITY */}
+                            {/* Access via hidden /acces-portail route */}
 
                             {/* Mobile menu button */}
                             <button

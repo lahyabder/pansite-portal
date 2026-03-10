@@ -149,6 +149,9 @@ export interface Content {
     eventDate?: string;        // for events
     eventEndDate?: string;     // for multi-day events
     eventLocation?: string;    // for events
+    images?: string[];         // optional gallery
+    externalLink?: string;     // optional external URL
+    videoLink?: string;        // optional video URL (Youtube, etc)
     expiresAt?: string;        // for alerts
     publishedAt?: string;
     createdAt: string;

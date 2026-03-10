@@ -1,14 +1,57 @@
 import type { Content, ContentCategory, ContentStatus, ContentFilters, PaginatedResult, AuditLogEntry, AuditAction } from '../types';
 import { mockContents, mockAuditLog } from '../mock';
+import * as path from 'path';
 
 /**
- * In-memory content repository — designed to be swapped with a real DB later.
- * All mutations work on cloned arrays so the mock source stays intact per-import.
+ * In-memory content repository with JSON persistence for local dev sync.
  */
 
-let _contents: Content[] = [...mockContents];
-let _auditLog: AuditLogEntry[] = [...mockAuditLog];
+let _contents: Content[] = [];
+let _auditLog: AuditLogEntry[] = [];
 let _nextId = 100;
+
+// Path to a shared JSON file in a stable location for local dev sync
+const DB_PATH = typeof window === 'undefined' ? '/tmp/pansite_db.json' : '';
+
+function loadDB() {
+    if (typeof window !== 'undefined') {
+        // In browser, we can't read files, so we just return the in-memory state
+        return;
+    }
+
+    try {
+        const fs = require('fs');
+        if (fs.existsSync(DB_PATH)) {
+            const data = JSON.parse(fs.readFileSync(DB_PATH, 'utf8'));
+            _contents = data.contents || [];
+            _auditLog = data.auditLog || [];
+            _nextId = data.nextId || 100;
+        } else {
+            console.log('Seeding DB at:', DB_PATH);
+            _contents = [...mockContents];
+            _auditLog = [...mockAuditLog];
+            saveDB();
+        }
+    } catch (e) {
+        console.warn('Persistence failed, using memory:', e);
+        _contents = [...mockContents];
+        _auditLog = [...mockAuditLog];
+    }
+}
+
+function saveDB() {
+    if (typeof window !== 'undefined') return;
+    try {
+        const fs = require('fs');
+        const data = JSON.stringify({ contents: _contents, auditLog: _auditLog, nextId: _nextId }, null, 2);
+        fs.writeFileSync(DB_PATH, data);
+    } catch (e) {
+        console.error('Failed to save to DB:', e);
+    }
+}
+
+// Initial load
+loadDB();
 
 function now() {
     return new Date().toISOString();
@@ -16,10 +59,12 @@ function now() {
 
 // ─── Read ─────────────────────────────────────────────────
 export function getAllContents(): Content[] {
+    loadDB();
     return _contents.filter((c) => !c.deletedAt);
 }
 
 export function getPublishedContents(filters?: ContentFilters): PaginatedResult<Content> {
+    loadDB();
     let items = _contents.filter((c) => c.status === 'published' && !c.deletedAt);
 
     if (filters?.category) {
@@ -56,20 +101,24 @@ export function getPublishedContents(filters?: ContentFilters): PaginatedResult<
 }
 
 export function getContentBySlug(slug: string): Content | undefined {
+    loadDB();
     return _contents.find((c) => c.slug === slug && !c.deletedAt);
 }
 
 export function getContentById(id: string): Content | undefined {
+    loadDB();
     return _contents.find((c) => c.id === id);
 }
 
 export function getContentsByCategory(category: ContentCategory): Content[] {
+    loadDB();
     return _contents
         .filter((c) => c.category === category && c.status === 'published' && !c.deletedAt)
         .sort((a, b) => new Date(b.publishedAt || b.createdAt).getTime() - new Date(a.publishedAt || a.createdAt).getTime());
 }
 
 export function getActiveAlerts(): Content[] {
+    loadDB();
     const today = new Date();
     return _contents.filter(
         (c) =>
@@ -81,6 +130,7 @@ export function getActiveAlerts(): Content[] {
 }
 
 export function getLatestContents(limit: number = 4): Content[] {
+    loadDB();
     return _contents
         .filter((c) => c.status === 'published' && !c.deletedAt)
         .sort((a, b) => new Date(b.publishedAt || b.createdAt).getTime() - new Date(a.publishedAt || a.createdAt).getTime())
@@ -88,6 +138,7 @@ export function getLatestContents(limit: number = 4): Content[] {
 }
 
 export function getAdminContents(filters?: ContentFilters): PaginatedResult<Content> {
+    loadDB();
     let items = _contents.filter((c) => !c.deletedAt);
 
     if (filters?.category) items = items.filter((c) => c.category === filters.category);
@@ -110,6 +161,7 @@ export function getAdminContents(filters?: ContentFilters): PaginatedResult<Cont
 
 // ─── Write ────────────────────────────────────────────────
 export function createContent(data: Omit<Content, 'id' | 'createdAt' | 'updatedAt'>): Content {
+    loadDB();
     const content: Content = {
         ...data,
         id: `cnt-${String(++_nextId).padStart(3, '0')}`,
@@ -118,22 +170,27 @@ export function createContent(data: Omit<Content, 'id' | 'createdAt' | 'updatedA
     };
     _contents.unshift(content);
     addAuditEntry('content', content.id, 'create', data.authorId, getUserName(data.authorId));
+    saveDB();
     return content;
 }
 
 export function updateContent(id: string, data: Partial<Content>, userId: string): Content | null {
+    loadDB();
     const idx = _contents.findIndex((c) => c.id === id);
     if (idx === -1) return null;
     _contents[idx] = { ..._contents[idx], ...data, updatedAt: now() };
     addAuditEntry('content', id, 'update', userId, getUserName(userId));
+    saveDB();
     return _contents[idx];
 }
 
 export function deleteContent(id: string, userId: string): boolean {
+    loadDB();
     const idx = _contents.findIndex((c) => c.id === id);
     if (idx === -1) return false;
     _contents[idx] = { ..._contents[idx], deletedAt: now(), updatedAt: now() };
     addAuditEntry('content', id, 'delete', userId, getUserName(userId));
+    saveDB();
     return true;
 }
 
@@ -174,6 +231,7 @@ function updateStatusWithAudit(
     action: AuditAction,
     userId: string,
 ): Content | null {
+    loadDB();
     const idx = _contents.findIndex((c) => c.id === id);
     if (idx === -1) return null;
     const prev = _contents[idx].status;
@@ -184,6 +242,7 @@ function updateStatusWithAudit(
         updatedAt: now(),
     };
     addAuditEntry('content', id, action, userId, getUserName(userId), undefined, prev, newStatus);
+    saveDB();
     return _contents[idx];
 }
 

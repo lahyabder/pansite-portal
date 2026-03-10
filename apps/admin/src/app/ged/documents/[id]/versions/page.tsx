@@ -66,7 +66,7 @@ export default function DocumentVersionsPage({ params }: { params: Promise<{ id:
                 {/* Header */}
                 <div className="flex items-center justify-between">
                     <div>
-                        <button onClick={() => router.push('/documents')} className="text-admin-primary-light text-sm hover:underline mb-2 block">
+                        <button onClick={() => router.push('/ged/documents')} className="text-admin-primary-light text-sm hover:underline mb-2 block">
                             ← Retour aux documents
                         </button>
                         <h2 className="text-xl font-bold text-admin-text">{doc.title.fr}</h2>

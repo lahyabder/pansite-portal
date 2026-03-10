@@ -2,6 +2,9 @@ import type { Locale } from '@pan/shared';
 import { getDictionary } from '@/lib/dictionaries';
 import { PageHero } from '@/components/PageHero';
 import { ContentList } from '@/components/ContentList';
+import { getPublishedContents } from '@pan/shared';
+
+export const dynamic = 'force-dynamic';
 
 export default async function ActualitesPage({
     params,
@@ -11,6 +14,9 @@ export default async function ActualitesPage({
     const { locale: localeParam } = await params;
     const locale = (['ar', 'fr', 'en', 'es'].includes(localeParam) ? localeParam : 'fr') as Locale;
     const dict = getDictionary(locale);
+
+    // Fetch on server to use filesystem sync
+    const initialData = getPublishedContents({ pageSize: 12, category: 'actualite' });
 
     return (
         <>
@@ -28,9 +34,11 @@ export default async function ActualitesPage({
                         locale={locale}
                         dict={dict}
                         initialCategory="actualite"
+                        initialItems={initialData.items}
                     />
                 </div>
             </section>
         </>
     );
 }
+

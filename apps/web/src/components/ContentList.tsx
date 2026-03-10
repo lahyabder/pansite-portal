@@ -1,6 +1,6 @@
 'use client';
 
-import type { Locale, ContentCategory } from '@pan/shared';
+import type { Locale, ContentCategory, Content } from '@pan/shared';
 import { t, formatDate, getContentsByCategory } from '@pan/shared';
 import type { Dictionary } from '@/lib/dictionaries';
 import Link from 'next/link';
@@ -10,6 +10,7 @@ interface ContentListProps {
     locale: Locale;
     dict: Dictionary;
     initialCategory?: ContentCategory;
+    initialItems?: Content[];
 }
 
 const categories: { key: ContentCategory | 'all'; icon: string }[] = [
@@ -20,13 +21,13 @@ const categories: { key: ContentCategory | 'all'; icon: string }[] = [
     { key: 'alerte', icon: '⚠️' },
 ];
 
-export function ContentList({ locale, dict, initialCategory }: ContentListProps) {
+export function ContentList({ locale, dict, initialCategory, initialItems }: ContentListProps) {
     const [activeCategory, setActiveCategory] = useState<ContentCategory | 'all'>(initialCategory || 'all');
     const [currentPage, setCurrentPage] = useState(1);
     const pageSize = 6;
 
     // Get all published content
-    const allPublished = [
+    const allPublished = initialItems || [
         ...getContentsByCategory('actualite'),
         ...getContentsByCategory('communique'),
         ...getContentsByCategory('evenement'),
@@ -98,8 +99,24 @@ export function ContentList({ locale, dict, initialCategory }: ContentListProps)
                             className="group bg-white rounded-2xl overflow-hidden border border-pan-gray-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex flex-col"
                         >
                             {/* Card header */}
-                            <div className="h-44 bg-gradient-to-br from-pan-blue to-pan-sky relative overflow-hidden">
-                                <div className="absolute inset-0 bg-pan-navy/20 group-hover:bg-pan-navy/10 transition-colors duration-300" />
+                            <div className="h-44 bg-gradient-to-br from-pan-blue to-pan-sky relative overflow-hidden flex items-center justify-center">
+                                <div className="absolute inset-0 bg-pan-navy/20 group-hover:bg-pan-navy/10 transition-colors duration-300 z-10" />
+
+                                {item.images && item.images.length > 0 ? (
+                                    // eslint-disable-next-line @next/next/no-img-element
+                                    <img
+                                        src={item.images[0]}
+                                        alt={t(item.title, locale)}
+                                        className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-all duration-700"
+                                    />
+                                ) : item.coverImage ? (
+                                    // eslint-disable-next-line @next/next/no-img-element
+                                    <img
+                                        src={item.coverImage}
+                                        alt={t(item.title, locale)}
+                                        className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-all duration-700"
+                                    />
+                                ) : null}
                                 {item.priority === 'urgent' && (
                                     <div className="absolute top-3 end-3 bg-red-500 text-white text-[10px] font-bold px-2 py-1 rounded-full animate-pulse">
                                         {{

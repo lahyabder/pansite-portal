@@ -66,7 +66,7 @@ export default function EditDocumentPage({ params }: { params: Promise<{ id: str
             categories: categories.split(',').map((c) => c.trim()).filter(Boolean),
             keywords: keywords.split(',').map((k) => k.trim()).filter(Boolean),
         }, session?.user.id || 'system');
-        router.push('/documents');
+        router.push('/ged/documents');
     }
 
     const inputClass = 'w-full px-4 py-2.5 bg-admin-surface border border-admin-border rounded-xl text-admin-text text-sm placeholder:text-admin-text-muted focus:outline-none focus:ring-2 focus:ring-admin-primary/30';
@@ -76,7 +76,7 @@ export default function EditDocumentPage({ params }: { params: Promise<{ id: str
         <RequirePermission module="documents" action="edit">
             <div className="max-w-4xl mx-auto space-y-6">
                 <div>
-                    <button onClick={() => router.push('/documents')} className="text-admin-primary-light text-sm hover:underline mb-2 block">
+                    <button onClick={() => router.push('/ged/documents')} className="text-admin-primary-light text-sm hover:underline mb-2 block">
                         ← Retour aux documents
                     </button>
                     <h2 className="text-xl font-bold text-admin-text">Modifier le document</h2>
@@ -161,7 +161,7 @@ export default function EditDocumentPage({ params }: { params: Promise<{ id: str
                 </div>
 
                 <div className="flex items-center gap-3 justify-end">
-                    <button onClick={() => router.push('/documents')} className="px-5 py-2.5 border border-admin-border text-admin-text-muted text-sm rounded-xl hover:bg-admin-surface-alt transition-colors">
+                    <button onClick={() => router.push('/ged/documents')} className="px-5 py-2.5 border border-admin-border text-admin-text-muted text-sm rounded-xl hover:bg-admin-surface-alt transition-colors">
                         Annuler
                     </button>
                     <button onClick={handleSave} className="px-5 py-2.5 bg-admin-primary text-white text-sm font-medium rounded-xl hover:bg-admin-primary/80 transition-colors">
