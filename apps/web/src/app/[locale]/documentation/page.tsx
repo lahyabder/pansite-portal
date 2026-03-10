@@ -5,7 +5,7 @@ import { DocumentLibrary } from '@/components/DocumentLibrary';
 
 export default async function DocumentationPage({ params }: { params: Promise<{ locale: string }> }) {
     const { locale: lp } = await params;
-    const locale = (lp === 'ar' ? 'ar' : 'fr') as Locale;
+    const locale = (['ar', 'fr', 'en', 'es'].includes(lp) ? lp : 'fr') as Locale;
     const dict = getDictionary(locale);
 
     return (

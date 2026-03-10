@@ -9,16 +9,23 @@ export default async function AlertesPage({
     params: Promise<{ locale: string }>;
 }) {
     const { locale: localeParam } = await params;
-    const locale = (localeParam === 'ar' ? 'ar' : 'fr') as Locale;
+    const locale = (['ar', 'fr', 'en', 'es'].includes(localeParam) ? localeParam : 'fr') as Locale;
     const dict = getDictionary(locale);
+
+    const subtitles = {
+        ar: 'التنبيهات والإشعارات الهامة.',
+        fr: 'Avis importants et alertes portuaires.',
+        en: 'Important notices and port alerts.',
+        es: 'Avisos importantes y alertas portuarias.'
+    }[locale];
 
     return (
         <>
             <PageHero
                 title={dict.content.categories.alerte}
-                subtitle={locale === 'ar' ? 'التنبيهات والإشعارات الهامة.' : 'Avis importants et alertes portuaires.'}
+                subtitle={subtitles}
                 breadcrumbs={[
-                    { label: locale === 'ar' ? 'الرئيسية' : 'Accueil', href: `/${locale}` },
+                    { label: dict.nav.home, href: `/${locale}` },
                     { label: dict.content.categories.alerte },
                 ]}
             />

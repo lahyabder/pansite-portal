@@ -4,7 +4,7 @@ import { PageHero } from '@/components/PageHero';
 
 export default async function LePortPage({ params }: { params: Promise<{ locale: string }> }) {
     const { locale: lp } = await params;
-    const locale = (lp === 'ar' ? 'ar' : 'fr') as Locale;
+    const locale = (['ar', 'fr', 'en', 'es'].includes(lp) ? lp : 'fr') as Locale;
     const dict = getDictionary(locale);
 
     return (
@@ -132,11 +132,25 @@ export default async function LePortPage({ params }: { params: Promise<{ locale:
                             <div className="grid grid-cols-2 gap-6">
                                 <div className="p-6 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors">
                                     <div className="text-4xl font-bold text-pan-gold mb-1">90+</div>
-                                    <div className="text-[10px] text-pan-light/40 font-bold uppercase tracking-widest">Partenaires Privés</div>
+                                    <div className="text-[10px] text-pan-light/40 font-bold uppercase tracking-widest">
+                                        {{
+                                            ar: 'شركاء خصوصيين',
+                                            fr: 'Partenaires Privés',
+                                            en: 'Private Partners',
+                                            es: 'Socios Privados'
+                                        }[locale]}
+                                    </div>
                                 </div>
                                 <div className="p-6 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors">
                                     <div className="text-4xl font-bold text-pan-gold mb-1">24/7</div>
-                                    <div className="text-[10px] text-pan-light/40 font-bold uppercase tracking-widest">Disponibilité</div>
+                                    <div className="text-[10px] text-pan-light/40 font-bold uppercase tracking-widest">
+                                        {{
+                                            ar: 'جاهزية',
+                                            fr: 'Disponibilité',
+                                            en: 'Availability',
+                                            es: 'Disponibilidad'
+                                        }[locale]}
+                                    </div>
                                 </div>
                             </div>
                         </div>

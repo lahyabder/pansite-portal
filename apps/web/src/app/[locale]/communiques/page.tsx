@@ -9,16 +9,23 @@ export default async function CommuniquesPage({
     params: Promise<{ locale: string }>;
 }) {
     const { locale: localeParam } = await params;
-    const locale = (localeParam === 'ar' ? 'ar' : 'fr') as Locale;
+    const locale = (['ar', 'fr', 'en', 'es'].includes(localeParam) ? localeParam : 'fr') as Locale;
     const dict = getDictionary(locale);
+
+    const subtitles = {
+        ar: 'البيانات الرسمية والإعلانات من إدارة الميناء.',
+        fr: 'Communiqués officiels et annonces de la direction du port.',
+        en: 'Official communiqués and announcements from port management.',
+        es: 'Comunicados oficiales y anuncios de la dirección del puerto.'
+    }[locale];
 
     return (
         <>
             <PageHero
                 title={dict.content.categories.communique}
-                subtitle={locale === 'ar' ? 'البيانات الرسمية والإعلانات من إدارة الميناء.' : 'Communiqués officiels et annonces de la direction du port.'}
+                subtitle={subtitles}
                 breadcrumbs={[
-                    { label: locale === 'ar' ? 'الرئيسية' : 'Accueil', href: `/${locale}` },
+                    { label: dict.nav.home, href: `/${locale}` },
                     { label: dict.content.categories.communique },
                 ]}
             />

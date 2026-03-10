@@ -5,49 +5,88 @@ import { FileText, Download, Clock, CheckCircle } from 'lucide-react';
 
 export default async function AppelsOffresPage({ params }: { params: Promise<{ locale: string }> }) {
     const { locale: lp } = await params;
-    const locale = (lp === 'ar' ? 'ar' : 'fr') as Locale;
+    const locale = (['ar', 'fr', 'en', 'es'].includes(lp) ? lp : 'fr') as Locale;
     const dict = getDictionary(locale);
+
+    const labels = {
+        ar: { title: 'العنوان & المرجع', pub: 'تاريخ النشر', lim: 'الموعد النهائي', docs: 'الوثائق', status: 'الحالة', open: 'مفتوح', closed: 'مغلق' },
+        fr: { title: 'Titre & Référence', pub: 'Date publication', lim: 'Date limite', docs: 'Documents', status: 'Statut', open: 'Ouvert', closed: 'Clôturé' },
+        en: { title: 'Title & Reference', pub: 'Publication Date', lim: 'Deadline', docs: 'Documents', status: 'Status', open: 'Open', closed: 'Closed' },
+        es: { title: 'Título y Referencia', pub: 'Fecha de publicación', lim: 'Fecha límite', docs: 'Documentos', status: 'Estado', open: 'Abierto', closed: 'Cerrado' },
+    }[locale];
 
     // Mock Demo Data for 4 tenders
     const tenders = [
         {
             id: 'AO-2025-001',
-            title: locale === 'ar'
-                ? 'توسعة المحطة البحرية - المرحلة 2'
-                : 'Extension du terminal maritime - Phase 2',
+            title: {
+                ar: 'توسعة المحطة البحرية - المرحلة 2',
+                fr: 'Extension du terminal maritime - Phase 2',
+                en: 'Marine Terminal Extension - Phase 2',
+                es: 'Extensión de la terminal marítima - Fase 2'
+            }[locale] || 'Extension du terminal maritime - Phase 2',
             datePub: '2025-10-15',
             dateLim: '2025-11-30',
-            docs: ['Cahier des charges', 'Plans techniques'],
+            docs: {
+                ar: ['دفتر الشروط', 'المخططات التقنية'],
+                fr: ['Cahier des charges', 'Plans techniques'],
+                en: ['Specifications', 'Technical plans'],
+                es: ['Pliego de condiciones', 'Planos técnicos']
+            }[locale] || ['Cahier des charges', 'Plans techniques'],
             status: 'active'
         },
         {
             id: 'AO-2025-002',
-            title: locale === 'ar'
-                ? 'توريد وتركيب 4 رافعات جسرية جديدة'
-                : 'Fourniture et installation de 4 nouveaux portiques',
+            title: {
+                ar: 'توريد وتركيب 4 رافعات جسرية جديدة',
+                fr: 'Fourniture et installation de 4 nouveaux portiques',
+                en: 'Supply and installation of 4 new portal cranes',
+                es: 'Suministro e instalación de 4 nuevas grúas pórtico'
+            }[locale] || 'Fourniture et installation de 4 nouveaux portiques',
             datePub: '2025-09-01',
             dateLim: '2025-10-15',
-            docs: ['Dossier completAO'],
+            docs: {
+                ar: ['ملف المناقصة'],
+                fr: ['Dossier complet AO'],
+                en: ['Full tender file'],
+                es: ['Expediente completo de licitación']
+            }[locale] || ['Dossier complet AO'],
             status: 'closed'
         },
         {
             id: 'AO-2025-003',
-            title: locale === 'ar'
-                ? 'دراسة الأثر البيئي لتجريف قناة الوصول'
-                : 'Étude d\'impact environnemental pour le dragage du chenal d\'accès',
+            title: {
+                ar: 'دراسة الأثر البيئي لتجريف قناة الوصول',
+                fr: 'Étude d\'impact environnemental pour le dragage du chenal d\'accès',
+                en: 'Environmental impact study for access channel dredging',
+                es: 'Estudio de impacto ambiental para el dragado del canal de acceso'
+            }[locale] || 'Étude d\'impact environnemental pour le dragage du chenal d\'accès',
             datePub: '2025-11-01',
             dateLim: '2025-12-15',
-            docs: ['Termes de référence', 'Annexes environnementales', 'Formulaires'],
+            docs: {
+                ar: ['شروط المرجعية', 'الملاحق البيئية', 'نماذج الاستمارة'],
+                fr: ['Termes de référence', 'Annexes environnementales', 'Formulaires'],
+                en: ['Terms of reference', 'Environmental annexes', 'Forms'],
+                es: ['Términos de referencia', 'Anexos ambientales', 'Formularios']
+            }[locale] || ['Termes de référence', 'Annexes environnementales', 'Formulaires'],
             status: 'active'
         },
         {
             id: 'AO-2025-004',
-            title: locale === 'ar'
-                ? 'صيانة نظام المراقبة الأمنية (CCTV)'
-                : 'Maintenance du système de vidéosurveillance (CCTV)',
+            title: {
+                ar: 'صيانة نظام المراقبة الأمنية (CCTV)',
+                fr: 'Maintenance du système de vidéosurveillance (CCTV)',
+                en: 'Maintenance of surveillance system (CCTV)',
+                es: 'Mantenimiento del sistema de videovigilancia (CCTV)'
+            }[locale] || 'Maintenance du système de vidéosurveillance (CCTV)',
             datePub: '2025-11-10',
             dateLim: '2025-12-05',
-            docs: ['Règlement de consultation', 'Spécifications techniques'],
+            docs: {
+                ar: ['نظام الاستشارة', 'المواصفات التقنية'],
+                fr: ['Règlement de consultation', 'Spécifications techniques'],
+                en: ['Consultation rules', 'Technical specifications'],
+                es: ['Reglamento de consulta', 'Especificaciones técnicas']
+            }[locale] || ['Règlement de consultation', 'Spécifications techniques'],
             status: 'active'
         }
     ];
@@ -68,23 +107,23 @@ export default async function AppelsOffresPage({ params }: { params: Promise<{ l
                 <div className="max-w-7xl mx-auto px-6">
                     <div className="bg-white rounded-2xl shadow-sm border border-pan-gray-200 overflow-hidden">
                         <div className="overflow-x-auto">
-                            <table className="w-full text-left border-collapse">
+                            <table className="w-full text-start border-collapse">
                                 <thead>
                                     <tr className="bg-pan-navy text-white text-sm">
                                         <th className="px-6 py-4 font-semibold whitespace-nowrap">
-                                            {locale === 'ar' ? 'العنوان & المرجع' : 'Titre & Référence'}
+                                            {labels.title}
                                         </th>
                                         <th className="px-6 py-4 font-semibold whitespace-nowrap">
-                                            {locale === 'ar' ? 'تاريخ النشر' : 'Date publication'}
+                                            {labels.pub}
                                         </th>
                                         <th className="px-6 py-4 font-semibold whitespace-nowrap">
-                                            {locale === 'ar' ? 'الموعد النهائي' : 'Date limite'}
+                                            {labels.lim}
                                         </th>
                                         <th className="px-6 py-4 font-semibold">
-                                            {locale === 'ar' ? 'الوثائق' : 'Documents'}
+                                            {labels.docs}
                                         </th>
                                         <th className="px-6 py-4 font-semibold whitespace-nowrap">
-                                            {locale === 'ar' ? 'الحالة' : 'Statut'}
+                                            {labels.status}
                                         </th>
                                     </tr>
                                 </thead>
@@ -123,12 +162,12 @@ export default async function AppelsOffresPage({ params }: { params: Promise<{ l
                                                 {tender.status === 'active' ? (
                                                     <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-green-50 text-green-700 text-xs font-bold uppercase rounded-full border border-green-200">
                                                         <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
-                                                        {locale === 'ar' ? 'مفتوح' : 'Ouvert'}
+                                                        {labels.open}
                                                     </span>
                                                 ) : (
                                                     <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-pan-gray-100 text-pan-gray-600 text-xs font-bold uppercase rounded-full border border-pan-gray-200">
                                                         <CheckCircle className="w-3 h-3" />
-                                                        {locale === 'ar' ? 'مغلق' : 'Clôturé'}
+                                                        {labels.closed}
                                                     </span>
                                                 )}
                                             </td>

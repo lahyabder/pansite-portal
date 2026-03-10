@@ -9,7 +9,7 @@ export default async function ActualitesPage({
     params: Promise<{ locale: string }>;
 }) {
     const { locale: localeParam } = await params;
-    const locale = (localeParam === 'ar' ? 'ar' : 'fr') as Locale;
+    const locale = (['ar', 'fr', 'en', 'es'].includes(localeParam) ? localeParam : 'fr') as Locale;
     const dict = getDictionary(locale);
 
     return (
@@ -18,7 +18,7 @@ export default async function ActualitesPage({
                 title={dict.content.categories.actualite}
                 subtitle={dict.news.subtitle}
                 breadcrumbs={[
-                    { label: locale === 'ar' ? 'الرئيسية' : 'Accueil', href: `/${locale}` },
+                    { label: dict.nav.home, href: `/${locale}` },
                     { label: dict.content.categories.actualite },
                 ]}
             />

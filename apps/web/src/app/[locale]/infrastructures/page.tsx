@@ -4,8 +4,15 @@ import { PageHero } from '@/components/PageHero';
 
 export default async function InfrastructuresPage({ params }: { params: Promise<{ locale: string }> }) {
     const { locale: lp } = await params;
-    const locale = (lp === 'ar' ? 'ar' : 'fr') as Locale;
+    const locale = (['ar', 'fr', 'en', 'es'].includes(lp) ? lp : 'fr') as Locale;
     const dict = getDictionary(locale);
+
+    const labels = {
+        ar: { length: 'الطول', draft: 'عمق الغاطس' },
+        fr: { length: 'Longueur', draft: 'Tirant d\'eau' },
+        en: { length: 'Length', draft: 'Draft' },
+        es: { length: 'Longitud', draft: 'Calado' },
+    }[locale];
 
     return (
         <>
@@ -37,11 +44,11 @@ export default async function InfrastructuresPage({ params }: { params: Promise<
                                 <p className="text-pan-gray-600 text-sm leading-relaxed mb-6">{quai.info}</p>
                                 <div className="grid grid-cols-2 gap-4 pt-6 border-t border-pan-navy/5">
                                     <div>
-                                        <div className="text-[10px] text-pan-gray-400 font-bold uppercase tracking-wider">Longueur</div>
+                                        <div className="text-[10px] text-pan-gray-400 font-bold uppercase tracking-wider">{labels.length}</div>
                                         <div className="text-lg font-bold text-pan-navy">{quai.length}</div>
                                     </div>
                                     <div>
-                                        <div className="text-[10px] text-pan-gray-400 font-bold uppercase tracking-wider">Tirant d&apos;eau</div>
+                                        <div className="text-[10px] text-pan-gray-400 font-bold uppercase tracking-wider">{labels.draft}</div>
                                         <div className="text-lg font-bold text-pan-sky">{quai.draft}</div>
                                     </div>
                                 </div>

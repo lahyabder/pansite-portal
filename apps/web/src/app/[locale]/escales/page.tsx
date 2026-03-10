@@ -4,8 +4,39 @@ import { PageHero } from '@/components/PageHero';
 
 export default async function EscalesPage({ params }: { params: Promise<{ locale: string }> }) {
     const { locale: lp } = await params;
-    const locale = (lp === 'ar' ? 'ar' : 'fr') as Locale;
+    const locale = (['ar', 'fr', 'en', 'es'].includes(lp) ? lp : 'fr') as Locale;
     const dict = getDictionary(locale);
+
+    const labels = {
+        ar: {
+            vesselName: 'اسم السفينة',
+            type: 'النوع',
+            date: 'التاريخ',
+            status: 'الحالة',
+            download: 'تحميل جدول الرسو الأسبوعي (PDF)'
+        },
+        fr: {
+            vesselName: 'Nom du Navire',
+            type: 'Type',
+            date: 'Date',
+            status: 'Statut',
+            download: 'Télécharger le planning (PDF)'
+        },
+        en: {
+            vesselName: 'Vessel Name',
+            type: 'Type',
+            date: 'Date',
+            status: 'Status',
+            download: 'Download Weekly Berthing Schedule (PDF)'
+        },
+        es: {
+            vesselName: 'Nombre del Buque',
+            type: 'Tipo',
+            date: 'Fecha',
+            status: 'Estado',
+            download: 'Descargar Programa de Atraque Semanal (PDF)'
+        }
+    }[locale];
 
     return (
         <>
@@ -31,10 +62,10 @@ export default async function EscalesPage({ params }: { params: Promise<{ locale
                         <table className="w-full text-start">
                             <thead className="bg-pan-pale border-b border-pan-navy/5">
                                 <tr>
-                                    <th className="px-8 py-6 font-bold text-pan-navy text-sm uppercase tracking-wider">{locale === 'ar' ? 'اسم السفينة' : 'Nom du Navire'}</th>
-                                    <th className="px-8 py-6 font-bold text-pan-navy text-sm uppercase tracking-wider">{locale === 'ar' ? 'النوع' : 'Type'}</th>
-                                    <th className="px-8 py-6 font-bold text-pan-navy text-sm uppercase tracking-wider">{locale === 'ar' ? 'التاريخ' : 'Date'}</th>
-                                    <th className="px-8 py-6 font-bold text-pan-navy text-sm uppercase tracking-wider">{locale === 'ar' ? 'الحالة' : 'Statut'}</th>
+                                    <th className="px-8 py-6 font-bold text-pan-navy text-sm uppercase tracking-wider">{labels.vesselName}</th>
+                                    <th className="px-8 py-6 font-bold text-pan-navy text-sm uppercase tracking-wider">{labels.type}</th>
+                                    <th className="px-8 py-6 font-bold text-pan-navy text-sm uppercase tracking-wider">{labels.date}</th>
+                                    <th className="px-8 py-6 font-bold text-pan-navy text-sm uppercase tracking-wider">{labels.status}</th>
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-pan-navy/5">
@@ -49,11 +80,11 @@ export default async function EscalesPage({ params }: { params: Promise<{ locale
                                             </div>
                                         </td>
                                         <td className="px-8 py-6">
-                                            <span className={`inline-flex items-center px-4 py-1.5 rounded-full text-xs font-bold ${item.status === 'À quai' || item.status === 'في الرصيف'
-                                                    ? 'bg-pan-sky/10 text-pan-sky'
-                                                    : item.status === 'En attente' || item.status === 'في الانتظار'
-                                                        ? 'bg-amber-100 text-amber-700'
-                                                        : 'bg-pan-gray-100 text-pan-gray-600'
+                                            <span className={`inline-flex items-center px-4 py-1.5 rounded-full text-xs font-bold ${['À quai', 'في الرصيف', 'At berth', 'En muelle'].includes(item.status)
+                                                ? 'bg-pan-sky/10 text-pan-sky'
+                                                : ['En attente', 'في الانتظار', 'Waiting', 'En espera'].includes(item.status)
+                                                    ? 'bg-amber-100 text-amber-700'
+                                                    : 'bg-pan-gray-100 text-pan-gray-600'
                                                 }`}>
                                                 {item.status}
                                             </span>
@@ -71,7 +102,7 @@ export default async function EscalesPage({ params }: { params: Promise<{ locale
                     <h2 className="text-3xl font-bold text-pan-navy mb-6">{dict.pages.stopovers.planning.title}</h2>
                     <p className="text-pan-gray-600 max-w-2xl mx-auto mb-12 text-lg">{dict.pages.stopovers.planning.desc}</p>
                     <button className="px-10 py-4 bg-pan-navy text-white font-bold rounded-2xl hover:bg-pan-sky transition-all transform hover:-translate-y-1 shadow-xl shadow-pan-navy/20">
-                        {locale === 'ar' ? 'تحميل جدول الرسو الأسبوعي (PDF)' : 'Télécharger le planning (PDF)'}
+                        {labels.download}
                     </button>
                 </div>
             </section>

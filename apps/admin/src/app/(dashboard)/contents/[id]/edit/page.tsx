@@ -23,11 +23,8 @@ export default function EditContentPage({
         if (!content) return null;
         return {
             titleFr: content.title.fr,
-            titleAr: content.title.ar,
             excerptFr: content.excerpt.fr,
-            excerptAr: content.excerpt.ar,
             bodyFr: content.body.fr,
-            bodyAr: content.body.ar,
             category: content.category,
             tags: content.tags.join(', '),
             priority: content.priority || 'normal',
@@ -52,9 +49,9 @@ export default function EditContentPage({
         setSaving(true);
         updateContent(id, {
             slug: slugify(form.titleFr),
-            title: { fr: form.titleFr, ar: form.titleAr },
-            excerpt: { fr: form.excerptFr, ar: form.excerptAr },
-            body: { fr: form.bodyFr, ar: form.bodyAr },
+            title: { fr: form.titleFr, ar: form.titleFr, en: form.titleFr, es: form.titleFr },
+            excerpt: { fr: form.excerptFr, ar: form.excerptFr, en: form.excerptFr, es: form.excerptFr },
+            body: { fr: form.bodyFr, ar: form.bodyFr, en: form.bodyFr, es: form.bodyFr },
             category: form.category as ContentCategory,
             tags: form.tags.split(',').map((t) => t.trim()).filter(Boolean),
             priority: form.priority as 'normal' | 'important' | 'urgent',
@@ -144,24 +141,6 @@ export default function EditContentPage({
                     </div>
                 </div>
 
-                {/* Arabic */}
-                <div className="bg-admin-surface rounded-xl border border-admin-border p-6">
-                    <h3 className="text-admin-text font-semibold mb-5">🇲🇷 المحتوى العربي</h3>
-                    <div className="space-y-4" dir="rtl">
-                        <div>
-                            <label className="block text-admin-text-muted text-sm mb-1.5">العنوان</label>
-                            <input type="text" value={form.titleAr} onChange={(e) => setForm({ ...form, titleAr: e.target.value })} className={inputClass} />
-                        </div>
-                        <div>
-                            <label className="block text-admin-text-muted text-sm mb-1.5">المقتطف</label>
-                            <textarea rows={2} value={form.excerptAr} onChange={(e) => setForm({ ...form, excerptAr: e.target.value })} className={inputClass + ' resize-none'} />
-                        </div>
-                        <div>
-                            <label className="block text-admin-text-muted text-sm mb-1.5">نص المقال</label>
-                            <textarea rows={8} value={form.bodyAr} onChange={(e) => setForm({ ...form, bodyAr: e.target.value })} className={inputClass + ' resize-none'} />
-                        </div>
-                    </div>
-                </div>
             </div>
         </RequirePermission>
     );

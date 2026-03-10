@@ -4,8 +4,31 @@ import { PageHero } from '@/components/PageHero';
 
 export default async function TarifsPage({ params }: { params: Promise<{ locale: string }> }) {
     const { locale: lp } = await params;
-    const locale = (lp === 'ar' ? 'ar' : 'fr') as Locale;
+    const locale = (['ar', 'fr', 'en', 'es'].includes(lp) ? lp : 'fr') as Locale;
     const dict = getDictionary(locale);
+
+    const footerLabels = {
+        ar: {
+            quote: 'يتم مراجعة التعريفات سنوياً لضمان التنافسية وجودة خدماتنا.',
+            download: 'تحميل قائمة التعريفات (PDF)',
+            contact: 'الاتصال بقسم الفوترة'
+        },
+        fr: {
+            quote: 'Les tarifs sont révisés annuellement pour garantir la compétitivité et la qualité de nos services.',
+            download: 'Télécharger la Grille (PDF)',
+            contact: 'Contacter la Facturation'
+        },
+        en: {
+            quote: 'Tariffs are reviewed annually to ensure competitiveness and quality of our services.',
+            download: 'Download Tariff Grid (PDF)',
+            contact: 'Contact Billing Department'
+        },
+        es: {
+            quote: 'Las tarifas se revisan anualmente para garantizar la competitividad y calidad de nuestros servicios.',
+            download: 'Descargar Tabla de Tarifas (PDF)',
+            contact: 'Contactar Facturación'
+        }
+    }[locale];
 
     return (
         <>
@@ -46,11 +69,11 @@ export default async function TarifsPage({ params }: { params: Promise<{ locale:
             <section className="py-20 bg-pan-navy text-white text-center">
                 <div className="max-w-4xl mx-auto px-6">
                     <p className="text-xl font-light text-pan-light/70 mb-8 italic">
-                        &quot;Les tarifs sont révisés annuellement pour garantir la compétitivité et la qualité de nos services.&quot;
+                        &quot;{footerLabels.quote}&quot;
                     </p>
                     <div className="flex flex-wrap justify-center gap-4">
-                        <button className="px-8 py-3 bg-white/10 text-white font-bold rounded-xl border border-white/20 hover:bg-white/20 transition-all">Télécharger la Grille (PDF)</button>
-                        <button className="px-8 py-3 bg-pan-gold text-pan-navy font-bold rounded-xl hover:bg-white transition-all">Contacter la Facturation</button>
+                        <button className="px-8 py-3 bg-white/10 text-white font-bold rounded-xl border border-white/20 hover:bg-white/20 transition-all">{footerLabels.download}</button>
+                        <button className="px-8 py-3 bg-pan-gold text-pan-navy font-bold rounded-xl hover:bg-white transition-all">{footerLabels.contact}</button>
                     </div>
                 </div>
             </section>

@@ -24,8 +24,12 @@ export function Header({ locale, dict }: HeaderProps) {
     const [openDropdown, setOpenDropdown] = useState<string | null>(null);
     const searchInputRef = useRef<HTMLInputElement>(null);
     const pathname = usePathname();
-    const otherLocale = locale === 'fr' ? 'ar' : 'fr';
-    const otherLabel = locale === 'fr' ? 'العربية' : 'Français';
+    const locales: { code: Locale; label: string; short: string }[] = [
+        { code: 'ar', label: 'العربية', short: 'AR' },
+        { code: 'fr', label: 'Français', short: 'FR' },
+        { code: 'en', label: 'English', short: 'EN' },
+        { code: 'es', label: 'Español', short: 'ES' },
+    ];
 
     const navGroups: NavGroup[] = [
         { label: dict.nav.home, href: `/${locale}` },
@@ -72,12 +76,20 @@ export function Header({ locale, dict }: HeaderProps) {
                         </span>
                     </div>
                     <div className="flex items-center gap-4">
-                        <Link
-                            href={`/${otherLocale}`}
-                            className="px-2.5 py-0.5 border border-white/20 rounded text-[10px] font-semibold hover:bg-white/10 transition-colors"
-                        >
-                            {otherLabel}
-                        </Link>
+                        <div className="flex items-center gap-2" translate="no">
+                            {locales.map((l) => (
+                                <Link
+                                    key={l.code}
+                                    href={pathname.replace(`/${locale}`, `/${l.code}`)}
+                                    className={`px-2 py-0.5 border rounded text-[10px] font-semibold transition-colors ${locale === l.code
+                                        ? 'bg-white text-pan-navy border-white'
+                                        : 'border-white/20 hover:bg-white/10'
+                                        }`}
+                                >
+                                    {l.short}
+                                </Link>
+                            ))}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -152,19 +164,32 @@ export function Header({ locale, dict }: HeaderProps) {
                             </button>
 
                             {/* Language switcher (Desktop + Mobile) */}
-                            <Link
-                                href={`/${otherLocale}`}
-                                className="px-3 py-2 text-xs font-semibold text-pan-navy border border-pan-gray-200 rounded-lg hover:bg-pan-pale hover:text-pan-blue transition-all shrink-0"
-                            >
-                                {locale === 'fr' ? 'AR' : 'FR'}
-                            </Link>
+                            <div className="flex items-center gap-1 border border-pan-gray-200 rounded-lg overflow-hidden shrink-0" translate="no">
+                                {locales.map((l) => (
+                                    <Link
+                                        key={l.code}
+                                        href={pathname.replace(`/${locale}`, `/${l.code}`)}
+                                        className={`px-2 py-1.5 text-[10px] font-bold transition-all ${locale === l.code
+                                            ? 'bg-pan-navy text-white'
+                                            : 'text-pan-navy hover:bg-pan-pale'
+                                            }`}
+                                    >
+                                        {l.short}
+                                    </Link>
+                                ))}
+                            </div>
 
                             {/* CTA Accès Port */}
                             <a
                                 href="https://admin.pan.afrikyia.com"
                                 className="hidden sm:inline-flex items-center gap-2 px-4 py-2 bg-pan-gold text-pan-navy text-xs font-bold rounded-lg hover:bg-pan-gold-light transition-all shadow-sm shrink-0"
                             >
-                                {locale === 'ar' ? 'بوابة الميناء' : 'Accès Port'}
+                                {({
+                                    ar: 'بوابة الميناء',
+                                    fr: 'Accès Port',
+                                    en: 'Port Portal',
+                                    es: 'Portal del Puerto'
+                                } as Record<string, string>)[locale]}
                             </a>
 
                             {/* Mobile menu button */}

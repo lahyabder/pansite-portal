@@ -14,11 +14,8 @@ export default function CreateContentPage() {
     const [saving, setSaving] = useState(false);
     const [form, setForm] = useState({
         titleFr: '',
-        titleAr: '',
         excerptFr: '',
-        excerptAr: '',
         bodyFr: '',
-        bodyAr: '',
         category: 'actualite' as ContentCategory,
         tags: '',
         priority: 'normal' as 'normal' | 'important' | 'urgent',
@@ -35,9 +32,9 @@ export default function CreateContentPage() {
         const slug = slugify(form.titleFr);
         createContent({
             slug,
-            title: { fr: form.titleFr, ar: form.titleAr || form.titleFr },
-            excerpt: { fr: form.excerptFr, ar: form.excerptAr || form.excerptFr },
-            body: { fr: form.bodyFr, ar: form.bodyAr || form.bodyFr },
+            title: { fr: form.titleFr, ar: form.titleFr, en: form.titleFr, es: form.titleFr },
+            excerpt: { fr: form.excerptFr, ar: form.excerptFr, en: form.excerptFr, es: form.excerptFr },
+            body: { fr: form.bodyFr, ar: form.bodyFr, en: form.bodyFr, es: form.bodyFr },
             category: form.category,
             tags: form.tags.split(',').map((t) => t.trim()).filter(Boolean),
             status: asDraft ? 'draft' : 'published',
@@ -194,42 +191,6 @@ export default function CreateContentPage() {
                     </div>
                 </div>
 
-                {/* Arabic content */}
-                <div className="bg-admin-surface rounded-xl border border-admin-border p-6">
-                    <h3 className="text-admin-text font-semibold mb-5">🇲🇷 المحتوى العربي</h3>
-                    <div className="space-y-4" dir="rtl">
-                        <div>
-                            <label className="block text-admin-text-muted text-sm mb-1.5">العنوان</label>
-                            <input
-                                type="text"
-                                value={form.titleAr}
-                                onChange={(e) => setForm({ ...form, titleAr: e.target.value })}
-                                placeholder="عنوان المقال..."
-                                className={inputClass}
-                            />
-                        </div>
-                        <div>
-                            <label className="block text-admin-text-muted text-sm mb-1.5">المقتطف</label>
-                            <textarea
-                                rows={2}
-                                value={form.excerptAr}
-                                onChange={(e) => setForm({ ...form, excerptAr: e.target.value })}
-                                placeholder="ملخص قصير للقوائم..."
-                                className={inputClass + ' resize-none'}
-                            />
-                        </div>
-                        <div>
-                            <label className="block text-admin-text-muted text-sm mb-1.5">نص المقال</label>
-                            <textarea
-                                rows={8}
-                                value={form.bodyAr}
-                                onChange={(e) => setForm({ ...form, bodyAr: e.target.value })}
-                                placeholder="المحتوى الكامل للمقال..."
-                                className={inputClass + ' resize-none'}
-                            />
-                        </div>
-                    </div>
-                </div>
             </div>
         </RequirePermission>
     );

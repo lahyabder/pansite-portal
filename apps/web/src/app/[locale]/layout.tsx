@@ -18,18 +18,29 @@ const inter = Inter({
 
 
 export function generateStaticParams() {
-    return [{ locale: 'fr' }, { locale: 'ar' }];
+    return [{ locale: 'fr' }, { locale: 'ar' }, { locale: 'en' }, { locale: 'es' }];
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
     const { locale: localeParam } = await params;
-    const locale = (localeParam === 'ar' ? 'ar' : 'fr') as Locale;
+    const locale = (['ar', 'en', 'es'].includes(localeParam) ? localeParam : 'fr') as Locale;
     const dict = getDictionary(locale);
 
-    const title = locale === 'ar' ? 'ميناء نواذيبو المستقل' : 'Port Autonome de Nouadhibou (PAN)';
-    const description = locale === 'ar'
-        ? 'البوابة الرسمية للميناء المستقل بنواذيبو، المركز الملاحي والتجاري في موريتانيا وغرب إفريقيا.'
-        : 'Ouverture sur le monde, pôle économique et hub logistique majeur en Mauritanie et en Afrique de l\'Ouest.';
+    const titles: Record<Locale, string> = {
+        ar: 'ميناء نواذيبو المستقل',
+        fr: 'Port Autonome de Nouadhibou (PAN)',
+        en: 'Nouadhibou Autonomous Port (PAN)',
+        es: 'Puerto Autónomo de Nouadhibou (PAN)',
+    };
+    const title = titles[locale];
+
+    const descriptions: Record<Locale, string> = {
+        ar: 'البوابة الرسمية للميناء المستقل بنواذيبو، المركز الملاحي والتجاري في موريتانيا وغبر إفريقيا.',
+        fr: "Ouverture sur le monde, pôle économique et hub logistique majeur en Mauritanie et en Afrique de l'Ouest.",
+        en: 'Official gateway of the Nouadhibou Autonomous Port, maritime and commercial hub in Mauritania and West Africa.',
+        es: 'Puerta oficial del Puerto Autónomo de Nouadhibou, centro marítimo y comercial en Mauritania y África Occidental.',
+    };
+    const description = descriptions[locale];
 
     return {
         title: {
@@ -42,6 +53,8 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
             languages: {
                 fr: '/fr',
                 ar: '/ar',
+                en: '/en',
+                es: '/es',
             },
         },
         openGraph: {
@@ -72,7 +85,7 @@ export default async function LocaleLayout({
     params: Promise<{ locale: string }>;
 }) {
     const { locale: localeParam } = await params;
-    const locale = (localeParam === 'ar' ? 'ar' : 'fr') as Locale;
+    const locale = (['ar', 'en', 'es'].includes(localeParam) ? localeParam : 'fr') as Locale;
     const dir = getDir(locale);
     const dict = getDictionary(locale);
 

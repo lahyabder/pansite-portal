@@ -9,13 +9,13 @@ interface FooterProps {
 
 export function Footer({ locale, dict }: FooterProps) {
     const column1 = [
-        { label: locale === 'ar' ? 'نظرة عامة' : 'Présentation', href: `/${locale}/le-port` },
+        { label: dict.nav.port, href: `/${locale}/le-port` },
         { label: dict.nav.infrastructure, href: `/${locale}/infrastructures` },
         { label: dict.nav.services, href: `/${locale}/services` },
     ];
 
     const column2 = [
-        { label: locale === 'ar' ? 'الأخبار' : 'Actualités', href: `/${locale}/actualites` },
+        { label: dict.news.title, href: `/${locale}/actualites` },
         { label: dict.nav.tenders, href: `/${locale}/appels-offres` },
         { label: dict.nav.documentation, href: `/${locale}/documentation` },
     ];
@@ -57,7 +57,7 @@ export function Footer({ locale, dict }: FooterProps) {
                     {/* Column 1 */}
                     <div>
                         <h3 className="font-semibold text-pan-gold text-sm mb-5 uppercase tracking-wider">
-                            {locale === 'ar' ? 'الميناء المستقل لنواذيبو' : 'Port Autonome de Nouadhibou'}
+                            {dict.hero.title}
                         </h3>
                         <ul className="space-y-2.5">
                             {column1.map((item) => (
@@ -77,7 +77,7 @@ export function Footer({ locale, dict }: FooterProps) {
                     {/* Column 2 */}
                     <div>
                         <h3 className="font-semibold text-pan-gold text-sm mb-5 uppercase tracking-wider">
-                            {locale === 'ar' ? 'معلومات' : 'Informations'}
+                            {dict.footer.quickLinks}
                         </h3>
                         <ul className="space-y-2.5">
                             {column2.map((item) => (
@@ -131,13 +131,18 @@ export function Footer({ locale, dict }: FooterProps) {
             <div className="border-t border-white/10">
                 <div className="max-w-7xl mx-auto px-6 py-5">
                     <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-                        <div className="flex flex-col sm:flex-row items-center gap-1 sm:gap-2 text-pan-light/40 text-xs">
+                        <div className="flex flex-col sm:flex-row items-center gap-1 sm:gap-2 text-pan-light/40 text-xs text-center sm:text-start">
                             <p>
-                                © 2025 Port Autonome de Nouadhibou. {locale === 'ar' ? 'جميع الحقوق محفوظة.' : 'Tous droits réservés.'}
+                                {dict.footer.rights}
                             </p>
                             <span className="hidden sm:inline">-</span>
                             <p>
-                                {locale === 'ar' ? 'تصميم وبرمجة' : 'Design & Développement'}{' '}
+                                {{
+                                    ar: 'تصميم وبرمجة',
+                                    fr: 'Design & Développement',
+                                    en: 'Design & Development',
+                                    es: 'Diseño y Desarrollo'
+                                }[locale]}{' '}
                                 <a href="https://afrikyia.com" target="_blank" rel="noopener noreferrer" className="text-pan-gold hover:text-pan-gold-light transition-colors font-medium">
                                     Afrikyia
                                 </a>

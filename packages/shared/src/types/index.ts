@@ -1,9 +1,11 @@
 // ─── Locale ───────────────────────────────────────────────
-export type Locale = 'fr' | 'ar';
+export type Locale = 'fr' | 'ar' | 'en' | 'es';
 
 export type LocalizedString = {
     fr: string;
     ar: string;
+    en?: string;
+    es?: string;
 };
 
 // ─── User & Roles (RBAC) ──────────────────────────────────

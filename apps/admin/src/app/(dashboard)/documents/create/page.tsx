@@ -47,9 +47,7 @@ export default function CreateDocumentPage() {
     const router = useRouter();
     const { session } = useAuth();
     const [titleFr, setTitleFr] = useState('');
-    const [titleAr, setTitleAr] = useState('');
     const [descFr, setDescFr] = useState('');
-    const [descAr, setDescAr] = useState('');
     const [reference, setReference] = useState('');
     const [fileType, setFileType] = useState<DocumentFileType>('pdf');
     const [theme, setTheme] = useState<DocumentTheme>('reglementation');
@@ -72,8 +70,8 @@ export default function CreateDocumentPage() {
         }
 
         createGedDocument({
-            title: { fr: titleFr, ar: titleAr || titleFr },
-            description: { fr: descFr, ar: descAr || descFr },
+            title: { fr: titleFr, ar: titleFr, en: titleFr, es: titleFr },
+            description: { fr: descFr, ar: descFr, en: descFr, es: descFr },
             reference: reference || undefined,
             fileType,
             categories: categories.split(',').map((c) => c.trim()).filter(Boolean),
@@ -111,26 +109,18 @@ export default function CreateDocumentPage() {
 
                 <div className="bg-admin-surface rounded-xl border border-admin-border p-6 space-y-6">
                     {/* Title FR / AR */}
-                    <div className="grid md:grid-cols-2 gap-4">
+                    <div className="grid md:grid-cols-1 gap-4">
                         <div>
                             <label className={labelClass}>Titre (Français) *</label>
                             <input type="text" value={titleFr} onChange={(e) => setTitleFr(e.target.value)} placeholder="Ex: Tarifs portuaires 2025" className={inputClass} />
                         </div>
-                        <div>
-                            <label className={labelClass}>Titre (Arabe)</label>
-                            <input type="text" value={titleAr} onChange={(e) => setTitleAr(e.target.value)} placeholder="العنوان بالعربية" dir="rtl" className={inputClass} />
-                        </div>
                     </div>
 
                     {/* Description FR / AR */}
-                    <div className="grid md:grid-cols-2 gap-4">
+                    <div className="grid md:grid-cols-1 gap-4">
                         <div>
                             <label className={labelClass}>Description (Français)</label>
                             <textarea value={descFr} onChange={(e) => setDescFr(e.target.value)} rows={3} placeholder="Description détaillée du document..." className={inputClass} />
-                        </div>
-                        <div>
-                            <label className={labelClass}>Description (Arabe)</label>
-                            <textarea value={descAr} onChange={(e) => setDescAr(e.target.value)} rows={3} placeholder="وصف الوثيقة بالعربية..." dir="rtl" className={inputClass} />
                         </div>
                     </div>
 

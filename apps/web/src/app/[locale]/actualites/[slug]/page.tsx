@@ -10,7 +10,7 @@ export default async function ContentDetailPage({
     params: Promise<{ locale: string; slug: string }>;
 }) {
     const { locale: localeParam, slug } = await params;
-    const locale = (localeParam === 'ar' ? 'ar' : 'fr') as Locale;
+    const locale = (['ar', 'fr', 'en', 'es'].includes(localeParam) ? localeParam : 'fr') as Locale;
     const dict = getDictionary(locale);
 
     const content = getContentBySlug(slug);
@@ -43,7 +43,7 @@ export default async function ContentDetailPage({
                     {/* Breadcrumbs */}
                     <nav className="flex items-center gap-2 text-sm text-pan-light/70 mb-6">
                         <Link href={`/${locale}`} className="hover:text-white transition-colors">
-                            {locale === 'ar' ? 'الرئيسية' : 'Accueil'}
+                            {dict.nav.home}
                         </Link>
                         <span>›</span>
                         <Link href={`/${locale}/${categoryRoute}`} className="hover:text-white transition-colors">
@@ -132,7 +132,7 @@ export default async function ContentDetailPage({
                             href={`/${locale}/${categoryRoute}`}
                             className="inline-flex items-center gap-2 text-pan-sky font-medium hover:text-pan-blue transition-colors"
                         >
-                            <span>{locale === 'ar' ? '→' : '←'}</span>
+                            <span>{['ar'].includes(locale) ? '←' : '→'}</span>
                             {dict.content.detail.backToList}
                         </Link>
                     </div>

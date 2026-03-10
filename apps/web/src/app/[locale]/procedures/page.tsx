@@ -4,8 +4,27 @@ import { PageHero } from '@/components/PageHero';
 
 export default async function ProceduresPage({ params }: { params: Promise<{ locale: string }> }) {
     const { locale: lp } = await params;
-    const locale = (lp === 'ar' ? 'ar' : 'fr') as Locale;
+    const locale = (['ar', 'fr', 'en', 'es'].includes(lp) ? lp : 'fr') as Locale;
     const dict = getDictionary(locale);
+
+    const labels = {
+        ar: {
+            title: 'هل لديك أسئلة حول إجراءاتنا؟',
+            subtitle: 'فريقنا التجاري تحت تصرفكم لمرافقتكم في خطواتكم.'
+        },
+        fr: {
+            title: 'Des questions sur nos procédures ?',
+            subtitle: 'Notre équipe commerciale est à votre disposition pour vous accompagner dans vos démarches.'
+        },
+        en: {
+            title: 'Questions about our procedures?',
+            subtitle: 'Our sales team is at your disposal to assist you in your steps.'
+        },
+        es: {
+            title: '¿Preguntas sobre nuestros procedimientos?',
+            subtitle: 'Nuestro equipo comercial está a su disposición para acompañarle en sus gestiones.'
+        }
+    }[locale];
 
     return (
         <>
@@ -45,8 +64,8 @@ export default async function ProceduresPage({ params }: { params: Promise<{ loc
 
             <section className="py-20 bg-pan-navy">
                 <div className="max-w-4xl mx-auto px-6 text-center">
-                    <h2 className="text-2xl font-bold text-white mb-6">Des questions sur nos procédures ?</h2>
-                    <p className="text-pan-light/60 mb-10 text-lg">Notre équipe commerciale est à votre disposition pour vous accompagner dans vos démarches.</p>
+                    <h2 className="text-2xl font-bold text-white mb-6">{labels.title}</h2>
+                    <p className="text-pan-light/60 mb-10 text-lg">{labels.subtitle}</p>
                     <a href={`/${locale}/contact`} className="inline-flex items-center justify-center px-10 py-4 bg-pan-gold text-pan-navy font-bold rounded-2xl hover:bg-white transition-all transform hover:-translate-y-1 active:scale-95 shadow-xl shadow-pan-gold/20">
                         {dict.nav.contact}
                     </a>

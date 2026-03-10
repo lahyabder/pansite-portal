@@ -1,36 +1,44 @@
 'use client';
 
-import { mockStatistics, mockContents, mockRequests, mockServices } from '@pan/shared';
+import { mockStatistics, mockContents, mockRequests, mockServices, type LocalizedString } from '@pan/shared';
 import { useAuth } from '@/lib/auth';
+import { useI18n } from '@/lib/i18n';
 import { Ship, FileText, Mail, BarChart3, Clock, CheckCircle, Archive } from 'lucide-react';
 
 export default function DashboardPage() {
   const { canAny } = useAuth();
-  const pendingRequests = mockRequests.filter((r) => r.status === 'new' || r.status === 'in_progress').length;
-  const publishedContents = mockContents.filter((c) => c.status === 'published').length;
+  const { t, locale } = useI18n();
+
+  // Helper to get translated text from LocalizedString
+  const getT = (text: LocalizedString) => {
+    return text[locale] || text.fr || '';
+  };
+
+  const pendingRequestsCount = mockRequests.filter((r) => r.status === 'new' || r.status === 'in_progress').length;
+  const publishedContentsCount = mockContents.filter((c) => c.status === 'published').length;
 
   const stats = [
     {
-      label: 'Services actifs',
+      label: t.dashboard.activeServices,
       value: mockServices.filter((s) => s.isActive).length,
       icon: <Ship className="w-6 h-6" />,
       color: 'bg-admin-primary/15 text-admin-primary-light',
     },
     {
-      label: 'Articles publiés',
-      value: publishedContents,
+      label: t.dashboard.publishedArticles,
+      value: publishedContentsCount,
       icon: <FileText className="w-6 h-6" />,
       color: 'bg-admin-success/15 text-admin-success',
     },
     {
-      label: 'Demandes en attente',
-      value: pendingRequests,
+      label: t.dashboard.pendingRequests,
+      value: pendingRequestsCount,
       icon: <Mail className="w-6 h-6" />,
       color: 'bg-admin-warning/15 text-admin-warning',
     },
     {
-      label: 'Trafic (tonnes)',
-      value: mockStatistics[0]?.value.toLocaleString('fr-FR') || '—',
+      label: t.dashboard.trafficTons,
+      value: mockStatistics[0]?.value.toLocaleString(locale) || '—',
       icon: <BarChart3 className="w-6 h-6" />,
       color: 'bg-admin-accent/15 text-admin-accent',
     },
@@ -60,10 +68,10 @@ export default function DashboardPage() {
         {canAny('requests') && (
           <div className="bg-admin-surface rounded-xl border border-admin-border">
             <div className="px-5 py-4 border-b border-admin-border">
-              <h2 className="text-admin-text font-semibold">Dernières demandes</h2>
+              <h2 className="text-admin-text font-semibold">{t.dashboard.lastRequests}</h2>
             </div>
             <div className="divide-y divide-admin-border">
-              {mockRequests.map((req) => (
+              {mockRequests.slice(0, 5).map((req) => (
                 <div key={req.id} className="px-5 py-4 hover:bg-admin-surface-alt/50 transition-colors">
                   <div className="flex items-center justify-between mb-1">
                     <span className="text-admin-text text-sm font-medium">{req.subject}</span>
@@ -76,9 +84,9 @@ export default function DashboardPage() {
                         }`}
                     >
                       {req.status === 'new'
-                        ? 'Nouveau'
+                        ? t.dashboard.status.new
                         : req.status === 'closed'
-                          ? 'Clôturée'
+                          ? t.dashboard.status.closed
                           : req.status}
                     </span>
                   </div>
@@ -95,13 +103,13 @@ export default function DashboardPage() {
         {canAny('content') && (
           <div className="bg-admin-surface rounded-xl border border-admin-border">
             <div className="px-5 py-4 border-b border-admin-border">
-              <h2 className="text-admin-text font-semibold">Derniers contenus</h2>
+              <h2 className="text-admin-text font-semibold">{t.dashboard.lastContents}</h2>
             </div>
             <div className="divide-y divide-admin-border">
-              {mockContents.map((content) => (
+              {mockContents.slice(0, 5).map((content) => (
                 <div key={content.id} className="px-5 py-4 hover:bg-admin-surface-alt/50 transition-colors">
                   <div className="flex items-center justify-between mb-1">
-                    <span className="text-admin-text text-sm font-medium">{content.title.fr}</span>
+                    <span className="text-admin-text text-sm font-medium">{getT(content.title)}</span>
                     <span
                       className={`text-[10px] px-2.5 py-1 flex items-center gap-1 rounded-full font-bold uppercase tracking-wider ${content.status === 'published'
                         ? 'bg-admin-success/15 text-admin-success'
@@ -111,10 +119,10 @@ export default function DashboardPage() {
                         }`}
                     >
                       {content.status === 'published'
-                        ? <><CheckCircle className="w-3 h-3" /> Publié</>
+                        ? <><CheckCircle className="w-3 h-3" /> {t.dashboard.status.published}</>
                         : content.status === 'draft'
-                          ? <><Clock className="w-3 h-3" /> Brouillon</>
-                          : <><Archive className="w-3 h-3" /> Archivé</>}
+                          ? <><Clock className="w-3 h-3" /> {t.dashboard.status.draft}</>
+                          : <><Archive className="w-3 h-3" /> {t.dashboard.status.archived}</>}
                     </span>
                   </div>
                   <div className="text-admin-text-muted text-xs">{content.category}</div>
@@ -124,6 +132,6 @@ export default function DashboardPage() {
           </div>
         )}
       </div>
-    </div >
+    </div>
   );
 }

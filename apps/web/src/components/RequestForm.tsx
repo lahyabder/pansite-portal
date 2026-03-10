@@ -53,7 +53,7 @@ export function RequestFormClient({ locale, dict, serviceId, serviceName }: Prop
     }
 
     const isRtl = locale === 'ar';
-    const inputClass = `w-full px-4 py-3 bg-pan-gray-50 border border-pan-gray-200 rounded-xl text-pan-navy text-sm placeholder:text-pan-gray-400 focus:outline-none focus:ring-2 focus:ring-pan-sky/30 focus:border-pan-sky transition-colors ${isRtl ? 'text-right' : ''}`;
+    const inputClass = `w-full px-4 py-3 bg-pan-gray-50 border border-pan-gray-200 rounded-xl text-pan-navy text-sm placeholder:text-pan-gray-400 focus:outline-none focus:ring-2 focus:ring-pan-sky/30 focus:border-pan-sky transition-colors text-start`;
     const labelClass = 'block text-pan-navy text-sm font-medium mb-1.5';
 
     if (submitted) {
@@ -82,8 +82,8 @@ export function RequestFormClient({ locale, dict, serviceId, serviceName }: Prop
                             type="button"
                             onClick={() => handleTypeChange(k)}
                             className={`px-4 py-2 rounded-xl text-sm font-medium transition-all ${type === k
-                                    ? 'bg-pan-sky text-white shadow-md'
-                                    : 'bg-pan-gray-100 text-pan-gray-600 hover:bg-pan-gray-200'
+                                ? 'bg-pan-sky text-white shadow-md'
+                                : 'bg-pan-gray-100 text-pan-gray-600 hover:bg-pan-gray-200'
                                 }`}
                         >
                             {v}

@@ -68,8 +68,8 @@ export function ContentList({ locale, dict, initialCategory }: ContentListProps)
                         key={key}
                         onClick={() => handleCategoryChange(key)}
                         className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 ${activeCategory === key
-                                ? 'bg-pan-navy text-white shadow-lg shadow-pan-navy/20'
-                                : 'bg-white text-pan-gray-500 border border-pan-gray-200 hover:border-pan-sky hover:text-pan-sky'
+                            ? 'bg-pan-navy text-white shadow-lg shadow-pan-navy/20'
+                            : 'bg-white text-pan-gray-500 border border-pan-gray-200 hover:border-pan-sky hover:text-pan-sky'
                             }`}
                     >
                         <span>{icon}</span>
@@ -102,7 +102,12 @@ export function ContentList({ locale, dict, initialCategory }: ContentListProps)
                                 <div className="absolute inset-0 bg-pan-navy/20 group-hover:bg-pan-navy/10 transition-colors duration-300" />
                                 {item.priority === 'urgent' && (
                                     <div className="absolute top-3 end-3 bg-red-500 text-white text-[10px] font-bold px-2 py-1 rounded-full animate-pulse">
-                                        URGENT
+                                        {{
+                                            ar: 'عاجل',
+                                            fr: 'URGENT',
+                                            en: 'URGENT',
+                                            es: 'URGENTE'
+                                        }[locale]}
                                     </div>
                                 )}
                                 <div className="absolute bottom-3 start-3 flex items-center gap-2">
@@ -156,8 +161,8 @@ export function ContentList({ locale, dict, initialCategory }: ContentListProps)
                             key={p}
                             onClick={() => setCurrentPage(p)}
                             className={`w-10 h-10 rounded-lg text-sm font-medium transition-all ${p === currentPage
-                                    ? 'bg-pan-navy text-white shadow-lg'
-                                    : 'bg-white border border-pan-gray-200 text-pan-gray-500 hover:border-pan-sky hover:text-pan-sky'
+                                ? 'bg-pan-navy text-white shadow-lg'
+                                : 'bg-white border border-pan-gray-200 text-pan-gray-500 hover:border-pan-sky hover:text-pan-sky'
                                 }`}
                         >
                             {p}

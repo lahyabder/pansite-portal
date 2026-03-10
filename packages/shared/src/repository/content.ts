@@ -34,7 +34,11 @@ export function getPublishedContents(filters?: ContentFilters): PaginatedResult<
             (c) =>
                 c.title.fr.toLowerCase().includes(q) ||
                 c.title.ar.includes(q) ||
+                (c.title.en && c.title.en.toLowerCase().includes(q)) ||
+                (c.title.es && c.title.es.toLowerCase().includes(q)) ||
                 c.excerpt.fr.toLowerCase().includes(q) ||
+                (c.excerpt.en && c.excerpt.en.toLowerCase().includes(q)) ||
+                (c.excerpt.es && c.excerpt.es.toLowerCase().includes(q)) ||
                 c.tags.some((t) => t.toLowerCase().includes(q)),
         );
     }

@@ -12,7 +12,7 @@ export default async function HomePage({
     params: Promise<{ locale: string }>;
 }) {
     const { locale: localeParam } = await params;
-    const locale = (localeParam === 'ar' ? 'ar' : 'fr') as Locale;
+    const locale = (['ar', 'fr', 'en', 'es'].includes(localeParam) ? localeParam : 'fr') as Locale;
     const dict = getDictionary(locale);
 
     const latestContent = getLatestContents(6);
@@ -31,18 +31,13 @@ export default async function HomePage({
         alerte: 'alertes',
     };
 
-    const heroTitle = locale === 'ar' ? 'ميناء نواذيبو المستقل' : 'Port Autonome de Nouadhibou';
-    const heroSubtitle = locale === 'ar'
-        ? 'منصة استراتيجية للتجارة البحرية في موريتانيا'
-        : 'Plateforme stratégique du commerce maritime en Mauritanie';
-
     const quickServices = [
-        { title: locale === 'ar' ? 'الخدمات المينائية' : 'Services portuaires', icon: Ship, href: `/${locale}/services` },
-        { title: locale === 'ar' ? 'المناقصات' : 'Appels d\'offres', icon: FileText, href: `/${locale}/appels-offres` },
-        { title: locale === 'ar' ? 'التعريفات' : 'Tarifs et redevances', icon: TrendingUp, href: `/${locale}/tarifs` },
-        { title: locale === 'ar' ? 'الوثائق الرسمية' : 'Documentation officielle', icon: Building2, href: `/${locale}/documentation` },
-        { title: locale === 'ar' ? 'المعلومات البحرية' : 'Informations maritimes', icon: Anchor, href: `/${locale}/escales` },
-        { title: locale === 'ar' ? 'اتصل بنا' : 'Contact', icon: Phone, href: `/${locale}/contact` },
+        { title: dict.nav.services, icon: Ship, href: `/${locale}/services` },
+        { title: dict.nav.tenders, icon: FileText, href: `/${locale}/appels-offres` },
+        { title: dict.nav.tariffs, icon: TrendingUp, href: `/${locale}/tarifs` },
+        { title: dict.nav.documentation, icon: Building2, href: `/${locale}/documentation` },
+        { title: dict.nav.stopovers, icon: Anchor, href: `/${locale}/escales` },
+        { title: dict.nav.contact, icon: Phone, href: `/${locale}/contact` },
     ];
 
     return (
@@ -65,24 +60,24 @@ export default async function HomePage({
                     <div className="max-w-3xl">
                         <div className="w-20 h-1.5 bg-pan-gold rounded-full mb-8" />
                         <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold leading-tight tracking-tight mb-6">
-                            {heroTitle}
+                            {dict.hero.title}
                         </h1>
                         <p className="text-lg sm:text-2xl text-pan-light leading-relaxed mb-10 max-w-2xl font-light">
-                            {heroSubtitle}
+                            {dict.hero.subtitle}
                         </p>
                         <div className="flex flex-wrap gap-4">
                             <Link
                                 href={`/${locale}/le-port`}
                                 className="inline-flex items-center gap-2 px-8 py-4 bg-pan-gold text-pan-navy font-semibold rounded-lg hover:bg-pan-gold-light transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-0.5"
                             >
-                                {locale === 'ar' ? 'اكتشف الميناء' : 'Découvrir le Port'}
+                                {dict.hero.cta}
                                 <span aria-hidden="true">{locale === 'ar' ? '←' : '→'}</span>
                             </Link>
                             <Link
                                 href={`/${locale}/services`}
                                 className="inline-flex items-center gap-2 px-8 py-4 bg-pan-blue/80 backdrop-blur-sm border-2 border-transparent text-white font-semibold rounded-lg hover:bg-pan-blue transition-all duration-300"
                             >
-                                {locale === 'ar' ? 'الخدمات الإلكترونية' : 'Services en ligne'}
+                                {dict.hero.ctaSecondary}
                             </Link>
                         </div>
                     </div>
@@ -116,7 +111,12 @@ export default async function HomePage({
                 <div className="max-w-7xl mx-auto px-6">
                     <div className="text-center mb-16">
                         <h2 className="text-3xl sm:text-4xl font-bold text-pan-navy mb-4">
-                            {locale === 'ar' ? 'وصول سريع' : 'Accès Rapide'}
+                            {{
+                                ar: 'وصول سريع',
+                                fr: 'Accès Rapide',
+                                en: 'Quick Access',
+                                es: 'Acceso Rápido'
+                            }[locale]}
                         </h2>
                     </div>
                     <div className="grid grid-cols-2 md:grid-cols-3 gap-4 lg:gap-6">
@@ -172,7 +172,12 @@ export default async function HomePage({
 
                                     {article.priority === 'urgent' && (
                                         <div className="absolute top-3 end-3 bg-red-500 text-white text-[10px] font-bold px-3 py-1.5 rounded-full animate-pulse uppercase tracking-wider">
-                                            Urgent
+                                            {{
+                                                ar: 'عاجل',
+                                                fr: 'Urgent',
+                                                en: 'Urgent',
+                                                es: 'Urgente'
+                                            }[locale]}
                                         </div>
                                     )}
                                     <div className="absolute bottom-4 start-4 flex items-center gap-2">

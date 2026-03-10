@@ -3,8 +3,8 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useAuth } from '@/lib/auth';
+import { useI18n } from '@/lib/i18n';
 import type { PermissionModule } from '@pan/shared';
-import { ROLE_LABELS } from '@pan/shared';
 
 interface NavItem {
     icon: string;
@@ -18,43 +18,44 @@ interface NavSection {
     items: NavItem[];
 }
 
-const navSections: NavSection[] = [
-    {
-        title: 'Principal',
-        items: [
-            { icon: '📊', label: 'Tableau de bord', href: '/' },
-        ],
-    },
-    {
-        title: 'Contenu',
-        items: [
-            { icon: '📰', label: 'Contenus', href: '/contents', module: 'content' },
-            { icon: '📁', label: 'Documents GED', href: '/documents', module: 'documents' },
-            { icon: '🖼️', label: 'Médias', href: '/medias', module: 'content' },
-        ],
-    },
-    {
-        title: 'Opérationnel',
-        items: [
-            { icon: '🚢', label: 'Services', href: '/services', module: 'services' },
-            { icon: '📩', label: 'Demandes', href: '/requests', module: 'requests' },
-            { icon: '📋', label: 'Appels d\'offres', href: '/tenders', module: 'services' },
-        ],
-    },
-    {
-        title: 'Administration',
-        items: [
-            { icon: '👥', label: 'Utilisateurs', href: '/users', module: 'users' },
-            { icon: '📈', label: 'Analytique', href: '/analytics', module: 'analytics' },
-            { icon: '📜', label: 'Journal d\'audit', href: '/audit', module: 'audit' },
-            { icon: '⚙️', label: 'Paramètres', href: '/settings', module: 'settings' },
-        ],
-    },
-];
-
 export function AdminSidebar() {
     const pathname = usePathname();
     const { session, logout, canAny } = useAuth();
+    const { t, locale, isRTL } = useI18n();
+
+    const navSections: NavSection[] = [
+        {
+            title: t.sidebar.principal,
+            items: [
+                { icon: '📊', label: t.sidebar.dashboard, href: '/' },
+            ],
+        },
+        {
+            title: t.sidebar.content,
+            items: [
+                { icon: '📰', label: t.sidebar.contents, href: '/contents', module: 'content' },
+                { icon: '📁', label: t.sidebar.documents, href: '/documents', module: 'documents' },
+                { icon: '🖼️', label: t.sidebar.media, href: '/medias', module: 'content' },
+            ],
+        },
+        {
+            title: t.sidebar.operational,
+            items: [
+                { icon: '🚢', label: t.sidebar.services, href: '/services', module: 'services' },
+                { icon: '📩', label: t.sidebar.requests, href: '/requests', module: 'requests' },
+                { icon: '📋', label: t.sidebar.tenders, href: '/tenders', module: 'services' },
+            ],
+        },
+        {
+            title: t.sidebar.administration,
+            items: [
+                { icon: '👥', label: t.sidebar.users, href: '/users', module: 'users' },
+                { icon: '📈', label: t.sidebar.analytics, href: '/analytics', module: 'analytics' },
+                { icon: '📜', label: t.sidebar.audit, href: '/audit', module: 'audit' },
+                { icon: '⚙️', label: t.sidebar.settings, href: '/settings', module: 'settings' },
+            ],
+        },
+    ];
 
     const isActive = (href: string) => {
         if (href === '/') return pathname === '/';
@@ -117,19 +118,21 @@ export function AdminSidebar() {
                     <div className="w-9 h-9 bg-admin-primary rounded-full flex items-center justify-center relative">
                         <span className="text-white text-xs font-bold">{initials}</span>
                         {user?.twoFactorEnabled && (
-                            <span className="absolute -top-0.5 -end-0.5 w-3 h-3 bg-emerald-500 rounded-full border-2 border-admin-surface" title="2FA activé" />
+                            <span className="absolute -top-0.5 -end-0.5 w-3 h-3 bg-emerald-500 rounded-full border-2 border-admin-surface" title={t.sidebar.twoFactorActive} />
                         )}
                     </div>
                     <div className="flex-1 min-w-0">
                         <div className="text-admin-text text-sm font-medium truncate">{user?.name ?? '...'}</div>
-                        <div className="text-admin-text-muted text-[10px]">{user ? ROLE_LABELS[user.role] : ''}</div>
+                        <div className="text-admin-text-muted text-[10px]">
+                            {user ? t.roles[user.role] : ''}
+                        </div>
                     </div>
                     <button
                         onClick={logout}
                         className="p-1.5 text-admin-text-muted hover:text-admin-danger transition-colors rounded-lg hover:bg-admin-surface-alt"
-                        title="Déconnexion"
+                        title={t.sidebar.logout}
                     >
-                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+                        <svg className={`w-4 h-4 ${isRTL ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" />
                         </svg>
                     </button>

@@ -9,16 +9,23 @@ export default async function EvenementsPage({
     params: Promise<{ locale: string }>;
 }) {
     const { locale: localeParam } = await params;
-    const locale = (localeParam === 'ar' ? 'ar' : 'fr') as Locale;
+    const locale = (['ar', 'fr', 'en', 'es'].includes(localeParam) ? localeParam : 'fr') as Locale;
     const dict = getDictionary(locale);
+
+    const subtitles = {
+        ar: 'الفعاليات والمناسبات القادمة.',
+        fr: 'Prochains événements et manifestations du PAN.',
+        en: 'Upcoming events and manifestations of PAN.',
+        es: 'Próximos eventos y manifestaciones del PAN.'
+    }[locale];
 
     return (
         <>
             <PageHero
                 title={dict.content.categories.evenement}
-                subtitle={locale === 'ar' ? 'الفعاليات والمناسبات القادمة.' : 'Prochains événements et manifestations du PAN.'}
+                subtitle={subtitles}
                 breadcrumbs={[
-                    { label: locale === 'ar' ? 'الرئيسية' : 'Accueil', href: `/${locale}` },
+                    { label: dict.nav.home, href: `/${locale}` },
                     { label: dict.content.categories.evenement },
                 ]}
             />

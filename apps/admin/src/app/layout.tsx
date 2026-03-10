@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Inter, Tajawal } from 'next/font/google';
 import './globals.css';
 import { AuthProvider } from '@/lib/auth';
+import { I18nProvider } from '@/lib/i18n';
 
 const inter = Inter({
   variable: '--font-inter',
@@ -36,9 +37,11 @@ export default function RootLayout({
   return (
     <html lang="fr" dir="ltr">
       <body className={`${inter.variable} ${tajawal.variable} font-sans antialiased bg-admin-bg text-admin-text`}>
-        <AuthProvider>
-          {children}
-        </AuthProvider>
+        <I18nProvider>
+          <AuthProvider>
+            {children}
+          </AuthProvider>
+        </I18nProvider>
       </body>
     </html>
   );

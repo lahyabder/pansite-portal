@@ -10,30 +10,33 @@ import {
     archiveContent,
     restoreContent,
 } from '@pan/shared';
-import type { Content, ContentCategory, ContentStatus } from '@pan/shared';
+import type { Content, ContentCategory, ContentStatus, LocalizedString } from '@pan/shared';
 import { RequirePermission, useAuth } from '@/lib/auth';
-
-const statusConfig: Record<ContentStatus, { label: string; color: string }> = {
-    draft: { label: 'Brouillon', color: 'bg-gray-500/15 text-gray-400' },
-    pending_approval: { label: 'En révision', color: 'bg-amber-500/15 text-amber-400' },
-    published: { label: 'Publié', color: 'bg-emerald-500/15 text-emerald-400' },
-    archived: { label: 'Archivé', color: 'bg-red-500/15 text-red-400' },
-};
-
-const categoryConfig: Record<ContentCategory, { label: string; icon: string }> = {
-    actualite: { label: 'Actualité', icon: '📰' },
-    communique: { label: 'Communiqué', icon: '📢' },
-    evenement: { label: 'Événement', icon: '📅' },
-    alerte: { label: 'Alerte', icon: '⚠️' },
-};
+import { useI18n } from '@/lib/i18n';
 
 export default function AdminContentsPage() {
+    const { session, can } = useAuth();
+    const { t, locale } = useI18n();
+
+    const statusConfig: Record<ContentStatus, { label: string; color: string }> = {
+        draft: { label: t.contentManagement.statuses.draft, color: 'bg-gray-500/15 text-gray-400' },
+        pending_approval: { label: t.contentManagement.statuses.pending_approval, color: 'bg-amber-500/15 text-amber-400' },
+        published: { label: t.contentManagement.statuses.published, color: 'bg-emerald-500/15 text-emerald-400' },
+        archived: { label: t.contentManagement.statuses.archived, color: 'bg-red-500/15 text-red-400' },
+    };
+
+    const categoryConfig: Record<ContentCategory, { label: string; icon: string }> = {
+        actualite: { label: t.contentManagement.categories.actualite, icon: '📰' },
+        communique: { label: t.contentManagement.categories.communique, icon: '📢' },
+        evenement: { label: t.contentManagement.categories.evenement, icon: '📅' },
+        alerte: { label: t.contentManagement.categories.alerte, icon: '⚠️' },
+    };
+
     const [contents, setContents] = useState<Content[]>(() => getAllContents());
     const [filterCategory, setFilterCategory] = useState<ContentCategory | ''>('');
     const [filterStatus, setFilterStatus] = useState<ContentStatus | ''>('');
     const [searchQuery, setSearchQuery] = useState('');
     const [toast, setToast] = useState<string | null>(null);
-    const { session, can } = useAuth();
 
     const showToast = (msg: string) => {
         setToast(msg);
@@ -49,34 +52,37 @@ export default function AdminContentsPage() {
         switch (action) {
             case 'submit':
                 result = submitForReview(id, userId);
-                if (result) showToast('Soumis pour révision');
+                if (result) showToast(t.contentManagement.messages.submitted);
                 break;
             case 'publish':
                 result = publishContent(id, userId);
-                if (result) showToast('Publié avec succès');
+                if (result) showToast(t.contentManagement.messages.published);
                 break;
             case 'archive':
                 result = archiveContent(id, userId);
-                if (result) showToast('Archivé');
+                if (result) showToast(t.contentManagement.messages.archived);
                 break;
             case 'restore':
                 result = restoreContent(id, userId);
-                if (result) showToast('Restauré en brouillon');
+                if (result) showToast(t.contentManagement.messages.restored);
                 break;
             case 'delete':
-                if (window.confirm('Supprimer ce contenu ?')) {
+                if (window.confirm(t.contentManagement.messages.confirmDelete)) {
                     deleteContent(id, userId);
-                    showToast('Supprimé');
+                    showToast(t.contentManagement.messages.deleted);
                 }
                 break;
         }
         refresh();
     };
 
+    const getT = (text: LocalizedString) => text[locale] || text.fr || '';
+
     const filtered = contents.filter((c) => {
         if (filterCategory && c.category !== filterCategory) return false;
         if (filterStatus && c.status !== filterStatus) return false;
-        if (searchQuery && !c.title.fr.toLowerCase().includes(searchQuery.toLowerCase())) return false;
+        const title = getT(c.title).toLowerCase();
+        if (searchQuery && !title.includes(searchQuery.toLowerCase())) return false;
         return true;
     });
 
@@ -93,9 +99,9 @@ export default function AdminContentsPage() {
                 {/* Header */}
                 <div className="flex items-center justify-between">
                     <div>
-                        <h2 className="text-xl font-bold text-admin-text">Gestion des Contenus</h2>
+                        <h2 className="text-xl font-bold text-admin-text">{t.topbar.titles.contents}</h2>
                         <p className="text-admin-text-muted text-sm mt-1">
-                            {filtered.length} contenu(s) · Workflow: brouillon → révision → publication → archivage
+                            {filtered.length} {t.common.noResults.includes('Aucun') ? (filtered.length > 1 ? 'contenus' : 'contenu') : 'results'}
                         </p>
                     </div>
                     {can('content', 'create') && (
@@ -103,7 +109,7 @@ export default function AdminContentsPage() {
                             href="/contents/create"
                             className="px-4 py-2.5 bg-admin-primary text-white text-sm font-medium rounded-xl hover:bg-admin-primary/80 transition-colors"
                         >
-                            + Nouveau contenu
+                            + {t.topbar.titles.newContent}
                         </Link>
                     )}
                 </div>
@@ -112,7 +118,7 @@ export default function AdminContentsPage() {
                 <div className="flex flex-wrap items-center gap-3">
                     <input
                         type="text"
-                        placeholder="Rechercher..."
+                        placeholder={`${t.common.search}...`}
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
                         className="px-4 py-2 bg-admin-surface border border-admin-border rounded-xl text-admin-text text-sm w-64 focus:outline-none focus:ring-2 focus:ring-admin-primary/50"
@@ -122,7 +128,7 @@ export default function AdminContentsPage() {
                         onChange={(e) => setFilterCategory(e.target.value as ContentCategory | '')}
                         className="px-4 py-2 bg-admin-surface border border-admin-border rounded-xl text-admin-text text-sm focus:outline-none focus:ring-2 focus:ring-admin-primary/50"
                     >
-                        <option value="">Toutes catégories</option>
+                        <option value="">{t.common.filter} ({t.common.status})</option>
                         {Object.entries(categoryConfig).map(([key, { label, icon }]) => (
                             <option key={key} value={key}>{icon} {label}</option>
                         ))}
@@ -132,7 +138,7 @@ export default function AdminContentsPage() {
                         onChange={(e) => setFilterStatus(e.target.value as ContentStatus | '')}
                         className="px-4 py-2 bg-admin-surface border border-admin-border rounded-xl text-admin-text text-sm focus:outline-none focus:ring-2 focus:ring-admin-primary/50"
                     >
-                        <option value="">Tous statuts</option>
+                        <option value="">{t.common.filter} ({t.common.status})</option>
                         {Object.entries(statusConfig).map(([key, { label }]) => (
                             <option key={key} value={key}>{label}</option>
                         ))}
@@ -162,11 +168,11 @@ export default function AdminContentsPage() {
                     <table className="w-full">
                         <thead>
                             <tr className="border-b border-admin-border">
-                                <th className="text-start px-5 py-3.5 text-admin-text-muted text-xs font-semibold uppercase tracking-wider">Titre</th>
-                                <th className="text-start px-5 py-3.5 text-admin-text-muted text-xs font-semibold uppercase tracking-wider">Type</th>
-                                <th className="text-start px-5 py-3.5 text-admin-text-muted text-xs font-semibold uppercase tracking-wider">Statut</th>
-                                <th className="text-start px-5 py-3.5 text-admin-text-muted text-xs font-semibold uppercase tracking-wider">Priorité</th>
-                                <th className="text-end px-5 py-3.5 text-admin-text-muted text-xs font-semibold uppercase tracking-wider">Actions</th>
+                                <th className="text-start px-5 py-3.5 text-admin-text-muted text-xs font-semibold uppercase tracking-wider">{t.common.title}</th>
+                                <th className="text-start px-5 py-3.5 text-admin-text-muted text-xs font-semibold uppercase tracking-wider">{t.common.type}</th>
+                                <th className="text-start px-5 py-3.5 text-admin-text-muted text-xs font-semibold uppercase tracking-wider">{t.common.status}</th>
+                                <th className="text-start px-5 py-3.5 text-admin-text-muted text-xs font-semibold uppercase tracking-wider">{t.common.priority}</th>
+                                <th className="text-end px-5 py-3.5 text-admin-text-muted text-xs font-semibold uppercase tracking-wider">{t.common.actions}</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-admin-border">
@@ -176,7 +182,7 @@ export default function AdminContentsPage() {
                                 return (
                                     <tr key={content.id} className="hover:bg-admin-surface-alt/50 transition-colors">
                                         <td className="px-5 py-4">
-                                            <div className="text-admin-text text-sm font-medium line-clamp-1">{content.title.fr}</div>
+                                            <div className="text-admin-text text-sm font-medium line-clamp-1">{getT(content.title)}</div>
                                             <div className="text-admin-text-muted text-xs mt-0.5">{content.slug}</div>
                                         </td>
                                         <td className="px-5 py-4">
@@ -189,13 +195,13 @@ export default function AdminContentsPage() {
                                         </td>
                                         <td className="px-5 py-4">
                                             {content.priority === 'urgent' && (
-                                                <span className="text-[10px] px-2 py-0.5 rounded-full font-semibold bg-red-500/15 text-red-400">🚨 Urgent</span>
+                                                <span className="text-[10px] px-2 py-0.5 rounded-full font-semibold bg-red-500/15 text-red-400">🚨 {t.contentManagement.priorities.urgent}</span>
                                             )}
                                             {content.priority === 'important' && (
-                                                <span className="text-[10px] px-2 py-0.5 rounded-full font-semibold bg-amber-500/15 text-amber-400">⚡ Important</span>
+                                                <span className="text-[10px] px-2 py-0.5 rounded-full font-semibold bg-amber-500/15 text-amber-400">⚡ {t.contentManagement.priorities.important}</span>
                                             )}
                                             {(!content.priority || content.priority === 'normal') && (
-                                                <span className="text-admin-text-muted text-xs">Normal</span>
+                                                <span className="text-admin-text-muted text-xs">{t.contentManagement.priorities.normal}</span>
                                             )}
                                         </td>
                                         <td className="px-5 py-4 text-end">
@@ -205,45 +211,45 @@ export default function AdminContentsPage() {
                                                     <button
                                                         onClick={() => handleAction(content.id, 'submit')}
                                                         className="text-[11px] px-2.5 py-1 rounded-lg bg-amber-500/10 text-amber-400 hover:bg-amber-500/20 transition-colors"
-                                                        title="Soumettre pour révision"
+                                                        title={t.contentManagement.workflow.submit}
                                                     >
-                                                        Soumettre
+                                                        {t.contentManagement.workflow.submit}
                                                     </button>
                                                 )}
                                                 {(content.status === 'draft' && can('content', 'publish')) && (
                                                     <button
                                                         onClick={() => handleAction(content.id, 'publish')}
                                                         className="text-[11px] px-2.5 py-1 rounded-lg bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500/20 transition-colors"
-                                                        title="Publier directement"
+                                                        title={t.contentManagement.workflow.publish}
                                                     >
-                                                        Publier
+                                                        {t.contentManagement.workflow.publish}
                                                     </button>
                                                 )}
                                                 {(content.status === 'pending_approval' && can('content', 'approve')) && (
                                                     <button
                                                         onClick={() => handleAction(content.id, 'publish')}
                                                         className="text-[11px] px-2.5 py-1 rounded-lg bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500/20 transition-colors"
-                                                        title="Approuver et publier"
+                                                        title={t.contentManagement.workflow.approve}
                                                     >
-                                                        Approuver
+                                                        {t.contentManagement.workflow.approve}
                                                     </button>
                                                 )}
                                                 {(content.status === 'published' && can('content', 'edit')) && (
                                                     <button
                                                         onClick={() => handleAction(content.id, 'archive')}
                                                         className="text-[11px] px-2.5 py-1 rounded-lg bg-gray-500/10 text-gray-400 hover:bg-gray-500/20 transition-colors"
-                                                        title="Archiver"
+                                                        title={t.contentManagement.workflow.archive}
                                                     >
-                                                        Archiver
+                                                        {t.contentManagement.workflow.archive}
                                                     </button>
                                                 )}
                                                 {(content.status === 'archived' && can('content', 'edit')) && (
                                                     <button
                                                         onClick={() => handleAction(content.id, 'restore')}
                                                         className="text-[11px] px-2.5 py-1 rounded-lg bg-blue-500/10 text-blue-400 hover:bg-blue-500/20 transition-colors"
-                                                        title="Restaurer"
+                                                        title={t.contentManagement.workflow.restore}
                                                     >
-                                                        Restaurer
+                                                        {t.contentManagement.workflow.restore}
                                                     </button>
                                                 )}
                                                 {can('content', 'edit') && (
@@ -251,7 +257,7 @@ export default function AdminContentsPage() {
                                                         href={`/contents/${content.id}/edit`}
                                                         className="text-[11px] px-2.5 py-1 rounded-lg bg-admin-surface-alt text-admin-text-muted hover:text-admin-text transition-colors"
                                                     >
-                                                        Modifier
+                                                        {t.common.edit}
                                                     </Link>
                                                 )}
                                                 {can('content', 'delete') && (

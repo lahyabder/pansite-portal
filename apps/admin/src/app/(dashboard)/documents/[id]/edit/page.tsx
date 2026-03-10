@@ -37,9 +37,7 @@ export default function EditDocumentPage({ params }: { params: Promise<{ id: str
     const doc = getGedDocumentById(id);
 
     const [titleFr, setTitleFr] = useState(doc?.title.fr || '');
-    const [titleAr, setTitleAr] = useState(doc?.title.ar || '');
     const [descFr, setDescFr] = useState(doc?.description.fr || '');
-    const [descAr, setDescAr] = useState(doc?.description.ar || '');
     const [reference, setReference] = useState(doc?.reference || '');
     const [theme, setTheme] = useState<DocumentTheme>(doc?.theme || 'reglementation');
     const [direction, setDirection] = useState<DocumentDirection>(doc?.direction || 'direction_generale');
@@ -58,8 +56,8 @@ export default function EditDocumentPage({ params }: { params: Promise<{ id: str
 
     function handleSave() {
         updateGedDocument(id, {
-            title: { fr: titleFr, ar: titleAr },
-            description: { fr: descFr, ar: descAr },
+            title: { fr: titleFr, ar: titleFr, en: titleFr, es: titleFr },
+            description: { fr: descFr, ar: descFr, en: descFr, es: descFr },
             reference: reference || undefined,
             theme,
             direction,
@@ -90,26 +88,18 @@ export default function EditDocumentPage({ params }: { params: Promise<{ id: str
 
                 <div className="bg-admin-surface rounded-xl border border-admin-border p-6 space-y-6">
                     {/* Title FR / AR */}
-                    <div className="grid md:grid-cols-2 gap-4">
+                    <div className="grid md:grid-cols-1 gap-4">
                         <div>
                             <label className={labelClass}>Titre (Français) *</label>
                             <input type="text" value={titleFr} onChange={(e) => setTitleFr(e.target.value)} className={inputClass} />
                         </div>
-                        <div>
-                            <label className={labelClass}>Titre (Arabe)</label>
-                            <input type="text" value={titleAr} onChange={(e) => setTitleAr(e.target.value)} dir="rtl" className={inputClass} />
-                        </div>
                     </div>
 
                     {/* Description FR / AR */}
-                    <div className="grid md:grid-cols-2 gap-4">
+                    <div className="grid md:grid-cols-1 gap-4">
                         <div>
                             <label className={labelClass}>Description (Français)</label>
                             <textarea value={descFr} onChange={(e) => setDescFr(e.target.value)} rows={3} className={inputClass} />
-                        </div>
-                        <div>
-                            <label className={labelClass}>Description (Arabe)</label>
-                            <textarea value={descAr} onChange={(e) => setDescAr(e.target.value)} rows={3} dir="rtl" className={inputClass} />
                         </div>
                     </div>
 
