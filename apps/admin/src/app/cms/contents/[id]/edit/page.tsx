@@ -345,6 +345,16 @@ export default function EditContentPage({
                                         <option value="communique">📢 Communiqué</option>
                                         <option value="evenement">📅 Événement</option>
                                         <option value="alerte">⚠️ Alerte</option>
+                                        <option value="le-port">⚓ Le Port</option>
+                                        <option value="infrastructure">🏗️ Infrastructures</option>
+                                        <option value="services">🛠️ Services</option>
+                                        <option value="procedures">📜 Procédures</option>
+                                        <option value="tariffs">💰 Tarifs</option>
+                                        <option value="stopovers">🚢 Escales</option>
+                                        <option value="tenders">📝 Appels d'offres</option>
+                                        <option value="documentation">📂 Documentation</option>
+                                        <option value="media">🖼️ Médiathèque</option>
+                                        <option value="contact">📞 Contact</option>
                                     </select>
                                 </div>
                                 <div>

@@ -132,7 +132,7 @@ export const ROLE_LABELS: Record<UserRole, string> = {
 
 // ─── Content (CMS: actualités, communiqués, événements, alertes) ──
 export type ContentStatus = 'draft' | 'pending_approval' | 'published' | 'archived';
-export type ContentCategory = 'actualite' | 'communique' | 'evenement' | 'alerte';
+export type ContentCategory = 'actualite' | 'communique' | 'evenement' | 'alerte' | 'le-port' | 'infrastructure' | 'services' | 'procedures' | 'tariffs' | 'stopovers' | 'tenders' | 'documentation' | 'media' | 'contact';
 
 export interface Content {
     id: string;

@@ -7,6 +7,7 @@ export const dynamic = 'force-dynamic';
 import { getDictionary } from '@/lib/dictionaries';
 import Link from 'next/link';
 import { AlertBar } from '@/components/AlertBar';
+import { HeroSlider } from '@/components/HeroSlider';
 import { Ship, Anchor, Building2, FileText, Calendar, Phone, TrendingUp, ShipWheel } from 'lucide-react';
 
 export default async function HomePage({
@@ -47,45 +48,9 @@ export default async function HomePage({
         <>
             <AlertBar locale={locale} dict={dict} />
 
-            {/* ═══ Hero Section ═══ */}
-            <section
-                id="hero"
-                className="relative bg-pan-navy text-white overflow-hidden"
-            >
-                {/* Background Image / Overlay */}
-                <div
-                    className="absolute inset-0 bg-cover bg-center opacity-40"
-                    style={{ backgroundImage: "url('https://images.unsplash.com/photo-1542287413-a442750e263d?ixlib=rb-4.0.3&auto=format&fit=crop&w=2850&q=80')" }}
-                />
-                <div className="absolute inset-0 bg-gradient-to-r from-pan-navy/90 to-pan-blue/80" />
+            {/* ═══ Hero Slider Section ═══ */}
+            <HeroSlider dict={dict} locale={locale} />
 
-                <div className="relative max-w-7xl mx-auto px-6 py-32 sm:py-40 lg:py-48 flex items-center">
-                    <div className="max-w-3xl">
-                        <div className="w-20 h-1.5 bg-pan-gold rounded-full mb-8" />
-                        <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold leading-tight tracking-tight mb-6">
-                            {dict.hero.title}
-                        </h1>
-                        <p className="text-lg sm:text-2xl text-pan-light leading-relaxed mb-10 max-w-2xl font-light">
-                            {dict.hero.subtitle}
-                        </p>
-                        <div className="flex flex-wrap gap-4">
-                            <Link
-                                href={`/${locale}/le-port`}
-                                className="inline-flex items-center gap-2 px-8 py-4 bg-pan-gold text-pan-navy font-semibold rounded-lg hover:bg-pan-gold-light transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-0.5"
-                            >
-                                {dict.hero.cta}
-                                <span aria-hidden="true">{locale === 'ar' ? '←' : '→'}</span>
-                            </Link>
-                            <Link
-                                href={`/${locale}/services`}
-                                className="inline-flex items-center gap-2 px-8 py-4 bg-pan-blue/80 backdrop-blur-sm border-2 border-transparent text-white font-semibold rounded-lg hover:bg-pan-blue transition-all duration-300"
-                            >
-                                {dict.hero.ctaSecondary}
-                            </Link>
-                        </div>
-                    </div>
-                </div>
-            </section>
 
             {/* ═══ Key Figures (Chiffres Clés) ═══ */}
             <section id="statistics" className="relative z-10 -mt-12">

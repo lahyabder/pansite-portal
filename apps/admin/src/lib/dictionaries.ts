@@ -4,14 +4,18 @@ export type AdminDictionary = {
     sidebar: {
         principal: string;
         dashboard: string;
-        content: string;
+        siteContent: string;
         contents: string;
-        documents: string;
-        media: string;
-        operational: string;
+        port: string;
+        infrastructure: string;
         services: string;
-        requests: string;
+        procedures: string;
+        tariffs: string;
+        stopovers: string;
         tenders: string;
+        documentation: string;
+        media: string;
+        contact: string;
         administration: string;
         users: string;
         analytics: string;
@@ -82,6 +86,16 @@ export type AdminDictionary = {
             communique: string;
             evenement: string;
             alerte: string;
+            'le-port': string;
+            infrastructure: string;
+            services: string;
+            procedures: string;
+            tariffs: string;
+            stopovers: string;
+            tenders: string;
+            documentation: string;
+            media: string;
+            contact: string;
         };
         statuses: {
             draft: string;
@@ -239,15 +253,19 @@ export const dictionaries: Record<Locale, AdminDictionary> = {
         sidebar: {
             principal: 'Principal',
             dashboard: 'Tableau de bord',
-            content: 'Contenu',
-            contents: 'Contenus',
-            documents: 'Documents GED',
-            media: 'Médias',
-            operational: 'Opérationnel',
+            siteContent: 'Contenu Site',
+            contents: 'Actualités',
+            port: 'Le Port',
+            infrastructure: 'Infrastructures',
             services: 'Services',
-            requests: 'Demandes',
+            procedures: 'Procédures',
+            tariffs: 'Tarifs',
+            stopovers: 'Escales',
             tenders: "Appels d'offres",
-            administration: 'Administration',
+            documentation: 'Documentation',
+            media: 'Médias',
+            contact: 'Contact',
+            administration: 'Système',
             users: 'Utilisateurs',
             analytics: 'Analytique',
             audit: "Journal d'audit",
@@ -317,6 +335,16 @@ export const dictionaries: Record<Locale, AdminDictionary> = {
                 communique: 'Communiqué',
                 evenement: 'Événement',
                 alerte: 'Alerte',
+                'le-port': 'Le Port',
+                infrastructure: 'Infrastructures',
+                services: 'Services',
+                procedures: 'Procédures',
+                tariffs: 'Tarifs',
+                stopovers: 'Escales',
+                tenders: "Appels d'offres",
+                documentation: 'Documentation',
+                media: 'Médias',
+                contact: 'Contact',
             },
             statuses: {
                 draft: 'Brouillon',
@@ -472,15 +500,19 @@ export const dictionaries: Record<Locale, AdminDictionary> = {
         sidebar: {
             principal: 'الرئيسية',
             dashboard: 'لوحة القيادة',
-            content: 'المحتوى',
-            contents: 'المحتويات',
-            documents: 'الوثائق',
-            media: 'الوسائط',
-            operational: 'العمليات',
+            siteContent: 'محتوى الموقع',
+            contents: 'الأخبار',
+            port: 'الميناء',
+            infrastructure: 'البنية التحتية',
             services: 'الخدمات',
-            requests: 'الطلبات',
+            procedures: 'الإجراءات',
+            tariffs: 'التعريفات',
+            stopovers: 'حركة السفن',
             tenders: 'المناقصات',
-            administration: 'الإدارة',
+            documentation: 'الوثائق',
+            media: 'الإعلام',
+            contact: 'اتصل بنا',
+            administration: 'النظام',
             users: 'المستخدمون',
             analytics: 'التحليلات',
             audit: 'سجل العمليات',
@@ -550,6 +582,16 @@ export const dictionaries: Record<Locale, AdminDictionary> = {
                 communique: 'بيان',
                 evenement: 'فعالية',
                 alerte: 'تنبيه',
+                'le-port': 'الميناء',
+                infrastructure: 'البنية التحتية',
+                services: 'الخدمات',
+                procedures: 'الإجراءات',
+                tariffs: 'التعريفات',
+                stopovers: 'حركة السفن',
+                tenders: 'المناقصات',
+                documentation: 'الوثائق',
+                media: 'الإعلام',
+                contact: 'اتصل بنا',
             },
             statuses: {
                 draft: 'مسودة',
@@ -705,15 +747,19 @@ export const dictionaries: Record<Locale, AdminDictionary> = {
         sidebar: {
             principal: 'Principal',
             dashboard: 'Dashboard',
-            content: 'Content',
-            contents: 'Contents',
-            documents: 'GED Documents',
-            media: 'Media',
-            operational: 'Operational',
+            siteContent: 'Site Content',
+            contents: 'News',
+            port: 'The Port',
+            infrastructure: 'Infrastructures',
             services: 'Services',
-            requests: 'Requests',
+            procedures: 'Procedures',
+            tariffs: 'Tariffs',
+            stopovers: 'Stopovers',
             tenders: 'Tenders',
-            administration: 'Administration',
+            documentation: 'Documentation',
+            media: 'Media',
+            contact: 'Contact',
+            administration: 'System',
             users: 'Users',
             analytics: 'Analytics',
             audit: 'Audit Log',
@@ -783,6 +829,16 @@ export const dictionaries: Record<Locale, AdminDictionary> = {
                 communique: 'Press Release',
                 evenement: 'Event',
                 alerte: 'Alert',
+                'le-port': 'The Port',
+                infrastructure: 'Infrastructures',
+                services: 'Services',
+                procedures: 'Procedures',
+                tariffs: 'Tariffs',
+                stopovers: 'Stopovers',
+                tenders: 'Tenders',
+                documentation: 'Documentation',
+                media: 'Media',
+                contact: 'Contact',
             },
             statuses: {
                 draft: 'Draft',
@@ -937,16 +993,20 @@ export const dictionaries: Record<Locale, AdminDictionary> = {
     es: {
         sidebar: {
             principal: 'Principal',
-            dashboard: 'Tablero',
-            content: 'Contenido',
-            contents: 'Contenidos',
-            documents: 'Documentos GED',
-            media: 'Medios',
-            operational: 'Operativo',
+            dashboard: 'Panel de control',
+            siteContent: 'Contenido del Sitio',
+            contents: 'Noticias',
+            port: 'El Puerto',
+            infrastructure: 'Infraestructuras',
             services: 'Servicios',
-            requests: 'Solicitudes',
+            procedures: 'Procedimientos',
+            tariffs: 'Tarifas',
+            stopovers: 'Escalas',
             tenders: 'Licitaciones',
-            administration: 'Administración',
+            documentation: 'Documentación',
+            media: 'Medios',
+            contact: 'Contacto',
+            administration: 'Sistema',
             users: 'Usuarios',
             analytics: 'Analítica',
             audit: 'Registro de Auditoría',
@@ -1016,6 +1076,16 @@ export const dictionaries: Record<Locale, AdminDictionary> = {
                 communique: 'Comunicado',
                 evenement: 'Evento',
                 alerte: 'Alerta',
+                'le-port': 'El Puerto',
+                infrastructure: 'Infraestructuras',
+                services: 'Servicios',
+                procedures: 'Procedimientos',
+                tariffs: 'Tarifas',
+                stopovers: 'Escalas',
+                tenders: 'Licitaciones',
+                documentation: 'Documentación',
+                media: 'Medios',
+                contact: 'Contacto',
             },
             statuses: {
                 draft: 'Borrador',

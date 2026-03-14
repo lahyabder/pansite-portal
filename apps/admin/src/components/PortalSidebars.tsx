@@ -3,31 +3,40 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useAuth } from '@/lib/auth';
-import { LayoutDashboard, Newspaper, Ship, Settings, BarChart, Users, FileText, Media, ClipboardList, LogOut } from 'lucide-react';
+import { useI18n } from '@/lib/i18n';
+import { LayoutDashboard, Newspaper, Ship, Settings, BarChart, Users, FileText, FileImage as Image, ClipboardList, LogOut } from 'lucide-react';
 
 export function CMSSidebar() {
     const pathname = usePathname();
     const { session, logout } = useAuth();
+    const { t, locale } = useI18n();
 
     const menu = [
         {
-            title: 'Principal', items: [
-                { icon: LayoutDashboard, label: 'Tableau de bord', href: '/cms' },
+            title: t.sidebar.principal, items: [
+                { icon: LayoutDashboard, label: t.sidebar.dashboard, href: '/cms' },
             ]
         },
         {
-            title: 'Contenu Site', items: [
-                { icon: Newspaper, label: 'Articles & News', href: '/cms/contents' },
-                { icon: Ship, label: 'Services Portuaires', href: '/cms/services' },
-                { icon: ClipboardList, label: 'Appels d\'offres', href: '/cms/tenders' },
-                { icon: Newspaper, label: 'Médiathèque', href: '/cms/medias' },
+            title: t.sidebar.siteContent, items: [
+                { icon: Newspaper, label: t.sidebar.contents, href: '/cms/contents' },
+                { icon: Ship, label: t.sidebar.port, href: '/cms/contents?category=le-port' },
+                { icon: LayoutDashboard, label: t.sidebar.infrastructure, href: '/cms/contents?category=infrastructure' },
+                { icon: ClipboardList, label: t.sidebar.services, href: '/cms/contents?category=services' },
+                { icon: FileText, label: t.sidebar.procedures, href: '/cms/contents?category=procedures' },
+                { icon: BarChart, label: t.sidebar.tariffs, href: '/cms/contents?category=tariffs' },
+                { icon: Ship, label: t.sidebar.stopovers, href: '/cms/contents?category=stopovers' },
+                { icon: ClipboardList, label: t.sidebar.tenders, href: '/cms/contents?category=tenders' },
+                { icon: FileText, label: t.sidebar.documentation, href: '/cms/contents?category=documentation' },
+                { icon: Image, label: t.sidebar.media, href: '/cms/contents?category=media' },
+                { icon: Users, label: t.sidebar.contact, href: '/cms/contents?category=contact' },
             ]
         },
         {
-            title: 'Système', items: [
-                { icon: Users, label: 'Utilisateurs', href: '/cms/users' },
-                { icon: BarChart, label: 'Statistiques', href: '/cms/analytics' },
-                { icon: Settings, label: 'Paramètres site', href: '/cms/settings' },
+            title: t.sidebar.administration, items: [
+                { icon: Users, label: t.sidebar.users, href: '/cms/users' },
+                { icon: BarChart, label: t.sidebar.analytics, href: '/cms/analytics' },
+                { icon: Settings, label: t.sidebar.settings, href: '/cms/settings' },
             ]
         },
     ];
@@ -38,15 +47,15 @@ export function CMSSidebar() {
     };
 
     return (
-        <aside className="w-64 bg-[#0a0f1d] border-e border-white/5 flex flex-col shrink-0 h-screen sticky top-0 text-white">
+        <aside className={`w-64 bg-[#0a0f1d] border-e border-white/5 flex flex-col shrink-0 h-screen sticky top-0 text-white ${locale === 'ar' ? 'font-arabic' : ''}`} dir={locale === 'ar' ? 'rtl' : 'ltr'}>
             <div className="p-6">
                 <div className="flex items-center gap-3">
                     <div className="w-10 h-10 bg-pan-gold rounded-xl flex items-center justify-center shadow-lg shadow-pan-gold/20">
                         <LayoutDashboard className="w-6 h-6 text-pan-navy" />
                     </div>
                     <div>
-                        <div className="font-bold text-sm tracking-tight">CMS Portal</div>
-                        <div className="text-[10px] text-pan-gold font-semibold uppercase">Site Content</div>
+                        <div className="font-bold text-sm tracking-tight">{t.topbar.portName}</div>
+                        <div className="text-[10px] text-pan-gold font-semibold uppercase">{t.sidebar.dashboard}</div>
                     </div>
                 </div>
             </div>
@@ -75,13 +84,13 @@ export function CMSSidebar() {
                 ))}
             </nav>
 
-            <div className="p-4 border-t border-white/5">
+            <div className={`p-4 border-t border-white/5 ${locale === 'ar' ? 'text-right' : 'text-left'}`}>
                 <button
                     onClick={logout}
                     className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm text-red-400 hover:bg-red-500/10 transition-colors"
                 >
                     <LogOut className="w-5 h-5" />
-                    Déconnexion
+                    {t.sidebar.logout}
                 </button>
             </div>
         </aside>

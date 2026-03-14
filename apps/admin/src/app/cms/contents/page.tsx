@@ -33,14 +33,25 @@ export default function AdminContentsPage() {
         communique: { label: t.contentManagement.categories.communique, icon: '📢' },
         evenement: { label: t.contentManagement.categories.evenement, icon: '📅' },
         alerte: { label: t.contentManagement.categories.alerte, icon: '⚠️' },
+        'le-port': { label: t.contentManagement.categories['le-port'], icon: '⚓' },
+        infrastructure: { label: t.contentManagement.categories.infrastructure, icon: '🏗️' },
+        services: { label: t.contentManagement.categories.services, icon: '🛠️' },
+        procedures: { label: t.contentManagement.categories.procedures, icon: '📜' },
+        tariffs: { label: t.contentManagement.categories.tariffs, icon: '💰' },
+        stopovers: { label: t.contentManagement.categories.stopovers, icon: '🚢' },
+        tenders: { label: t.contentManagement.categories.tenders, icon: '📝' },
+        documentation: { label: t.contentManagement.categories.documentation, icon: '📂' },
+        media: { label: t.contentManagement.categories.media, icon: '🖼️' },
+        contact: { label: t.contentManagement.categories.contact, icon: '📞' },
     };
 
     const searchParams = useSearchParams();
     const initialStatus = searchParams.get('status') as ContentStatus | '';
+    const initialCategory = searchParams.get('category') as ContentCategory | '';
 
     const [contents, setContents] = useState<Content[]>([]);
     const [loading, setLoading] = useState(true);
-    const [filterCategory, setFilterCategory] = useState<ContentCategory | ''>('');
+    const [filterCategory, setFilterCategory] = useState<ContentCategory | ''>(initialCategory || '');
     const [filterStatus, setFilterStatus] = useState<ContentStatus | ''>(initialStatus || '');
     const [searchQuery, setSearchQuery] = useState('');
     const [toast, setToast] = useState<string | null>(null);
