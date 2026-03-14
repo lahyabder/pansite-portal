@@ -49,15 +49,24 @@ export async function POST(req: NextRequest) {
         const body = await req.json();
         const { authorId = 'usr-001', ...data } = body;
 
+        const status = data.status || 'draft';
+
+        // Auto-set publishedAt when publishing directly
+        if (status === 'published' && !data.publishedAt) {
+            data.publishedAt = new Date().toISOString();
+        }
+
         const content = createContent({
             ...data,
             authorId,
             tags: data.tags || [],
-            status: data.status || 'draft',
+            status,
         });
 
         return NextResponse.json(content, { status: 201, headers: CORS_HEADERS });
     } catch (err) {
+        console.error('[POST /api/content]', err);
         return NextResponse.json({ error: 'Invalid request body' }, { status: 400, headers: CORS_HEADERS });
     }
 }
+
