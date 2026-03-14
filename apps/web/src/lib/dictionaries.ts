@@ -82,6 +82,16 @@ export type Dictionary = {
             communique: string;
             evenement: string;
             alerte: string;
+            'le-port': string;
+            infrastructure: string;
+            services: string;
+            procedures: string;
+            tariffs: string;
+            stopovers: string;
+            tenders: string;
+            documentation: string;
+            media: string;
+            contact: string;
             all: string;
         };
         filters: {
@@ -382,6 +392,16 @@ const dictionaries: Record<Locale, Dictionary> = {
                 communique: 'Communiqués',
                 evenement: 'Événements',
                 alerte: 'Alertes & Avis',
+                'le-port': 'Le Port',
+                infrastructure: 'Infrastructures',
+                services: 'Services',
+                procedures: 'Procédures',
+                tariffs: 'Tarifs',
+                stopovers: 'Escales',
+                tenders: 'Appels d\'offres',
+                documentation: 'Documentation',
+                media: 'Médiathèque',
+                contact: 'Contact',
                 all: 'Tout',
             },
             filters: {
@@ -829,6 +849,16 @@ const dictionaries: Record<Locale, Dictionary> = {
                 communique: 'البيانات',
                 evenement: 'الفعاليات',
                 alerte: 'التنبيهات والإشعارات',
+                'le-port': 'الميناء',
+                infrastructure: 'البنية التحتية',
+                services: 'الخدمات',
+                procedures: 'الإجراءات',
+                tariffs: 'التعريفات',
+                stopovers: 'الرسو',
+                tenders: 'المناقصات',
+                documentation: 'الوثائق',
+                media: 'الإعلام',
+                contact: 'اتصال',
                 all: 'الكل',
             },
             filters: {
@@ -1276,6 +1306,16 @@ const dictionaries: Record<Locale, Dictionary> = {
                 communique: 'Press Releases',
                 evenement: 'Events',
                 alerte: 'Alerts & Notices',
+                'le-port': 'The Port',
+                infrastructure: 'Infrastructure',
+                services: 'Services',
+                procedures: 'Procedures',
+                tariffs: 'Tariffs',
+                stopovers: 'Stopovers',
+                tenders: 'Tenders',
+                documentation: 'Documentation',
+                media: 'Media',
+                contact: 'Contact',
                 all: 'All',
             },
             filters: {
@@ -1726,6 +1766,16 @@ const dictionaries: Record<Locale, Dictionary> = {
                 communique: 'Comunicados',
                 evenement: 'Eventos',
                 alerte: 'Alertas y Avisos',
+                'le-port': 'El Puerto',
+                infrastructure: 'Infraestructuras',
+                services: 'Servicios',
+                procedures: 'Procedimientos',
+                tariffs: 'Tarifas',
+                stopovers: 'Escalas',
+                tenders: 'Licitaciones',
+                documentation: 'Documentación',
+                media: 'Medios',
+                contact: 'Contacto',
                 all: 'Todo',
             },
             filters: {
