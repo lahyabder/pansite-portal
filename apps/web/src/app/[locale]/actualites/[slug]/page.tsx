@@ -18,12 +18,24 @@ export default async function ContentDetailPage({
     if (!content || content.status !== 'published') return notFound();
 
     const categoryLabel = dict.content.categories[content.category] || content.category;
-    const categoryRoute = {
-        actualite: 'actualites',
-        communique: 'communiques',
-        evenement: 'evenements',
-        alerte: 'alertes',
-    }[content.category] || 'actualites';
+    const categoryRoute = (
+        {
+            actualite: 'actualites',
+            communique: 'communiques',
+            evenement: 'evenements',
+            alerte: 'alertes',
+            'le-port': 'le-port',
+            infrastructure: 'infrastructure',
+            services: 'services',
+            procedures: 'procedures',
+            tariffs: 'tariffs',
+            stopovers: 'stopovers',
+            tenders: 'tenders',
+            documentation: 'documentation',
+            media: 'media',
+            contact: 'contact',
+        } as Record<string, string>
+    )[content.category] || 'actualites';
 
     // Get related content (same category, different slug)
     const related = getContentsByCategory(content.category)
