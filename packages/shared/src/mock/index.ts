@@ -750,6 +750,36 @@ export const mockContents: Content[] = [
         createdAt: '2025-03-06T09:00:00Z',
         updatedAt: '2025-03-06T09:00:00Z',
     },
+    {
+        id: 'cnt-015',
+        slug: 'visite-rehabilitation-quai-commercial-2025',
+        title: {
+            ar: 'المدير العام لميناء نواذيبو المستقل يتفقد إعادة تأهيل الرصيف التجاري',
+            fr: 'Le Directeur Général du Port Autonome de Nouadhibou inspecte la réhabilitation du quai commercial',
+            en: 'Director General of the Nouadhibou Autonomous Port Inspects Commercial Quay Rehabilitation',
+            es: 'El Director General del Puerto Autónomo de Nouadhibou inspecciona la rehabilitación del muelle comercial',
+        },
+        body: {
+            ar: 'في إطار المتابعة المستمرة للمشاريع التنموية، قام المدير العام،السيد أحمد ولد سيد احمد ولد اج، بزيارة تفقدية، يوم الخميس 3 يوليو 2025، للوقوف على آخر مستجدات مشروع استكمال إعادة تأهيل الرصيف التجاري.\n\nوقد رافقه خلال الجولة فريق من المهندسين والمشرفين على المشروع، حيث اطلع بشكل مباشر على مراحل الإنجاز في وتيرة العمل.',
+            fr: "Dans le cadre du suivi continu des projets de développement, le Directeur Général, M. Ahmed Ould Sidi Ahmed Ould Aj, a effectué une visite d'inspection, le jeudi 3 juillet 2025, pour prendre connaissance des dernières évolutions du projet d'achèvement de la réhabilitation du quai commercial.\n\nIl était accompagné lors de cette tournée d'une équipe d'ingénieurs et de superviseurs du projet, avec lesquels il a pu observer directement les phases d'avancement et le rythme des travaux.",
+            en: "As part of the continuous monitoring of development projects, the Director General, Mr. Ahmed Ould Sidi Ahmed Ould Aj, conducted an inspection visit on Thursday, July 3, 2025, to assess the latest developments in the project to complete the rehabilitation of the commercial quay.\n\nHe was accompanied during the tour by a team of engineers and project supervisors, with whom he was able to directly observe the progress phases and the pace of work.",
+            es: "En el marco del seguimiento continuo de los proyectos de desarrollo, el Director General, el Sr. Ahmed Ould Sidi Ahmed Ould Aj, realizó una visita de inspección el jueves 3 de julio de 2025, para conocer los últimos avances del proyecto de finalización de la rehabilitación del muelle comercial.\n\nEstuvo acompañado durante el recorrido por un equipo de ingenieros y supervisores del proyecto, con quienes pudo observar directamente las fases de avance y el ritmo de los trabajos.",
+        },
+        excerpt: {
+            ar: 'المدير العام يتفقد مشروع إعادة تأهيل الرصيف التجاري ويطلع على آخر مستجدات الإنجاز.',
+            fr: "Le Directeur Général inspecte le projet de réhabilitation du quai commercial et prend connaissance des dernières avancées.",
+            en: 'The Director General inspects the commercial quay rehabilitation project and reviews the latest progress.',
+            es: 'El Director General inspecciona el proyecto de rehabilitación del muelle comercial y revisa los últimos avances.',
+        },
+        category: 'actualite',
+        tags: ['infrastructure', 'rehabilitation', 'quai-commercial', 'direction-generale'],
+        status: 'published',
+        priority: 'important',
+        authorId: 'usr-001',
+        publishedAt: '2025-07-03T12:00:00Z',
+        createdAt: '2025-07-03T12:00:00Z',
+        updatedAt: '2025-07-03T12:00:00Z',
+    },
 ];
 
 // ─── Mock Audit Log ───────────────────────────────────────

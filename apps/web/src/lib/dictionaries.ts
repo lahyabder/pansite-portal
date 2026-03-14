@@ -117,6 +117,10 @@ export type Dictionary = {
         port: {
             title: string;
             subtitle: string;
+            dg_word: {
+                title: string;
+                content: string;
+            };
             role: {
                 title: string;
                 description: string;
@@ -140,7 +144,17 @@ export type Dictionary = {
             };
             impact: {
                 title: string;
+                items: { title: string; description: string }[];
+            };
+            governance: {
+                title: string;
                 description: string;
+                board: {
+                    title: string;
+                    headerRole: string;
+                    headerAttribution: string;
+                    members: { role: string; attribution: string }[];
+                };
             };
             services: {
                 title: string;
@@ -150,6 +164,10 @@ export type Dictionary = {
         infrastructure: {
             title: string;
             subtitle: string;
+            gallery: {
+                title: string;
+                items: { title: string; description: string }[];
+            };
             quais: {
                 title: string;
                 items: { name: string; info: string; length: string; draft: string }[];
@@ -162,7 +180,7 @@ export type Dictionary = {
         services: {
             title: string;
             subtitle: string;
-            list: { title: string; desc: string; icon: string }[];
+            list: { title: string; desc: string; icon: string; points: string[] }[];
         };
         procedures: {
             title: string;
@@ -300,7 +318,7 @@ const dictionaries: Record<Locale, Dictionary> = {
         hero: {
             title: 'Port Autonome de Nouadhibou',
             subtitle:
-                "Porte d'entrée stratégique de la Mauritanie sur l'Atlantique. Hub commercial majeur pour l'Afrique de l'Ouest.",
+                'Le Port Autonome de Nouadhibou est la principale infrastructure portuaire de Mauritanie, offrant des services maritimes et logistiques de qualité pour soutenir le commerce international et le développement économique de la région.',
             cta: 'Découvrir nos services',
             ctaSecondary: 'Nous contacter',
         },
@@ -398,7 +416,11 @@ const dictionaries: Record<Locale, Dictionary> = {
         pages: {
             port: {
                 title: 'Le Port',
-                subtitle: 'Découvrez l\'histoire, les infrastructures et la vision du Port Autonome de Nouadhibou.',
+                subtitle: 'Découvrez l\'histoire et l\'évolution du Port Autonome de Nouadhibou, ainsi que son impact socio-économique sur la région.',
+                dg_word: {
+                    title: 'Mot du Directeur Général',
+                    content: 'Cher visiteur, bienvenue au Port Autonome de Nouadhibou. Notre mission est de garantir une connectivité maritime optimale tout en favorisant la croissance économique régionale.',
+                },
                 role: {
                     title: 'Rôle Stratégique',
                     description: 'Le Port Autonome de Nouadhibou (PAN) se situe dans une baie naturellement protégée. C\'est le pivot de toutes les activités de pêche et le moteur du développement de Nouadhibou.',
@@ -415,13 +437,10 @@ const dictionaries: Record<Locale, Dictionary> = {
                 history: {
                     title: 'Historique & Jalons',
                     milestones: [
-                        { year: '1955', event: 'Premier petit quai construit par SIGP.' },
-                        { year: '1960', event: 'Construction d\'un quai commercial de 60m et 3 quais de pêche.' },
-                        { year: '1968', event: 'Extension du quai de pêche à 300m (FED).' },
-                        { year: '1976', event: 'Expansion commerciale et nouveaux bâtiments administratifs (Fonds Koweïtien).' },
-                        { year: '1998', event: 'Décret officiel d\'extension du domaine portuaire.' },
-                        { year: '2014', event: 'Nouveau quai de 660m, rampe RO-RO et plateforme de 12 hectares.' },
-                        { year: '2025', event: 'Modernisation globale et transformation digitale.' },
+                        { year: '1955', event: 'Développement des infrastructures de pêche. Extension des installations pour soutenir l\'industrie de la pêche.' },
+                        { year: '1968', event: 'Développement des infrastructures de pêche. Extension des installations pour soutenir l\'industrie de la pêche.' },
+                        { year: '2014', event: 'Extension du port avec nouvelles plateformes RO-RO. Modernisation majeure des infrastructures pour accueillir plus de navires.' },
+                        { year: '2025', event: 'Modernisation et digitalisation en cours. Projet de transformation numérique et d\'optimisation des opérations portuaires.' },
                     ],
                 },
                 evolution: {
@@ -439,8 +458,25 @@ const dictionaries: Record<Locale, Dictionary> = {
                     ],
                 },
                 impact: {
-                    title: 'Impact Économique & Social',
-                    description: 'Poumon économique de la région et plus grand employeur de la ville, le port favorise l\'intégration du secteur privé et assure une stabilité sociale à travers des partenariats durables.',
+                    title: 'Intégration Socio-Économique',
+                    items: [
+                        { title: 'Premier employeur de Nouadhibou', description: 'Le Port Autonome de Nouadhibou est le plus grand employeur de la région, offrant des milliers d\'emplois directs et indirects.' },
+                        { title: '80% des exportations liées à la pêche', description: 'Le port joue un rôle crucial dans l\'économie nationale en facilitant la majorité des exportations de produits de la pêche.' },
+                        { title: '+50 partenaires privés', description: 'Un réseau étendu de partenaires commerciaux et industriels contribue au dynamisme économique du port.' },
+                    ],
+                },
+                governance: {
+                    title: 'Gouvernance',
+                    description: 'Découvrez la structure organisationnelle et les instances dirigeantes du Port Autonome de Nouadhibou.',
+                    board: {
+                        title: 'Conseil d’Administration',
+                        headerRole: 'Rôle',
+                        headerAttribution: 'Attributions',
+                        members: [
+                            { role: 'Président', attribution: 'Direction stratégique et supervision des activités du port' },
+                            { role: 'Membres', attribution: 'Représentants des ministères et des acteurs économiques' },
+                        ],
+                    },
                 },
                 services: {
                     title: 'Services Portuaires',
@@ -458,13 +494,22 @@ const dictionaries: Record<Locale, Dictionary> = {
             },
             infrastructure: {
                 title: 'Infrastructures',
-                subtitle: 'Découvrez nos installations portuaires modernes et nos équipements de pointe.',
+                subtitle: 'Découvrez nos installations modernes et nos équipements de pointe qui garantissent des opérations portuaires efficaces et sécurisées.',
+                gallery: {
+                    title: 'Une galerie photo expressive',
+                    items: [
+                        { title: 'Terminal conteneurs', description: 'Terminal moderne équipé pour la gestion efficace des conteneurs avec des équipements de pointe.' },
+                        { title: 'Zone de pesage 100 tonnes', description: 'Capacité de pesage haute précision pour tous types de cargaisons.' },
+                        { title: 'Stockage frigorifique', description: 'Installations modernes pour la conservation des produits périssables.' },
+                        { title: 'Remorquage en action', description: 'Assistance dynamique et sécurisée pour les manœuvres des navires.' },
+                    ],
+                },
                 quais: {
                     title: 'Quais & Terminaux',
                     items: [
-                        { name: 'Quai de Pêche', info: 'Dédié aux navires de pêche hauturière et artisanale.', length: '300m', draft: '6.0m' },
-                        { name: 'Quai Commercial', info: 'Polyvalent pour le fret général et les conteneurs.', length: '660m', draft: '10.5m' },
-                        { name: 'Terminal Pétrolier', info: 'Installations sécurisées pour le déchargement d\'hydrocarbures.', length: '200m', draft: '12.0m' },
+                        { name: 'Quai de Commerce', info: 'Quai principal dédié aux activités commerciales et au transport de marchandises diverses.', length: '350m', draft: '9.0m' },
+                        { name: 'Quai de Pêche Industrielle', info: 'Infrastructure spécialisée pour les navires de pêche hauturière avec installations de déchargement.', length: '280m', draft: '7.0m' },
+                        { name: 'Terminal Pétrolier', info: 'Terminal spécialisé pour le déchargement des produits pétroliers avec systèmes de sécurité avancés.', length: '200m', draft: '12.0m' },
                     ],
                 },
                 zones: {
@@ -477,12 +522,45 @@ const dictionaries: Record<Locale, Dictionary> = {
                 },
             },
             services: {
-                title: 'Services Portuaires',
-                subtitle: 'Nos solutions maritimes et logistiques pour vos opérations.',
+                title: 'Nos Services',
+                subtitle: 'Le Port Autonome de Nouadhibou propose une gamme complète de services portuaires et logistiques pour répondre à tous vos besoins.',
                 list: [
-                    { title: 'Pilotage', desc: 'Assistance obligatoire pour l\'entrée et la sortie du port.', icon: 'ship' },
-                    { title: 'Manutention', desc: 'Chargement et déchargement de tous types de cargaisons.', icon: 'crane' },
-                    { title: 'Remorquage', desc: 'Assistance aux navires lors des manœuvres portuaires.', icon: 'tow' },
+                    {
+                        title: 'Manutention',
+                        desc: 'Services de chargement et déchargement optimisés pour tous types de marchandises avec un matériel spécialisé garantissant une manutention sécurisée et efficace.',
+                        icon: 'crane',
+                        points: ['Chargement et déchargement optimisés', 'Matériel spécialisé pour manutention sécurisée', 'Personnel qualifié et expérimenté', 'Opérations 24/7'],
+                    },
+                    {
+                        title: 'Transbordements',
+                        desc: 'Opérations rapides sans stockage intermédiaire permettant une réduction significative des coûts logistiques et une optimisation de la chaîne d\'approvisionnement.',
+                        icon: 'refresh-cw',
+                        points: ['Opérations rapides sans stockage', 'Réduction des coûts logistiques', 'Coordination optimisée', 'Suivi en temps réel'],
+                    },
+                    {
+                        title: 'Entreposage',
+                        desc: 'Espaces de stockage diversifiés incluant des zones sous douane, des installations frigorifiques et des entrepôts sécurisés accessibles 24h/24 et 7j/7.',
+                        icon: 'box',
+                        points: ['Espaces sous douane', 'Zones frigorifiques', 'Stockage sécurisé', 'Accès 24/7'],
+                    },
+                    {
+                        title: 'Transit & Logistique',
+                        desc: 'Services complets de coordination entre transport maritime et terrestre avec une gestion douanière simplifiée pour fluidifier vos opérations logistiques.',
+                        icon: 'truck',
+                        points: ['Coordination transport maritime/terrestre', 'Gestion douanière simplifiée', 'Solutions logistiques intégrées', 'Suivi administratif complet'],
+                    },
+                    {
+                        title: 'Services aux Navires',
+                        desc: 'Assistance complète pour les navires incluant le pilotage, le remorquage, l\'avitaillement et la fourniture d\'eau douce pour garantir des escales optimales.',
+                        icon: 'anchor',
+                        points: ['Pilotage professionnel', 'Services de remorquage', 'Avitaillement', 'Fourniture d\'eau douce'],
+                    },
+                    {
+                        title: 'Gestion des Terminaux',
+                        desc: 'Exploitation efficace des terminaux spécialisés pour conteneurs, vracs et marchandises diverses avec des équipements modernes et un personnel qualifié.',
+                        icon: 'layout',
+                        points: ['Terminal conteneurs', 'Terminal vracs', 'Terminal pêche', 'Equipements modernes'],
+                    },
                 ],
             },
             procedures: {
@@ -785,7 +863,11 @@ const dictionaries: Record<Locale, Dictionary> = {
         pages: {
             port: {
                 title: 'الميناء',
-                subtitle: 'تعرف على تاريخ، منشآت ورؤية ميناء نواذيبو المستقل.',
+                subtitle: 'اكتشف تاريخ وتطور الميناء المستقل لنواذيبو، بالإضافة إلى تأثيره الاجتماعي والاقتصادي على المنطقة.',
+                dg_word: {
+                    title: 'كلمة المدير العام',
+                    content: 'عزيزي الزائر، مرحباً بكم في الميناء المستقل لنواذيبو. مهمتنا هي ضمان ربط بحري أمثل مع تعزيز النمو الاقتصادي الإقليمي.',
+                },
                 role: {
                     title: 'الدور الاستراتيجي',
                     description: 'يقع ميناء نواذيبو المستقل (PAN) في خليج محمي طبيعياً، وهو مركز لجميع الأنشطة المتعلقة بالصيد، والمحرك الأساسي لتنمية مدينة نواذيبو.',
@@ -802,13 +884,10 @@ const dictionaries: Record<Locale, Dictionary> = {
                 history: {
                     title: 'تاريخ الإنشاءات',
                     milestones: [
-                        { year: '1955', event: 'إنشاء أول رصيف صغير من طرف شركة SIGP.' },
-                        { year: '1960', event: 'بناء رصيف تجاري بطول 60م و3 أرصفة صيد.' },
-                        { year: '1968', event: 'توسعة رصيف الصيد ليصل إلى 300م بتمويل أوروبي.' },
-                        { year: '1976', event: 'توسعة الرصيف التجاري وبناء مبان إدارية بتمويل كويتي ودولي.' },
-                        { year: '1998', event: 'قرار رسمي بتوسعة المجال البري للميناء.' },
-                        { year: '2014', event: 'رصيف جديد بطول 660م، منحدرات RO-RO ومنصة بمساحة 12 هكتاراً.' },
-                        { year: '2025', event: 'مشروع تحديث شامل وإدخال أدوات التسيير الرقمي.' },
+                        { year: '1955', event: 'تطوير البنية التحتية للصيد. توسعة المنشآت لدعم صناعة الصيد.' },
+                        { year: '1968', event: 'تطوير البنية التحتية للصيد. توسعة المنشآت لدعم صناعة الصيد.' },
+                        { year: '2014', event: 'توسعة الميناء مع منصات RO-RO جديدة. تحديث رئيسي للبنية التحتية لاستقبال المزيد من السفن.' },
+                        { year: '2025', event: 'التحديث والرقمنة جارية. مشروع تحول رقمي وتحسين العمليات المينائية.' },
                     ],
                 },
                 evolution: {
@@ -827,7 +906,24 @@ const dictionaries: Record<Locale, Dictionary> = {
                 },
                 impact: {
                     title: 'الاندماج الاجتماعي والاقتصادي',
-                    description: 'يُعتبر الميناء الرئة الاقتصادية لنواذيبو وأكبر مشغل في المدينة، حيث يفتح المجال للقطاع الخاص ويضمن الاستقرار الاجتماعي عبر شراكات قوية.',
+                    items: [
+                        { title: 'أكبر مشغل في نواذيبو', description: 'الميناء المستقل لنواذيبو هو أكبر مشغل في المنطقة، حيث يوفر آلاف الوظائف المباشرة وغير المباشرة.' },
+                        { title: '80% من الصادرات مرتبطة بالصيد', description: 'يلعب الميناء دوراً حاسماً في الاقتصاد الوطني من خلال تسهيل غالبية صادرات منتجات الصيد.' },
+                        { title: '+50 شريك من القطاع الخاص', description: 'تساهم شبكة واسعة من الشركاء التجاريين والصناعيين في الديناميكية الاقتصادية للميناء.' },
+                    ],
+                },
+                governance: {
+                    title: 'الحكامة',
+                    description: 'اكتشف الهيكل التنظيمي والهيئات الإدارية للميناء المستقل لنواذيبو.',
+                    board: {
+                        title: 'مجلس الإدارة',
+                        headerRole: 'الدور',
+                        headerAttribution: 'الاختصاصات',
+                        members: [
+                            { role: 'الرئيس', attribution: 'التوجه الاستراتيجي والإشراف على أنشطة الميناء' },
+                            { role: 'الأعضاء', attribution: 'ممثلون عن الوزارات والفاعلين الاقتصاديين' },
+                        ],
+                    },
                 },
                 services: {
                     title: 'الخدمات المينائية',
@@ -845,7 +941,16 @@ const dictionaries: Record<Locale, Dictionary> = {
             },
             infrastructure: {
                 title: 'البنية التحتية',
-                subtitle: 'اكتشف منشآتنا المينائية الحديثة ومعداتنا المتطورة.',
+                subtitle: 'اكتشف منشآتنا الحديثة ومعداتنا المتطورة التي تضمن عمليات مينائية فعالة وآمنة.',
+                gallery: {
+                    title: 'معرض صور تعبيري',
+                    items: [
+                        { title: 'محطة الحاويات', description: 'محطة حديثة مجهزة لتسيير فعال للحاويات بأحدث المعدات.' },
+                        { title: 'منطقة وزن 100 طن', description: 'قدرة وزن عالية الدقة لجميع أنواع الشحنات.' },
+                        { title: 'التخزين المبرد', description: 'منشآت حديثة للحفاظ على المنتجات سريعة التلف.' },
+                        { title: 'القطر أثناء العمل', description: 'مساعدة ديناميكية وآمنة لمناورات السفن.' },
+                    ],
+                },
                 quais: {
                     title: 'الأرصفة والمحطات',
                     items: [
@@ -864,12 +969,45 @@ const dictionaries: Record<Locale, Dictionary> = {
                 },
             },
             services: {
-                title: 'الخدمات المينائية',
-                subtitle: 'حلولنا البحرية واللوجستية لعملياتكم المينائية.',
+                title: 'خدماتنا',
+                subtitle: 'يقدم الميناء المستقل لنواذيبو مجموعة كاملة من الخدمات المينائية واللوجستية لتلبية جميع احتياجاتكم.',
                 list: [
-                    { title: 'الإرشاد', desc: 'مساعدة إلزامية لدخول وخروج السفن من الميناء.', icon: 'ship' },
-                    { title: 'المناولة', desc: 'شحن وتفريغ جميع أنواع الحمولات بفعالية.', icon: 'crane' },
-                    { title: 'القطر', desc: 'مساعدة السفن أثناء المناورات داخل الميناء.', icon: 'tow' },
+                    {
+                        title: 'المناولة',
+                        desc: 'خدمات شحن وتفريغ محسنة لجميع أنواع البضائع مع معدات متخصصة تضمن مناولة آمنة وفعالة.',
+                        icon: 'crane',
+                        points: ['شحن وتفريغ محسن', 'معدات متخصصة لمناولة آمنة', 'طاقم مؤهل وذو خبرة', 'عمليات على مدار الساعة'],
+                    },
+                    {
+                        title: 'المسافنة',
+                        desc: 'عمليات سريعة بدون تخزين وسيط تسمح بخفض كبير في التكاليف اللوجستية وتحسين سلسلة التوريد.',
+                        icon: 'refresh-cw',
+                        points: ['عمليات سريعة بدون تخزين', 'خفض التكاليف اللوجستية', 'تنسيق محسن', 'تتبع في الوقت الفعلي'],
+                    },
+                    {
+                        title: 'التخزين',
+                        desc: 'مساحات تخزين متنوعة تشمل مناطق مستودعات جمركية، منشآت تبريد ومستودعات آمنة متاحة على مدار الساعة.',
+                        icon: 'box',
+                        points: ['مناطق مستودعات جمركية', 'مناطق تبريد', 'تخزين آمن', 'وصول 24/7'],
+                    },
+                    {
+                        title: 'العبور والخدمات اللوجستية',
+                        desc: 'خدمات تنسيق كاملة بين النقل البحري والبري مع إدارة جمركية مبسطة لتسهيل عملياتكم اللوجستية.',
+                        icon: 'truck',
+                        points: ['تنسيق النقل البحري/البري', 'إدارة جمركية مبسطة', 'حلول لوجستية متكاملة', 'متابعة إدارية كاملة'],
+                    },
+                    {
+                        title: 'خدمات السفن',
+                        desc: 'مساعدة كاملة للسفن تشمل الإرشاد، القطر، التزويد بالوقود وتوفير المياه العذبة لضمان رسو مثالي.',
+                        icon: 'anchor',
+                        points: ['إرشاد مهني', 'خدمات القطر', 'التزويد بالوقود', 'توفير المياه العذبة'],
+                    },
+                    {
+                        title: 'تسيير المحطات',
+                        desc: 'استغلال فعال للمحطات المتخصصة للحاويات، الصب والبضائع المتنوعة مع معدات حديثة وطاقم مؤهل.',
+                        icon: 'layout',
+                        points: ['محطة الحاويات', 'محطة الصب', 'محطة الصيد', 'معدات حديثة'],
+                    },
                 ],
             },
             procedures: {
@@ -1074,7 +1212,7 @@ const dictionaries: Record<Locale, Dictionary> = {
         hero: {
             title: 'Nouadhibou Autonomous Port',
             subtitle:
-                'Strategic gateway of Mauritania on the Atlantic. Major commercial hub for West Africa.',
+                'The Nouadhibou Autonomous Port is the main port infrastructure of Mauritania, offering quality maritime and logistics services to support international trade and regional economic development.',
             cta: 'Discover our services',
             ctaSecondary: 'Contact us',
         },
@@ -1172,7 +1310,11 @@ const dictionaries: Record<Locale, Dictionary> = {
         pages: {
             port: {
                 title: 'The Port',
-                subtitle: 'Discover the history, infrastructure, and vision of the Nouadhibou Autonomous Port.',
+                subtitle: 'Discover the history and evolution of the Nouadhibou Autonomous Port, as well as its socio-economic impact on the region.',
+                dg_word: {
+                    title: 'Message from the Director General',
+                    content: 'Dear visitor, welcome to the Nouadhibou Autonomous Port. Our mission is to guarantee optimal maritime connectivity while promoting regional economic growth.',
+                },
                 role: {
                     title: 'Strategic Role',
                     description: 'The Nouadhibou Autonomous Port (PAN) is located in a naturally protected bay. It is the pivot for all fishing activities and the engine of development for Nouadhibou.',
@@ -1189,13 +1331,10 @@ const dictionaries: Record<Locale, Dictionary> = {
                 history: {
                     title: 'History & Milestones',
                     milestones: [
-                        { year: '1955', event: 'First small quay built by SIGP.' },
-                        { year: '1960', event: 'Construction of a 60m commercial quay and 3 fishing quays.' },
-                        { year: '1968', event: 'Extension of the fishing quay to 300m (FED).' },
-                        { year: '1976', event: 'Commercial expansion and new administrative buildings (Kuwaiti Fund).' },
-                        { year: '1998', event: 'Official decree for the extension of the port domain.' },
-                        { year: '2014', event: 'New 660m quay, RO-RO ramp, and 12-hectare platform.' },
-                        { year: '2025', event: 'Global modernization and digital transformation.' },
+                        { year: '1955', event: 'Development of fishing infrastructure. Extension of facilities to support the fishing industry.' },
+                        { year: '1968', event: 'Development of fishing infrastructure. Extension of facilities to support the fishing industry.' },
+                        { year: '2014', event: 'Port extension with new RO-RO platforms. Major infrastructure modernization to accommodate more vessels.' },
+                        { year: '2025', event: 'Modernization and digitalization in progress. Digital transformation and port operations optimization project.' },
                     ],
                 },
                 evolution: {
@@ -1213,8 +1352,25 @@ const dictionaries: Record<Locale, Dictionary> = {
                     ],
                 },
                 impact: {
-                    title: 'Economic & Social Impact',
-                    description: "As the region's economic lung and the city's largest employer, the port promotes private sector integration and ensures social stability through sustainable partnerships.",
+                    title: 'Socio-Economic Integration',
+                    items: [
+                        { title: 'First employer of Nouadhibou', description: 'The Nouadhibou Autonomous Port is the region\'s largest employer, offering thousands of direct and indirect jobs.' },
+                        { title: '80% of exports related to fishing', description: 'The port plays a crucial role in the national economy by facilitating the majority of fishing product exports.' },
+                        { title: '+50 private partners', description: 'An extensive network of commercial and industrial partners contributes to the port\'s economic dynamism.' },
+                    ],
+                },
+                governance: {
+                    title: 'Governance',
+                    description: 'Discover the organizational structure and governing bodies of the Nouadhibou Autonomous Port.',
+                    board: {
+                        title: 'Board of Directors',
+                        headerRole: 'Role',
+                        headerAttribution: 'Attributes',
+                        members: [
+                            { role: 'Chairman', attribution: 'Strategic direction and supervision of port activities' },
+                            { role: 'Members', attribution: 'Representatives of ministries and economic actors' },
+                        ],
+                    },
                 },
                 services: {
                     title: 'Port Services',
@@ -1232,13 +1388,22 @@ const dictionaries: Record<Locale, Dictionary> = {
             },
             infrastructure: {
                 title: 'Infrastructure',
-                subtitle: 'Discover our modern port facilities and state-of-the-art equipment.',
+                subtitle: 'Discover our modern facilities and state-of-the-art equipment that define efficient and secure port operations.',
+                gallery: {
+                    title: 'Expressive photo gallery',
+                    items: [
+                        { title: 'Container Terminal', description: 'Modern terminal equipped for efficient container management with state-of-the-art equipment.' },
+                        { title: '100-ton weighing zone', description: 'High-precision weighing capacity for all types of cargo.' },
+                        { title: 'Cold Storage', description: 'Modern facilities for the conservation of perishable products.' },
+                        { title: 'Towing in action', description: 'Dynamic and secure assistance for vessel maneuvers.' },
+                    ],
+                },
                 quais: {
                     title: 'Quays & Terminals',
                     items: [
-                        { name: 'Fishing Quay', info: 'Dedicated to deep-sea and artisanal fishing vessels.', length: '300m', draft: '6.0m' },
-                        { name: 'Commercial Quay', info: 'Versatile for general cargo and containers.', length: '660m', draft: '10.5m' },
-                        { name: 'Oil Terminal', info: 'Secure facilities for oil discharge.', length: '200m', draft: '12.0m' },
+                        { name: 'Commercial Quay', info: 'Main quay dedicated to commercial activities and transport of various goods.', length: '350m', draft: '9.0m' },
+                        { name: 'Industrial Fishing Quay', info: 'Specialized infrastructure for deep-sea fishing vessels with unloading facilities.', length: '280m', draft: '7.0m' },
+                        { name: 'Oil Terminal', info: 'Specialized terminal for unloading petroleum products with advanced safety systems.', length: '200m', draft: '12.0m' },
                     ],
                 },
                 zones: {
@@ -1251,12 +1416,45 @@ const dictionaries: Record<Locale, Dictionary> = {
                 },
             },
             services: {
-                title: 'Port Services',
-                subtitle: 'Our maritime and logistical solutions for your operations.',
+                title: 'Our Services',
+                subtitle: 'The Nouadhibou Autonomous Port offers a full range of port and logistical services to meet all your needs.',
                 list: [
-                    { title: 'Pilotage', desc: 'Mandatory assistance for port entry and exit.', icon: 'ship' },
-                    { title: 'Handling', desc: 'Loading and unloading of all types of cargo.', icon: 'crane' },
-                    { title: 'Towing', desc: 'Assistance to vessels during port maneuvers.', icon: 'tow' },
+                    {
+                        title: 'Handling',
+                        desc: 'Optimized loading and unloading services for all types of cargo with specialized equipment guaranteeing secure and efficient handling.',
+                        icon: 'crane',
+                        points: ['Optimized loading/unloading', 'Specialized secure equipment', 'Qualified personnel', '24/7 operations'],
+                    },
+                    {
+                        title: 'Transshipments',
+                        desc: 'Rapid operations without intermediate storage allowing significant reduction in logistical costs and supply chain optimization.',
+                        icon: 'refresh-cw',
+                        points: ['Rapid operations', 'Logistical cost reduction', 'Optimized coordination', 'Real-time tracking'],
+                    },
+                    {
+                        title: 'Warehousing',
+                        desc: 'Diversified storage spaces including bonded areas, cold storage facilities, and secure warehouses accessible 24/7.',
+                        icon: 'box',
+                        points: ['Bonded areas', 'Cold storage', 'Secure warehousing', '24/7 access'],
+                    },
+                    {
+                        title: 'Transit & Logistics',
+                        desc: 'Comprehensive coordination services between maritime and land transport with simplified customs management to fluidize your logistical operations.',
+                        icon: 'truck',
+                        points: ['Maritime/land coordination', 'Simplified customs', 'Integrated solutions', 'Full admin follow-up'],
+                    },
+                    {
+                        title: 'Vessel Services',
+                        desc: 'Complete assistance for vessels including pilotage, towing, bunkering, and fresh water supply to guarantee optimal stopovers.',
+                        icon: 'anchor',
+                        points: ['Professional pilotage', 'Towing services', 'Bunkering', 'Fresh water supply'],
+                    },
+                    {
+                        title: 'Terminal Management',
+                        desc: 'Efficient exploitation of specialized terminals for containers, bulk, and general cargo with modern equipment and qualified personnel.',
+                        icon: 'layout',
+                        points: ['Container terminal', 'Bulk terminal', 'Fishing terminal', 'Modern equipment'],
+                    },
                 ],
             },
             procedures: {
@@ -1562,7 +1760,11 @@ const dictionaries: Record<Locale, Dictionary> = {
         pages: {
             port: {
                 title: 'El Puerto',
-                subtitle: 'Descubra la historia, las infraestructuras y la visión del Puerto Autónomo de Nouadhibou.',
+                subtitle: 'Descubra la historia y la evolución del Puerto Autónomo de Nouadhibou, así como su impacto socioeconómico en la región.',
+                dg_word: {
+                    title: 'Mensaje del Director General',
+                    content: 'Estimado visitante, bienvenido al Puerto Autónomo de Nouadhibou. Nuestra misión es garantizar una conectividad marítima óptima fomentando al mismo tiempo el crecimiento económico regional.',
+                },
                 role: {
                     title: 'Papel Estratégico',
                     description: 'El Puerto Autónomo de Nouadhibou (PAN) se encuentra en una bahía protegida naturalmente. Es el eje de todas las actividades pesqueras y el motor del desarrollo de Nouadhibou.',
@@ -1574,18 +1776,15 @@ const dictionaries: Record<Locale, Dictionary> = {
                 },
                 geography: {
                     title: 'Situación Geográfica',
-                    description: 'Situado a 20°54 N y 17°03 O, el puerto se beneficia de un refugio natural excepcional contra el oleaje del Atlántico, en el cruce de las grandes rutas marítimas.',
+                    description: 'Situado a 20°54 N and 17°03 O, el puerto se beneficia de un refugio natural excepcional contra el oleaje del Atlántico, en el cruce de las grandes rutas marítimas.',
                 },
                 history: {
                     title: 'Historia e Hitos',
                     milestones: [
-                        { year: '1955', event: 'Primer muelle pequeño construido por SIGP.' },
-                        { year: '1960', event: 'Construcción de un muelle comercial de 60m y 3 muelles de pesca.' },
-                        { year: '1968', event: 'Extensión del muelle de pesca a 300m (FED).' },
-                        { year: '1976', event: 'Expansión comercial y nuevos edificios administrativos (Fondo de Kuwait).' },
-                        { year: '1998', event: 'Decreto oficial de extensión del dominio portuario.' },
-                        { year: '2014', event: 'Nuevo muelle de 660m, rampa RO-RO y plataforma de 12 hectáreas.' },
-                        { year: '2025', event: 'Modernización global y transformación digital.' },
+                        { year: '1955', event: 'Desarrollo de infraestructuras pesqueras. Ampliación de las instalaciones para apoyar la industria pesquera.' },
+                        { year: '1968', event: 'Desarrollo de infraestructuras pesqueras. Ampliación de las instalaciones para apoyar la industria pesquera.' },
+                        { year: '2014', event: 'Ampliación del puerto con nuevas plataformas RO-RO. Modernización importante de las infraestructuras para acoger más buques.' },
+                        { year: '2025', event: 'Modernización y digitalización en curso. Proyecto de transformación digital y optimización de las operaciones portuarias.' },
                     ],
                 },
                 evolution: {
@@ -1603,8 +1802,25 @@ const dictionaries: Record<Locale, Dictionary> = {
                     ],
                 },
                 impact: {
-                    title: 'Impacto Económico y Social',
-                    description: 'Pulmón económico de la región y mayor empleador de la ciudad, el puerto fomenta la integración del sector privado y garantiza la estabilidad social a través de asociaciones sostenibles.',
+                    title: 'Integración Socioeconómica',
+                    items: [
+                        { title: 'Primer empleador de Nouadhibou', description: 'El Puerto Autónomo de Nouadhibou es el mayor empleador de la región, ofreciendo miles de empleos directos e indirectos.' },
+                        { title: '80% de las exportaciones vinculadas a la pesca', description: 'El puerto desempeña un papel crucial en la economía nacional al facilitar la mayoría de las exportaciones de productos pesqueros.' },
+                        { title: '+50 socios privados', description: 'Una extensa red de socios comerciales e industriales contribuye al dinamismo económico del puerto.' },
+                    ],
+                },
+                governance: {
+                    title: 'Gobernanza',
+                    description: 'Descubra la estructura organizativa y los órganos rectores del Puerto Autónomo de Nouadhibou.',
+                    board: {
+                        title: 'Consejo de Administración',
+                        headerRole: 'Papel',
+                        headerAttribution: 'Atribuciones',
+                        members: [
+                            { role: 'Presidente', attribution: 'Dirección estratégica y supervisión de las actividades del puerto' },
+                            { role: 'Miembros', attribution: 'Representantes de ministerios y agentes económicos' },
+                        ],
+                    },
                 },
                 services: {
                     title: 'Servicios Portuarios',
@@ -1622,31 +1838,73 @@ const dictionaries: Record<Locale, Dictionary> = {
             },
             infrastructure: {
                 title: 'Infraestructuras',
-                subtitle: 'Descubra nuestras instalaciones portuarias modernas y equipos de vanguardia.',
+                subtitle: 'Descubra nuestras instalaciones portuarias modernas y equipos de última generación que garantizan operaciones portuarias eficientes y seguras.',
+                gallery: {
+                    title: 'Galería de fotos expresiva',
+                    items: [
+                        { title: 'Terminal de contenedores', description: 'Terminal moderno equipado para la gestión eficiente de contenedores con equipos de vanguardia.' },
+                        { title: 'Zona de pesaje de 100 toneladas', description: 'Capacidad de pesaje de alta precisión para todo tipo de carga.' },
+                        { title: 'Almacenamiento en frío', description: 'Instalaciones modernas para la conservación de productos perecederos.' },
+                        { title: 'Remolque en acción', description: 'Asistencia dinámica y segura para las maniobras de los buques.' },
+                    ],
+                },
                 quais: {
                     title: 'Muelles y Terminales',
                     items: [
-                        { name: 'Muelle de Pesca', info: 'Dedicado a buques de pesca de altura y artesanal.', length: '300m', draft: '6.0m' },
-                        { name: 'Muelle Comercial', info: 'Polivalente para carga general y contenedores.', length: '660m', draft: '10.5m' },
-                        { name: 'Terminal Petrolera', info: 'Instalaciones seguras para la descarga de hidrocarburos.', length: '200m', draft: '12.0m' },
+                        { name: 'Muelle de Comercio', info: 'Muelle principal dedicado a actividades comerciales y transporte de mercancías diversas.', length: '350m', draft: '9.0m' },
+                        { name: 'Muelle de Pesca Industrial', info: 'Infraestructura especializada para buques de pesca de altura con instalaciones de descarga.', length: '280m', draft: '7.0m' },
+                        { name: 'Terminal Petrolera', info: 'Terminal especializada para la descarga de productos petrolíferos con sistemas de seguridad avanzados.', length: '200m', draft: '12.0m' },
                     ],
                 },
                 zones: {
                     title: 'Zonas Dedicadas',
                     items: [
-                        { name: 'Zona de Aduanas', area: '12 Hectáreas', purpose: 'Almacenamiento temporal y logística.' },
+                        { name: 'Zona bajo aduana', area: '12 Hectáreas', purpose: 'Almacenamiento temporal y logística.' },
                         { name: 'Zona Industrial', area: '15 Hectares', purpose: 'Unidades de procesamiento de pescado.' },
-                        { name: 'Zona Franca', area: 'Extensión en curso', purpose: 'Incentivos fiscales y export.' },
+                        { name: 'Zona Franca', area: 'Extensión en curso', purpose: 'Incentivos fiscales y exportación.' },
                     ],
                 },
             },
             services: {
-                title: 'Servicios Portuarios',
-                subtitle: 'Nuestras soluciones marítimas y logísticas para sus operaciones.',
+                title: 'Nuestros Servicios',
+                subtitle: 'El Puerto Autónomo de Nouadhibou ofrece una gama completa de servicios portuarios y logísticos para satisfacer todas sus necesidades.',
                 list: [
-                    { title: 'Practicaje', desc: 'Asistencia obligatoria para la entrada y salida del puerto.', icon: 'ship' },
-                    { title: 'Manipulación', desc: 'Carga y descarga de todo tipo de mercancías.', icon: 'crane' },
-                    { title: 'Remolque', desc: 'Asistencia a los buques durante las maniobras portuarias.', icon: 'tow' },
+                    {
+                        title: 'Manipulación',
+                        desc: 'Servicios de carga y descarga optimizados para todo tipo de mercancías con equipos especializados que garantizan una manipulación segura y eficiente.',
+                        icon: 'crane',
+                        points: ['Carga/descarga optimizada', 'Equipos seguros especializados', 'Personal cualificado', 'Operaciones 24/7'],
+                    },
+                    {
+                        title: 'Transbordos',
+                        desc: 'Operaciones rápidas sin almacenamiento intermedio que permiten una reducción significativa de los costes logísticos y la optimización de la cadena de suministro.',
+                        icon: 'refresh-cw',
+                        points: ['Operaciones rápidas', 'Reducción de costes logísticos', 'Coordinación optimizada', 'Seguimiento en tiempo real'],
+                    },
+                    {
+                        title: 'Almacenamiento',
+                        desc: 'Espacios de almacenamiento diversificados que incluyen zonas francas, instalaciones de almacenamiento en frío y almacenes seguros accesibles las 24 horas, los 7 días de la semana.',
+                        icon: 'box',
+                        points: ['Zonas francas', 'Almacenamiento en frío', 'Almacenes seguros', 'Acceso 24/7'],
+                    },
+                    {
+                        title: 'Tránsito y Logística',
+                        desc: 'Servicios de coordinación integral entre el transporte marítimo y terrestre con una gestión aduanera simplificada para agilizar sus operaciones logísticas.',
+                        icon: 'truck',
+                        points: ['Coordinación mar/tierra', 'Aduana simplificada', 'Soluciones integradas', 'Seguimiento administrativo'],
+                    },
+                    {
+                        title: 'Servicios a Buques',
+                        desc: 'Asistencia completa para buques que incluye practicaje, remolque, abastecimiento de combustible y suministro de agua dulce para garantizar escalas óptimas.',
+                        icon: 'anchor',
+                        points: ['Practicaje profesional', 'Remolque especializado', 'Abastecimiento de combustible', 'Suministro de agua dulce'],
+                    },
+                    {
+                        title: 'Gestión de Terminales',
+                        desc: 'Explotación eficiente de terminales especializadas para contenedores, graneles y mercancías diversas con equipos modernos y personal cualificado.',
+                        icon: 'layout',
+                        points: ['Terminal contenedores', 'Terminal graneles', 'Terminal pesca', 'Equipos modernos'],
+                    },
                 ],
             },
             procedures: {
@@ -1688,7 +1946,7 @@ const dictionaries: Record<Locale, Dictionary> = {
                 subtitle: 'Consulte las licitaciones y contratos públicos en curso.',
             },
             documentation: {
-                title: 'Documentation',
+                title: 'Documentación',
                 subtitle: 'Documentos oficiales, informes y formularios descargables.',
             },
             media: {
@@ -1753,7 +2011,7 @@ const dictionaries: Record<Locale, Dictionary> = {
         ged: {
             title: 'Documentación',
             subtitle: 'Biblioteca de documentos oficiales, informes, formularios y reglamentos del Puerto Autónomo de Nouadhibou.',
-            searchPlaceholder: 'Buscar un document...',
+            searchPlaceholder: 'Buscar un documento...',
             filters: {
                 theme: 'Tema',
                 direction: 'Dirección',
