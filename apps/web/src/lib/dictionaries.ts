@@ -154,6 +154,7 @@ export type Dictionary = {
             };
             impact: {
                 title: string;
+                description: string;
                 items: { title: string; description: string }[];
             };
             governance: {
@@ -479,6 +480,7 @@ const dictionaries: Record<Locale, Dictionary> = {
                 },
                 impact: {
                     title: 'Intégration Socio-Économique',
+                    description: 'Le Port Autonome de Nouadhibou est un moteur de développement régional et national.',
                     items: [
                         { title: 'Premier employeur de Nouadhibou', description: 'Le Port Autonome de Nouadhibou est le plus grand employeur de la région, offrant des milliers d\'emplois directs et indirects.' },
                         { title: '80% des exportations liées à la pêche', description: 'Le port joue un rôle crucial dans l\'économie nationale en facilitant la majorité des exportations de produits de la pêche.' },
@@ -936,6 +938,7 @@ const dictionaries: Record<Locale, Dictionary> = {
                 },
                 impact: {
                     title: 'الاندماج الاجتماعي والاقتصادي',
+                    description: 'ميناء نواذيبو المستقل هو محرك للتنمية الجهوية والوطنية.',
                     items: [
                         { title: 'أكبر مشغل في نواذيبو', description: 'الميناء المستقل لنواذيبو هو أكبر مشغل في المنطقة، حيث يوفر آلاف الوظائف المباشرة وغير المباشرة.' },
                         { title: '80% من الصادرات مرتبطة بالصيد', description: 'يلعب الميناء دوراً حاسماً في الاقتصاد الوطني من خلال تسهيل غالبية صادرات منتجات الصيد.' },
@@ -1393,6 +1396,7 @@ const dictionaries: Record<Locale, Dictionary> = {
                 },
                 impact: {
                     title: 'Socio-Economic Integration',
+                    description: 'The Autonomous Port of Nouadhibou is an engine of regional and national development.',
                     items: [
                         { title: 'First employer of Nouadhibou', description: 'The Nouadhibou Autonomous Port is the region\'s largest employer, offering thousands of direct and indirect jobs.' },
                         { title: '80% of exports related to fishing', description: 'The port plays a crucial role in the national economy by facilitating the majority of fishing product exports.' },
@@ -1853,6 +1857,7 @@ const dictionaries: Record<Locale, Dictionary> = {
                 },
                 impact: {
                     title: 'Integración Socioeconómica',
+                    description: 'El Puerto Autónomo de Nouadhibou es un motor del desarrollo regional y nacional.',
                     items: [
                         { title: 'Primer empleador de Nouadhibou', description: 'El Puerto Autónomo de Nouadhibou es el mayor empleador de la región, ofreciendo miles de empleos directos e indirectos.' },
                         { title: '80% de las exportaciones vinculadas a la pesca', description: 'El puerto desempeña un papel crucial en la economía nacional al facilitar la mayoría de las exportaciones de productos pesqueros.' },
