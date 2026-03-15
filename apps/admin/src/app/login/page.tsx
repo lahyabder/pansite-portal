@@ -4,20 +4,11 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/lib/auth';
 
-const demoAccounts = [
-    { email: 'admin@pan.mr', pass: 'admin', role: 'Super Admin' },
-    { email: 'fatima@pan.mr', pass: 'editor', role: 'Admin Contenu' },
-    { email: 'ibrahim@pan.mr', pass: 'ged', role: 'Gestionnaire GED' },
-    { email: 'aissata@pan.mr', pass: 'services', role: 'Gestionnaire Services' },
-    { email: 'sidi@pan.mr', pass: 'validator', role: 'Validateur' },
-];
-
 export default function LoginPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
-    const [showAccounts, setShowAccounts] = useState(false);
     const router = useRouter();
     const { login, isAuthenticated } = useAuth();
 
@@ -32,7 +23,7 @@ export default function LoginPage() {
         setLoading(true);
 
         const loginPromise = login(email, password);
-        const timeoutPromise = new Promise<{ success: false; error: string }>((_, reject) =>
+        const timeoutPromise = new Promise<{ success: false ; error: string }>((_, reject) =>
             setTimeout(() => reject(new Error('TIMEOUT')), 8000)
         );
 
@@ -53,11 +44,6 @@ export default function LoginPage() {
             setLoading(false);
         }
     };
-
-    function quickLogin(em: string, pw: string) {
-        setEmail(em);
-        setPassword(pw);
-    }
 
     return (
         <div className="min-h-screen flex items-center justify-center p-6" style={{
@@ -142,30 +128,6 @@ export default function LoginPage() {
                         <p className="text-[#64748b] text-[10px] leading-relaxed">
                             Activez l&apos;authentification à deux facteurs (2FA/TOTP) dans vos paramètres pour renforcer la sécurité de votre compte.
                         </p>
-                    </div>
-
-                    {/* Demo accounts */}
-                    <div className="mt-4 pt-4 border-t border-white/5">
-                        <button
-                            onClick={() => setShowAccounts(!showAccounts)}
-                            className="text-[#475569] text-[10px] text-center w-full hover:text-[#64748b] transition-colors"
-                        >
-                            {showAccounts ? '▲ Masquer' : '▼ Comptes démo'}
-                        </button>
-                        {showAccounts && (
-                            <div className="mt-3 space-y-1.5">
-                                {demoAccounts.map((acc) => (
-                                    <button
-                                        key={acc.email}
-                                        onClick={() => quickLogin(acc.email, acc.pass)}
-                                        className="w-full flex items-center justify-between px-3 py-2 bg-[#0f172a]/50 rounded-lg text-[10px] hover:bg-[#0f172a] transition-colors group"
-                                    >
-                                        <span className="text-[#94a3b8] group-hover:text-white transition-colors">{acc.email}</span>
-                                        <span className="text-[#475569]">{acc.role}</span>
-                                    </button>
-                                ))}
-                            </div>
-                        )}
                     </div>
                 </div>
 
