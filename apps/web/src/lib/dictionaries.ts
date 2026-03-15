@@ -25,6 +25,8 @@ export type Dictionary = {
     stats: {
         title: string;
     };
+    quickAccess: string;
+    urgent: string;
     services: {
         title: string;
         subtitle: string;
@@ -183,6 +185,16 @@ export type Dictionary = {
                 title: string;
                 items: { name: string; info: string; length: string; draft: string }[];
             };
+            interactiveMapTitle: string;
+            interactiveMapDesc: string;
+            technicalDetails: string;
+            strategicZone: string;
+            labels: {
+                length: string;
+                draft: string;
+                status: string;
+                operational: string;
+            };
             zones: {
                 title: string;
                 items: { name: string; area: string; purpose: string }[];
@@ -336,6 +348,8 @@ const dictionaries: Record<Locale, Dictionary> = {
         stats: {
             title: 'Le PAN en chiffres',
         },
+        quickAccess: 'Accès Rapide',
+        urgent: 'Urgent',
         services: {
             title: 'Nos Services',
             subtitle: 'Des solutions portuaires complètes pour répondre à tous vos besoins logistiques.',
@@ -533,6 +547,16 @@ const dictionaries: Record<Locale, Dictionary> = {
                         { name: 'Quai de Pêche Industrielle', info: 'Infrastructure spécialisée pour les navires de pêche hauturière avec installations de déchargement.', length: '280m', draft: '7.0m' },
                         { name: 'Terminal Pétrolier', info: 'Terminal spécialisé pour le déchargement des produits pétroliers avec systèmes de sécurité avancés.', length: '200m', draft: '12.0m' },
                     ],
+                },
+                interactiveMapTitle: 'Vue Interactive du Port',
+                interactiveMapDesc: 'Explorez nos installations portuaires en temps réel via notre carte interactive. Survolez les zones pour plus de détails.',
+                technicalDetails: 'Détails Techniques',
+                strategicZone: 'Zone Stratégique',
+                labels: {
+                    length: 'Longueur',
+                    draft: 'Tirant d\'eau',
+                    status: 'Statut',
+                    operational: 'Opérationnel',
                 },
                 zones: {
                     title: 'Zones Dédiées',
@@ -786,7 +810,7 @@ const dictionaries: Record<Locale, Dictionary> = {
             searchPlaceholder: 'ابحث في الموقع...',
         },
         hero: {
-            title: 'الميناء المستقل لنواذيبو',
+            title: 'ميناء نواذيبو المستقل',
             subtitle: 'البوابة الاستراتيجية لموريتانيا على المحيط الأطلسي. مركز تجاري رئيسي لغرب أفريقيا.',
             cta: 'اكتشف خدماتنا',
             ctaSecondary: 'اتصل بنا',
@@ -794,6 +818,8 @@ const dictionaries: Record<Locale, Dictionary> = {
         stats: {
             title: 'الميناء بالأرقام',
         },
+        quickAccess: 'وصول سريع',
+        urgent: 'عاجل',
         services: {
             title: 'خدماتنا',
             subtitle: 'حلول مينائية شاملة لتلبية جميع احتياجاتكم اللوجستية.',
@@ -841,7 +867,7 @@ const dictionaries: Record<Locale, Dictionary> = {
         },
         news: {
             title: 'الأخبار',
-            subtitle: 'آخر أخبار الميناء المستقل لنواذيبو.',
+            subtitle: 'آخر أخبار ميناء نواذيبو المستقل.',
             readMore: 'اقرأ المزيد',
             viewAll: 'جميع الأخبار',
         },
@@ -895,10 +921,10 @@ const dictionaries: Record<Locale, Dictionary> = {
         pages: {
             port: {
                 title: 'الميناء',
-                subtitle: 'اكتشف تاريخ وتطور الميناء المستقل لنواذيبو، بالإضافة إلى تأثيره الاجتماعي والاقتصادي على المنطقة.',
+                subtitle: 'اكتشف تاريخ وتطور ميناء نواذيبو المستقل، بالإضافة إلى تأثيره الاجتماعي والاقتصادي على المنطقة.',
                 dg_word: {
                     title: 'كلمة المدير العام',
-                    content: 'عزيزي الزائر، مرحباً بكم في الميناء المستقل لنواذيبو. مهمتنا هي ضمان ربط بحري أمثل مع تعزيز النمو الاقتصادي الإقليمي.',
+                    content: 'عزيزي الزائر، مرحباً بكم في ميناء نواذيبو المستقل. مهمتنا هي ضمان ربط بحري أمثل مع تعزيز النمو الاقتصادي الإقليمي.',
                 },
                 role: {
                     title: 'الدور الاستراتيجي',
@@ -940,7 +966,7 @@ const dictionaries: Record<Locale, Dictionary> = {
                     title: 'الاندماج الاجتماعي والاقتصادي',
                     description: 'ميناء نواذيبو المستقل هو محرك للتنمية الجهوية والوطنية.',
                     items: [
-                        { title: 'أكبر مشغل في نواذيبو', description: 'الميناء المستقل لنواذيبو هو أكبر مشغل في المنطقة، حيث يوفر آلاف الوظائف المباشرة وغير المباشرة.' },
+                        { title: 'أكبر مشغل في نواذيبو', description: 'ميناء نواذيبو المستقل هو أكبر مشغل في المنطقة، حيث يوفر آلاف الوظائف المباشرة وغير المباشرة.' },
                         { title: '80% من الصادرات مرتبطة بالصيد', description: 'يلعب الميناء دوراً حاسماً في الاقتصاد الوطني من خلال تسهيل غالبية صادرات منتجات الصيد.' },
                         { title: '+50 شريك من القطاع الخاص', description: 'تساهم شبكة واسعة من الشركاء التجاريين والصناعيين في الديناميكية الاقتصادية للميناء.' },
                     ],
@@ -992,6 +1018,16 @@ const dictionaries: Record<Locale, Dictionary> = {
                         { name: 'محطة النفط', info: 'منشآت آمنة لتفريغ المحروقات والمواد البترولية.', length: '200م', draft: '12.0م' },
                     ],
                 },
+                interactiveMapTitle: 'خريطة تفاعلية للميناء',
+                interactiveMapDesc: 'استكشف منشآتنا المينائية في الوقت الفعلي عبر خريطتنا التفاعلية. مرر مؤشر الماوس فوق المناطق لمزيد من التفاصيل.',
+                technicalDetails: 'التفاصيل التقنية',
+                strategicZone: 'منطقة استراتيجية',
+                labels: {
+                    length: 'الطول',
+                    draft: 'عمق الغاطس',
+                    status: 'الحالة',
+                    operational: 'تشغيلي',
+                },
                 zones: {
                     title: 'المناطق المتخصصة',
                     items: [
@@ -1003,7 +1039,7 @@ const dictionaries: Record<Locale, Dictionary> = {
             },
             services: {
                 title: 'خدماتنا',
-                subtitle: 'يقدم الميناء المستقل لنواذيبو مجموعة كاملة من الخدمات المينائية واللوجستية لتلبية جميع احتياجاتكم.',
+                subtitle: 'يقدم ميناء نواذيبو المستقل مجموعة كاملة من الخدمات المينائية واللوجستية لتلبية جميع احتياجاتكم.',
                 list: [
                     {
                         title: 'المناولة',
@@ -1112,7 +1148,7 @@ const dictionaries: Record<Locale, Dictionary> = {
             },
         },
         footer: {
-            description: 'الميناء المستقل لنواذيبو فاعل رئيسي في التنمية الاقتصادية لموريتانيا، يقدم خدمات مينائية بجودة دولية.',
+            description: 'ميناء نواذيبو المستقل فاعل رئيسي في التنمية الاقتصادية لموريتانيا، يقدم خدمات مينائية بجودة دولية.',
             quickLinks: 'روابط سريعة',
             services: 'الخدمات',
             legal: 'معلومات قانونية',
@@ -1121,7 +1157,7 @@ const dictionaries: Record<Locale, Dictionary> = {
             phone: '+222 45 74 51 06',
             fax: '+222 45 74 51 07',
             email: 'contact@pan.mr',
-            rights: '© 2025 الميناء المستقل لنواذيبو. جميع الحقوق محفوظة.',
+            rights: '© 2025 ميناء نواذيبو المستقل. جميع الحقوق محفوظة.',
             legalNotice: 'الإشعار القانوني',
             privacyPolicy: 'سياسة الخصوصية',
             termsOfUse: 'شروط الاستخدام',
@@ -1252,6 +1288,8 @@ const dictionaries: Record<Locale, Dictionary> = {
         stats: {
             title: 'PAN in figures',
         },
+        quickAccess: 'Quick Access',
+        urgent: 'Urgent',
         services: {
             title: 'Our Services',
             subtitle: 'Comprehensive port solutions to meet all your logistical needs.',
@@ -1449,6 +1487,16 @@ const dictionaries: Record<Locale, Dictionary> = {
                         { name: 'Industrial Fishing Quay', info: 'Specialized infrastructure for deep-sea fishing vessels with unloading facilities.', length: '280m', draft: '7.0m' },
                         { name: 'Oil Terminal', info: 'Specialized terminal for unloading petroleum products with advanced safety systems.', length: '200m', draft: '12.0m' },
                     ],
+                },
+                interactiveMapTitle: 'Interactive Port View',
+                interactiveMapDesc: 'Explore our port facilities in real-time via our interactive map. Hover over zones for more details.',
+                technicalDetails: 'Technical Details',
+                strategicZone: 'Strategic Zone',
+                labels: {
+                    length: 'Length',
+                    draft: 'Draft',
+                    status: 'Status',
+                    operational: 'Operational',
                 },
                 zones: {
                     title: 'Dedicated Zones',
@@ -1713,6 +1761,8 @@ const dictionaries: Record<Locale, Dictionary> = {
         stats: {
             title: 'El PAN en cifras',
         },
+        quickAccess: 'Acceso Rápido',
+        urgent: 'Urgente',
         services: {
             title: 'Nuestros Servicios',
             subtitle: 'Soluciones portuarias integrales para satisfacer todas sus necesidades logísticas.',
@@ -1910,6 +1960,16 @@ const dictionaries: Record<Locale, Dictionary> = {
                         { name: 'Muelle de Pesca Industrial', info: 'Infraestructura especializada para buques de pesca de altura con instalaciones de descarga.', length: '280m', draft: '7.0m' },
                         { name: 'Terminal Petrolera', info: 'Terminal especializada para la descarga de productos petrolíferos con sistemas de seguridad avanzados.', length: '200m', draft: '12.0m' },
                     ],
+                },
+                interactiveMapTitle: 'Vista Interactiva del Puerto',
+                interactiveMapDesc: 'Explore nuestras instalaciones portuarias en tiempo real a través de nuestro mapa interactivo. Pase el cursor sobre las zonas para más detalles.',
+                technicalDetails: 'Detalles Técnicos',
+                strategicZone: 'Zona Estratégica',
+                labels: {
+                    length: 'Longitud',
+                    draft: 'Calado',
+                    status: 'Estado',
+                    operational: 'Operativo',
                 },
                 zones: {
                     title: 'Zonas Dedicadas',

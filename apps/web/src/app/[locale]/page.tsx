@@ -79,12 +79,7 @@ export default async function HomePage({
                 <div className="max-w-7xl mx-auto px-6">
                     <div className="text-center mb-16">
                         <h2 className="text-3xl sm:text-4xl font-bold text-pan-navy mb-4">
-                            {{
-                                ar: 'وصول سريع',
-                                fr: 'Accès Rapide',
-                                en: 'Quick Access',
-                                es: 'Acceso Rápido'
-                            }[locale]}
+                            {dict.quickAccess}
                         </h2>
                     </div>
                     <div className="grid grid-cols-2 md:grid-cols-3 gap-4 lg:gap-6">
@@ -158,12 +153,7 @@ export default async function HomePage({
 
                                     {article.priority === 'urgent' && (
                                         <div className="absolute top-3 end-3 bg-red-500 text-white text-[10px] font-bold px-3 py-1.5 rounded-full animate-pulse uppercase tracking-wider">
-                                            {{
-                                                ar: 'عاجل',
-                                                fr: 'Urgent',
-                                                en: 'Urgent',
-                                                es: 'Urgente'
-                                            }[locale]}
+                                            {dict.urgent}
                                         </div>
                                     )}
                                     <div className="absolute bottom-4 start-4 flex items-center gap-2">

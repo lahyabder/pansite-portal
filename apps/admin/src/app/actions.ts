@@ -16,16 +16,28 @@ const WEB_API_BASE = process.env.WEB_API_BASE_URL || 'http://localhost:3000';
 
 async function contentFetch(path: string, options?: RequestInit) {
     const url = `${WEB_API_BASE}/api/content${path}`;
-    const res = await fetch(url, {
-        ...options,
-        headers: { 'Content-Type': 'application/json', ...(options?.headers || {}) },
-        cache: 'no-store',
-    });
-    if (!res.ok) {
-        const text = await res.text();
-        throw new Error(`Content API error ${res.status}: ${text}`);
+    const controller = new AbortController();
+    const id = setTimeout(() => controller.abort(), 5000);
+
+    try {
+        const res = await fetch(url, {
+            ...options,
+            headers: { 'Content-Type': 'application/json', ...(options?.headers || {}) },
+            cache: 'no-store',
+            signal: controller.signal,
+        });
+        clearTimeout(id);
+        if (!res.ok) {
+            const text = await res.text();
+            console.error(`Content API error ${res.status}: ${text}`);
+            return null;
+        }
+        return res.json();
+    } catch (err) {
+        clearTimeout(id);
+        console.error(`Fetch error for ${url}:`, err);
+        return null;
     }
-    return res.json();
 }
 
 // ─── File Upload ──────────────────────────────────────────────────────────────
@@ -115,7 +127,8 @@ export async function preTranslateAction(data: {
 
 export async function getAllContentsAction() {
     try {
-        return await contentFetch('?admin=true');
+        const data = await contentFetch('?admin=true');
+        return data || [];
     } catch {
         return [];
     }

@@ -521,7 +521,7 @@ export const dictionaries: Record<Locale, AdminDictionary> = {
             twoFactorActive: 'التحقق بخطوتين مفعل',
         },
         topbar: {
-            portName: 'الميناء المستقل لنواذيبو',
+            portName: 'ميناء نواذيبو المستقل',
             notifications: 'التنبيهات',
             titles: {
                 dashboard: 'لوحة القيادة',

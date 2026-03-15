@@ -8,13 +8,6 @@ export default async function InfrastructuresPage({ params }: { params: Promise<
     const locale = (['ar', 'fr', 'en', 'es'].includes(lp) ? lp : 'fr') as Locale;
     const dict = getDictionary(locale);
 
-    const labels = {
-        ar: { length: 'الطول', draft: 'عمق الغاطس', status: 'الحالة', operational: 'تشغيلي' },
-        fr: { length: 'Longueur', draft: 'Tirant d\'eau', status: 'Statut', operational: 'Opérationnel' },
-        en: { length: 'Length', draft: 'Draft', status: 'Status', operational: 'Operational' },
-        es: { length: 'Longitud', draft: 'Calado', status: 'Estado', operational: 'Operativo' },
-    }[locale];
-
     return (
         <div className="bg-pan-pale min-h-screen">
             <PageHero
@@ -37,11 +30,11 @@ export default async function InfrastructuresPage({ params }: { params: Promise<
                                     <span className="w-1.5 h-1.5 rounded-full bg-pan-sky animate-pulse" />
                                     {dict.pages.infrastructure.quais.title}
                                 </div>
-                                <h2 className="text-3xl font-bold text-pan-navy tracking-tight">Vue Interactive du Port</h2>
-                                <p className="text-pan-gray-500 mt-2 text-sm max-w-xl">Explorez nos installations portuaires en temps réel via notre carte interactive. Survolez les zones pour plus de détails.</p>
+                                <h2 className="text-3xl font-bold text-pan-navy tracking-tight">{dict.pages.infrastructure.interactiveMapTitle}</h2>
+                                <p className="text-pan-gray-500 mt-2 text-sm max-w-xl">{dict.pages.infrastructure.interactiveMapDesc}</p>
                             </div>
                             <div className="flex items-center gap-4 text-xs font-medium text-pan-gray-400">
-                                <span className="flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-pan-sky" /> {labels.operational}</span>
+                                <span className="flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-pan-sky" /> {dict.pages.infrastructure.labels.operational}</span>
                             </div>
                         </div>
                         
@@ -73,17 +66,17 @@ export default async function InfrastructuresPage({ params }: { params: Promise<
                                     
                                     <div className="space-y-4">
                                         <div className="flex items-center justify-between p-4 rounded-2xl bg-pan-pale group-hover:bg-white transition-colors border border-transparent group-hover:border-pan-navy/5">
-                                            <span className="text-xs font-bold text-pan-gray-400 uppercase tracking-widest">{labels.length}</span>
+                                            <span className="text-xs font-bold text-pan-gray-400 uppercase tracking-widest">{dict.pages.infrastructure.labels.length}</span>
                                             <span className="text-lg font-black text-pan-navy">{quai.length}</span>
                                         </div>
                                         <div className="flex items-center justify-between p-4 rounded-2xl bg-pan-pale group-hover:bg-white transition-colors border border-transparent group-hover:border-pan-navy/5">
-                                            <span className="text-xs font-bold text-pan-gray-400 uppercase tracking-widest">{labels.draft}</span>
+                                            <span className="text-xs font-bold text-pan-gray-400 uppercase tracking-widest">{dict.pages.infrastructure.labels.draft}</span>
                                             <span className="text-lg font-black text-pan-sky">{quai.draft}</span>
                                         </div>
                                     </div>
 
                                     <button className="mt-8 w-full py-4 rounded-2xl bg-pan-navy text-white text-sm font-bold uppercase tracking-widest hover:bg-pan-sky transition-all shadow-lg shadow-pan-navy/10 flex items-center justify-center gap-2 group/btn">
-                                        Détails Techniques
+                                        {dict.pages.infrastructure.technicalDetails}
                                         <span className="transition-transform group-hover/btn:translate-x-1">→</span>
                                     </button>
                                 </div>
@@ -118,7 +111,7 @@ export default async function InfrastructuresPage({ params }: { params: Promise<
                                 
                                 <div className="mt-8 pt-8 border-t border-white/10 flex items-center gap-4 opacity-0 group-hover:opacity-100 transition-opacity">
                                     <div className="w-1.5 h-1.5 rounded-full bg-pan-gold" />
-                                    <span className="text-white/60 text-[10px] font-bold uppercase tracking-widest">Zone Stratégique</span>
+                                    <span className="text-white/60 text-[10px] font-bold uppercase tracking-widest">{dict.pages.infrastructure.strategicZone}</span>
                                 </div>
                             </div>
                         ))}
