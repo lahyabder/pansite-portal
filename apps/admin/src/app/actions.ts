@@ -1,10 +1,5 @@
 'use server';
 
-import {
-    updateGedDocument,
-    deleteGedDocument,
-    createGedDocument,
-} from '@pan/shared';
 import { revalidatePath } from 'next/cache';
 import { writeFile } from 'fs/promises';
 import { join } from 'path';
@@ -67,6 +62,9 @@ export async function uploadFileAction(formData: FormData) {
 
 // ─── OpenAI Translation ───────────────────────────────────────────────────────
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+if (!process.env.OPENAI_API_KEY) {
+    console.warn('WARNING: OPENAI_API_KEY is missing. Translations will use mock fallback.');
+}
 
 async function translateText(text: string, to: string) {
     if (!text) return '';
@@ -139,10 +137,10 @@ export async function preTranslateAction(data: {
 
 export async function getAllContentsAction() {
     try {
-        const data = await contentFetch('?admin=true');
-        return data || [];
-    } catch {
-        return [];
+        return await contentFetch('?admin=true');
+    } catch (err) {
+        console.error('getAllContentsAction failed:', err);
+        return null;
     }
 }
 
@@ -216,22 +214,3 @@ export async function deleteContentAction(id: string, userId: string) {
     return true;
 }
 
-// ─── GED Actions (unchanged — GED uses its own store) ────────────────────────
-export async function updateDocumentAction(id: string, data: Record<string, unknown>, userId: string) {
-    const result = updateGedDocument(id, data, userId);
-    revalidatePath('/ged/documents');
-    revalidatePath('/ged');
-    return result;
-}
-
-export async function deleteDocumentAction(id: string, userId: string) {
-    const result = deleteGedDocument(id, userId);
-    revalidatePath('/ged/documents');
-    return result;
-}
-
-export async function createDocumentAction(data: Record<string, unknown>) {
-    const result = createGedDocument(data as Parameters<typeof createGedDocument>[0]);
-    revalidatePath('/ged/documents');
-    return result;
-}

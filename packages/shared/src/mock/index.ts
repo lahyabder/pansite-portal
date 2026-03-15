@@ -1,4 +1,4 @@
-import type { Content, Document, Service, Request, NavItem, PortStatistic, User, AuditLogEntry, GedDocument } from '../types';
+import type { Content, Service, Request, NavItem, PortStatistic, User, AuditLogEntry } from '../types';
 
 // ─── Mock Users ───────────────────────────────────────────
 export const mockUsers: User[] = [
@@ -34,7 +34,7 @@ export const mockUsers: User[] = [
         id: 'usr-003',
         email: 'ibrahim@pan.mr',
         name: 'Ibrahim Ould Abdallah',
-        role: 'ged_manager',
+        role: 'content_admin',
         department: 'direction_technique',
         isActive: true,
         twoFactorEnabled: false,
@@ -98,11 +98,7 @@ export const mockContents: Content[] = [];
 // ─── Mock Audit Log ───────────────────────────────────────
 export const mockAuditLog: AuditLogEntry[] = [];
 
-// ─── Mock GED Documents ───────────────────────────────────
-export const mockGedDocuments: GedDocument[] = [];
 
-// ─── Mock Documents ───────────────────────────────────────
-export const mockDocuments: Document[] = [];
 
 // ─── Mock Requests ────────────────────────────────────────
 export const mockRequests: Request[] = [];
@@ -122,7 +118,6 @@ export const mockNavigation: NavItem[] = [
     },
     { label: { fr: 'Services', ar: 'الخدمات', en: 'Services', es: 'Servicios' }, href: '/services' },
     { label: { fr: 'Actualités', ar: 'الأخبار', en: 'News', es: 'Noticias' }, href: '/actualites' },
-    { label: { fr: 'Documents', ar: 'الوثائق', en: 'Documents', es: 'Documentos' }, href: '/documents' },
     { label: { fr: 'Contact', ar: 'اتصل بنا', en: 'Contact', es: 'Contacto' }, href: '/contact' },
 ];
 

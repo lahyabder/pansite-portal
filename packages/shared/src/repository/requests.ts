@@ -258,7 +258,6 @@ export function getRequestStats() {
     const byType = {
         information: all.filter((r) => r.type === 'information').length,
         reclamation: all.filter((r) => r.type === 'reclamation').length,
-        document_request: all.filter((r) => r.type === 'document_request').length,
         rendez_vous: all.filter((r) => r.type === 'rendez_vous').length,
     };
 

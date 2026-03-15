@@ -12,7 +12,6 @@ export type LocalizedString = {
 export type UserRole =
     | 'super_admin'
     | 'content_admin'
-    | 'ged_manager'
     | 'services_manager'
     | 'validator'
     | 'internal_reader';
@@ -21,11 +20,10 @@ export type PermissionAction = 'view' | 'create' | 'edit' | 'delete' | 'approve'
 
 export type PermissionModule =
     | 'content'
-    | 'documents'
     | 'services'
-    | 'requests'
     | 'users'
     | 'analytics'
+    | 'requests'
     | 'audit'
     | 'settings';
 
@@ -52,61 +50,46 @@ export interface User {
 export const ROLE_PERMISSIONS: Record<UserRole, PermissionMatrix> = {
     super_admin: {
         content: ['view', 'create', 'edit', 'delete', 'approve', 'publish'],
-        documents: ['view', 'create', 'edit', 'delete', 'approve', 'publish'],
         services: ['view', 'create', 'edit', 'delete', 'approve', 'publish'],
-        requests: ['view', 'create', 'edit', 'delete', 'approve', 'publish'],
         users: ['view', 'create', 'edit', 'delete', 'approve', 'publish'],
         analytics: ['view', 'create', 'edit', 'delete', 'approve', 'publish'],
+        requests: ['view', 'create', 'edit', 'delete', 'approve', 'publish'],
         audit: ['view', 'create', 'edit', 'delete', 'approve', 'publish'],
         settings: ['view', 'create', 'edit', 'delete', 'approve', 'publish'],
     },
     content_admin: {
         content: ['view', 'create', 'edit', 'delete', 'approve', 'publish'],
-        documents: ['view'],
         services: ['view'],
-        requests: ['view'],
         users: [],
         analytics: ['view'],
-        audit: ['view'],
-        settings: [],
-    },
-    ged_manager: {
-        content: ['view'],
-        documents: ['view', 'create', 'edit', 'delete', 'approve', 'publish'],
-        services: ['view'],
         requests: ['view'],
-        users: [],
-        analytics: ['view'],
-        audit: ['view'],
+        audit: [],
         settings: [],
     },
     services_manager: {
         content: ['view'],
-        documents: ['view'],
         services: ['view', 'create', 'edit', 'approve'],
-        requests: ['view', 'create', 'edit', 'approve'],
         users: [],
         analytics: ['view'],
-        audit: ['view'],
+        requests: ['view', 'edit', 'approve'],
+        audit: [],
         settings: [],
     },
     validator: {
         content: ['view', 'approve', 'publish'],
-        documents: ['view', 'approve', 'publish'],
         services: ['view', 'approve'],
-        requests: ['view', 'approve'],
         users: [],
         analytics: ['view'],
-        audit: ['view'],
+        requests: ['view'],
+        audit: [],
         settings: [],
     },
     internal_reader: {
         content: ['view'],
-        documents: ['view'],
         services: ['view'],
-        requests: [],
         users: [],
         analytics: [],
+        requests: [],
         audit: [],
         settings: [],
     },
@@ -124,7 +107,6 @@ export function getModulePermissions(role: UserRole, module: PermissionModule): 
 export const ROLE_LABELS: Record<UserRole, string> = {
     super_admin: 'Super Administrateur',
     content_admin: 'Admin Contenu',
-    ged_manager: 'Gestionnaire GED',
     services_manager: 'Gestionnaire Services',
     validator: 'Validateur',
     internal_reader: 'Lecteur Interne',
@@ -132,7 +114,7 @@ export const ROLE_LABELS: Record<UserRole, string> = {
 
 // ─── Content (CMS: actualités, communiqués, événements, alertes) ──
 export type ContentStatus = 'draft' | 'pending_approval' | 'published' | 'archived';
-export type ContentCategory = 'actualite' | 'communique' | 'evenement' | 'alerte' | 'le-port' | 'infrastructure' | 'services' | 'procedures' | 'tariffs' | 'stopovers' | 'tenders' | 'documentation' | 'media' | 'contact';
+export type ContentCategory = 'actualite' | 'communique' | 'evenement' | 'alerte' | 'le-port' | 'infrastructure' | 'services' | 'procedures' | 'tariffs' | 'stopovers' | 'tenders' | 'media' | 'contact';
 
 export interface Content {
     id: string;
@@ -169,8 +151,6 @@ export type AuditAction =
     | 'publish'
     | 'archive'
     | 'restore'
-    | 'upload_version'
-    | 'download'
     | 'assign'
     | 'status_change'
     | 'respond'
@@ -182,7 +162,7 @@ export type AuditAction =
 
 export interface AuditLogEntry {
     id: string;
-    entityType: 'content' | 'document' | 'service' | 'request' | 'user' | 'session';
+    entityType: 'content' | 'service' | 'user' | 'session' | 'request';
     entityId: string;
     action: AuditAction;
     userId: string;
@@ -196,21 +176,6 @@ export interface AuditLogEntry {
     createdAt: string;
 }
 
-// ─── Document GED ─────────────────────────────────────────
-export type DocumentFileType = 'pdf' | 'doc' | 'docx' | 'xlsx' | 'xls' | 'ppt' | 'pptx' | 'jpg' | 'png' | 'other';
-export type DocumentStatus = 'draft' | 'published' | 'archived';
-export type DocumentAccessLevel = 'public' | 'restricted' | 'internal';
-
-export type DocumentTheme =
-    | 'reglementation'
-    | 'tarification'
-    | 'securite'
-    | 'environnement'
-    | 'infrastructure'
-    | 'commerce'
-    | 'rh'
-    | 'finance'
-    | 'autre';
 
 export type DocumentDirection =
     | 'direction_generale'
@@ -222,69 +187,6 @@ export type DocumentDirection =
     | 'capitainerie'
     | 'securite'
     | 'autre';
-
-export interface DocumentVersion {
-    id: string;
-    versionNumber: number;
-    fileName: string;
-    fileUrl: string;
-    fileSize: number;
-    fileType: DocumentFileType;
-    uploadedBy: string;
-    uploadedByName: string;
-    comment?: string;
-    createdAt: string;
-}
-
-export interface GedDocument {
-    id: string;
-    title: LocalizedString;
-    description: LocalizedString;
-    reference?: string;             // internal reference code e.g. PAN-DOC-2025-001
-    fileType: DocumentFileType;
-    categories: string[];           // multi-category
-    theme: DocumentTheme;
-    direction: DocumentDirection;
-    keywords: string[];
-    language: 'fr' | 'ar' | 'fr_ar';  // document language
-    accessLevel: DocumentAccessLevel;
-    status: DocumentStatus;
-    versions: DocumentVersion[];    // version history (latest first)
-    currentVersion: number;
-    authorId: string;
-    publishedAt?: string;
-    createdAt: string;
-    updatedAt: string;
-    deletedAt?: string;             // soft-delete
-}
-
-// Legacy alias for backward compat
-export interface Document {
-    id: string;
-    title: LocalizedString;
-    description: LocalizedString;
-    type: DocumentFileType;
-    fileUrl: string;
-    fileSize: number;
-    category: string;
-    isPublic: boolean;
-    uploadedBy: string;
-    createdAt: string;
-    updatedAt: string;
-}
-
-export interface DocumentFilters {
-    search?: string;
-    theme?: DocumentTheme;
-    direction?: DocumentDirection;
-    category?: string;
-    accessLevel?: DocumentAccessLevel;
-    status?: DocumentStatus;
-    fileType?: DocumentFileType;
-    language?: string;
-    page?: number;
-    pageSize?: number;
-}
 
 // ─── Service (port services offered by PAN) ───────────────
 export interface ServiceStep {
@@ -332,7 +234,7 @@ export type RequestStatus =
     | 'rejected'
     | 'closed';
 
-export type RequestType = 'information' | 'reclamation' | 'document_request' | 'rendez_vous';
+export type RequestType = 'information' | 'reclamation' | 'rendez_vous';
 export type RequestPriority = 'low' | 'normal' | 'high' | 'urgent';
 
 export interface RequestStatusEntry {

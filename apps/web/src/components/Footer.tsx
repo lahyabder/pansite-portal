@@ -17,7 +17,6 @@ export function Footer({ locale, dict }: FooterProps) {
     const column2 = [
         { label: dict.news.title, href: `/${locale}/actualites` },
         { label: dict.nav.tenders, href: `/${locale}/appels-offres` },
-        { label: dict.nav.documentation, href: `/${locale}/documentation` },
     ];
 
     const legalLinks = [

@@ -13,20 +13,14 @@ export function AdminTopbar() {
         if (pathname === '/cms') return t.topbar.titles.dashboard;
         if (pathname === '/cms/contents') return t.topbar.titles.contents;
         if (pathname === '/cms/contents/create') return t.topbar.titles.newContent;
-        if (pathname === '/ged') return t.sidebar.dashboard;
-        if (pathname === '/ged/documents') return t.topbar.titles.documents;
-        if (pathname === '/ged/documents/create') return t.topbar.titles.newDocument;
         if (pathname === '/cms/medias') return t.topbar.titles.media;
         if (pathname === '/cms/services') return t.topbar.titles.services;
         if (pathname === '/cms/tenders') return t.topbar.titles.tenders;
-        if (pathname === '/cms/users') return t.topbar.titles.users;
         if (pathname === '/cms/analytics') return t.topbar.titles.analytics;
         if (pathname === '/cms/settings') return t.topbar.titles.settings;
-        if (pathname === '/ged/audit') return t.sidebar.audit;
-        if (pathname === '/ged/requests') return t.topbar.titles.requests;
+        if (pathname === '/cms/audit') return t.topbar.titles.audit;
+        if (pathname === '/cms/requests') return t.topbar.titles.requests;
 
-        if (pathname.includes('/documents/') && pathname.includes('/versions')) return t.topbar.titles.versionHistory;
-        if (pathname.includes('/documents/') && pathname.includes('/edit')) return t.topbar.titles.editDocument;
         if (pathname.includes('/contents/') && pathname.includes('/edit')) return t.topbar.titles.editContent;
 
         return 'PAN Admin';

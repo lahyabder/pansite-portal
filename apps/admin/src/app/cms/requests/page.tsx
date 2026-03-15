@@ -25,7 +25,6 @@ export default function RequestsPage() {
     const typeConfig: Record<RequestType, { label: string; icon: string }> = {
         information: { label: t.requestsManagement.types.information, icon: 'ℹ️' },
         reclamation: { label: t.requestsManagement.types.reclamation, icon: '⚠️' },
-        document_request: { label: t.requestsManagement.types.document_request, icon: '📄' },
         rendez_vous: { label: t.requestsManagement.types.rendez_vous, icon: '📅' },
     };
 

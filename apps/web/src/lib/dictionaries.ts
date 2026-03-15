@@ -10,7 +10,6 @@ export type Dictionary = {
         tariffs: string;
         stopovers: string;
         tenders: string;
-        documentation: string;
         media: string;
         contact: string;
         search: string;
@@ -45,7 +44,6 @@ export type Dictionary = {
         requestTypes: {
             information: string;
             reclamation: string;
-            document_request: string;
             rendez_vous: string;
         };
         formLabels: {
@@ -91,7 +89,6 @@ export type Dictionary = {
             tariffs: string;
             stopovers: string;
             tenders: string;
-            documentation: string;
             media: string;
             contact: string;
             all: string;
@@ -228,7 +225,6 @@ export type Dictionary = {
             };
         };
         tenders: { title: string; subtitle: string };
-        documentation: { title: string; subtitle: string };
         media: {
             title: string;
             subtitle: string;
@@ -276,49 +272,6 @@ export type Dictionary = {
         page: string;
         of: string;
     };
-    ged: {
-        title: string;
-        subtitle: string;
-        searchPlaceholder: string;
-        filters: {
-            theme: string;
-            direction: string;
-            accessLevel: string;
-            fileType: string;
-            allThemes: string;
-            allDirections: string;
-            allAccess: string;
-            allTypes: string;
-        };
-        themes: Record<string, string>;
-        directions: Record<string, string>;
-        accessLevels: Record<string, string>;
-        fileTypes: Record<string, string>;
-        labels: {
-            reference: string;
-            version: string;
-            versions: string;
-            currentVersion: string;
-            versionHistory: string;
-            uploadedBy: string;
-            uploadedOn: string;
-            keywords: string;
-            categories: string;
-            language: string;
-            accessLevel: string;
-            direction: string;
-            theme: string;
-            downloadFile: string;
-            noDocuments: string;
-            noDocumentsDesc: string;
-            restrictedAccess: string;
-            restrictedDesc: string;
-            internalAccess: string;
-            internalDesc: string;
-            loginRequired: string;
-        };
-        languages: Record<string, string>;
-    };
 };
 
 const dictionaries: Record<Locale, Dictionary> = {
@@ -332,7 +285,6 @@ const dictionaries: Record<Locale, Dictionary> = {
             tariffs: 'Tarifs',
             stopovers: 'Escales',
             tenders: 'Appels d\'Offres',
-            documentation: 'Documentation',
             media: 'Médias',
             contact: 'Contact',
             search: 'Rechercher',
@@ -368,7 +320,6 @@ const dictionaries: Record<Locale, Dictionary> = {
             requestTypes: {
                 information: "Demande d'information",
                 reclamation: 'Réclamation',
-                document_request: 'Demande de document',
                 rendez_vous: 'Demande de rendez-vous',
             },
             formLabels: {
@@ -414,7 +365,6 @@ const dictionaries: Record<Locale, Dictionary> = {
                 tariffs: 'Tarifs',
                 stopovers: 'Escales',
                 tenders: 'Appels d\'offres',
-                documentation: 'Documentation',
                 media: 'Médiathèque',
                 contact: 'Contact',
                 all: 'Tout',
@@ -647,10 +597,6 @@ const dictionaries: Record<Locale, Dictionary> = {
                 title: 'Appels d\'Offres',
                 subtitle: 'Consultez les appels d\'offres et marchés publics en cours.',
             },
-            documentation: {
-                title: 'Documentation',
-                subtitle: 'Documents officiels, rapports et formulaires téléchargeables.',
-            },
             media: {
                 title: 'Médias',
                 subtitle: 'Restez informé de l\'actualité portuaire et des événements majeurs.',
@@ -710,88 +656,6 @@ const dictionaries: Record<Locale, Dictionary> = {
             page: 'Page',
             of: 'sur',
         },
-        ged: {
-            title: 'Documentation',
-            subtitle: 'Bibliothèque de documents officiels, rapports, formulaires et réglementation du Port Autonome de Nouadhibou.',
-            searchPlaceholder: 'Rechercher un document...',
-            filters: {
-                theme: 'Thème',
-                direction: 'Direction',
-                accessLevel: 'Accès',
-                fileType: 'Type de fichier',
-                allThemes: 'Tous les thèmes',
-                allDirections: 'Toutes les directions',
-                allAccess: 'Tous les niveaux',
-                allTypes: 'Tous les types',
-            },
-            themes: {
-                reglementation: 'Réglementation',
-                tarification: 'Tarification',
-                securite: 'Sécurité',
-                environnement: 'Environnement',
-                infrastructure: 'Infrastructure',
-                commerce: 'Commerce',
-                rh: 'Ressources Humaines',
-                finance: 'Finance',
-                autre: 'Autre',
-            },
-            directions: {
-                direction_generale: 'Direction Générale',
-                direction_exploitation: 'Direction Exploitation',
-                direction_commerciale: 'Direction Commerciale',
-                direction_technique: 'Direction Technique',
-                direction_financiere: 'Direction Financière',
-                direction_rh: 'Direction RH',
-                capitainerie: 'Capitainerie',
-                securite: 'Service Sécurité',
-                autre: 'Autre',
-            },
-            accessLevels: {
-                public: 'Public',
-                restricted: 'Restreint',
-                internal: 'Interne',
-            },
-            fileTypes: {
-                pdf: 'PDF',
-                doc: 'Word',
-                docx: 'Word',
-                xlsx: 'Excel',
-                xls: 'Excel',
-                ppt: 'PowerPoint',
-                pptx: 'PowerPoint',
-                jpg: 'Image',
-                png: 'Image',
-                other: 'Autre',
-            },
-            labels: {
-                reference: 'Référence',
-                version: 'Version',
-                versions: 'versions',
-                currentVersion: 'Version actuelle',
-                versionHistory: 'Historique des versions',
-                uploadedBy: 'Ajouté par',
-                uploadedOn: 'Ajouté le',
-                keywords: 'Mots-clés',
-                categories: 'Catégories',
-                language: 'Langue',
-                accessLevel: 'Niveau d\'accès',
-                direction: 'Direction',
-                theme: 'Thème',
-                downloadFile: 'Télécharger le fichier',
-                noDocuments: 'Aucun document',
-                noDocumentsDesc: 'Aucun document ne correspond à votre recherche.',
-                restrictedAccess: 'Accès restreint',
-                restrictedDesc: 'Ce document nécessite une autorisation pour être téléchargé.',
-                internalAccess: 'Document interne',
-                internalDesc: 'Ce document est réservé au personnel du PAN.',
-                loginRequired: 'Connexion requise',
-            },
-            languages: {
-                fr: 'Français',
-                ar: 'Arabe',
-                fr_ar: 'Bilingue (FR/AR)',
-            },
-        },
     },
     ar: {
         nav: {
@@ -803,7 +667,6 @@ const dictionaries: Record<Locale, Dictionary> = {
             tariffs: 'التعريفات',
             stopovers: 'الرسو',
             tenders: 'المناقصات',
-            documentation: 'الوثائق',
             media: 'الإعلام',
             contact: 'اتصل بنا',
             search: 'بحث',
@@ -838,7 +701,6 @@ const dictionaries: Record<Locale, Dictionary> = {
             requestTypes: {
                 information: 'طلب معلومات',
                 reclamation: 'شكوى',
-                document_request: 'طلب وثيقة',
                 rendez_vous: 'طلب موعد',
             },
             formLabels: {
@@ -884,7 +746,6 @@ const dictionaries: Record<Locale, Dictionary> = {
                 tariffs: 'التعريفات',
                 stopovers: 'الرسو',
                 tenders: 'المناقصات',
-                documentation: 'الوثائق',
                 media: 'الإعلام',
                 contact: 'اتصال',
                 all: 'الكل',
@@ -1117,10 +978,6 @@ const dictionaries: Record<Locale, Dictionary> = {
                 title: 'المناقصات',
                 subtitle: 'اطلع على المناقصات والصفقات العمومية الجارية.',
             },
-            documentation: {
-                title: 'الوثائق',
-                subtitle: 'الوثائق الرسمية والتقارير والنماذج القابلة للتحميل.',
-            },
             media: {
                 title: 'الإعلام',
                 subtitle: 'ابق على اطلاع بآخر أخبار الميناء والفعاليات الكبرى.',
@@ -1179,88 +1036,6 @@ const dictionaries: Record<Locale, Dictionary> = {
             page: 'صفحة',
             of: 'من',
         },
-        ged: {
-            title: 'الوثائق',
-            subtitle: 'مكتبة الوثائق الرسمية والتقارير والنماذج واللوائح للميناء المستقل لنواذيبو.',
-            searchPlaceholder: 'البحث عن وثيقة...',
-            filters: {
-                theme: 'الموضوع',
-                direction: 'الإدارة',
-                accessLevel: 'الوصول',
-                fileType: 'نوع الملف',
-                allThemes: 'جميع المواضيع',
-                allDirections: 'جميع الإدارات',
-                allAccess: 'جميع المستويات',
-                allTypes: 'جميع الأنواع',
-            },
-            themes: {
-                reglementation: 'اللوائح',
-                tarification: 'التعريفات',
-                securite: 'الأمن',
-                environnement: 'البيئة',
-                infrastructure: 'البنية التحتية',
-                commerce: 'التجارة',
-                rh: 'الموارد البشرية',
-                finance: 'المالية',
-                autre: 'أخرى',
-            },
-            directions: {
-                direction_generale: 'الإدارة العامة',
-                direction_exploitation: 'إدارة الاستغلال',
-                direction_commerciale: 'الإدارة التجارية',
-                direction_technique: 'الإدارة التقنية',
-                direction_financiere: 'الإدارة المالية',
-                direction_rh: 'إدارة الموارد البشرية',
-                capitainerie: 'إدارة الميناء',
-                securite: 'مصلحة الأمن',
-                autre: 'أخرى',
-            },
-            accessLevels: {
-                public: 'عام',
-                restricted: 'مقيد',
-                internal: 'داخلي',
-            },
-            fileTypes: {
-                pdf: 'PDF',
-                doc: 'Word',
-                docx: 'Word',
-                xlsx: 'Excel',
-                xls: 'Excel',
-                ppt: 'PowerPoint',
-                pptx: 'PowerPoint',
-                jpg: 'صورة',
-                png: 'صورة',
-                other: 'أخرى',
-            },
-            labels: {
-                reference: 'المرجع',
-                version: 'النسخة',
-                versions: 'نسخ',
-                currentVersion: 'النسخة الحالية',
-                versionHistory: 'سجل النسخ',
-                uploadedBy: 'أضافه',
-                uploadedOn: 'أضيف في',
-                keywords: 'الكلمات المفتاحية',
-                categories: 'التصنيفات',
-                language: 'اللغة',
-                accessLevel: 'مستوى الوصول',
-                direction: 'الإدارة',
-                theme: 'الموضوع',
-                downloadFile: 'تحميل الملف',
-                noDocuments: 'لا توجد وثائق',
-                noDocumentsDesc: 'لا توجد وثائق مطابقة لبحثك.',
-                restrictedAccess: 'وصول مقيد',
-                restrictedDesc: 'يتطلب هذا المستند إذناً للتحميل.',
-                internalAccess: 'وثيقة داخلية',
-                internalDesc: 'هذه الوثيقة مخصصة لموظفي الميناء.',
-                loginRequired: 'يتطلب تسجيل الدخول',
-            },
-            languages: {
-                fr: 'الفرنسية',
-                ar: 'العربية',
-                fr_ar: 'ثنائي اللغة',
-            },
-        },
     },
     en: {
         nav: {
@@ -1272,7 +1047,6 @@ const dictionaries: Record<Locale, Dictionary> = {
             tariffs: 'Tariffs',
             stopovers: 'Stopovers',
             tenders: 'Tenders',
-            documentation: 'Documentation',
             media: 'Media',
             contact: 'Contact',
             search: 'Search',
@@ -1308,7 +1082,6 @@ const dictionaries: Record<Locale, Dictionary> = {
             requestTypes: {
                 information: 'Information request',
                 reclamation: 'Complaint',
-                document_request: 'Document request',
                 rendez_vous: 'Appointment request',
             },
             formLabels: {
@@ -1354,7 +1127,6 @@ const dictionaries: Record<Locale, Dictionary> = {
                 tariffs: 'Tariffs',
                 stopovers: 'Stopovers',
                 tenders: 'Tenders',
-                documentation: 'Documentation',
                 media: 'Media',
                 contact: 'Contact',
                 all: 'All',
@@ -1587,10 +1359,6 @@ const dictionaries: Record<Locale, Dictionary> = {
                 title: 'Tenders',
                 subtitle: 'Consult current tenders and public contracts.',
             },
-            documentation: {
-                title: 'Documentation',
-                subtitle: 'Official documents, reports, and downloadable forms.',
-            },
             media: {
                 title: 'Media',
                 subtitle: 'Stay informed about port news and major events.',
@@ -1650,90 +1418,7 @@ const dictionaries: Record<Locale, Dictionary> = {
             page: 'Page',
             of: 'of',
         },
-        ged: {
-            title: 'Documentation',
-            subtitle: 'Library of official documents, reports, forms, and regulations of the Nouadhibou Autonomous Port.',
-            searchPlaceholder: 'Search for a document...',
-            filters: {
-                theme: 'Theme',
-                direction: 'Department',
-                accessLevel: 'Access',
-                fileType: 'File type',
-                allThemes: 'All themes',
-                allDirections: 'All departments',
-                allAccess: 'All levels',
-                allTypes: 'All types',
-            },
-            themes: {
-                reglementation: 'Regulation',
-                tarification: 'Tariffing',
-                securite: 'Security',
-                environnement: 'Environment',
-                infrastructure: 'Infrastructure',
-                commerce: 'Trade',
-                rh: 'Human Resources',
-                finance: 'Finance',
-                autre: 'Other',
-            },
-            directions: {
-                direction_generale: 'General Direction',
-                direction_exploitation: 'Operation Direction',
-                direction_commerciale: 'Commercial Direction',
-                direction_technique: 'Technical Direction',
-                direction_financiere: 'Finance Direction',
-                direction_rh: 'HR Direction',
-                capitainerie: 'Port Authority',
-                securite: 'Security Service',
-                autre: 'Other',
-            },
-            accessLevels: {
-                public: 'Public',
-                restricted: 'Restricted',
-                internal: 'Internal',
-            },
-            fileTypes: {
-                pdf: 'PDF',
-                doc: 'Word',
-                docx: 'Word',
-                xlsx: 'Excel',
-                xls: 'Excel',
-                ppt: 'PowerPoint',
-                pptx: 'PowerPoint',
-                jpg: 'Image',
-                png: 'Image',
-                other: 'Other',
-            },
-            labels: {
-                reference: 'Reference',
-                version: 'Version',
-                versions: 'versions',
-                currentVersion: 'Current version',
-                versionHistory: 'Version history',
-                uploadedBy: 'Uploaded by',
-                uploadedOn: 'Uploaded on',
-                keywords: 'Keywords',
-                categories: 'Categories',
-                language: 'Language',
-                accessLevel: 'Access level',
-                direction: 'Department',
-                theme: 'Theme',
-                downloadFile: 'Download file',
-                noDocuments: 'No documents',
-                noDocumentsDesc: 'No documents match your search.',
-                restrictedAccess: 'Restricted access',
-                restrictedDesc: 'This document requires authorization to be downloaded.',
-                internalAccess: 'Internal document',
-                internalDesc: 'This document is reserved for PAN personnel.',
-                loginRequired: 'Login required',
-            },
-            languages: {
-                fr: 'French',
-                ar: 'Arabic',
-                en: 'English',
-                es: 'Spanish',
-                fr_ar: 'Bilingual (FR/AR)',
-            },
-        },
+
     },
     es: {
         nav: {
@@ -1745,7 +1430,6 @@ const dictionaries: Record<Locale, Dictionary> = {
             tariffs: 'Tarifas',
             stopovers: 'Escalas',
             tenders: 'Licitaciones',
-            documentation: 'Documentación',
             media: 'Medios',
             contact: 'Contacto',
             search: 'Buscar',
@@ -1781,7 +1465,6 @@ const dictionaries: Record<Locale, Dictionary> = {
             requestTypes: {
                 information: 'Solicitud de información',
                 reclamation: 'Reclamación',
-                document_request: 'Solicitud de documento',
                 rendez_vous: 'Solicitud de cita',
             },
             formLabels: {
@@ -1827,7 +1510,6 @@ const dictionaries: Record<Locale, Dictionary> = {
                 tariffs: 'Tarifas',
                 stopovers: 'Escalas',
                 tenders: 'Licitaciones',
-                documentation: 'Documentación',
                 media: 'Medios',
                 contact: 'Contacto',
                 all: 'Todo',
@@ -2060,10 +1742,6 @@ const dictionaries: Record<Locale, Dictionary> = {
                 title: 'Licitaciones',
                 subtitle: 'Consulte las licitaciones y contratos públicos en curso.',
             },
-            documentation: {
-                title: 'Documentación',
-                subtitle: 'Documentos oficiales, informes y formularios descargables.',
-            },
             media: {
                 title: 'Medios',
                 subtitle: 'Manténgase informado sobre la actualidad portuaria y eventos principales.',
@@ -2122,90 +1800,6 @@ const dictionaries: Record<Locale, Dictionary> = {
             next: 'Siguiente',
             page: 'Página',
             of: 'de',
-        },
-        ged: {
-            title: 'Documentación',
-            subtitle: 'Biblioteca de documentos oficiales, informes, formularios y reglamentos del Puerto Autónomo de Nouadhibou.',
-            searchPlaceholder: 'Buscar un documento...',
-            filters: {
-                theme: 'Tema',
-                direction: 'Dirección',
-                accessLevel: 'Acceso',
-                fileType: 'Tipo de archivo',
-                allThemes: 'Todos los temas',
-                allDirections: 'Todas las direcciones',
-                allAccess: 'Todos los niveles',
-                allTypes: 'Todos los tipos',
-            },
-            themes: {
-                reglementation: 'Reglamentación',
-                tarification: 'Tarificación',
-                securite: 'Seguridad',
-                environnement: 'Medio Ambiente',
-                infrastructure: 'Infraestructura',
-                commerce: 'Comercio',
-                rh: 'Recursos Humanos',
-                finance: 'Finanzas',
-                autre: 'Otro',
-            },
-            directions: {
-                direction_generale: 'Dirección General',
-                direction_exploitation: 'Dirección de Explotación',
-                direction_commerciale: 'Dirección Comercial',
-                direction_technique: 'Dirección Técnica',
-                direction_financiere: 'Dirección Financiera',
-                direction_rh: 'Dirección de RR.HH.',
-                capitainerie: 'Capitanía',
-                securite: 'Servicio de Seguridad',
-                autre: 'Otro',
-            },
-            accessLevels: {
-                public: 'Público',
-                restricted: 'Restringido',
-                internal: 'Interno',
-            },
-            fileTypes: {
-                pdf: 'PDF',
-                doc: 'Word',
-                docx: 'Word',
-                xlsx: 'Excel',
-                xls: 'Excel',
-                ppt: 'PowerPoint',
-                pptx: 'PowerPoint',
-                jpg: 'Imagen',
-                png: 'Imagen',
-                other: 'Otro',
-            },
-            labels: {
-                reference: 'Referencia',
-                version: 'Versión',
-                versions: 'versiones',
-                currentVersion: 'Versión actual',
-                versionHistory: 'Historial de versiones',
-                uploadedBy: 'Subido por',
-                uploadedOn: 'Subido el',
-                keywords: 'Palabras clave',
-                categories: 'Categorías',
-                language: 'Idioma',
-                accessLevel: 'Nivel de acceso',
-                direction: 'Dirección',
-                theme: 'Tema',
-                downloadFile: 'Descargar archivo',
-                noDocuments: 'Sin documentos',
-                noDocumentsDesc: 'Ningún documento coincide con su búsqueda.',
-                restrictedAccess: 'Acceso restringido',
-                restrictedDesc: 'Este documento requiere autorización para ser descargado.',
-                internalAccess: 'Documento interno',
-                internalDesc: 'Este documento está reservado para el personal del PAN.',
-                loginRequired: 'Inicio de sesión requerido',
-            },
-            languages: {
-                fr: 'Francés',
-                ar: 'Árabe',
-                en: 'Inglés',
-                es: 'Español',
-                fr_ar: 'Bilingüe (FR/AR)',
-            },
         },
     },
 };

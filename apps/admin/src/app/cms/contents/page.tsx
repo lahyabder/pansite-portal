@@ -40,7 +40,6 @@ export default function AdminContentsPage() {
         tariffs: { label: t.contentManagement.categories.tariffs, icon: '💰' },
         stopovers: { label: t.contentManagement.categories.stopovers, icon: '🚢' },
         tenders: { label: t.contentManagement.categories.tenders, icon: '📝' },
-        documentation: { label: t.contentManagement.categories.documentation, icon: '📂' },
         media: { label: t.contentManagement.categories.media, icon: '🖼️' },
         contact: { label: t.contentManagement.categories.contact, icon: '📞' },
     };
@@ -73,10 +72,12 @@ export default function AdminContentsPage() {
         setError(false);
         try {
             const data = await getAllContentsAction();
-            if (!data || (Array.isArray(data) && data.length === 0 && !initialCategory && !initialStatus)) {
-                // If it's null or we got nothing on a full load, maybe it failed
+            if (data === null) {
+                setError(true);
+                setContents([]);
+            } else {
+                setContents(data);
             }
-            setContents(data || []);
         } catch (err) {
             console.error('Failed to fetch contents:', err);
             setError(true);

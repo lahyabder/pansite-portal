@@ -10,7 +10,6 @@ import { useI18n } from '@/lib/i18n';
 const roleColors: Record<UserRole, string> = {
     super_admin: 'bg-red-500/15 text-red-400',
     content_admin: 'bg-blue-500/15 text-blue-400',
-    ged_manager: 'bg-cyan-500/15 text-cyan-400',
     services_manager: 'bg-purple-500/15 text-purple-400',
     validator: 'bg-amber-500/15 text-amber-400',
     internal_reader: 'bg-gray-500/15 text-gray-400',
@@ -36,7 +35,6 @@ export default function UsersPage() {
 
     const moduleLabels: Record<PermissionModule, string> = {
         content: t.usersManagement.modules.content,
-        documents: t.usersManagement.modules.documents,
         services: t.usersManagement.modules.services,
         requests: t.usersManagement.modules.requests,
         users: t.usersManagement.modules.users,

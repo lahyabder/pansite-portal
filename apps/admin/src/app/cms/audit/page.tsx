@@ -14,8 +14,6 @@ const actionConfig: Record<AuditAction, { label: string; icon: string; color: st
     publish: { label: 'Publication', icon: '🚀', color: 'text-emerald-400' },
     archive: { label: 'Archivage', icon: '📦', color: 'text-gray-400' },
     restore: { label: 'Restauration', icon: '♻️', color: 'text-blue-400' },
-    upload_version: { label: 'Nouvelle version', icon: '📋', color: 'text-cyan-400' },
-    download: { label: 'Téléchargement', icon: '⬇️', color: 'text-sky-400' },
     assign: { label: 'Affectation', icon: '👤', color: 'text-purple-400' },
     status_change: { label: 'Changement de statut', icon: '🔄', color: 'text-orange-400' },
     respond: { label: 'Réponse envoyée', icon: '💬', color: 'text-teal-400' },
@@ -28,7 +26,6 @@ const actionConfig: Record<AuditAction, { label: string; icon: string; color: st
 
 const entityLabels: Record<string, string> = {
     content: 'Contenu',
-    document: 'Document',
     service: 'Service',
     request: 'Demande',
     user: 'Utilisateur',

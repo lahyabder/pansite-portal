@@ -13,7 +13,6 @@ export type AdminDictionary = {
         tariffs: string;
         stopovers: string;
         tenders: string;
-        documentation: string;
         media: string;
         contact: string;
         administration: string;
@@ -32,10 +31,6 @@ export type AdminDictionary = {
             contents: string;
             newContent: string;
             editContent: string;
-            documents: string;
-            newDocument: string;
-            editDocument: string;
-            versionHistory: string;
             media: string;
             services: string;
             requests: string;
@@ -93,7 +88,6 @@ export type AdminDictionary = {
             tariffs: string;
             stopovers: string;
             tenders: string;
-            documentation: string;
             media: string;
             contact: string;
         };
@@ -171,7 +165,6 @@ export type AdminDictionary = {
         types: {
             information: string;
             reclamation: string;
-            document_request: string;
             rendez_vous: string;
         };
         priorities: {
@@ -221,7 +214,6 @@ export type AdminDictionary = {
         twoFactorDisabled: string;
         modules: {
             content: string;
-            documents: string;
             services: string;
             requests: string;
             users: string;
@@ -241,7 +233,6 @@ export type AdminDictionary = {
     roles: {
         super_admin: string;
         content_admin: string;
-        ged_manager: string;
         services_manager: string;
         validator: string;
         internal_reader: string;
@@ -299,7 +290,6 @@ export const dictionaries: Record<Locale, AdminDictionary> = {
             tariffs: 'Tarifs',
             stopovers: 'Escales',
             tenders: "Appels d'offres",
-            documentation: 'Documentation',
             media: 'Médias',
             contact: 'Contact',
             administration: 'Système',
@@ -318,10 +308,6 @@ export const dictionaries: Record<Locale, AdminDictionary> = {
                 contents: 'Gestion des Contenus',
                 newContent: 'Nouveau Contenu',
                 editContent: 'Modifier le Contenu',
-                documents: 'Documents GED',
-                newDocument: 'Nouveau Document',
-                editDocument: 'Modifier le document',
-                versionHistory: 'Historique des versions',
                 media: 'Gestion des Médias',
                 services: 'Catalogue des Services',
                 requests: 'File des demandes',
@@ -379,7 +365,6 @@ export const dictionaries: Record<Locale, AdminDictionary> = {
                 tariffs: 'Tarifs',
                 stopovers: 'Escales',
                 tenders: "Appels d'offres",
-                documentation: 'Documentation',
                 media: 'Médias',
                 contact: 'Contact',
             },
@@ -457,7 +442,6 @@ export const dictionaries: Record<Locale, AdminDictionary> = {
             types: {
                 information: "Demande d'info",
                 reclamation: 'Réclamation',
-                document_request: 'Demande doc.',
                 rendez_vous: 'Rendez-vous',
             },
             priorities: {
@@ -507,7 +491,6 @@ export const dictionaries: Record<Locale, AdminDictionary> = {
             twoFactorDisabled: '⚠️ Désactivé',
             modules: {
                 content: 'Contenus',
-                documents: 'Documents GED',
                 services: 'Services',
                 requests: 'Demandes',
                 users: 'Utilisateurs',
@@ -527,7 +510,6 @@ export const dictionaries: Record<Locale, AdminDictionary> = {
         roles: {
             super_admin: 'Super Administrateur',
             content_admin: 'Admin Contenu',
-            ged_manager: 'Gestionnaire GED',
             services_manager: 'Gestionnaire Services',
             validator: 'Validateur',
             internal_reader: 'Lecteur Interne',
@@ -583,7 +565,6 @@ export const dictionaries: Record<Locale, AdminDictionary> = {
             tariffs: 'التعريفات',
             stopovers: 'حركة السفن',
             tenders: 'المناقصات',
-            documentation: 'الوثائق',
             media: 'الإعلام',
             contact: 'اتصل بنا',
             administration: 'النظام',
@@ -602,10 +583,6 @@ export const dictionaries: Record<Locale, AdminDictionary> = {
                 contents: 'إدارة المحتويات',
                 newContent: 'محتوى جديد',
                 editContent: 'تعديل المحتوى',
-                documents: 'إدارة الوثائق',
-                newDocument: 'وثيقة جديدة',
-                editDocument: 'تعديل الوثيقة',
-                versionHistory: 'سجل النسخ',
                 media: 'إدارة الوسائط',
                 services: 'دليل الخدمات',
                 requests: 'قائمة الطلبات',
@@ -663,7 +640,6 @@ export const dictionaries: Record<Locale, AdminDictionary> = {
                 tariffs: 'التعريفات',
                 stopovers: 'حركة السفن',
                 tenders: 'المناقصات',
-                documentation: 'الوثائق',
                 media: 'الإعلام',
                 contact: 'اتصل بنا',
             },
@@ -741,7 +717,6 @@ export const dictionaries: Record<Locale, AdminDictionary> = {
             types: {
                 information: 'طلب معلومات',
                 reclamation: 'شكوى',
-                document_request: 'طلب وثيقة',
                 rendez_vous: 'موعد',
             },
             priorities: {
@@ -791,7 +766,6 @@ export const dictionaries: Record<Locale, AdminDictionary> = {
             twoFactorDisabled: '⚠️ غير مفعل',
             modules: {
                 content: 'المحتويات',
-                documents: 'المستندات',
                 services: 'الخدمات',
                 requests: 'الطلبات',
                 users: 'المستخدمون',
@@ -811,7 +785,6 @@ export const dictionaries: Record<Locale, AdminDictionary> = {
         roles: {
             super_admin: 'مسؤول نظام',
             content_admin: 'مسؤول محتوى',
-            ged_manager: 'مسؤول وثائق',
             services_manager: 'مسؤول خدمات',
             validator: 'مراجع',
             internal_reader: 'قارئ داخلي',
@@ -867,7 +840,6 @@ export const dictionaries: Record<Locale, AdminDictionary> = {
             tariffs: 'Tariffs',
             stopovers: 'Stopovers',
             tenders: 'Tenders',
-            documentation: 'Documentation',
             media: 'Media',
             contact: 'Contact',
             administration: 'System',
@@ -886,10 +858,6 @@ export const dictionaries: Record<Locale, AdminDictionary> = {
                 contents: 'Content Management',
                 newContent: 'New Content',
                 editContent: 'Edit Content',
-                documents: 'GED Documents',
-                newDocument: 'New Document',
-                editDocument: 'Edit Document',
-                versionHistory: 'Version History',
                 media: 'Media Management',
                 services: 'Service Catalog',
                 requests: 'Request Queue',
@@ -947,7 +915,6 @@ export const dictionaries: Record<Locale, AdminDictionary> = {
                 tariffs: 'Tariffs',
                 stopovers: 'Stopovers',
                 tenders: 'Tenders',
-                documentation: 'Documentation',
                 media: 'Media',
                 contact: 'Contact',
             },
@@ -1025,7 +992,6 @@ export const dictionaries: Record<Locale, AdminDictionary> = {
             types: {
                 information: 'Information request',
                 reclamation: 'Complaint',
-                document_request: 'Document request',
                 rendez_vous: 'Appointment',
             },
             priorities: {
@@ -1075,7 +1041,6 @@ export const dictionaries: Record<Locale, AdminDictionary> = {
             twoFactorDisabled: '⚠️ Disabled',
             modules: {
                 content: 'Content',
-                documents: 'Documents',
                 services: 'Services',
                 requests: 'Requests',
                 users: 'Users',
@@ -1095,7 +1060,6 @@ export const dictionaries: Record<Locale, AdminDictionary> = {
         roles: {
             super_admin: 'Super Admin',
             content_admin: 'Content Admin',
-            ged_manager: 'GED Manager',
             services_manager: 'Services Manager',
             validator: 'Validator',
             internal_reader: 'Internal Reader',
@@ -1151,7 +1115,6 @@ export const dictionaries: Record<Locale, AdminDictionary> = {
             tariffs: 'Tarifas',
             stopovers: 'Escalas',
             tenders: 'Licitaciones',
-            documentation: 'Documentación',
             media: 'Medios',
             contact: 'Contacto',
             administration: 'Sistema',
@@ -1170,10 +1133,6 @@ export const dictionaries: Record<Locale, AdminDictionary> = {
                 contents: 'Gestión de Contenidos',
                 newContent: 'Nuevo Contenido',
                 editContent: 'Editar Contenido',
-                documents: 'Documentos GED',
-                newDocument: 'Nuevo Documento',
-                editDocument: 'Editar Documento',
-                versionHistory: 'Historial de Versiones',
                 media: 'Gestión de Medios',
                 services: 'Catálogo de Servicios',
                 requests: 'Cola de Solicitudes',
@@ -1231,7 +1190,6 @@ export const dictionaries: Record<Locale, AdminDictionary> = {
                 tariffs: 'Tarifas',
                 stopovers: 'Escalas',
                 tenders: 'Licitaciones',
-                documentation: 'Documentación',
                 media: 'Medios',
                 contact: 'Contacto',
             },
@@ -1309,7 +1267,6 @@ export const dictionaries: Record<Locale, AdminDictionary> = {
             types: {
                 information: 'Solicitud de info',
                 reclamation: 'Reclamación',
-                document_request: 'Solicitud de doc.',
                 rendez_vous: 'Cita',
             },
             priorities: {
@@ -1359,7 +1316,6 @@ export const dictionaries: Record<Locale, AdminDictionary> = {
             twoFactorDisabled: '⚠️ Desactivado',
             modules: {
                 content: 'Contenidos',
-                documents: 'Documentos',
                 services: 'Servicios',
                 requests: 'Solicitudes',
                 users: 'Usuarios',
@@ -1379,7 +1335,6 @@ export const dictionaries: Record<Locale, AdminDictionary> = {
         roles: {
             super_admin: 'Superadministrador',
             content_admin: 'Administrador de Contenido',
-            ged_manager: 'Gestor GED',
             services_manager: 'Gestor de Servicios',
             validator: 'Validador',
             internal_reader: 'Lector Interno',

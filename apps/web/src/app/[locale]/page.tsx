@@ -39,7 +39,6 @@ export default async function HomePage({
         { title: dict.nav.services, icon: Ship, href: `/${locale}/services` },
         { title: dict.nav.tenders, icon: FileText, href: `/${locale}/appels-offres` },
         { title: dict.nav.tariffs, icon: TrendingUp, href: `/${locale}/tarifs` },
-        { title: dict.nav.documentation, icon: Building2, href: `/${locale}/documentation` },
         { title: dict.nav.stopovers, icon: Anchor, href: `/${locale}/escales` },
         { title: dict.nav.contact, icon: Phone, href: `/${locale}/contact` },
     ];

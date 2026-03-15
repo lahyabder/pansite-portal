@@ -305,7 +305,6 @@ export default function CreateContentPage() {
                                         <option value="tariffs">💰 {dict.contentManagement.categories.tariffs}</option>
                                         <option value="stopovers">🚢 {dict.contentManagement.categories.stopovers}</option>
                                         <option value="tenders">📝 {dict.contentManagement.categories.tenders}</option>
-                                        <option value="documentation">📂 {dict.contentManagement.categories.documentation}</option>
                                         <option value="media">🖼️ {dict.contentManagement.categories.media}</option>
                                         <option value="contact">📞 {dict.contentManagement.categories.contact}</option>
                                     </select>

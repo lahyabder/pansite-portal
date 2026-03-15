@@ -40,7 +40,6 @@ export function Header({ locale, dict }: HeaderProps) {
         { label: dict.nav.tariffs, href: `/${locale}/tarifs` },
         { label: dict.nav.stopovers, href: `/${locale}/escales` },
         { label: dict.nav.tenders, href: `/${locale}/appels-offres` },
-        { label: dict.nav.documentation, href: `/${locale}/documentation` },
         { label: dict.nav.media, href: `/${locale}/medias` },
         { label: dict.nav.contact, href: `/${locale}/contact` },
     ];
