@@ -88,9 +88,10 @@ Return ONLY the translated text, nothing else.`
                 { role: 'user', content: text }
             ],
             temperature: 0.3,
-        });
+        }, { timeout: 10000 });
         return response.choices[0].message.content?.trim() || text;
-    } catch {
+    } catch (err) {
+        console.error(`Translation error to ${to}:`, err);
         const mocks: Record<string, string> = {
             ar: `[ترجمة آليا] ${text}`,
             en: `[Auto-EN] ${text}`,
@@ -114,10 +115,20 @@ export async function preTranslateAction(data: {
         body: { [data.sourceLang]: data.body }
     };
 
-    for (const target of targets) {
-        translations.title[target] = await translateText(data.title, target);
-        translations.excerpt[target] = await translateText(data.excerpt, target);
-        translations.body[target] = await translateText(data.body, target);
+    const promises = targets.map(async (target) => {
+        const [t, e, b] = await Promise.all([
+            translateText(data.title, target),
+            translateText(data.excerpt, target),
+            translateText(data.body, target)
+        ]);
+        return { target, t, e, b };
+    });
+
+    const results = await Promise.all(promises);
+    for (const res of results) {
+        translations.title[res.target] = res.t;
+        translations.excerpt[res.target] = res.e;
+        translations.body[res.target] = res.b;
     }
 
     return translations;

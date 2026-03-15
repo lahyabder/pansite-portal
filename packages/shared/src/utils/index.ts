@@ -40,16 +40,14 @@ export function formatFileSize(bytes: number): string {
  * Generate a slug from a string
  */
 export function slugify(str: string): string {
-    return str
+    const slug = str
         .toLowerCase()
-        .replace(/[àáâãäå]/g, 'a')
-        .replace(/[èéêë]/g, 'e')
-        .replace(/[ìíîï]/g, 'i')
-        .replace(/[òóôõö]/g, 'o')
-        .replace(/[ùúûü]/g, 'u')
-        .replace(/[ç]/g, 'c')
-        .replace(/[^a-z0-9]+/g, '-')
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '') // Remove accents
+        .replace(/[^a-z0-9\u0600-\u06FF]+/g, '-') // Keep Arabic and alphanumeric
         .replace(/^-|-$/g, '');
+
+    return slug || `content-${Date.now()}`;
 }
 
 /**

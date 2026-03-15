@@ -75,41 +75,47 @@ export default function CreateContentPage() {
     };
 
     const handleSubmit = async (asDraft: boolean) => {
-        const mainTitle = form.title.fr || form.title.ar || form.title.en || '';
+        const mainTitle = form.title.fr || form.title.ar || form.title.en || form.title.es || '';
         if (!mainTitle.trim()) return;
         setSaving(true);
 
-        // 1. Upload images first
-        let imageUrls: string[] = [];
-        if (selectedFiles.length > 0) {
-            const formData = new FormData();
-            selectedFiles.forEach(f => formData.append('files', f));
-            imageUrls = await uploadFileAction(formData);
+        try {
+            // 1. Upload images first
+            let imageUrls: string[] = [];
+            if (selectedFiles.length > 0) {
+                const formData = new FormData();
+                selectedFiles.forEach(f => formData.append('files', f));
+                imageUrls = await uploadFileAction(formData);
+            }
+
+            const slug = slugify(mainTitle);
+
+            await createContentAction({
+                slug,
+                title: form.title,
+                excerpt: form.excerpt,
+                body: form.body,
+                category: form.category,
+                tags: form.tags.split(',').map((t) => t.trim()).filter(Boolean),
+                status: asDraft ? 'draft' : 'published',
+                priority: form.priority,
+                authorId: session?.user.id || 'system',
+                publishedAt: asDraft ? undefined : new Date().toISOString(),
+                eventDate: form.eventDate || undefined,
+                eventEndDate: form.eventEndDate || undefined,
+                eventLocation: form.eventLocation || undefined,
+                expiresAt: form.expiresAt || undefined,
+                externalLink: form.externalLink || undefined,
+                videoLink: form.videoLink || undefined,
+                images: imageUrls,
+            });
+
+            router.push('/cms/contents');
+        } catch (error) {
+            console.error('Submission failed', error);
+            alert('Erreur lors de la création du contenu. Veuillez réessayer.');
+            setSaving(false);
         }
-
-        const slug = slugify(mainTitle);
-
-        await createContentAction({
-            slug,
-            title: form.title,
-            excerpt: form.excerpt,
-            body: form.body,
-            category: form.category,
-            tags: form.tags.split(',').map((t) => t.trim()).filter(Boolean),
-            status: asDraft ? 'draft' : 'published',
-            priority: form.priority,
-            authorId: session?.user.id || 'system',
-            publishedAt: asDraft ? undefined : new Date().toISOString(),
-            eventDate: form.eventDate || undefined,
-            eventEndDate: form.eventEndDate || undefined,
-            eventLocation: form.eventLocation || undefined,
-            expiresAt: form.expiresAt || undefined,
-            externalLink: form.externalLink || undefined,
-            videoLink: form.videoLink || undefined,
-            images: imageUrls,
-        });
-
-        router.push('/cms/contents');
     };
 
     const inputClass = 'w-full px-4 py-2.5 bg-admin-bg border border-admin-border rounded-xl text-admin-text text-sm focus:outline-none focus:ring-2 focus:ring-admin-primary/50 focus:border-admin-primary transition-all';
