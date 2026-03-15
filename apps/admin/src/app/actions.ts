@@ -8,7 +8,8 @@ import { OpenAI } from 'openai';
 // ─── Base URL for the web app Content API ────────────────────────────────────
 // In dev, web runs on 3000; in prod, override via WEB_API_BASE_URL env var
 const WEB_API_BASE = process.env.WEB_API_BASE_URL || 
-                     (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL.replace('-admin.', '-web.')}` : 'http://127.0.0.1:3000');
+                     (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL.replace('admin.', 'www.').replace('-admin', '-web')}` : 'http://127.0.0.1:3000');
+
 
 
 console.log('[Admin API] Base URL Initialized:', WEB_API_BASE);
