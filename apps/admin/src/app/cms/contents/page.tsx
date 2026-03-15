@@ -51,26 +51,40 @@ export default function AdminContentsPage() {
 
     const [contents, setContents] = useState<Content[]>([]);
     const [loading, setLoading] = useState(true);
-    const [filterCategory, setFilterCategory] = useState<ContentCategory | ''>(initialCategory || '');
-    const [filterStatus, setFilterStatus] = useState<ContentStatus | ''>(initialStatus || '');
+    const [filterCategory, setFilterCategory] = useState<ContentCategory | ''>(initialCategory);
+    const [filterStatus, setFilterStatus] = useState<ContentStatus | ''>(initialStatus);
     const [searchQuery, setSearchQuery] = useState('');
     const [toast, setToast] = useState<string | null>(null);
+    const [error, setError] = useState<boolean>(false);
 
     const showToast = (msg: string) => {
         setToast(msg);
         setTimeout(() => setToast(null), 3000);
     };
 
+    useEffect(() => {
+        setFilterCategory(initialCategory || '');
+        setFilterStatus(initialStatus || '');
+        refresh();
+    }, [initialCategory, initialStatus]);
+
     const refresh = async () => {
         setLoading(true);
-        const data = await getAllContentsAction();
-        setContents(data);
-        setLoading(false);
+        setError(false);
+        try {
+            const data = await getAllContentsAction();
+            if (!data || (Array.isArray(data) && data.length === 0 && !initialCategory && !initialStatus)) {
+                // If it's null or we got nothing on a full load, maybe it failed
+            }
+            setContents(data || []);
+        } catch (err) {
+            console.error('Failed to fetch contents:', err);
+            setError(true);
+            setContents([]);
+        } finally {
+            setLoading(false);
+        }
     };
-
-    useEffect(() => {
-        refresh();
-    }, []);
 
     const handleAction = async (id: string, action: string) => {
         if (!session) return;
@@ -190,6 +204,19 @@ export default function AdminContentsPage() {
                     })}
                 </div>
 
+                {error && (
+                    <div className="flex items-center justify-center p-20 bg-admin-surface rounded-xl border border-admin-danger/30 text-admin-danger">
+                        <div className="flex flex-col items-center gap-4 text-center">
+                            <span className="text-4xl">⚠️</span>
+                            <div>
+                                <p className="font-bold">{t.cms.messages.saveError}</p>
+                                <p className="text-sm opacity-70 mt-1">Impossible de charger les données. Vérifiez l'URL de l'API.</p>
+                            </div>
+                            <button onClick={refresh} className="px-4 py-2 bg-admin-primary text-white rounded-lg text-sm font-bold">Réessayer</button>
+                        </div>
+                    </div>
+                )}
+
                 {loading && (
                     <div className="flex items-center justify-center p-20 bg-admin-surface rounded-xl border border-admin-border">
                         <div className="flex flex-col items-center gap-4">
@@ -199,7 +226,7 @@ export default function AdminContentsPage() {
                     </div>
                 )}
 
-                {!loading && (
+                {!loading && !error && (
                     <div className="bg-admin-surface rounded-xl border border-admin-border overflow-hidden">
                         <table className="w-full">
                             <thead>

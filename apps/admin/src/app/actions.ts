@@ -12,7 +12,8 @@ import { OpenAI } from 'openai';
 
 // ─── Base URL for the web app Content API ────────────────────────────────────
 // In dev, web runs on 3000; in prod, override via WEB_API_BASE_URL env var
-const WEB_API_BASE = process.env.WEB_API_BASE_URL || 'http://localhost:3000';
+const WEB_API_BASE = process.env.WEB_API_BASE_URL || 
+                     (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL.replace('-admin-', '-web-')}` : 'http://localhost:3000');
 
 async function contentFetch(path: string, options?: RequestInit) {
     const url = `${WEB_API_BASE}/api/content${path}`;
