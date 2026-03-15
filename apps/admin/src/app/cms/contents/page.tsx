@@ -54,7 +54,8 @@ export default function AdminContentsPage() {
     const [filterStatus, setFilterStatus] = useState<ContentStatus | ''>(initialStatus);
     const [searchQuery, setSearchQuery] = useState('');
     const [toast, setToast] = useState<string | null>(null);
-    const [error, setError] = useState<boolean>(false);
+    const [error, setError] = useState<string | null>(null);
+
 
     const showToast = (msg: string) => {
         setToast(msg);
@@ -69,18 +70,19 @@ export default function AdminContentsPage() {
 
     const refresh = async () => {
         setLoading(true);
-        setError(false);
+        setError(null);
         try {
-            const data = await getAllContentsAction();
-            if (data === null) {
-                setError(true);
+            const result = await getAllContentsAction();
+            if (result.error) {
+                setError(result.error);
                 setContents([]);
             } else {
-                setContents(data);
+                setContents(result.data);
             }
-        } catch (err) {
+
+        } catch (err: any) {
             console.error('Failed to fetch contents:', err);
-            setError(true);
+            setError(err.message || 'FETCH_EXCEPTION');
             setContents([]);
         } finally {
             setLoading(false);
@@ -211,12 +213,14 @@ export default function AdminContentsPage() {
                             <span className="text-4xl">⚠️</span>
                             <div>
                                 <p className="font-bold">{t.cms.messages.saveError}</p>
-                                <p className="text-sm opacity-70 mt-1">Impossible de charger les données. Vérifiez l'URL de l'API.</p>
+                                <p className="text-sm opacity-70 mt-1">Impossible de charger les données: {error}</p>
+                                <p className="text-[10px] opacity-50 mt-2 font-mono">Vérifiez la connexion entre l'admin (3001) et le web (3000)</p>
                             </div>
                             <button onClick={refresh} className="px-4 py-2 bg-admin-primary text-white rounded-lg text-sm font-bold">Réessayer</button>
                         </div>
                     </div>
                 )}
+
 
                 {loading && (
                     <div className="flex items-center justify-center p-20 bg-admin-surface rounded-xl border border-admin-border">

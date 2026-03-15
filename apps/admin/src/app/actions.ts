@@ -8,12 +8,18 @@ import { OpenAI } from 'openai';
 // ─── Base URL for the web app Content API ────────────────────────────────────
 // In dev, web runs on 3000; in prod, override via WEB_API_BASE_URL env var
 const WEB_API_BASE = process.env.WEB_API_BASE_URL || 
-                     (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL.replace('-admin-', '-web-')}` : 'http://localhost:3000');
+                     (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL.replace('-admin-', '-web-')}` : 'http://127.0.0.1:3000');
+
+
+console.log('[Admin API] Base URL:', WEB_API_BASE);
+
 
 async function contentFetch(path: string, options?: RequestInit) {
     const url = `${WEB_API_BASE}/api/content${path}`;
     const controller = new AbortController();
-    const id = setTimeout(() => controller.abort(), 5000);
+    const id = setTimeout(() => controller.abort(), 8000); // Increased timeout
+
+    console.log(`[Admin API] Fetching: ${url}`, { method: options?.method || 'GET' });
 
     try {
         const res = await fetch(url, {
@@ -23,18 +29,27 @@ async function contentFetch(path: string, options?: RequestInit) {
             signal: controller.signal,
         });
         clearTimeout(id);
+        
         if (!res.ok) {
             const text = await res.text();
-            console.error(`Content API error ${res.status}: ${text}`);
+            console.error(`[Admin API] Error ${res.status} for ${url}:`, text);
             return null;
         }
-        return res.json();
-    } catch (err) {
+        
+        const data = await res.json();
+        console.log(`[Admin API] Success for ${url} (${Array.isArray(data) ? data.length : '1'} items)`);
+        return data;
+    } catch (err: any) {
         clearTimeout(id);
-        console.error(`Fetch error for ${url}:`, err);
+        if (err.name === 'AbortError') {
+            console.error(`[Admin API] Timeout (8s) for ${url}`);
+        } else {
+            console.error(`[Admin API] Fetch error for ${url}:`, err.message || err);
+        }
         return null;
     }
 }
+
 
 // ─── File Upload ──────────────────────────────────────────────────────────────
 export async function uploadFileAction(formData: FormData) {
@@ -137,12 +152,15 @@ export async function preTranslateAction(data: {
 
 export async function getAllContentsAction() {
     try {
-        return await contentFetch('?admin=true');
-    } catch (err) {
+        const data = await contentFetch('?admin=true');
+        if (data === null) return { error: 'API_RESPONSE_NULL' };
+        return { data };
+    } catch (err: any) {
         console.error('getAllContentsAction failed:', err);
-        return null;
+        return { error: err.message || 'FETCH_FAILED' };
     }
 }
+
 
 export async function getContentByIdAction(id: string) {
     try {

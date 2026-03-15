@@ -14,8 +14,10 @@ export default function CMSDashboard() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        getAllContentsAction().then(data => {
-            setContents(data);
+        getAllContentsAction().then(res => {
+            if (res.data) {
+                setContents(res.data);
+            }
             setLoading(false);
         });
     }, []);
