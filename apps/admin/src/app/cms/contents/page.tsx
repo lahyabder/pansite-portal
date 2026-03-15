@@ -212,10 +212,11 @@ export default function AdminContentsPage() {
                         <div className="flex flex-col items-center gap-4 text-center">
                             <span className="text-4xl">⚠️</span>
                             <div>
-                                <p className="font-bold">{t.cms.messages.saveError}</p>
-                                <p className="text-sm opacity-70 mt-1">Impossible de charger les données: {error}</p>
-                                <p className="text-[10px] opacity-50 mt-2 font-mono">Vérifiez la connexion entre l'admin (3001) et le web (3000)</p>
+                                <p className="font-bold">Erreur de chargement</p>
+                                <p className="text-sm opacity-70 mt-1">Impossible de récupérer les contenus: {error}</p>
+                                <p className="text-[10px] opacity-50 mt-2 font-mono">Consultez <Link href="/cms/debug" className="underline text-pan-gold">/cms/debug</Link> pour diagnostiquer la connexion</p>
                             </div>
+
                             <button onClick={refresh} className="px-4 py-2 bg-admin-primary text-white rounded-lg text-sm font-bold">Réessayer</button>
                         </div>
                     </div>

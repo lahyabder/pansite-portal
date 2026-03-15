@@ -8,10 +8,10 @@ import { OpenAI } from 'openai';
 // ─── Base URL for the web app Content API ────────────────────────────────────
 // In dev, web runs on 3000; in prod, override via WEB_API_BASE_URL env var
 const WEB_API_BASE = process.env.WEB_API_BASE_URL || 
-                     (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL.replace('-admin-', '-web-')}` : 'http://127.0.0.1:3000');
+                     (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL.replace('-admin.', '-web.')}` : 'http://127.0.0.1:3000');
 
 
-console.log('[Admin API] Base URL:', WEB_API_BASE);
+console.log('[Admin API] Base URL Initialized:', WEB_API_BASE);
 
 
 async function contentFetch(path: string, options?: RequestInit) {
@@ -230,5 +230,43 @@ export async function deleteContentAction(id: string, userId: string) {
     revalidatePath('/cms/contents');
     revalidatePath('/cms');
     return true;
+}
+
+export async function testApiConnectionAction() {
+    const results = {
+        timestamp: new Date().toISOString(),
+        config: {
+            WEB_API_BASE,
+            VERCEL_URL: process.env.VERCEL_URL || 'not-set',
+            NODE_ENV: process.env.NODE_ENV,
+        },
+        tests: [] as any[]
+    };
+
+    // Test 1: Fetch from content API
+    try {
+        const start = Date.now();
+        const url = `${WEB_API_BASE}/api/content?admin=true`;
+        const res = await fetch(url, { cache: 'no-store' });
+        const duration = Date.now() - start;
+        
+        results.tests.push({
+            name: 'Web Content API',
+            url,
+            status: res.status,
+            ok: res.ok,
+            duration: `${duration}ms`,
+            headers: Object.fromEntries(res.headers.entries())
+        });
+    } catch (err: any) {
+        results.tests.push({
+            name: 'Web Content API',
+            error: err.message || 'Unknown error',
+            code: err.code || 'NO_CODE',
+            stack: err.stack?.split('\n').slice(0, 3).join('\n')
+        });
+    }
+
+    return results;
 }
 
