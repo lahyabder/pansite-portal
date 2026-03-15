@@ -2,7 +2,8 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { Newspaper, Ship, Globe, ExternalLink, Trash2, Edit3, Eye } from 'lucide-react';
+import { Newspaper, Ship, Globe, ExternalLink, Trash2, Edit3, Eye, PlusCircle } from 'lucide-react';
+
 import {
     getAllContents,
     submitForReview,
@@ -141,21 +142,33 @@ export default function AdminContentsPage() {
                 )}
 
                 {/* Header */}
-                <div className="flex items-center justify-between">
+                <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-admin-border">
                     <div>
-                        <h2 className="text-xl font-bold text-admin-text">{t.topbar.titles.contents}</h2>
-                        <p className="text-admin-text-muted text-sm mt-1">
-                            {filtered.length} {t.common.noResults.includes('Aucun') ? (filtered.length > 1 ? 'contenus' : 'contenu') : 'results'}
+                        <div className="flex items-center gap-3 text-admin-text-muted text-xs font-bold uppercase tracking-[0.2em] mb-2">
+                            <Newspaper className="w-4 h-4" />
+                            {filterCategory ? categoryConfig[filterCategory as ContentCategory]?.label : t.topbar.titles.contents}
+                        </div>
+                        <h2 className="text-3xl font-bold text-admin-text italic">
+                            {filterCategory 
+                                ? `Gestion des ${categoryConfig[filterCategory as ContentCategory]?.label}`
+                                : t.topbar.titles.contents}
+                        </h2>
+                        <p className="text-admin-text-muted text-sm mt-3 flex items-center gap-2">
+                            <span className="w-1.5 h-1.5 bg-pan-gold rounded-full animate-pulse" />
+                            {filtered.length} documents répertoriés
                         </p>
                     </div>
-                    {can('content', 'create') && (
-                        <Link
-                            href="/cms/contents/create"
-                            className="px-4 py-2.5 bg-admin-primary text-white text-sm font-medium rounded-xl hover:bg-admin-primary/80 transition-colors"
-                        >
-                            + {t.topbar.titles.newContent}
-                        </Link>
-                    )}
+                    <div className="flex items-center gap-3">
+                        {can('content', 'create') && (
+                            <Link
+                                href={`/cms/contents/create${filterCategory ? `?category=${filterCategory}` : ''}`}
+                                className="px-6 py-3 bg-pan-gold text-pan-navy text-sm font-bold rounded-2xl hover:scale-105 hover:shadow-lg hover:shadow-pan-gold/20 transition-all flex items-center gap-2 group"
+                            >
+                                <PlusCircle className="w-5 h-5 group-hover:rotate-90 transition-transform" />
+                                {t.topbar.titles.newContent}
+                            </Link>
+                        )}
+                    </div>
                 </div>
 
                 {/* Filters */}
@@ -298,7 +311,7 @@ export default function AdminContentsPage() {
                                                     {(content.status === 'draft' && can('content', 'approve')) && (
                                                         <button
                                                             onClick={() => handleAction(content.id, 'submit')}
-                                                            className="text-[11px] px-2.5 py-1 rounded-lg bg-amber-500/10 text-amber-400 hover:bg-amber-500/20 transition-colors"
+                                                            className="px-3 py-1.5 rounded-lg bg-amber-500 text-pan-navy text-[10px] font-bold hover:bg-amber-400 transition-all shadow-lg shadow-amber-500/10"
                                                             title={t.contentManagement.workflow.submit}
                                                         >
                                                             {t.contentManagement.workflow.submit}
@@ -307,7 +320,7 @@ export default function AdminContentsPage() {
                                                     {(content.status === 'draft' && can('content', 'publish')) && (
                                                         <button
                                                             onClick={() => handleAction(content.id, 'publish')}
-                                                            className="text-[11px] px-2.5 py-1 rounded-lg bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500/20 transition-colors"
+                                                            className="px-3 py-1.5 rounded-lg bg-emerald-500 text-pan-navy text-[10px] font-bold hover:bg-emerald-400 transition-all shadow-lg shadow-emerald-500/10"
                                                             title={t.contentManagement.workflow.publish}
                                                         >
                                                             {t.contentManagement.workflow.publish}
@@ -316,7 +329,7 @@ export default function AdminContentsPage() {
                                                     {(content.status === 'pending_approval' && can('content', 'approve')) && (
                                                         <button
                                                             onClick={() => handleAction(content.id, 'publish')}
-                                                            className="text-[11px] px-2.5 py-1 rounded-lg bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500/20 transition-colors"
+                                                            className="px-3 py-1.5 rounded-lg bg-emerald-500 text-pan-navy text-[10px] font-bold hover:bg-emerald-400 transition-all shadow-lg shadow-emerald-500/10"
                                                             title={t.contentManagement.workflow.approve}
                                                         >
                                                             {t.contentManagement.workflow.approve}
@@ -325,7 +338,7 @@ export default function AdminContentsPage() {
                                                     {(content.status === 'published' && can('content', 'edit')) && (
                                                         <button
                                                             onClick={() => handleAction(content.id, 'archive')}
-                                                            className="text-[11px] px-2.5 py-1 rounded-lg bg-gray-500/10 text-gray-400 hover:bg-gray-500/20 transition-colors"
+                                                            className="px-3 py-1.5 rounded-lg bg-gray-600 text-white text-[10px] font-bold hover:bg-gray-500 transition-all"
                                                             title={t.contentManagement.workflow.archive}
                                                         >
                                                             {t.contentManagement.workflow.archive}
@@ -334,28 +347,33 @@ export default function AdminContentsPage() {
                                                     {(content.status === 'archived' && can('content', 'edit')) && (
                                                         <button
                                                             onClick={() => handleAction(content.id, 'restore')}
-                                                            className="text-[11px] px-2.5 py-1 rounded-lg bg-blue-500/10 text-blue-400 hover:bg-blue-500/20 transition-colors"
+                                                            className="px-3 py-1.5 rounded-lg bg-sky-500 text-pan-navy text-[10px] font-bold hover:bg-sky-400 transition-all"
                                                             title={t.contentManagement.workflow.restore}
                                                         >
                                                             {t.contentManagement.workflow.restore}
                                                         </button>
                                                     )}
+                                                    
                                                     {can('content', 'edit') && (
                                                         <Link
                                                             href={`/cms/contents/${content.id}/edit`}
-                                                            className="text-[11px] px-2.5 py-1 rounded-lg bg-admin-surface-alt text-admin-text-muted hover:text-admin-text transition-colors"
+                                                            className="p-2 rounded-lg bg-white/5 text-white hover:bg-pan-gold hover:text-pan-navy transition-all border border-white/5"
+                                                            title={t.common.edit}
                                                         >
-                                                            {t.common.edit}
+                                                            <Edit3 className="w-4 h-4" />
                                                         </Link>
                                                     )}
+                                                    
                                                     {can('content', 'delete') && (
                                                         <button
                                                             onClick={() => handleAction(content.id, 'delete')}
-                                                            className="text-[11px] px-2.5 py-1 rounded-lg bg-red-500/10 text-red-400 hover:bg-red-500/20 transition-colors"
+                                                            className="p-2 rounded-lg bg-red-500/10 text-red-400 hover:bg-red-500 hover:text-white transition-all border border-red-500/20"
+                                                            title={t.common.delete}
                                                         >
-                                                            ×
+                                                            <Trash2 className="w-4 h-4" />
                                                         </button>
                                                     )}
+
                                                 </div>
                                             </td>
                                         </tr>

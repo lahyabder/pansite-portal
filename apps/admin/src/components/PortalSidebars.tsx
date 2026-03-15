@@ -19,14 +19,14 @@ export function CMSSidebar() {
         },
         {
             title: t.sidebar.siteContent, items: [
-                { icon: Newspaper, label: t.sidebar.contents, href: '/cms/contents' },
+                { icon: Newspaper, label: t.sidebar.contents, href: '/cms/contents?category=actualite' },
                 { icon: Ship, label: t.sidebar.port, href: '/cms/contents?category=le-port' },
                 { icon: LayoutDashboard, label: t.sidebar.infrastructure, href: '/cms/contents?category=infrastructure' },
                 { icon: ClipboardList, label: t.sidebar.services, href: '/cms/contents?category=services' },
                 { icon: FileText, label: t.sidebar.procedures, href: '/cms/contents?category=procedures' },
                 { icon: BarChart, label: t.sidebar.tariffs, href: '/cms/contents?category=tariffs' },
                 { icon: Ship, label: t.sidebar.stopovers, href: '/cms/contents?category=stopovers' },
-                { icon: ClipboardList, label: t.sidebar.tenders, href: '/cms/contents?category=tenders' },
+                { icon: Newspaper, label: t.sidebar.tenders, href: '/cms/contents?category=tenders' },
                 { icon: Image, label: t.sidebar.media, href: '/cms/contents?category=media' },
                 { icon: Users, label: t.sidebar.contact, href: '/cms/contents?category=contact' },
             ]
