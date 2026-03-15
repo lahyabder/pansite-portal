@@ -31,12 +31,25 @@ export default function LoginPage() {
         setError('');
         setLoading(true);
 
-        const result = await login(email, password);
+        const loginPromise = login(email, password);
+        const timeoutPromise = new Promise<{ success: false; error: string }>((_, reject) =>
+            setTimeout(() => reject(new Error('TIMEOUT')), 8000)
+        );
 
-        if (result.success) {
-            router.push('/');
-        } else {
-            setError(result.error || 'Erreur de connexion');
+        try {
+            const result = await Promise.race([loginPromise, timeoutPromise]) as { success: boolean; error?: string };
+
+            if (result.success) {
+                router.push('/');
+            } else {
+                setError(result.error || 'Erreur de connexion');
+                setLoading(false);
+            }
+        } catch (err: any) {
+            console.error('[Login] Error or Timeout:', err);
+            setError(err.message === 'TIMEOUT' 
+                ? 'La connexion prend trop de temps. Vérifiez votre connexion internet.' 
+                : 'Une erreur inattendue est survenue.');
             setLoading(false);
         }
     };

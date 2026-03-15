@@ -178,17 +178,29 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         // Rate limit check
         const rateCheck = isRateLimited();
         if (rateCheck.limited) {
+            console.warn('[Auth] Login rate limited', rateCheck);
             const secs = Math.ceil(rateCheck.retryAfterMs / 1000);
             return { success: false, error: `Trop de tentatives. Réessayez dans ${secs}s.` };
         }
 
+        console.log(`[Auth] Attempting login for: ${email}`);
+        
         // Simulate network delay
-        await new Promise(r => setTimeout(r, 600));
+        try {
+            await new Promise((resolve, reject) => {
+                const timer = setTimeout(resolve, 600);
+                // Optional: add a way to force fail for testing
+            });
+        } catch (err) {
+            console.error('[Auth] Simulation delay failed', err);
+            return { success: false, error: 'Erreur technique lors de la simulation.' };
+        }
 
         const user = mockUsers.find(u => u.email === email);
 
         // Check user exists
         if (!user || MOCK_CREDENTIALS[email] !== password) {
+            console.warn(`[Auth] Invalid credentials for: ${email}`);
             loginAttempts.push({ timestamp: Date.now(), success: false });
             logAudit('failed_login', email, email, `Tentative échouée pour: ${email}`);
             return { success: false, error: 'Email ou mot de passe incorrect.' };
@@ -207,6 +219,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         }
 
         // Success
+        console.log(`[Auth] Login successful for: ${user.name} (${user.role})`);
         loginAttempts.push({ timestamp: Date.now(), success: true });
         const now = new Date();
         const sess: Session = {
@@ -215,8 +228,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             expiresAt: new Date(now.getTime() + SESSION_DURATION).toISOString(),
             csrfToken: generateCsrfToken(),
         };
-        setSession(sess);
-        localStorage.setItem(SESSION_KEY, JSON.stringify(sess));
+        
+        try {
+            setSession(sess);
+            localStorage.setItem(SESSION_KEY, JSON.stringify(sess));
+            console.log('[Auth] Session saved to localStorage');
+        } catch (lsErr) {
+            console.error('[Auth] Failed to save session to localStorage', lsErr);
+            // We can still proceed if state is set, but session won't persist
+        }
+
         logAudit('login', user.id, user.name, `Connexion réussie (${ROLE_LABELS[user.role]})`);
         return { success: true };
     }, []);
