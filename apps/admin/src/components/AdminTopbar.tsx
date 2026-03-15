@@ -43,6 +43,20 @@ export function AdminTopbar() {
             <div className="flex items-center gap-6">
 
                 <div className="flex items-center gap-3">
+                    {/* Language Switcher */}
+                    <div className="flex items-center bg-admin-surface-alt rounded-lg p-1 border border-admin-border overflow-hidden">
+                        {languages.map((lang) => (
+                            <button
+                                key={lang.code}
+                                onClick={() => setLocale(lang.code)}
+                                className={`px-2 py-1 text-[10px] font-bold rounded-md transition-all ${locale === lang.code ? 'bg-admin-primary text-white shadow-sm' : 'text-admin-text-muted hover:text-admin-text'}`}
+                                title={lang.label}
+                            >
+                                {lang.code.toUpperCase()}
+                            </button>
+                        ))}
+                    </div>
+
                     {/* Notifications bell */}
                     <button className="relative p-2 text-admin-text-muted hover:text-admin-text hover:bg-admin-surface-alt rounded-lg transition-colors" title={t.topbar.notifications}>
                         <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">

@@ -14,18 +14,29 @@ interface I18nContextType {
 const I18nContext = createContext<I18nContextType | undefined>(undefined);
 
 export function I18nProvider({ children }: { children: React.ReactNode }) {
-    const locale: Locale = 'fr';
-    const isRTL = false;
+    const [locale, setLocale] = useState<Locale>('fr');
+    const [isRTL, setIsRTL] = useState(false);
 
     useEffect(() => {
-        document.documentElement.lang = 'fr';
-        document.documentElement.dir = 'ltr';
+        // Simple detection or stored preference
+        const stored = localStorage.getItem('pan-admin-locale') as Locale;
+        if (stored && ['ar', 'fr', 'en', 'es'].includes(stored)) {
+            setLocale(stored);
+            setIsRTL(stored === 'ar');
+        }
     }, []);
+
+    useEffect(() => {
+        document.documentElement.lang = locale;
+        document.documentElement.dir = locale === 'ar' ? 'rtl' : 'ltr';
+        setIsRTL(locale === 'ar');
+        localStorage.setItem('pan-admin-locale', locale);
+    }, [locale]);
 
     const value = {
         locale,
-        setLocale: () => { }, // No-op
-        t: dictionaries.fr,
+        setLocale,
+        t: dictionaries[locale] || dictionaries.fr,
         isRTL
     };
 

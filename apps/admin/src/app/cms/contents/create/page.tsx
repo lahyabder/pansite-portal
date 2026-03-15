@@ -4,14 +4,16 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { createContentAction, uploadFileAction, preTranslateAction } from '../../../actions';
 import { slugify } from '@pan/shared';
-import type { ContentCategory } from '@pan/shared';
+import type { ContentCategory, Locale } from '@pan/shared';
 import Link from 'next/link';
 import { RequirePermission, useAuth } from '@/lib/auth';
+import { useI18n } from '@/lib/i18n';
 import { Upload, X, Image as ImageIcon, Rocket, Globe, Layout, Save } from 'lucide-react';
 
 export default function CreateContentPage() {
     const router = useRouter();
     const { session } = useAuth();
+    const { t: dict, locale, isRTL } = useI18n();
     const [saving, setSaving] = useState(false);
     const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
     const [previews, setPreviews] = useState<string[]>([]);
@@ -29,7 +31,7 @@ export default function CreateContentPage() {
         externalLink: '',
         videoLink: '',
     });
-    const [activeLang, setActiveLang] = useState('fr');
+    const [activeLang, setActiveLang] = useState(locale);
     const [translating, setTranslating] = useState(false);
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -69,6 +71,7 @@ export default function CreateContentPage() {
             }));
         } catch (error) {
             console.error('Translation failed', error);
+            alert(dict.cms.messages.translateError);
         } finally {
             setTranslating(false);
         }
@@ -90,7 +93,7 @@ export default function CreateContentPage() {
 
             const slug = slugify(mainTitle);
 
-            await createContentAction({
+            const result = await createContentAction({
                 slug,
                 title: form.title,
                 excerpt: form.excerpt,
@@ -110,10 +113,15 @@ export default function CreateContentPage() {
                 images: imageUrls,
             });
 
+            if (result === null) {
+                throw new Error('API connection error');
+            }
+
             router.push('/cms/contents');
         } catch (error) {
             console.error('Submission failed', error);
-            alert('Erreur lors de la création du contenu. Veuillez réessayer.');
+            alert(dict.cms.messages.saveError);
+        } finally {
             setSaving(false);
         }
     };
@@ -127,9 +135,9 @@ export default function CreateContentPage() {
                 <div className="flex items-center justify-between">
                     <div>
                         <Link href="/cms/contents" className="text-admin-text-muted text-sm hover:text-admin-text transition-colors flex items-center gap-2">
-                            ← Retour à la liste
+                            {dict.cms.backToList}
                         </Link>
-                        <h2 className="text-2xl font-bold text-admin-text mt-2 italic tracking-tighter">Nouveau Contenu</h2>
+                        <h2 className="text-2xl font-bold text-admin-text mt-2 italic tracking-tighter">{dict.cms.creation.title}</h2>
                     </div>
                     <div className="flex items-center gap-3">
                         <button
@@ -137,14 +145,14 @@ export default function CreateContentPage() {
                             disabled={saving || !(form.title as any)[activeLang]}
                             className="px-5 py-2.5 text-admin-text-muted text-sm font-bold hover:text-admin-text transition-all"
                         >
-                            Brouillon
+                            {saving ? dict.cms.creation.saving : dict.cms.creation.draft}
                         </button>
                         <button
                             onClick={() => handleSubmit(false)}
                             disabled={saving || !(form.title as any)[activeLang]}
                             className="px-6 py-2.5 bg-emerald-600 text-white text-sm font-bold rounded-xl hover:bg-emerald-700 shadow-xl shadow-emerald-500/20 disabled:opacity-40 transition-all flex items-center gap-2"
                         >
-                            <Rocket className="w-4 h-4" /> {saving ? 'Publication...' : 'Publier maintenant'}
+                            <Rocket className="w-4 h-4" /> {saving ? dict.cms.creation.publishing : dict.cms.creation.publish}
                         </button>
                     </div>
                 </div>
@@ -166,7 +174,7 @@ export default function CreateContentPage() {
                                         ].map((lang) => (
                                             <button
                                                 key={lang.id}
-                                                onClick={() => setActiveLang(lang.id)}
+                                                onClick={() => setActiveLang(lang.id as Locale)}
                                                 className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 ${activeLang === lang.id ? 'bg-admin-primary text-white shadow-lg' : 'text-admin-text-muted hover:text-admin-text'}`}
                                             >
                                                 <span>{lang.flag}</span>
@@ -182,21 +190,21 @@ export default function CreateContentPage() {
                                         className="w-full sm:w-auto px-5 py-2.5 bg-pan-gold text-pan-navy text-xs font-bold rounded-xl hover:bg-pan-gold-light disabled:opacity-30 transition-all flex items-center justify-center gap-2 shadow-lg"
                                     >
                                         <Globe className={`w-4 h-4 ${translating ? 'animate-spin' : ''}`} />
-                                        {translating ? 'Traduction I.A...' : `Traduire vers les autres`}
+                                        {translating ? dict.cms.creation.translating : dict.cms.creation.translate}
                                     </button>
                                 </div>
 
                                 <div className="space-y-6" dir={activeLang === 'ar' ? 'rtl' : 'ltr'}>
                                     <div>
                                         <label className="block text-admin-text-muted text-[10px] font-bold uppercase tracking-widest mb-2 px-1">
-                                            {activeLang === 'ar' ? 'العنوان' : "Titre de l'article"} ({activeLang.toUpperCase()}) *
+                                            {dict.cms.form.title} ({activeLang.toUpperCase()}) *
                                         </label>
                                         <input
                                             type="text"
                                             value={(form.title as any)[activeLang]}
                                             onChange={(e) => setForm({ ...form, title: { ...form.title, [activeLang]: e.target.value } })}
-                                            placeholder={activeLang === 'ar' ? 'اكتب العنوان هنا...' : 'Ex: Le nouveau terminal...'}
-                                            className={inputClass + ' text-lg font-bold'}
+                                            placeholder={dict.cms.form.titlePlaceholder}
+                                            className={inputClass + ' text-lg font-bold text-start'}
                                         />
                                         {activeLang === 'fr' && (form.title as any).fr && (
                                             <div className="text-[10px] font-mono text-admin-text-muted mt-2 px-1 opacity-50 italic">
@@ -206,26 +214,26 @@ export default function CreateContentPage() {
                                     </div>
                                     <div>
                                         <label className="block text-admin-text-muted text-[10px] font-bold uppercase tracking-widest mb-2 px-1">
-                                            {activeLang === 'ar' ? 'الملخص' : "Résumé (Extrait)"} ({activeLang.toUpperCase()})
+                                            {dict.cms.form.excerpt} ({activeLang.toUpperCase()})
                                         </label>
                                         <textarea
                                             rows={2}
                                             value={(form.excerpt as any)[activeLang]}
                                             onChange={(e) => setForm({ ...form, excerpt: { ...form.excerpt, [activeLang]: e.target.value } })}
-                                            placeholder={activeLang === 'ar' ? 'اكتب ملخصاً قصيراً...' : 'Bref résumé...'}
-                                            className={inputClass + ' resize-none'}
+                                            placeholder={dict.cms.form.excerptPlaceholder}
+                                            className={inputClass + ' resize-none text-start'}
                                         />
                                     </div>
                                     <div>
                                         <label className="block text-admin-text-muted text-[10px] font-bold uppercase tracking-widest mb-2 px-1">
-                                            {activeLang === 'ar' ? 'نص الخبر' : "Corps de l'article"} ({activeLang.toUpperCase()})
+                                            {dict.cms.form.body} ({activeLang.toUpperCase()})
                                         </label>
                                         <textarea
                                             rows={12}
                                             value={(form.body as any)[activeLang]}
                                             onChange={(e) => setForm({ ...form, body: { ...form.body, [activeLang]: e.target.value } })}
-                                            placeholder={activeLang === 'ar' ? 'اكتب محتوى الخبر بالتفصيل...' : 'Contenu complet...'}
-                                            className={inputClass + ' resize-none font-sans leading-relaxed'}
+                                            placeholder={dict.cms.form.bodyPlaceholder}
+                                            className={inputClass + ' resize-none font-sans leading-relaxed text-start'}
                                         />
                                     </div>
                                 </div>
@@ -236,7 +244,7 @@ export default function CreateContentPage() {
                         <div className="bg-admin-surface rounded-3xl border border-admin-border p-8 shadow-xl">
                             <h3 className="text-admin-text font-bold mb-6 flex items-center gap-3">
                                 <span className="w-1.5 h-6 bg-emerald-500 rounded-full" />
-                                🖼️ Galerie Photo
+                                🖼️ {dict.cms.creation.imageGallery}
                             </h3>
 
                             <div className="space-y-6">
@@ -250,8 +258,8 @@ export default function CreateContentPage() {
                                         <div className="w-12 h-12 bg-admin-primary/10 rounded-2xl flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
                                             <Upload className="w-6 h-6 text-admin-primary" />
                                         </div>
-                                        <div className="text-admin-text font-bold text-sm">Glissez ou cliquez pour ajouter</div>
-                                        <div className="text-admin-text-muted text-[10px] mt-1 tracking-wider uppercase opacity-50">Images HD (JPG, PNG, WEBP)</div>
+                                        <div className="text-admin-text font-bold text-sm">{dict.cms.creation.dropzone}</div>
+                                        <div className="text-admin-text-muted text-[10px] mt-1 tracking-wider uppercase opacity-50">{dict.cms.creation.imageDisclaimer}</div>
                                     </label>
                                 </div>
 
@@ -284,59 +292,59 @@ export default function CreateContentPage() {
 
                             <div className="space-y-6">
                                 <div>
-                                    <label className="block text-admin-text-muted text-[10px] font-bold uppercase mb-2">Catégorie</label>
+                                    <label className="block text-admin-text-muted text-[10px] font-bold uppercase mb-2">{dict.cms.form.category}</label>
                                     <select value={form.category} onChange={(e) => setForm({ ...form, category: e.target.value as any })} className={inputClass}>
-                                        <option value="actualite">📰 Actualité</option>
-                                        <option value="communique">📢 Communiqué</option>
-                                        <option value="evenement">📅 Événement</option>
-                                        <option value="alerte">⚠️ Alerte / Avis</option>
-                                        <option value="le-port">⚓ Le Port</option>
-                                        <option value="infrastructure">🏗️ Infrastructures</option>
-                                        <option value="services">🛠️ Services</option>
-                                        <option value="procedures">📜 Procédures</option>
-                                        <option value="tariffs">💰 Tarifs</option>
-                                        <option value="stopovers">🚢 Escales</option>
-                                        <option value="tenders">📝 Appels d'offres</option>
-                                        <option value="documentation">📂 Documentation</option>
-                                        <option value="media">🖼️ Médiathèque</option>
-                                        <option value="contact">📞 Contact</option>
+                                        <option value="actualite">📰 {dict.contentManagement.categories.actualite}</option>
+                                        <option value="communique">📢 {dict.contentManagement.categories.communique}</option>
+                                        <option value="evenement">📅 {dict.contentManagement.categories.evenement}</option>
+                                        <option value="alerte">⚠️ {dict.contentManagement.categories.alerte}</option>
+                                        <option value="le-port">⚓ {dict.contentManagement.categories['le-port']}</option>
+                                        <option value="infrastructure">🏗️ {dict.contentManagement.categories.infrastructure}</option>
+                                        <option value="services">🛠️ {dict.contentManagement.categories.services}</option>
+                                        <option value="procedures">📜 {dict.contentManagement.categories.procedures}</option>
+                                        <option value="tariffs">💰 {dict.contentManagement.categories.tariffs}</option>
+                                        <option value="stopovers">🚢 {dict.contentManagement.categories.stopovers}</option>
+                                        <option value="tenders">📝 {dict.contentManagement.categories.tenders}</option>
+                                        <option value="documentation">📂 {dict.contentManagement.categories.documentation}</option>
+                                        <option value="media">🖼️ {dict.contentManagement.categories.media}</option>
+                                        <option value="contact">📞 {dict.contentManagement.categories.contact}</option>
                                     </select>
                                 </div>
 
                                 <div>
-                                    <label className="block text-admin-text-muted text-[10px] font-bold uppercase mb-2">Priorité</label>
+                                    <label className="block text-admin-text-muted text-[10px] font-bold uppercase mb-2">{dict.cms.form.priority}</label>
                                     <select value={form.priority} onChange={(e) => setForm({ ...form, priority: e.target.value as any })} className={inputClass}>
-                                        <option value="normal">Standard</option>
-                                        <option value="important">⚡ Important</option>
-                                        <option value="urgent">🚨 Urgent</option>
+                                        <option value="normal">{dict.contentManagement.priorities.normal}</option>
+                                        <option value="important">⚡ {dict.contentManagement.priorities.important}</option>
+                                        <option value="urgent">🚨 {dict.contentManagement.priorities.urgent}</option>
                                     </select>
                                 </div>
 
                                 {form.category === 'evenement' && (
                                     <div className="space-y-4 pt-4 border-t border-white/5">
                                         <div>
-                                            <label className="block text-admin-text-muted text-[10px] font-bold uppercase mb-1.5">Date début</label>
+                                            <label className="block text-admin-text-muted text-[10px] font-bold uppercase mb-1.5">{dict.cms.form.startDate}</label>
                                             <input type="datetime-local" value={form.eventDate} onChange={(e) => setForm({ ...form, eventDate: e.target.value })} className={inputClass + ' text-xs'} />
                                         </div>
                                         <div>
-                                            <label className="block text-admin-text-muted text-[10px] font-bold uppercase mb-1.5">Lieu</label>
+                                            <label className="block text-admin-text-muted text-[10px] font-bold uppercase mb-1.5">{dict.cms.form.location}</label>
                                             <input type="text" value={form.eventLocation} onChange={(e) => setForm({ ...form, eventLocation: e.target.value })} className={inputClass + ' text-xs'} placeholder="Nouadhibou..." />
                                         </div>
                                     </div>
                                 )}
 
                                 <div>
-                                    <label className="block text-admin-text-muted text-[10px] font-bold uppercase mb-2">Tags</label>
-                                    <input type="text" value={form.tags} onChange={(e) => setForm({ ...form, tags: e.target.value })} placeholder="port, économie..." className={inputClass} />
+                                    <label className="block text-admin-text-muted text-[10px] font-bold uppercase mb-2">{dict.cms.form.tags}</label>
+                                    <input type="text" value={form.tags} onChange={(e) => setForm({ ...form, tags: e.target.value })} placeholder={dict.cms.form.tagsPlaceholder} className={inputClass} />
                                 </div>
 
                                 <div className="pt-6 border-t border-white/5 space-y-4">
-                                    <h5 className="text-[10px] font-bold text-white/40 uppercase tracking-widest px-1">Ressources</h5>
+                                    <h5 className="text-[10px] font-bold text-white/40 uppercase tracking-widest px-1">{dict.cms.form.resources}</h5>
                                     <div>
-                                        <input type="url" value={form.externalLink} onChange={(e) => setForm({ ...form, externalLink: e.target.value })} placeholder="Lien PDF ou Document..." className={inputClass + ' text-[11px]'} />
+                                        <input type="url" value={form.externalLink} onChange={(e) => setForm({ ...form, externalLink: e.target.value })} placeholder={dict.cms.form.docLink} className={inputClass + ' text-[11px]'} />
                                     </div>
                                     <div>
-                                        <input type="url" value={form.videoLink} onChange={(e) => setForm({ ...form, videoLink: e.target.value })} placeholder="Lien Vidéo (YouTube)..." className={inputClass + ' text-[11px]'} />
+                                        <input type="url" value={form.videoLink} onChange={(e) => setForm({ ...form, videoLink: e.target.value })} placeholder={dict.cms.form.videoLink} className={inputClass + ' text-[11px]'} />
                                     </div>
                                 </div>
                             </div>

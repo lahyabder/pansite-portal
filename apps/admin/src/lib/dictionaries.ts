@@ -246,6 +246,43 @@ export type AdminDictionary = {
         validator: string;
         internal_reader: string;
     };
+    cms: {
+        backToList: string;
+        creation: {
+            title: string;
+            publish: string;
+            publishing: string;
+            draft: string;
+            saving: string;
+            translate: string;
+            translating: string;
+            imageGallery: string;
+            dropzone: string;
+            imageDisclaimer: string;
+        };
+        form: {
+            title: string;
+            titlePlaceholder: string;
+            excerpt: string;
+            excerptPlaceholder: string;
+            body: string;
+            bodyPlaceholder: string;
+            category: string;
+            priority: string;
+            startDate: string;
+            location: string;
+            tags: string;
+            tagsPlaceholder: string;
+            resources: string;
+            docLink: string;
+            videoLink: string;
+        };
+        messages: {
+            saveSuccess: string;
+            saveError: string;
+            translateError: string;
+        };
+    };
 };
 
 export const dictionaries: Record<Locale, AdminDictionary> = {
@@ -495,6 +532,43 @@ export const dictionaries: Record<Locale, AdminDictionary> = {
             validator: 'Validateur',
             internal_reader: 'Lecteur Interne',
         },
+        cms: {
+            backToList: '← Retour à la liste',
+            creation: {
+                title: 'Nouveau Contenu',
+                publish: 'Publier maintenant',
+                publishing: 'Publication...',
+                draft: 'Brouillon',
+                saving: 'Enregistrement...',
+                translate: 'Traduire vers les autres',
+                translating: 'Traduction I.A...',
+                imageGallery: 'Galerie Photo',
+                dropzone: 'Glissez ou cliquez pour ajouter',
+                imageDisclaimer: 'Images HD (JPG, PNG, WEBP)',
+            },
+            form: {
+                title: "Titre de l'article",
+                titlePlaceholder: 'Ex: Le nouveau terminal...',
+                excerpt: 'Résumé (Extrait)',
+                excerptPlaceholder: 'Bref résumé...',
+                body: "Corps de l'article",
+                bodyPlaceholder: 'Contenu complet...',
+                category: 'Catégorie',
+                priority: 'Priorité',
+                startDate: 'Date début',
+                location: 'Lieu',
+                tags: 'Tags',
+                tagsPlaceholder: 'port, économie...',
+                resources: 'Ressources',
+                docLink: 'Lien PDF ou Document...',
+                videoLink: 'Lien Vidéo (YouTube)...',
+            },
+            messages: {
+                saveSuccess: 'Contenu enregistré avec succès',
+                saveError: 'Erreur lors de la création du contenu. Veuillez réessayer.',
+                translateError: 'La traduction a échoué. Veuillez réessayer.',
+            },
+        },
     },
     ar: {
         sidebar: {
@@ -741,6 +815,43 @@ export const dictionaries: Record<Locale, AdminDictionary> = {
             services_manager: 'مسؤول خدمات',
             validator: 'مراجع',
             internal_reader: 'قارئ داخلي',
+        },
+        cms: {
+            backToList: '← العودة للقائمة',
+            creation: {
+                title: 'محتوى جديد',
+                publish: 'انشر الآن',
+                publishing: 'جاري النشر...',
+                draft: 'حفظ كمسودة',
+                saving: 'جاري الحفظ...',
+                translate: 'ترجمة لبقية اللغات',
+                translating: 'جاري الترجمة...',
+                imageGallery: 'معرض الصور',
+                dropzone: 'قم بسحب الصور هنا أو اضغط للاختيار',
+                imageDisclaimer: 'صور عالية الجودة (JPG, PNG, WEBP)',
+            },
+            form: {
+                title: 'عنوان المقال',
+                titlePlaceholder: 'مثال: افتتاح المحطة الجديدة...',
+                excerpt: 'الملخص',
+                excerptPlaceholder: 'اكتب ملخصاً قصيراً...',
+                body: 'نص المقال',
+                bodyPlaceholder: 'اكتب محتوى المقال بالتفصيل...',
+                category: 'الفئة',
+                priority: 'الأولوية',
+                startDate: 'تاريخ البدء',
+                location: 'المكان',
+                tags: 'الوسوم (Tags)',
+                tagsPlaceholder: 'ميناء، اقتصاد...',
+                resources: 'المرفقات',
+                docLink: 'رابط ملف PDF أو وثيقة...',
+                videoLink: 'رابط فيديو (YouTube)...',
+            },
+            messages: {
+                saveSuccess: 'تم حفظ المحتوى بنجاح',
+                saveError: 'حدث خطأ أثناء حفظ المحتوى. يرجى المحاولة مرة أخرى.',
+                translateError: 'فشلت عملية الترجمة. يرجى المحاولة مرة أخرى.',
+            },
         },
     },
     en: {
@@ -989,6 +1100,43 @@ export const dictionaries: Record<Locale, AdminDictionary> = {
             validator: 'Validator',
             internal_reader: 'Internal Reader',
         },
+        cms: {
+            backToList: '← Back to list',
+            creation: {
+                title: 'New Content',
+                publish: 'Publish now',
+                publishing: 'Publishing...',
+                draft: 'Draft',
+                saving: 'Saving...',
+                translate: 'Translate to others',
+                translating: 'AI Translation...',
+                imageGallery: 'Photo Gallery',
+                dropzone: 'Drag or click to add',
+                imageDisclaimer: 'HD Images (JPG, PNG, WEBP)',
+            },
+            form: {
+                title: 'Article Title',
+                titlePlaceholder: 'Ex: The new terminal...',
+                excerpt: 'Summary (Excerpt)',
+                excerptPlaceholder: 'Short summary...',
+                body: 'Article Body',
+                bodyPlaceholder: 'Full content...',
+                category: 'Category',
+                priority: 'Priority',
+                startDate: 'Start Date',
+                location: 'Location',
+                tags: 'Tags',
+                tagsPlaceholder: 'port, economy...',
+                resources: 'Resources',
+                docLink: 'PDF or Document Link...',
+                videoLink: 'Video Link (YouTube)...',
+            },
+            messages: {
+                saveSuccess: 'Content saved successfully',
+                saveError: 'Error creating content. Please try again.',
+                translateError: 'Translation failed. Please try again.',
+            },
+        },
     },
     es: {
         sidebar: {
@@ -1235,6 +1383,43 @@ export const dictionaries: Record<Locale, AdminDictionary> = {
             services_manager: 'Gestor de Servicios',
             validator: 'Validador',
             internal_reader: 'Lector Interno',
+        },
+        cms: {
+            backToList: '← Volver a la lista',
+            creation: {
+                title: 'Nuevo Contenido',
+                publish: 'Publicar ahora',
+                publishing: 'Publicando...',
+                draft: 'Borrador',
+                saving: 'Guardando...',
+                translate: 'Traducir a otros',
+                translating: 'Traducción I.A...',
+                imageGallery: 'Galería de Fotos',
+                dropzone: 'Arrastra o haz clic para añadir',
+                imageDisclaimer: 'Imágenes HD (JPG, PNG, WEBP)',
+            },
+            form: {
+                title: 'Título del artículo',
+                titlePlaceholder: 'Ej: El nuevo terminal...',
+                excerpt: 'Resumen (Extracto)',
+                excerptPlaceholder: 'Breve resumen...',
+                body: 'Cuerpo del artículo',
+                bodyPlaceholder: 'Contenido completo...',
+                category: 'Categoría',
+                priority: 'Prioridad',
+                startDate: 'Fecha de inicio',
+                location: 'Lugar',
+                tags: 'Etiquetas',
+                tagsPlaceholder: 'puerto, economía...',
+                resources: 'Recursos',
+                docLink: 'Enlace de PDF o documento...',
+                videoLink: 'Enlace de video (YouTube)...',
+            },
+            messages: {
+                saveSuccess: 'Contenido guardado con éxito',
+                saveError: 'Error al crear el contenido. Por favor, inténtelo de nuevo.',
+                translateError: 'La traducción falló. Por favor, inténtelo de nuevo.',
+            },
         },
     },
 };

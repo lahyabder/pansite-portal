@@ -100,18 +100,19 @@ export function CMSSidebar() {
 export function GEDSidebar() {
     const pathname = usePathname();
     const { session, logout } = useAuth();
+    const { t, locale } = useI18n();
 
     const menu = [
         {
-            title: 'GED', items: [
-                { icon: LayoutDashboard, label: 'Aperçu Global', href: '/ged' },
-                { icon: FileText, label: 'Bibliothèque Centrale', href: '/ged/documents' },
+            title: t.sidebar.documentation, items: [
+                { icon: LayoutDashboard, label: t.sidebar.dashboard, href: '/ged' },
+                { icon: FileText, label: t.topbar.titles.documents, href: '/ged/documents' },
             ]
         },
         {
             title: 'Workflow', items: [
-                { icon: ClipboardList, label: 'Demandes de documents', href: '/ged/requests' },
-                { icon: BarChart, label: 'Journal d\'audit', href: '/ged/audit' },
+                { icon: ClipboardList, label: t.topbar.titles.requests, href: '/ged/requests' },
+                { icon: BarChart, label: t.sidebar.audit, href: '/ged/audit' },
             ]
         },
     ];
@@ -122,15 +123,15 @@ export function GEDSidebar() {
     };
 
     return (
-        <aside className="w-64 bg-[#0f172a] border-e border-white/5 flex flex-col shrink-0 h-screen sticky top-0 text-white">
+        <aside className={`w-64 bg-[#0f172a] border-e border-white/5 flex flex-col shrink-0 h-screen sticky top-0 text-white ${locale === 'ar' ? 'font-arabic' : ''}`} dir={locale === 'ar' ? 'rtl' : 'ltr'}>
             <div className="p-6">
                 <div className="flex items-center gap-3">
                     <div className="w-10 h-10 bg-pan-blue rounded-xl flex items-center justify-center shadow-lg shadow-pan-blue/20">
                         <FileText className="w-6 h-6 text-white" />
                     </div>
                     <div>
-                        <div className="font-bold text-sm tracking-tight">Portail GED</div>
-                        <div className="text-[10px] text-pan-sky font-semibold uppercase">Management</div>
+                        <div className="font-bold text-sm tracking-tight">{t.topbar.portName}</div>
+                        <div className="text-[10px] text-pan-sky font-semibold uppercase">GED Management</div>
                     </div>
                 </div>
             </div>
@@ -159,13 +160,13 @@ export function GEDSidebar() {
                 ))}
             </nav>
 
-            <div className="p-4 border-t border-white/5">
+            <div className={`p-4 border-t border-white/5 ${locale === 'ar' ? 'text-right' : 'text-left'}`}>
                 <button
                     onClick={logout}
                     className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm text-red-400 hover:bg-red-500/10 transition-colors"
                 >
                     <LogOut className="w-5 h-5" />
-                    Déconnexion
+                    {t.sidebar.logout}
                 </button>
             </div>
         </aside>
