@@ -13,11 +13,14 @@ export default function CMSDashboard() {
     const { locale } = useI18n();
     const [contents, setContents] = useState<Content[]>([]);
     const [loading, setLoading] = useState(true);
+    const [apiError, setApiError] = useState<string | null>(null);
 
     useEffect(() => {
         getAllContentsAction().then(res => {
             if (res.data) {
                 setContents(res.data);
+            } else if (res.error) {
+                setApiError(res.error);
             }
             setLoading(false);
         });
@@ -134,8 +137,8 @@ export default function CMSDashboard() {
                         </h3>
                         <div className="space-y-6">
                             {[
-                                { label: 'Serveur API', status: 'Opérationnel', color: 'text-emerald-400' },
-                                { label: 'Base de données', status: 'Connecté', color: 'text-emerald-400' },
+                                { label: 'Serveur API', status: apiError ? 'Erreur Connexion' : 'Opérationnel', color: apiError ? 'text-red-400' : 'text-emerald-400' },
+                                { label: 'Base de données', status: apiError ? 'Déconnecté' : 'Connecté', color: apiError ? 'text-red-400' : 'text-emerald-400' },
                                 { label: 'Version Logicielle', status: 'v4.5.0-stable', color: 'text-white/60' },
                                 { label: 'Cache Système', status: 'Optimisé', color: 'text-pan-sky' },
                             ].map((s, i) => (

@@ -9,9 +9,9 @@ import { OpenAI } from 'openai';
 // In dev, web runs on 3000; in prod, override via WEB_API_BASE_URL env var
 const WEB_API_BASE = process.env.WEB_API_BASE_URL || 
                      (process.env.VERCEL_URL ? 
-                        (process.env.VERCEL_URL.includes('pan.afrikyia.com') ? 
-                            'https://www.pan.afrikyia.com' : 
-                            `https://${process.env.VERCEL_URL.replace('admin.', 'www.').replace('-admin', '-web')}`) : 
+                        (process.env.VERCEL_URL.includes('pan.afrikyia.com') || process.env.VERCEL_URL.includes('pan.mr') ? 
+                            'https://www.pan.mr' : 
+                            `https://www.pan.mr`) : // Default to production if in Vercel but URL is strange
                         'http://127.0.0.1:3000');
 
 
@@ -109,7 +109,7 @@ async function translateText(text: string, to: string) {
 
     const client = getOpenAIClient();
     if (!client) {
-        throw new Error('MOCK_FALLBACK');
+        return `[MOCK ${to.toUpperCase()}] ${text}`;
     }
 
     try {
