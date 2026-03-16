@@ -77,9 +77,24 @@ export async function uploadFileAction(formData: FormData) {
 }
 
 // ─── OpenAI Translation ───────────────────────────────────────────────────────
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
-if (!process.env.OPENAI_API_KEY) {
-    console.warn('WARNING: OPENAI_API_KEY is missing. Translations will use mock fallback.');
+let _openai: OpenAI | null = null;
+
+function getOpenAIClient() {
+    if (_openai) return _openai;
+    
+    const apiKey = process.env.OPENAI_API_KEY;
+    if (!apiKey) {
+        console.warn('[Admin Actions] OPENAI_API_KEY is missing. Translations will use mock fallback.');
+        return null;
+    }
+
+    try {
+        _openai = new OpenAI({ apiKey });
+        return _openai;
+    } catch (err) {
+        console.error('[Admin Actions] Failed to initialize OpenAI client:', err);
+        return null;
+    }
 }
 
 async function translateText(text: string, to: string) {
@@ -88,8 +103,13 @@ async function translateText(text: string, to: string) {
         ar: 'Arabic', en: 'English', es: 'Spanish', fr: 'French'
     };
 
+    const client = getOpenAIClient();
+    if (!client) {
+        throw new Error('MOCK_FALLBACK');
+    }
+
     try {
-        const response = await openai.chat.completions.create({
+        const response = await client.chat.completions.create({
             model: 'gpt-4o-mini',
             messages: [
                 {
@@ -123,30 +143,40 @@ export async function preTranslateAction(data: {
     body: string;
     sourceLang: string;
 }) {
-    const targets = ['fr', 'ar', 'en', 'es'].filter(l => l !== data.sourceLang);
-    const translations: Record<string, Record<string, string>> = {
-        title: { [data.sourceLang]: data.title },
-        excerpt: { [data.sourceLang]: data.excerpt },
-        body: { [data.sourceLang]: data.body }
-    };
+    try {
+        const targets = ['fr', 'ar', 'en', 'es'].filter(l => l !== data.sourceLang);
+        const translations: Record<string, Record<string, string>> = {
+            title: { [data.sourceLang]: data.title },
+            excerpt: { [data.sourceLang]: data.excerpt },
+            body: { [data.sourceLang]: data.body }
+        };
 
-    const promises = targets.map(async (target) => {
-        const [t, e, b] = await Promise.all([
-            translateText(data.title, target),
-            translateText(data.excerpt, target),
-            translateText(data.body, target)
-        ]);
-        return { target, t, e, b };
-    });
+        const promises = targets.map(async (target) => {
+            const [t, e, b] = await Promise.all([
+                translateText(data.title, target),
+                translateText(data.excerpt, target),
+                translateText(data.body, target)
+            ]);
+            return { target, t, e, b };
+        });
 
-    const results = await Promise.all(promises);
-    for (const res of results) {
-        translations.title[res.target] = res.t;
-        translations.excerpt[res.target] = res.e;
-        translations.body[res.target] = res.b;
+        const results = await Promise.all(promises);
+        for (const res of results) {
+            translations.title[res.target] = res.t;
+            translations.excerpt[res.target] = res.e;
+            translations.body[res.target] = res.b;
+        }
+
+        return translations;
+    } catch (err) {
+        console.error('preTranslateAction failed:', err);
+        // Fallback to source only if total failure
+        return {
+            title: { [data.sourceLang]: data.title },
+            excerpt: { [data.sourceLang]: data.excerpt },
+            body: { [data.sourceLang]: data.body }
+        };
     }
-
-    return translations;
 }
 
 // ─── Content CRUD via Web API ─────────────────────────────────────────────────
