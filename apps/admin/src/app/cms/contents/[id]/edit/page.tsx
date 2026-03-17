@@ -7,6 +7,7 @@ import type { Content, ContentCategory } from '@pan/shared';
 import { updateContentAction, getContentByIdAction, uploadFileAction, preTranslateAction } from '../../../../actions';
 import Link from 'next/link';
 import { RequirePermission, useAuth } from '@/lib/auth';
+import { useI18n } from '@/lib/i18n';
 import { Upload, X, Image as ImageIcon, RotateCcw, Save, Globe } from 'lucide-react';
 
 export default function EditContentPage({
@@ -17,7 +18,7 @@ export default function EditContentPage({
     const { id } = use(params);
     const router = useRouter();
     const { session } = useAuth();
-
+    const { t: dict, locale, isRTL } = useI18n();
     const [content, setContent] = useState<Content | null>(null);
     const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
@@ -38,7 +39,7 @@ export default function EditContentPage({
         externalLink: '',
         videoLink: '',
     });
-    const [activeLang, setActiveLang] = useState('fr');
+    const [activeLang, setActiveLang] = useState(locale as any);
     const [translating, setTranslating] = useState(false);
 
     useEffect(() => {
@@ -64,7 +65,7 @@ export default function EditContentPage({
             }
             setLoading(false);
         });
-    }, [id]);
+    }, [id, locale]);
 
     const handleTranslate = async () => {
         const sourceTitle = form.title[activeLang];
@@ -90,6 +91,7 @@ export default function EditContentPage({
             }));
         } catch (error) {
             console.error('Translation failed', error);
+            alert(dict.cms.messages.translateError);
         } finally {
             setTranslating(false);
         }
@@ -235,7 +237,7 @@ export default function EditContentPage({
                             className="w-full sm:w-auto px-5 py-2.5 bg-pan-gold text-pan-navy text-xs font-bold rounded-xl hover:bg-pan-gold-light disabled:opacity-30 transition-all flex items-center justify-center gap-2 shadow-lg hover:shadow-pan-gold/20"
                         >
                             <Globe className={`w-4 h-4 ${translating ? 'animate-spin' : ''}`} />
-                            {translating ? 'Traduction...' : `Traduire vers les autres langues`}
+                            {translating ? dict.cms.creation.translating : dict.cms.creation.translate}
                         </button>
                     </div>
 

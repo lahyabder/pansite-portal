@@ -88,7 +88,7 @@ function getOpenAIClient() {
     
     const apiKey = process.env.OPENAI_API_KEY;
     if (!apiKey) {
-        console.warn('[Admin Actions] OPENAI_API_KEY is missing. Translations will use mock fallback.');
+        console.warn('[Admin Actions] ⚠️ OPENAI_API_KEY is missing. Translations will use mock fallback [MOCK].');
         return null;
     }
 
@@ -96,7 +96,7 @@ function getOpenAIClient() {
         _openai = new OpenAI({ apiKey });
         return _openai;
     } catch (err) {
-        console.error('[Admin Actions] Failed to initialize OpenAI client:', err);
+        console.error('[Admin Actions] ❌ Failed to initialize OpenAI client:', err);
         return null;
     }
 }
@@ -122,6 +122,8 @@ async function translateText(text: string, to: string) {
 Translate the following text to ${langNames[to]}.
 Keep the tone professional and formal.
 If the text contains HTML tags or special formatting, preserve it.
+IMPORTANT - Fixed proper names that must NEVER be translated or changed:
+- The Director General's name is always: ${to === 'ar' ? 'أحمد ولد سيد احمد ولد اج' : 'Ahmed Ould Sid Ahmed Ould Die'} (regardless of source language)
 Return ONLY the translated text, nothing else.`
                 },
                 { role: 'user', content: text }
@@ -130,7 +132,7 @@ Return ONLY the translated text, nothing else.`
         }, { timeout: 10000 });
         return response.choices[0].message.content?.trim() || text;
     } catch (err) {
-        console.error(`Translation error to ${to}:`, err);
+        console.error(`[Admin Actions] ❌ Translation error to ${to}:`, err);
         const mocks: Record<string, string> = {
             ar: `[ترجمة آليا] ${text}`,
             en: `[Auto-EN] ${text}`,
