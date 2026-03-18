@@ -2,7 +2,7 @@ import type { Locale } from '@pan/shared';
 import { getDictionary } from '@/lib/dictionaries';
 import { PageHero } from '@/components/PageHero';
 import { ContentList } from '@/components/ContentList';
-import { getPublishedContentsAPI } from '@/lib/api-client';
+import { getPublishedContents } from '@pan/shared';
 
 export default async function CommuniquesPage({
     params,
@@ -20,7 +20,7 @@ export default async function CommuniquesPage({
         es: 'Comunicados oficiales y anuncios de la dirección del puerto.'
     }[locale];
 
-    const initialData = await getPublishedContentsAPI({ category: 'communique', pageSize: 12 });
+    const initialData = await getPublishedContents({ category: 'communique', pageSize: 12 });
 
     return (
         <>

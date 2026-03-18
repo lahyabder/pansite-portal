@@ -1,6 +1,6 @@
 import type { Locale } from '@pan/shared';
 import { t, formatDate } from '@pan/shared';
-import { getContentBySlugAPI, getPublishedContentsAPI } from '@/lib/api-client';
+import { getContentBySlug, getPublishedContents } from '@pan/shared';
 import { getDictionary } from '@/lib/dictionaries';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
@@ -15,7 +15,7 @@ export default async function ContentDetailPage({
     const locale = (['ar', 'fr', 'en', 'es'].includes(localeParam) ? localeParam : 'fr') as Locale;
     const dict = getDictionary(locale);
 
-    const content = await getContentBySlugAPI(slug);
+    const content = await getContentBySlug(slug);
     if (!content || content.status !== 'published') return notFound();
 
     const categoryLabel = dict.content.categories[content.category] || content.category;
@@ -39,7 +39,7 @@ export default async function ContentDetailPage({
     )[content.category] || 'actualites';
 
     // Get related content (same category, different slug)
-    const relatedData = await getPublishedContentsAPI({ category: content.category, pageSize: 4 });
+    const relatedData = await getPublishedContents({ category: content.category, pageSize: 4 });
     const related = relatedData.items
         .filter((c) => c.slug !== slug)
         .slice(0, 3);

@@ -2,7 +2,7 @@ import type { Locale } from '@pan/shared';
 import { getDictionary } from '@/lib/dictionaries';
 import { PageHero } from '@/components/PageHero';
 import { ContentList } from '@/components/ContentList';
-import { getPublishedContentsAPI } from '@/lib/api-client';
+import { getPublishedContents } from '@pan/shared';
 
 export default async function EvenementsPage({
     params,
@@ -20,7 +20,7 @@ export default async function EvenementsPage({
         es: 'Próximos eventos y manifestaciones del PAN.'
     }[locale];
 
-    const initialData = await getPublishedContentsAPI({ category: 'evenement', pageSize: 12 });
+    const initialData = await getPublishedContents({ category: 'evenement', pageSize: 12 });
 
     return (
         <>
