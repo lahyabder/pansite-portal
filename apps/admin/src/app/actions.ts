@@ -62,19 +62,18 @@ export async function uploadFileAction(formData: FormData) {
     if (files.length === 0 || (files.length === 1 && files[0].name === 'undefined')) return [];
 
     const urls: string[] = [];
-    const uploadDir = join(process.cwd(), '..', 'web', 'public', 'uploads');
 
     for (const file of files) {
         if (!file.name || file.size === 0) continue;
 
         const bytes = await file.arrayBuffer();
         const buffer = Buffer.from(bytes);
-
-        const fileName = `${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.-]/g, '_')}`;
-        const filePath = join(uploadDir, fileName);
-
-        await writeFile(filePath, buffer);
-        urls.push(`/uploads/${fileName}`);
+        
+        // Convert to Base64 to bypass Vercel's read-only filesystem restrictions
+        // This is a temporary prototype workaround until S3/Blob is configured
+        const base64 = buffer.toString('base64');
+        const mimeType = file.type || 'image/jpeg';
+        urls.push(`data:${mimeType};base64,${base64}`);
     }
 
     return urls;
