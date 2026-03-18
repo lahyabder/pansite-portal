@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getAllContents, getPublishedContents, createContent, getContentBySlug } from '@pan/shared';
+import { getAllContents, getPublishedContents, createContent, getContentBySlug, getAdminContents } from '@pan/shared';
 import type { ContentCategory, ContentStatus } from '@pan/shared';
 
 // Allow cross-origin requests from admin panel
@@ -14,6 +14,7 @@ export async function OPTIONS() {
 }
 
 export async function GET(req: NextRequest) {
+    console.log("DEBUG ENV:", process.env.SUPABASE_SERVICE_ROLE_KEY ? "EXISTS" : "MISSING", process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ? "EXISTS" : "MISSING");
     const { searchParams } = req.nextUrl;
     const admin = searchParams.get('admin') === 'true';
     const category = searchParams.get('category') as ContentCategory | null;
@@ -24,7 +25,7 @@ export async function GET(req: NextRequest) {
     const slug = searchParams.get('slug');
 
     if (slug) {
-        const item = getContentBySlug(slug);
+        const item = await getContentBySlug(slug);
         if (!item || (!admin && item.status !== 'published')) {
             return NextResponse.json({ error: 'Content not found' }, { status: 404, headers: CORS_HEADERS });
         }
@@ -32,24 +33,25 @@ export async function GET(req: NextRequest) {
     }
 
     if (admin) {
-        // Admin view: all contents including drafts
-        const all = getAllContents();
-        let filtered = all;
-        if (category) filtered = filtered.filter(c => c.category === category);
-        if (status) filtered = filtered.filter(c => c.status === status);
-        if (search) {
-            const q = search.toLowerCase();
-            filtered = filtered.filter(c =>
-                c.title.fr.toLowerCase().includes(q) ||
-                c.title.ar.includes(q) ||
-                c.slug.includes(q)
-            );
-        }
-        return NextResponse.json(filtered, { headers: CORS_HEADERS });
+        // Admin view: use the new admin repository function
+        const result = await getAdminContents({ 
+            category: category || undefined, 
+            status: status || undefined, 
+            search, 
+            page, 
+            pageSize 
+        });
+        return NextResponse.json(result, { headers: CORS_HEADERS });
     }
 
     // Public view: only published
-    const result = getPublishedContents({ category: category || undefined, status: 'published', search, page, pageSize });
+    const result = await getPublishedContents({ 
+        category: category || undefined, 
+        status: 'published', 
+        search, 
+        page, 
+        pageSize 
+    });
     return NextResponse.json(result, { headers: CORS_HEADERS });
 }
 
@@ -65,7 +67,7 @@ export async function POST(req: NextRequest) {
             data.publishedAt = new Date().toISOString();
         }
 
-        const content = createContent({
+        const content = await createContent({
             ...data,
             authorId,
             tags: data.tags || [],
@@ -73,9 +75,9 @@ export async function POST(req: NextRequest) {
         });
 
         return NextResponse.json(content, { status: 201, headers: CORS_HEADERS });
-    } catch (err) {
+    } catch (err: any) {
         console.error('[POST /api/content]', err);
-        return NextResponse.json({ error: 'Invalid request body' }, { status: 400, headers: CORS_HEADERS });
+        return NextResponse.json({ error: err.message || 'Invalid request' }, { status: 400, headers: CORS_HEADERS });
     }
 }
 

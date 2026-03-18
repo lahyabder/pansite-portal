@@ -18,7 +18,9 @@ export default function CMSDashboard() {
     useEffect(() => {
         getAllContentsAction().then(res => {
             if (res.data) {
-                setContents(res.data);
+                // Ensure contents is an array by unwrapping paginated result if needed
+                const items = Array.isArray(res.data) ? res.data : (res.data as any).items || [];
+                setContents(items);
             } else if (res.error) {
                 setApiError(res.error);
             }

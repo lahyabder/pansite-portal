@@ -17,5 +17,8 @@
   },
   "devDependencies": {
     "lucide-react": "^0.577.0"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.99.2"
   }
 }

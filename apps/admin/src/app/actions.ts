@@ -3,7 +3,7 @@
 import { revalidatePath } from 'next/cache';
 import { writeFile } from 'fs/promises';
 import { join } from 'path';
-import { OpenAI } from 'openai';
+
 
 // ─── Base URL for the web app Content API ────────────────────────────────────
 // In dev, web runs on 3000; in prod, override via WEB_API_BASE_URL env var
@@ -80,9 +80,9 @@ export async function uploadFileAction(formData: FormData) {
 }
 
 // ─── OpenAI Translation ───────────────────────────────────────────────────────
-let _openai: OpenAI | null = null;
+let _openai: any | null = null;
 
-function getOpenAIClient() {
+async function getOpenAIClient() {
     if (_openai) return _openai;
     
     const apiKey = process.env.OPENAI_API_KEY;
@@ -92,6 +92,7 @@ function getOpenAIClient() {
     }
 
     try {
+        const { OpenAI } = await import('openai');
         _openai = new OpenAI({ apiKey });
         return _openai;
     } catch (err) {
@@ -106,7 +107,7 @@ async function translateText(text: string, to: string) {
         ar: 'Arabic', en: 'English', es: 'Spanish', fr: 'French'
     };
 
-    const client = getOpenAIClient();
+    const client = await getOpenAIClient();
     if (!client) {
         return `[MOCK ${to.toUpperCase()}] ${text}`;
     }
@@ -259,6 +260,51 @@ export async function publishContentAction(id: string, userId: string) {
     revalidatePath('/cms/contents');
     revalidatePath('/cms');
     return result;
+}
+
+// ─── Requests via Web API ───────────────────────────────────────────────────
+
+export async function getFilteredRequestsAction(filters: any) {
+    const params = new URLSearchParams();
+    if (filters.search) params.append('search', filters.search);
+    if (filters.type) params.append('type', filters.type);
+    if (filters.status) params.append('status', filters.status);
+    if (filters.page) params.append('page', filters.page.toString());
+    if (filters.pageSize) params.append('pageSize', filters.pageSize.toString());
+
+    return await contentFetch(`/../requests?${params.toString()}`);
+}
+
+export async function getRequestStatsAction() {
+    return await contentFetch('/../requests?stats=true');
+}
+
+export async function assignRequestAction(data: { id: string, userId: string, userName: string, department: string, changedBy: string }) {
+    return await contentFetch('/../requests', {
+        method: 'POST',
+        body: JSON.stringify({ action: 'assign', data }),
+    });
+}
+
+export async function changeRequestStatusAction(data: { id: string, newStatus: string, comment: string, userId: string, userName: string }) {
+    return await contentFetch('/../requests', {
+        method: 'POST',
+        body: JSON.stringify({ action: 'status_change', data }),
+    });
+}
+
+export async function respondToRequestAction(data: { id: string, response: string, userId: string, userName: string }) {
+    return await contentFetch('/../requests', {
+        method: 'POST',
+        body: JSON.stringify({ action: 'respond', data }),
+    });
+}
+
+// ─── Audit via Web API ──────────────────────────────────────────────────────
+
+export async function getAuditLogAction(entityId?: string) {
+    const path = entityId ? `/../audit?entityId=${entityId}` : '/../audit';
+    return await contentFetch(path);
 }
 
 export async function deleteContentAction(id: string, userId: string) {

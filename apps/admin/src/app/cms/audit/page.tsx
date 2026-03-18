@@ -1,8 +1,8 @@
 'use client';
 
-import { useState, useMemo } from 'react';
-import { getAuditLog } from '@pan/shared';
+import { useState, useMemo, useEffect } from 'react';
 import type { AuditAction, AuditLogEntry } from '@pan/shared';
+import { getAuditLogAction } from '@/app/actions';
 import { RequirePermission } from '@/lib/auth';
 
 const actionConfig: Record<AuditAction, { label: string; icon: string; color: string }> = {
@@ -33,13 +33,29 @@ const entityLabels: Record<string, string> = {
 };
 
 export default function AuditLogPage() {
-    const allLogs = getAuditLog();
+    const [allLogs, setAllLogs] = useState<AuditLogEntry[]>([]);
+    const [loading, setLoading] = useState(true);
     const [search, setSearch] = useState('');
     const [filterAction, setFilterAction] = useState<string>('all');
     const [filterEntity, setFilterEntity] = useState<string>('all');
     const [filterUser, setFilterUser] = useState<string>('all');
     const [page, setPage] = useState(1);
     const pageSize = 25;
+
+    useEffect(() => {
+        async function loadLogs() {
+            setLoading(true);
+            try {
+                const logs = await getAuditLogAction();
+                setAllLogs(logs || []);
+            } catch (err) {
+                console.error('Failed to load audit logs:', err);
+            } finally {
+                setLoading(false);
+            }
+        }
+        loadLogs();
+    }, []);
 
     // Unique users & actions for filters
     const uniqueUsers = useMemo(() => [...new Set(allLogs.map(l => l.userName))].sort(), [allLogs]);

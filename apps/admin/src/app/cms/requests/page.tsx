@@ -1,8 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import type { RequestStatus, RequestType, RequestPriority, DocumentDirection, Request } from '@pan/shared';
-import { getAllRequests, changeRequestStatus, assignRequest, respondToRequest, getRequestStats } from '@pan/shared';
+import { getFilteredRequestsAction, changeRequestStatusAction, assignRequestAction, respondToRequestAction, getRequestStatsAction } from '@/app/actions';
 import Link from 'next/link';
 import { RequirePermission, useAuth } from '@/lib/auth';
 import { useI18n } from '@/lib/i18n';
@@ -45,7 +45,8 @@ export default function RequestsPage() {
         { value: 'capitainerie', label: t.directions.capitainerie },
         { value: 'securite', label: t.directions.securite },
     ];
-    const [reqs, setReqs] = useState<Request[]>(getAllRequests());
+    const [reqs, setReqs] = useState<Request[]>([]);
+    const [stats, setStats] = useState<any>(null);
     const [filterStatus, setFilterStatus] = useState<string>('all');
     const [filterType, setFilterType] = useState<string>('all');
     const [search, setSearch] = useState('');
@@ -53,29 +54,46 @@ export default function RequestsPage() {
     const [responseText, setResponseText] = useState('');
     const [statusComment, setStatusComment] = useState('');
     const [assignDept, setAssignDept] = useState<DocumentDirection>('direction_generale');
+    const [loading, setLoading] = useState(true);
 
-    const stats = getRequestStats();
+    async function loadData() {
+        setLoading(true);
+        try {
+            const [dataRes, statsRes] = await Promise.all([
+                getFilteredRequestsAction({}),
+                getRequestStatsAction()
+            ]);
+            if (dataRes && dataRes.items) setReqs(dataRes.items);
+            if (statsRes) setStats(statsRes);
+        } catch (err) {
+            console.error('Failed to load requests:', err);
+        } finally {
+            setLoading(false);
+        }
+    }
 
-    function refresh() { setReqs(getAllRequests()); }
+    useEffect(() => {
+        loadData();
+    }, []);
 
-    function handleAssign(id: string) {
+    async function handleAssign(id: string) {
         if (!session || !can('requests', 'edit')) return;
-        assignRequest(id, session.user.id, session.user.name, assignDept, session.user.id);
-        refresh();
+        await assignRequestAction({ id, userId: session.user.id, userName: session.user.name, department: assignDept, changedBy: session.user.id });
+        await loadData();
     }
 
-    function handleStatusChange(id: string, newStatus: RequestStatus) {
+    async function handleStatusChange(id: string, newStatus: RequestStatus) {
         if (!session || !can('requests', 'approve')) return;
-        changeRequestStatus(id, newStatus, statusComment, session.user.id, session.user.name);
+        await changeRequestStatusAction({ id, newStatus, comment: statusComment, userId: session.user.id, userName: session.user.name });
         setStatusComment('');
-        refresh();
+        await loadData();
     }
 
-    function handleRespond(id: string) {
+    async function handleRespond(id: string) {
         if (!session || !responseText.trim() || !can('requests', 'edit')) return;
-        respondToRequest(id, responseText, session.user.id, session.user.name);
+        await respondToRequestAction({ id, response: responseText, userId: session.user.id, userName: session.user.name });
         setResponseText('');
-        refresh();
+        await loadData();
     }
 
     // Filters
@@ -100,29 +118,37 @@ export default function RequestsPage() {
                 <div className="flex items-center justify-between">
                     <div>
                         <h2 className="text-xl font-bold text-admin-text">{t.requestsManagement.queue}</h2>
-                        <p className="text-admin-text-muted text-sm mt-1">{t.requestsManagement.stats(stats.total, stats.avgProcessingHours)}</p>
+                        {stats && <p className="text-admin-text-muted text-sm mt-1">{t.requestsManagement.stats(stats.total, stats.avgProcessingHours)}</p>}
                     </div>
                 </div>
 
+                {loading && (
+                    <div className="flex items-center justify-center p-10 bg-admin-surface rounded-xl border border-admin-border">
+                        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-admin-primary"></div>
+                    </div>
+                )}
+
                 {/* Stats cards */}
-                <div className="grid grid-cols-7 gap-3">
-                    {(Object.entries(statusConfig) as [RequestStatus, typeof statusConfig[RequestStatus]][]).map(([key, cfg]) => (
-                        <button
-                            key={key}
-                            onClick={() => setFilterStatus(filterStatus === key ? 'all' : key)}
-                            className={`bg-admin-surface rounded-xl p-3 border transition-all text-center ${filterStatus === key ? 'border-admin-primary ring-1 ring-admin-primary/30' : 'border-admin-border hover:border-admin-border/80'
-                                }`}
-                        >
-                            <span className={`text-[10px] px-2 py-0.5 rounded-full font-semibold ${cfg.bg} ${cfg.color}`}>{cfg.label}</span>
-                            <div className="text-xl font-bold text-admin-text mt-1.5">{stats.byStatus[key] || 0}</div>
-                        </button>
-                    ))}
-                </div>
+                {stats && (
+                    <div className="grid grid-cols-7 gap-3">
+                        {(Object.entries(statusConfig) as [RequestStatus, typeof statusConfig[RequestStatus]][]).map(([key, cfg]) => (
+                            <button
+                                key={key}
+                                onClick={() => setFilterStatus(filterStatus === key ? 'all' : key)}
+                                className={`bg-admin-surface rounded-xl p-3 border transition-all text-center ${filterStatus === key ? 'border-admin-primary ring-1 ring-admin-primary/30' : 'border-admin-border hover:border-admin-border/80'
+                                    }`}
+                            >
+                                <span className={`text-[10px] px-2 py-0.5 rounded-full font-semibold ${cfg.bg} ${cfg.color}`}>{cfg.label}</span>
+                                <div className="text-xl font-bold text-admin-text mt-1.5">{stats.byStatus[key] || 0}</div>
+                            </button>
+                        ))}
+                    </div>
+                )}
 
                 {/* Per-service breakdown */}
-                {stats.byService.length > 0 && (
+                {stats?.byService?.length > 0 && (
                     <div className="grid grid-cols-4 gap-3">
-                        {stats.byService.map(s => (
+                        {stats.byService.map((s: any) => (
                             <div key={s.serviceId} className="bg-admin-surface rounded-xl p-3 border border-admin-border">
                                 <div className="text-admin-text-muted text-xs">{s.serviceName}</div>
                                 <div className="text-lg font-bold text-admin-text mt-0.5">{s.count} <span className="text-xs text-admin-text-muted font-normal">{t.common.type}(s)</span></div>

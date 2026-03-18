@@ -46,8 +46,8 @@ export default function AdminContentsPage() {
     };
 
     const searchParams = useSearchParams();
-    const initialStatus = searchParams.get('status') as ContentStatus | '';
-    const initialCategory = searchParams.get('category') as ContentCategory | '';
+    const initialStatus = (searchParams.get('status') || '') as ContentStatus | '';
+    const initialCategory = (searchParams.get('category') || '') as ContentCategory | '';
 
     const [contents, setContents] = useState<Content[]>([]);
     const [loading, setLoading] = useState(true);
@@ -74,11 +74,11 @@ export default function AdminContentsPage() {
         setError(null);
         try {
             const result = await getAllContentsAction();
-            if (result.error) {
-                setError(result.error);
+            if (result.error || !result.data) {
+                setError(result.error || 'No data');
                 setContents([]);
             } else {
-                setContents(result.data);
+                setContents(Array.isArray(result.data) ? result.data : (result.data.items || []));
             }
 
         } catch (err: any) {

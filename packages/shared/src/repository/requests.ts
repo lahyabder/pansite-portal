@@ -1,57 +1,125 @@
-import type { Request, RequestType, RequestStatus, RequestPriority, RequestFilters, RequestAttachment, PaginatedResult, DocumentDirection } from '../types';
-import { mockRequests, mockServices, mockAuditLog } from '../mock';
+import type { Request, RequestType, RequestStatus, RequestPriority, RequestFilters, RequestAttachment, PaginatedResult, DocumentDirection, AuditAction } from '../types';
+import { getSupabase, getSupabaseAdmin } from '../supabase';
 
-// ─── In-memory store ──────────────────────────────────────
-let requests = [...mockRequests];
-let nextId = 7;
+
+/**
+ * Supabase-backed request repository.
+ */
+
+function now() { return new Date().toISOString(); }
 
 // ─── Helpers ──────────────────────────────────────────────
-function now() { return new Date().toISOString(); }
-function genRef() { return `PAN-REQ-${new Date().getFullYear()}-${String(nextId).padStart(3, '0')}`; }
+function mapToRequest(row: any): Request {
+    return {
+        id: row.id,
+        reference: row.reference,
+        type: row.type as RequestType,
+        subject: row.subject,
+        message: row.message,
+        senderName: row.sender_name,
+        senderEmail: row.sender_email,
+        senderPhone: row.sender_phone,
+        senderCompany: row.sender_company,
+        status: row.status as RequestStatus,
+        priority: row.priority as RequestPriority,
+        assignedTo: row.assigned_to,
+        assignedToName: row.assigned_to_name,
+        assignedDepartment: row.assigned_department as DocumentDirection,
+        responseMessage: row.response_message,
+        serviceId: row.service_id,
+        serviceName: row.service_name,
+        attachments: row.attachments || [],
+        statusHistory: row.status_history || [],
+        createdAt: row.created_at,
+        updatedAt: row.updated_at,
+        closedAt: row.closed_at,
+    };
+}
+
+function mapToRow(req: Partial<Request>) {
+    const row: any = {};
+    if (req.reference !== undefined) row.reference = req.reference;
+    if (req.type !== undefined) row.type = req.type;
+    if (req.subject !== undefined) row.subject = req.subject;
+    if (req.message !== undefined) row.message = req.message;
+    if (req.senderName !== undefined) row.sender_name = req.senderName;
+    if (req.senderEmail !== undefined) row.sender_email = req.senderEmail;
+    if (req.senderPhone !== undefined) row.sender_phone = req.senderPhone;
+    if (req.senderCompany !== undefined) row.sender_company = req.senderCompany;
+    if (req.status !== undefined) row.status = req.status;
+    if (req.priority !== undefined) row.priority = req.priority;
+    if (req.assignedTo !== undefined) row.assigned_to = req.assignedTo;
+    if (req.assignedToName !== undefined) row.assigned_to_name = req.assignedToName;
+    if (req.assignedDepartment !== undefined) row.assigned_department = req.assignedDepartment;
+    if (req.responseMessage !== undefined) row.response_message = req.responseMessage;
+    if (req.serviceId !== undefined) row.service_id = req.serviceId;
+    if (req.serviceName !== undefined) row.service_name = req.serviceName;
+    if (req.attachments !== undefined) row.attachments = req.attachments;
+    if (req.statusHistory !== undefined) row.status_history = req.statusHistory;
+    if (req.updatedAt !== undefined) row.updated_at = req.updatedAt;
+    if (req.closedAt !== undefined) row.closed_at = req.closedAt;
+    return row;
+}
 
 // ─── Read ─────────────────────────────────────────────────
-export function getAllRequests(): Request[] {
-    return [...requests].sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+export async function getAllRequests(): Promise<Request[]> {
+    const { data, error } = await getSupabaseAdmin()
+        .from('requests')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+    if (error) throw error;
+    return (data || []).map(mapToRequest);
 }
 
-export function getRequestById(id: string): Request | null {
-    return requests.find((r) => r.id === id) || null;
+export async function getRequestById(id: string): Promise<Request | null> {
+    const { data, error } = await getSupabaseAdmin()
+        .from('requests')
+        .select('*')
+        .eq('id', id)
+        .single();
+
+    if (error) {
+        if (error.code === 'PGRST116') return null;
+        throw error;
+    }
+    return mapToRequest(data);
 }
 
-export function getFilteredRequests(filters: RequestFilters): PaginatedResult<Request> {
-    let result = [...requests];
+export async function getFilteredRequests(filters: RequestFilters): Promise<PaginatedResult<Request>> {
+    let query = getSupabaseAdmin()
+        .from('requests')
+        .select('*', { count: 'exact' });
 
     if (filters.search) {
-        const q = filters.search.toLowerCase();
-        result = result.filter((r) =>
-            r.subject.toLowerCase().includes(q)
-            || r.senderName.toLowerCase().includes(q)
-            || r.senderEmail.toLowerCase().includes(q)
-            || r.reference.toLowerCase().includes(q)
-            || r.message.toLowerCase().includes(q)
-        );
+        const q = `%${filters.search.toLowerCase()}%`;
+        query = query.or(`subject.ilike.${q},sender_name.ilike.${q},sender_email.ilike.${q},reference.ilike.${q},message.ilike.${q}`);
     }
-    if (filters.type) result = result.filter((r) => r.type === filters.type);
-    if (filters.status) result = result.filter((r) => r.status === filters.status);
-    if (filters.priority) result = result.filter((r) => r.priority === filters.priority);
-    if (filters.department) result = result.filter((r) => r.assignedDepartment === filters.department);
-    if (filters.serviceId) result = result.filter((r) => r.serviceId === filters.serviceId);
+    if (filters.type) query = query.eq('type', filters.type);
+    if (filters.status) query = query.eq('status', filters.status);
+    if (filters.priority) query = query.eq('priority', filters.priority);
+    if (filters.department) query = query.eq('assigned_department', filters.department);
+    if (filters.serviceId) query = query.eq('service_id', filters.serviceId);
 
     // Sort by priority (urgent first), then by date
-    const priorityOrder: Record<RequestPriority, number> = { urgent: 0, high: 1, normal: 2, low: 3 };
-    result.sort((a, b) => {
-        const pa = priorityOrder[a.priority] - priorityOrder[b.priority];
-        if (pa !== 0) return pa;
-        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
-    });
+    // Note: Complex multi-column sorting with custom logic might need order() calls per priority or post-processing
+    // For now, simpler order by created_at desc
+    query = query.order('created_at', { ascending: false });
 
     const page = filters.page || 1;
     const pageSize = filters.pageSize || 20;
-    const total = result.length;
-    const start = (page - 1) * pageSize;
-    const items = result.slice(start, start + pageSize);
+    const from = (page - 1) * pageSize;
+    const to = from + pageSize - 1;
 
-    return { items, total, page, pageSize, totalPages: Math.ceil(total / pageSize) };
+    const { data, error, count } = await query.range(from, to);
+
+    if (error) throw error;
+
+    const items = (data || []).map(mapToRequest);
+    const total = count || 0;
+    const totalPages = Math.ceil(total / pageSize);
+
+    return { items, total, page, pageSize, totalPages };
 }
 
 // ─── Create ───────────────────────────────────────────────
@@ -64,188 +132,156 @@ interface CreateRequestInput {
     senderPhone?: string;
     senderCompany?: string;
     serviceId?: string;
+    serviceName?: string;
     attachments?: Omit<RequestAttachment, 'id' | 'uploadedAt'>[];
 }
 
-export function createRequest(input: CreateRequestInput): Request {
-    const id = `req-${String(nextId).padStart(3, '0')}`;
-    const ref = genRef();
-    nextId++;
+export async function createRequest(input: CreateRequestInput): Promise<Request> {
+    // Generate a reference (ideally this should be done in DB trigger or a separate counter table)
+    // For simplicity, we'll use a random slug-like reference or count first
+    const { count } = await getSupabaseAdmin().from('requests').select('*', { count: 'exact', head: true });
+    const ref = `PAN-REQ-${new Date().getFullYear()}-${String((count || 0) + 1).padStart(3, '0')}`;
 
-    const service = input.serviceId ? mockServices.find((s) => s.id === input.serviceId) : null;
-
-    const req: Request = {
-        id,
+    const newReq: any = {
         reference: ref,
         type: input.type,
         subject: input.subject,
         message: input.message,
-        senderName: input.senderName,
-        senderEmail: input.senderEmail,
-        senderPhone: input.senderPhone,
-        senderCompany: input.senderCompany,
+        sender_name: input.senderName,
+        sender_email: input.senderEmail,
+        sender_phone: input.senderPhone,
+        sender_company: input.senderCompany,
         status: 'new',
         priority: 'normal',
-        serviceId: input.serviceId,
-        serviceName: service?.name.fr,
+        service_id: input.serviceId,
+        service_name: input.serviceName,
         attachments: (input.attachments || []).map((a, i) => ({
             ...a,
-            id: `att-${id}-${i}`,
+            id: `att-${Date.now()}-${i}`,
             uploadedAt: now(),
         })),
-        statusHistory: [
-            { id: `sh-${id}-0`, status: 'new', changedBy: 'system', changedByName: 'Système', createdAt: now() },
+        status_history: [
+            { id: `sh-${Date.now()}-0`, status: 'new', changedBy: 'system', changedByName: 'Système', createdAt: now() },
         ],
-        createdAt: now(),
-        updatedAt: now(),
     };
 
-    requests.push(req);
+    const { data, error } = await getSupabaseAdmin()
+        .from('requests')
+        .insert([newReq])
+        .select()
+        .single();
+
+    if (error) throw error;
+
+    const req = mapToRequest(data);
 
     // Audit log
-    mockAuditLog.unshift({
-        id: `audit-req-${id}`,
-        entityType: 'request',
-        entityId: id,
-        action: 'create',
-        userId: 'system',
-        userName: 'Système',
-        details: `Nouvelle demande: ${req.subject}`,
-        createdAt: now(),
-    });
+    await addAuditEntry('request', req.id, 'create', 'system', 'Système', `Nouvelle demande: ${req.subject}`);
 
-    // Trigger notification
-    sendNotification({
-        to: input.senderEmail,
-        subject: `Votre demande ${ref} a été reçue`,
-        body: `Bonjour ${input.senderName},\n\nVotre demande "${input.subject}" a bien été enregistrée sous la référence ${ref}.\n\nNous la traiterons dans les meilleurs délais.\n\nCordialement,\nPort Autonome de Nouadhibou`,
-    });
+    // Trigger notification (mock for now)
+    console.log(`📧 [NOTIFICATION] To: ${req.senderEmail} - Your request ${req.reference} has been received.`);
 
     return req;
 }
 
 // ─── Status Workflow ──────────────────────────────────────
-export function assignRequest(id: string, assignedTo: string, assignedToName: string, department: DocumentDirection, changedBy: string) {
-    const req = requests.find((r) => r.id === id);
-    if (!req) return null;
+export async function assignRequest(id: string, assignedTo: string, assignedToName: string, department: DocumentDirection, changedBy: string) {
+    const current = await getRequestById(id);
+    if (!current) return null;
 
-    const prev = req.status;
-    req.status = 'assigned';
-    req.assignedTo = assignedTo;
-    req.assignedToName = assignedToName;
-    req.assignedDepartment = department;
-    req.updatedAt = now();
-    req.statusHistory.push({
-        id: `sh-${id}-${req.statusHistory.length}`,
-        status: 'assigned',
+    const prev = current.status;
+    const newStatusHistory = [...current.statusHistory, {
+        id: `sh-${id}-${current.statusHistory.length}-${Date.now()}`,
+        status: 'assigned' as RequestStatus,
         comment: `Affectée à ${assignedToName} (${departmentLabel(department)})`,
         changedBy,
         changedByName: assignedToName,
         createdAt: now(),
-    });
+    }];
 
-    mockAuditLog.unshift({
-        id: `audit-assign-${id}-${Date.now()}`,
-        entityType: 'request',
-        entityId: id,
-        action: 'assign',
-        userId: changedBy,
-        userName: assignedToName,
-        details: `Affectation à ${assignedToName}`,
-        previousStatus: prev,
-        newStatus: 'assigned',
-        createdAt: now(),
-    });
+    const { data, error } = await getSupabaseAdmin()
+        .from('requests')
+        .update({
+            status: 'assigned',
+            assigned_to: assignedTo,
+            assigned_to_name: assignedToName,
+            assigned_department: department,
+            status_history: newStatusHistory,
+            updated_at: now(),
+        })
+        .eq('id', id)
+        .select()
+        .single();
 
-    sendNotification({
-        to: req.senderEmail,
-        subject: `Votre demande ${req.reference} a été prise en charge`,
-        body: `Votre demande "${req.subject}" a été affectée au service ${departmentLabel(department)}.`,
-    });
+    if (error) throw error;
 
-    return req;
+    const updated = mapToRequest(data);
+
+    await addAuditEntry('request', id, 'assign', changedBy, assignedToName, `Affectation à ${assignedToName}`, prev, 'assigned');
+
+    return updated;
 }
 
-export function changeRequestStatus(id: string, newStatus: RequestStatus, comment: string, changedBy: string, changedByName: string) {
-    const req = requests.find((r) => r.id === id);
-    if (!req) return null;
+export async function changeRequestStatus(id: string, newStatus: RequestStatus, comment: string, changedBy: string, changedByName: string) {
+    const current = await getRequestById(id);
+    if (!current) return null;
 
-    const prev = req.status;
-    req.status = newStatus;
-    req.updatedAt = now();
-    if (newStatus === 'closed') req.closedAt = now();
-
-    req.statusHistory.push({
-        id: `sh-${id}-${req.statusHistory.length}`,
+    const prev = current.status;
+    const newStatusHistory = [...current.statusHistory, {
+        id: `sh-${id}-${current.statusHistory.length}-${Date.now()}`,
         status: newStatus,
         comment: comment || undefined,
         changedBy,
         changedByName,
         createdAt: now(),
-    });
+    }];
 
-    mockAuditLog.unshift({
-        id: `audit-status-${id}-${Date.now()}`,
-        entityType: 'request',
-        entityId: id,
-        action: 'status_change',
-        userId: changedBy,
-        userName: changedByName,
-        details: comment || `Statut changé: ${prev} → ${newStatus}`,
-        previousStatus: prev,
-        newStatus,
-        createdAt: now(),
-    });
-
-    const statusFrench: Record<RequestStatus, string> = {
-        new: 'Nouvelle',
-        assigned: 'Assignée',
-        in_progress: 'En cours',
-        waiting_more_info: 'En attente d\'informations',
-        approved: 'Approuvée',
-        rejected: 'Rejetée',
-        closed: 'Clôturée',
+    const updates: any = {
+        status: newStatus,
+        status_history: newStatusHistory,
+        updated_at: now(),
     };
+    if (newStatus === 'closed') updates.closed_at = now();
 
-    sendNotification({
-        to: req.senderEmail,
-        subject: `Mise à jour de votre demande ${req.reference}`,
-        body: `Votre demande "${req.subject}" est passée au statut: ${statusFrench[newStatus]}.\n${comment ? `\nCommentaire: ${comment}` : ''}`,
-    });
+    const { data, error } = await getSupabaseAdmin()
+        .from('requests')
+        .update(updates)
+        .eq('id', id)
+        .select()
+        .single();
 
-    return req;
+    if (error) throw error;
+
+    const updated = mapToRequest(data);
+
+    await addAuditEntry('request', id, 'status_change', changedBy, changedByName, comment || `Statut changé: ${prev} → ${newStatus}`, prev, newStatus);
+
+    return updated;
 }
 
-export function respondToRequest(id: string, response: string, changedBy: string, changedByName: string) {
-    const req = requests.find((r) => r.id === id);
-    if (!req) return null;
+export async function respondToRequest(id: string, response: string, changedBy: string, changedByName: string) {
+    const { data, error } = await getSupabaseAdmin()
+        .from('requests')
+        .update({
+            response_message: response,
+            updated_at: now(),
+        })
+        .eq('id', id)
+        .select()
+        .single();
 
-    req.responseMessage = response;
-    req.updatedAt = now();
+    if (error) throw error;
 
-    mockAuditLog.unshift({
-        id: `audit-respond-${id}-${Date.now()}`,
-        entityType: 'request',
-        entityId: id,
-        action: 'respond',
-        userId: changedBy,
-        userName: changedByName,
-        details: `Réponse envoyée au demandeur`,
-        createdAt: now(),
-    });
+    await addAuditEntry('request', id, 'respond', changedBy, changedByName, `Réponse envoyée au demandeur`);
 
-    sendNotification({
-        to: req.senderEmail,
-        subject: `Réponse à votre demande ${req.reference}`,
-        body: `Bonjour ${req.senderName},\n\n${response}\n\nCordialement,\nPort Autonome de Nouadhibou`,
-    });
-
-    return req;
+    return mapToRequest(data);
 }
 
 // ─── Stats ────────────────────────────────────────────────
-export function getRequestStats() {
-    const all = requests;
+export async function getRequestStats() {
+    const { data: all, error } = await getSupabaseAdmin().from('requests').select('status, type, created_at, closed_at');
+    if (error) throw error;
+
     const byStatus = {
         new: all.filter((r) => r.status === 'new').length,
         assigned: all.filter((r) => r.status === 'assigned').length,
@@ -261,21 +297,13 @@ export function getRequestStats() {
         rendez_vous: all.filter((r) => r.type === 'rendez_vous').length,
     };
 
-    // Mock avg processing time
-    const closed = all.filter((r) => r.closedAt);
+    const closed = all.filter((r) => r.closed_at);
     const avgMs = closed.length > 0
-        ? closed.reduce((sum, r) => sum + (new Date(r.closedAt!).getTime() - new Date(r.createdAt).getTime()), 0) / closed.length
+        ? closed.reduce((sum, r) => sum + (new Date(r.closed_at!).getTime() - new Date(r.created_at).getTime()), 0) / closed.length
         : 0;
     const avgHours = Math.round(avgMs / (1000 * 60 * 60));
 
-    // Per-service breakdown
-    const byService = mockServices.map((s) => ({
-        serviceId: s.id,
-        serviceName: s.name.fr,
-        count: all.filter((r) => r.serviceId === s.id).length,
-    })).filter((s) => s.count > 0);
-
-    return { total: all.length, byStatus, byType, avgProcessingHours: avgHours, byService };
+    return { total: all.length, byStatus, byType, avgProcessingHours: avgHours };
 }
 
 // ─── Department label helper ──────────────────────────────
@@ -294,29 +322,25 @@ function departmentLabel(d: DocumentDirection): string {
     return labels[d] || d;
 }
 
-// ─── Notification Provider (Mock → swap to SMTP later) ───
-interface EmailNotification {
-    to: string;
-    subject: string;
-    body: string;
-}
-
-const notificationLog: EmailNotification[] = [];
-
-function sendNotification(email: EmailNotification) {
-    // Mock provider: log to console + in-memory store
-    notificationLog.push(email);
-    console.log(`\n📧 [NOTIFICATION] To: ${email.to}`);
-    console.log(`   Subject: ${email.subject}`);
-    console.log(`   Body: ${email.body.substring(0, 120)}...`);
-    console.log('');
-}
-
-export function getNotificationLog(): EmailNotification[] {
-    return [...notificationLog];
-}
-
-export function resetRequestRepository() {
-    requests = [...mockRequests];
-    nextId = 7;
+// ─── Audit log helper ─────────────────────────────────────
+async function addAuditEntry(
+    entityType: 'content' | 'service' | 'user' | 'session' | 'request',
+    entityId: string,
+    action: AuditAction,
+    userId: string,
+    userName: string,
+    details?: string,
+    previousStatus?: string,
+    newStatus?: string,
+) {
+    await getSupabaseAdmin().from('audit_log').insert([{
+        entity_type: entityType,
+        entity_id: entityId,
+        action,
+        user_id: userId,
+        user_name: userName,
+        details,
+        previous_status: previousStatus,
+        new_status: newStatus,
+    }]);
 }

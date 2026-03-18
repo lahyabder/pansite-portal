@@ -13,7 +13,7 @@ export async function OPTIONS() {
 
 export async function GET(_req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
     const { id } = await params;
-    const content = getContentById(id);
+    const content = await getContentById(id);
     if (!content) return NextResponse.json({ error: 'Not found' }, { status: 404, headers: CORS_HEADERS });
     return NextResponse.json(content, { headers: CORS_HEADERS });
 }
@@ -23,7 +23,7 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
     try {
         const body = await req.json();
         const { userId = 'usr-001', ...data } = body;
-        const updated = updateContent(id, data, userId);
+        const updated = await updateContent(id, data, userId);
         if (!updated) return NextResponse.json({ error: 'Not found' }, { status: 404, headers: CORS_HEADERS });
         return NextResponse.json(updated, { headers: CORS_HEADERS });
     } catch {
@@ -35,7 +35,7 @@ export async function DELETE(req: NextRequest, { params }: { params: Promise<{ i
     const { id } = await params;
     const { searchParams } = req.nextUrl;
     const userId = searchParams.get('userId') || 'usr-001';
-    const ok = deleteContent(id, userId);
+    const ok = await deleteContent(id, userId);
     if (!ok) return NextResponse.json({ error: 'Not found' }, { status: 404, headers: CORS_HEADERS });
     return NextResponse.json({ success: true }, { headers: CORS_HEADERS });
 }
