@@ -30,14 +30,14 @@ export function RequestFormClient({ locale, dict, serviceId, serviceName }: Prop
         }
     }
 
-    function handleSubmit(e: React.FormEvent) {
+    async function handleSubmit(e: React.FormEvent) {
         e.preventDefault();
         if (!name.trim() || !email.trim() || !subject.trim() || !message.trim()) {
             alert(dict.services.formErrors.required);
             return;
         }
 
-        const req = createRequest({
+        const req = await createRequest({
             type,
             subject,
             message,

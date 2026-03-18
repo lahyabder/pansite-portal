@@ -1,7 +1,7 @@
 'use client';
 
 import type { Locale, ContentCategory, Content } from '@pan/shared';
-import { t, formatDate, getContentsByCategory } from '@pan/shared';
+import { t, formatDate } from '@pan/shared';
 import type { Dictionary } from '@/lib/dictionaries';
 import Link from 'next/link';
 import { useState } from 'react';
@@ -26,13 +26,8 @@ export function ContentList({ locale, dict, initialCategory, initialItems }: Con
     const [currentPage, setCurrentPage] = useState(1);
     const pageSize = 6;
 
-    // Get all published content
-    const allPublished = initialItems || [
-        ...getContentsByCategory('actualite'),
-        ...getContentsByCategory('communique'),
-        ...getContentsByCategory('evenement'),
-        ...getContentsByCategory('alerte'),
-    ].sort((a, b) => new Date(b.publishedAt || b.createdAt).getTime() - new Date(a.publishedAt || a.createdAt).getTime());
+    // Get all published content from props
+    const allPublished = initialItems || [];
 
     const filtered = activeCategory === 'all'
         ? allPublished

@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { useState, useEffect } from 'react';
 
 export function AlertBar({ locale, dict }: { locale: Locale; dict: Dictionary }) {
-    const [alerts, setAlerts] = useState<ReturnType<typeof getActiveAlerts>>([]);
+    const [alerts, setAlerts] = useState<Awaited<ReturnType<typeof getActiveAlerts>>>([]);
     const [dismissed, setDismissed] = useState<Set<string>>(new Set());
     const [currentIdx, setCurrentIdx] = useState(0);
 
