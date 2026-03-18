@@ -2,7 +2,7 @@ import type { Locale } from '@pan/shared';
 import { getDictionary } from '@/lib/dictionaries';
 import { PageHero } from '@/components/PageHero';
 import { ContentList } from '@/components/ContentList';
-import { getPublishedContents } from '@pan/shared';
+import { getPublishedContentsAPI } from '@/lib/api-client';
 
 export const dynamic = 'force-dynamic';
 
@@ -15,8 +15,8 @@ export default async function ActualitesPage({
     const locale = (['ar', 'fr', 'en', 'es'].includes(localeParam) ? localeParam : 'fr') as Locale;
     const dict = getDictionary(locale);
 
-    // Fetch on server to use filesystem sync
-    const initialData = getPublishedContents({ pageSize: 12, category: 'actualite' });
+    // Fetch via API to ensure persistence parity (on Vercel, Server Components and API Routes have isolated /tmp)
+    const initialData = await getPublishedContentsAPI({ pageSize: 12, category: 'actualite' });
 
     return (
         <>

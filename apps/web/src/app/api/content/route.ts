@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getAllContents, getPublishedContents, createContent } from '@pan/shared';
+import { getAllContents, getPublishedContents, createContent, getContentBySlug } from '@pan/shared';
 import type { ContentCategory, ContentStatus } from '@pan/shared';
 
 // Allow cross-origin requests from admin panel
@@ -21,6 +21,15 @@ export async function GET(req: NextRequest) {
     const search = searchParams.get('search') || undefined;
     const page = parseInt(searchParams.get('page') || '1');
     const pageSize = parseInt(searchParams.get('pageSize') || '20');
+    const slug = searchParams.get('slug');
+
+    if (slug) {
+        const item = getContentBySlug(slug);
+        if (!item || (!admin && item.status !== 'published')) {
+            return NextResponse.json({ error: 'Content not found' }, { status: 404, headers: CORS_HEADERS });
+        }
+        return NextResponse.json(item, { headers: CORS_HEADERS });
+    }
 
     if (admin) {
         // Admin view: all contents including drafts

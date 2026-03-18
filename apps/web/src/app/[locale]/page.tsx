@@ -1,6 +1,7 @@
 import type { Locale } from '@pan/shared';
 import { t, formatDate } from '@pan/shared';
-import { mockServices, mockStatistics, getLatestContents } from '@pan/shared';
+import { mockServices, mockStatistics } from '@pan/shared';
+import { getLatestContentsAPI } from '@/lib/api-client';
 
 export const dynamic = 'force-dynamic';
 
@@ -19,7 +20,7 @@ export default async function HomePage({
     const locale = (['ar', 'fr', 'en', 'es'].includes(localeParam) ? localeParam : 'fr') as Locale;
     const dict = getDictionary(locale);
 
-    const latestContent = getLatestContents(6);
+    const latestContent = await getLatestContentsAPI(6);
 
     const categoryColors: Record<string, string> = {
         actualite: 'bg-pan-blue text-white',
