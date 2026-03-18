@@ -2,6 +2,7 @@ import type { Locale } from '@pan/shared';
 import { getDictionary } from '@/lib/dictionaries';
 import { PageHero } from '@/components/PageHero';
 import { ContentList } from '@/components/ContentList';
+import { getPublishedContentsAPI } from '@/lib/api-client';
 
 export default async function CommuniquesPage({
     params,
@@ -19,6 +20,8 @@ export default async function CommuniquesPage({
         es: 'Comunicados oficiales y anuncios de la dirección del puerto.'
     }[locale];
 
+    const initialData = await getPublishedContentsAPI({ category: 'communique', pageSize: 12 });
+
     return (
         <>
             <PageHero
@@ -31,7 +34,12 @@ export default async function CommuniquesPage({
             />
             <section className="py-16 bg-pan-gray-50">
                 <div className="max-w-7xl mx-auto px-6">
-                    <ContentList locale={locale} dict={dict} initialCategory="communique" />
+                    <ContentList 
+                        locale={locale} 
+                        dict={dict} 
+                        initialCategory="communique" 
+                        initialItems={initialData.items}
+                    />
                 </div>
             </section>
         </>

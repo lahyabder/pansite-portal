@@ -2,6 +2,7 @@ import type { Locale } from '@pan/shared';
 import { getDictionary } from '@/lib/dictionaries';
 import { PageHero } from '@/components/PageHero';
 import { ContentList } from '@/components/ContentList';
+import { getPublishedContentsAPI } from '@/lib/api-client';
 
 export default async function EvenementsPage({
     params,
@@ -19,6 +20,8 @@ export default async function EvenementsPage({
         es: 'Próximos eventos y manifestaciones del PAN.'
     }[locale];
 
+    const initialData = await getPublishedContentsAPI({ category: 'evenement', pageSize: 12 });
+
     return (
         <>
             <PageHero
@@ -31,7 +34,12 @@ export default async function EvenementsPage({
             />
             <section className="py-16 bg-pan-gray-50">
                 <div className="max-w-7xl mx-auto px-6">
-                    <ContentList locale={locale} dict={dict} initialCategory="evenement" />
+                    <ContentList 
+                        locale={locale} 
+                        dict={dict} 
+                        initialCategory="evenement" 
+                        initialItems={initialData.items}
+                    />
                 </div>
             </section>
         </>
