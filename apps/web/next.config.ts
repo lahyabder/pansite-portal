@@ -3,6 +3,18 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   reactCompiler: true,
   transpilePackages: ["@pan/shared"],
+  async rewrites() {
+    return [
+      {
+        source: "/admin",
+        destination: `${process.env.NEXT_PUBLIC_ADMIN_URL || 'https://pansite-portal-admin-fkeb.vercel.app'}/admin`,
+      },
+      {
+        source: "/admin/:path*",
+        destination: `${process.env.NEXT_PUBLIC_ADMIN_URL || 'https://pansite-portal-admin-fkeb.vercel.app'}/admin/:path*`,
+      },
+    ];
+  },
   async headers() {
     return [
       {
