@@ -31,7 +31,7 @@ export default function LoginPage() {
             const result = await Promise.race([loginPromise, timeoutPromise]) as { success: boolean; error?: string };
 
             if (result.success) {
-                router.push('/cms');
+                router.push('/dashboard');
             } else {
                 setError(result.error || 'Erreur de connexion');
                 setLoading(false);

@@ -14,7 +14,7 @@ export default function PortalSelectorPage() {
         if (!isAuthenticated) {
             router.replace('/login');
         } else {
-            router.replace('/cms');
+            router.replace('/dashboard');
         }
     }, [isAuthenticated, router]);
 
