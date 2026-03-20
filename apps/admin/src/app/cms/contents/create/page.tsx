@@ -138,9 +138,14 @@ export default function CreateContentPage() {
 
     const inputClass = 'w-full px-4 py-2.5 bg-admin-bg border border-admin-border rounded-xl text-admin-text text-sm focus:outline-none focus:ring-2 focus:ring-admin-primary/50 focus:border-admin-primary transition-all';
 
-    const showExcerpt = !['media'].includes(form.category);
+    const staticPages = ['le-port', 'infrastructure', 'services', 'procedures', 'tariffs', 'contact', 'stopovers'];
+    const newsPages = ['actualite', 'communique', 'evenement', 'alerte'];
+
+    const showExcerpt = !['media', ...staticPages].includes(form.category);
     const showBody = !['media', 'tenders'].includes(form.category);
     const showGallery = !['tenders'].includes(form.category);
+    const showTags = newsPages.includes(form.category);
+    const showPriority = ['actualite', 'communique', 'alerte'].includes(form.category);
     const isTender = form.category === 'tenders';
 
     return (
@@ -331,14 +336,16 @@ export default function CreateContentPage() {
                                     </select>
                                 </div>
 
-                                <div>
-                                    <label className="block text-admin-text-muted text-[10px] font-bold uppercase mb-2">{dict.cms.form.priority}</label>
-                                    <select value={form.priority} onChange={(e) => setForm({ ...form, priority: e.target.value as any })} className={inputClass}>
-                                        <option value="normal">{dict.contentManagement.priorities.normal}</option>
-                                        <option value="important">⚡ {dict.contentManagement.priorities.important}</option>
-                                        <option value="urgent">🚨 {dict.contentManagement.priorities.urgent}</option>
-                                    </select>
-                                </div>
+                                {showPriority && (
+                                    <div>
+                                        <label className="block text-admin-text-muted text-[10px] font-bold uppercase mb-2">{dict.cms.form.priority}</label>
+                                        <select value={form.priority} onChange={(e) => setForm({ ...form, priority: e.target.value as any })} className={inputClass}>
+                                            <option value="normal">{dict.contentManagement.priorities.normal}</option>
+                                            <option value="important">⚡ {dict.contentManagement.priorities.important}</option>
+                                            <option value="urgent">🚨 {dict.contentManagement.priorities.urgent}</option>
+                                        </select>
+                                    </div>
+                                )}
 
                                 {form.category === 'evenement' && (
                                     <div className="space-y-4 pt-4 border-t border-white/5">
@@ -361,10 +368,12 @@ export default function CreateContentPage() {
                                     </div>
                                 )}
 
-                                <div>
-                                    <label className="block text-admin-text-muted text-[10px] font-bold uppercase mb-2">{dict.cms.form.tags}</label>
-                                    <input type="text" value={form.tags} onChange={(e) => setForm({ ...form, tags: e.target.value })} placeholder={dict.cms.form.tagsPlaceholder} className={inputClass} />
-                                </div>
+                                {showTags && (
+                                    <div>
+                                        <label className="block text-admin-text-muted text-[10px] font-bold uppercase mb-2">{dict.cms.form.tags}</label>
+                                        <input type="text" value={form.tags} onChange={(e) => setForm({ ...form, tags: e.target.value })} placeholder={dict.cms.form.tagsPlaceholder} className={inputClass} />
+                                    </div>
+                                )}
 
                                 <div className="pt-6 border-t border-white/5 space-y-4">
                                     <h5 className="text-[10px] font-bold text-white/40 uppercase tracking-widest px-1">{isTender ? "Documents Attachés" : dict.cms.form.resources}</h5>
@@ -372,7 +381,7 @@ export default function CreateContentPage() {
                                         <label className="block text-admin-text-muted text-[10px] font-bold uppercase mb-1.5 px-1">{isTender ? "Lien du document (PDF) *" : dict.cms.form.docLink}</label>
                                         <input type="url" value={form.externalLink || ''} onChange={(e) => setForm({ ...form, externalLink: e.target.value })} placeholder={isTender ? "https://..." : dict.cms.form.docLink} className={inputClass + ' text-[11px]'} />
                                     </div>
-                                    {!isTender && (
+                                    {!isTender && !staticPages.includes(form.category) && (
                                         <div>
                                             <label className="block text-admin-text-muted text-[10px] font-bold uppercase mb-1.5 px-1">{dict.cms.form.videoLink}</label>
                                             <input type="url" value={form.videoLink || ''} onChange={(e) => setForm({ ...form, videoLink: e.target.value })} placeholder={dict.cms.form.videoLink} className={inputClass + ' text-[11px]'} />

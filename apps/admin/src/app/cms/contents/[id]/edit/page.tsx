@@ -174,9 +174,14 @@ export default function EditContentPage({
 
     const inputClass = 'w-full px-4 py-2.5 bg-admin-bg border border-admin-border rounded-xl text-admin-text text-sm focus:outline-none focus:ring-2 focus:ring-admin-primary/50 focus:border-admin-primary transition-all';
 
-    const showExcerpt = !['media'].includes(form.category);
+    const staticPages = ['le-port', 'infrastructure', 'services', 'procedures', 'tariffs', 'contact', 'stopovers'];
+    const newsPages = ['actualite', 'communique', 'evenement', 'alerte'];
+
+    const showExcerpt = !['media', ...staticPages].includes(form.category);
     const showBody = !['media', 'tenders'].includes(form.category);
     const showGallery = !['tenders'].includes(form.category);
+    const showTags = newsPages.includes(form.category);
+    const showPriority = ['actualite', 'communique', 'alerte'].includes(form.category);
     const isTender = form.category === 'tenders';
 
     return (
@@ -370,14 +375,16 @@ export default function EditContentPage({
                                         <option value="contact">📞 Contact</option>
                                     </select>
                                 </div>
-                                <div>
-                                    <label className="block text-admin-text-muted text-[10px] font-bold uppercase mb-2">Priorité</label>
-                                    <select value={form.priority} onChange={(e) => setForm({ ...form, priority: e.target.value as any })} className={inputClass}>
-                                        <option value="normal">Normal</option>
-                                        <option value="important">⚡ Important</option>
-                                        <option value="urgent">🚨 Urgent</option>
-                                    </select>
-                                </div>
+                                {showPriority && (
+                                    <div>
+                                        <label className="block text-admin-text-muted text-[10px] font-bold uppercase mb-2">Priorité</label>
+                                        <select value={form.priority} onChange={(e) => setForm({ ...form, priority: e.target.value as any })} className={inputClass}>
+                                            <option value="normal">Normal</option>
+                                            <option value="important">⚡ Important</option>
+                                            <option value="urgent">🚨 Urgent</option>
+                                        </select>
+                                    </div>
+                                )}
 
                                 {form.category === 'evenement' && (
                                     <div className="space-y-4 pt-4 border-t border-white/5">
@@ -400,10 +407,12 @@ export default function EditContentPage({
                                     </div>
                                 )}
 
-                                <div>
-                                    <label className="block text-admin-text-muted text-[10px] font-bold uppercase mb-2">Tags</label>
-                                    <input type="text" value={form.tags} onChange={(e) => setForm({ ...form, tags: e.target.value })} className={inputClass} placeholder="infrastructure, port..." />
-                                </div>
+                                {showTags && (
+                                    <div>
+                                        <label className="block text-admin-text-muted text-[10px] font-bold uppercase mb-2">Tags</label>
+                                        <input type="text" value={form.tags} onChange={(e) => setForm({ ...form, tags: e.target.value })} className={inputClass} placeholder="infrastructure, port..." />
+                                    </div>
+                                )}
 
                                 <div className="pt-5 border-t border-white/5 space-y-4">
                                     <h5 className="text-[10px] font-bold text-white/40 uppercase">{isTender ? "Documents Attachés" : "Liens externes"}</h5>
@@ -411,7 +420,7 @@ export default function EditContentPage({
                                         <label className="block text-admin-text-muted text-[10px] font-bold uppercase mb-1.5">{isTender ? "Lien du document (PDF) *" : "Lien Document (URL)"}</label>
                                         <input type="url" value={form.externalLink || ''} onChange={(e) => setForm({ ...form, externalLink: e.target.value })} className={inputClass + ' text-[11px]'} placeholder="https://..." />
                                     </div>
-                                    {!isTender && (
+                                    {!isTender && !staticPages.includes(form.category) && (
                                         <div>
                                             <label className="block text-admin-text-muted text-[10px] font-bold uppercase mb-1.5">Lien Vidéo (URL)</label>
                                             <input type="url" value={form.videoLink || ''} onChange={(e) => setForm({ ...form, videoLink: e.target.value })} className={inputClass + ' text-[11px]'} placeholder="https://youtube.com/..." />
