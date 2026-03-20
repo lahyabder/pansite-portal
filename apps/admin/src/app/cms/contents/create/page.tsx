@@ -128,6 +128,11 @@ export default function CreateContentPage() {
 
     const inputClass = 'w-full px-4 py-2.5 bg-admin-bg border border-admin-border rounded-xl text-admin-text text-sm focus:outline-none focus:ring-2 focus:ring-admin-primary/50 focus:border-admin-primary transition-all';
 
+    const showExcerpt = !['media'].includes(form.category);
+    const showBody = !['media', 'tenders'].includes(form.category);
+    const showGallery = !['tenders'].includes(form.category);
+    const isTender = form.category === 'tenders';
+
     return (
         <RequirePermission module="content" action="create">
             <div className="max-w-5xl space-y-6">
@@ -212,36 +217,41 @@ export default function CreateContentPage() {
                                             </div>
                                         )}
                                     </div>
-                                    <div>
-                                        <label className="block text-admin-text-muted text-[10px] font-bold uppercase tracking-widest mb-2 px-1">
-                                            {dict.cms.form.excerpt} ({activeLang.toUpperCase()})
-                                        </label>
-                                        <textarea
-                                            rows={2}
-                                            value={(form.excerpt as any)[activeLang]}
-                                            onChange={(e) => setForm({ ...form, excerpt: { ...form.excerpt, [activeLang]: e.target.value } })}
-                                            placeholder={dict.cms.form.excerptPlaceholder}
-                                            className={inputClass + ' resize-none text-start'}
-                                        />
-                                    </div>
-                                    <div>
-                                        <label className="block text-admin-text-muted text-[10px] font-bold uppercase tracking-widest mb-2 px-1">
-                                            {dict.cms.form.body} ({activeLang.toUpperCase()})
-                                        </label>
-                                        <textarea
-                                            rows={12}
-                                            value={(form.body as any)[activeLang]}
-                                            onChange={(e) => setForm({ ...form, body: { ...form.body, [activeLang]: e.target.value } })}
-                                            placeholder={dict.cms.form.bodyPlaceholder}
-                                            className={inputClass + ' resize-none font-sans leading-relaxed text-start'}
-                                        />
-                                    </div>
+                                    {showExcerpt && (
+                                        <div>
+                                            <label className="block text-admin-text-muted text-[10px] font-bold uppercase tracking-widest mb-2 px-1">
+                                                {isTender ? "Brève description (FR/AR/EN/ES)" : dict.cms.form.excerpt} ({activeLang.toUpperCase()})
+                                            </label>
+                                            <textarea
+                                                rows={2}
+                                                value={(form.excerpt as any)[activeLang]}
+                                                onChange={(e) => setForm({ ...form, excerpt: { ...form.excerpt, [activeLang]: e.target.value } })}
+                                                placeholder={isTender ? "Référence ou résumé de l'appel d'offres..." : dict.cms.form.excerptPlaceholder}
+                                                className={inputClass + ' resize-none text-start'}
+                                            />
+                                        </div>
+                                    )}
+                                    {showBody && (
+                                        <div>
+                                            <label className="block text-admin-text-muted text-[10px] font-bold uppercase tracking-widest mb-2 px-1">
+                                                {dict.cms.form.body} ({activeLang.toUpperCase()})
+                                            </label>
+                                            <textarea
+                                                rows={12}
+                                                value={(form.body as any)[activeLang]}
+                                                onChange={(e) => setForm({ ...form, body: { ...form.body, [activeLang]: e.target.value } })}
+                                                placeholder={dict.cms.form.bodyPlaceholder}
+                                                className={inputClass + ' resize-none font-sans leading-relaxed text-start'}
+                                            />
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         </div>
 
                         {/* Media Section */}
-                        <div className="bg-admin-surface rounded-3xl border border-admin-border p-8 shadow-xl">
+                        {showGallery && (
+                            <div className="bg-admin-surface rounded-3xl border border-admin-border p-8 shadow-xl">
                             <h3 className="text-admin-text font-bold mb-6 flex items-center gap-3">
                                 <span className="w-1.5 h-6 bg-emerald-500 rounded-full" />
                                 🖼️ {dict.cms.creation.imageGallery}
@@ -281,6 +291,7 @@ export default function CreateContentPage() {
                                 )}
                             </div>
                         </div>
+                        )}
                     </div>
 
                     <div className="space-y-6">
@@ -331,6 +342,14 @@ export default function CreateContentPage() {
                                         </div>
                                     </div>
                                 )}
+                                {isTender && (
+                                    <div className="space-y-4 pt-4 border-t border-white/5">
+                                        <div>
+                                            <label className="block text-admin-text-muted text-[10px] font-bold uppercase mb-1.5">Date limite (Deadline)</label>
+                                            <input type="datetime-local" value={form.expiresAt || ''} onChange={(e) => setForm({ ...form, expiresAt: e.target.value })} className={inputClass + ' text-xs'} />
+                                        </div>
+                                    </div>
+                                )}
 
                                 <div>
                                     <label className="block text-admin-text-muted text-[10px] font-bold uppercase mb-2">{dict.cms.form.tags}</label>
@@ -338,13 +357,17 @@ export default function CreateContentPage() {
                                 </div>
 
                                 <div className="pt-6 border-t border-white/5 space-y-4">
-                                    <h5 className="text-[10px] font-bold text-white/40 uppercase tracking-widest px-1">{dict.cms.form.resources}</h5>
+                                    <h5 className="text-[10px] font-bold text-white/40 uppercase tracking-widest px-1">{isTender ? "Documents Attachés" : dict.cms.form.resources}</h5>
                                     <div>
-                                        <input type="url" value={form.externalLink} onChange={(e) => setForm({ ...form, externalLink: e.target.value })} placeholder={dict.cms.form.docLink} className={inputClass + ' text-[11px]'} />
+                                        <label className="block text-admin-text-muted text-[10px] font-bold uppercase mb-1.5 px-1">{isTender ? "Lien du document (PDF) *" : dict.cms.form.docLink}</label>
+                                        <input type="url" value={form.externalLink || ''} onChange={(e) => setForm({ ...form, externalLink: e.target.value })} placeholder={isTender ? "https://..." : dict.cms.form.docLink} className={inputClass + ' text-[11px]'} />
                                     </div>
-                                    <div>
-                                        <input type="url" value={form.videoLink} onChange={(e) => setForm({ ...form, videoLink: e.target.value })} placeholder={dict.cms.form.videoLink} className={inputClass + ' text-[11px]'} />
-                                    </div>
+                                    {!isTender && (
+                                        <div>
+                                            <label className="block text-admin-text-muted text-[10px] font-bold uppercase mb-1.5 px-1">{dict.cms.form.videoLink}</label>
+                                            <input type="url" value={form.videoLink || ''} onChange={(e) => setForm({ ...form, videoLink: e.target.value })} placeholder={dict.cms.form.videoLink} className={inputClass + ' text-[11px]'} />
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         </div>

@@ -174,6 +174,11 @@ export default function EditContentPage({
 
     const inputClass = 'w-full px-4 py-2.5 bg-admin-bg border border-admin-border rounded-xl text-admin-text text-sm focus:outline-none focus:ring-2 focus:ring-admin-primary/50 focus:border-admin-primary transition-all';
 
+    const showExcerpt = !['media'].includes(form.category);
+    const showBody = !['media', 'tenders'].includes(form.category);
+    const showGallery = !['tenders'].includes(form.category);
+    const isTender = form.category === 'tenders';
+
     return (
         <RequirePermission module="content" action="edit">
             <div className="max-w-4xl space-y-6">
@@ -255,37 +260,42 @@ export default function EditContentPage({
                                 placeholder={activeLang === 'ar' ? 'اكتب العنوان هنا...' : 'Entrez le titre...'}
                             />
                         </div>
-                        <div>
-                            <label className="block text-admin-text-muted text-[11px] font-bold uppercase tracking-wider mb-2">
-                                {activeLang === 'ar' ? 'الملخص' : "Extrait (Résumé)"} ({activeLang.toUpperCase()})
-                            </label>
-                            <textarea
-                                rows={2}
-                                value={form.excerpt[activeLang] || ''}
-                                onChange={(e) => setForm({ ...form, excerpt: { ...form.excerpt, [activeLang]: e.target.value } })}
-                                className={inputClass + ' resize-none'}
-                                placeholder={activeLang === 'ar' ? 'اكتب ملخصاً قصيراً...' : 'Résumé...'}
-                            />
-                        </div>
-                        <div>
-                            <label className="block text-admin-text-muted text-[11px] font-bold uppercase tracking-wider mb-2">
-                                {activeLang === 'ar' ? 'نص الخبر' : "Corps de l'article"} ({activeLang.toUpperCase()})
-                            </label>
-                            <textarea
-                                rows={12}
-                                value={form.body[activeLang] || ''}
-                                onChange={(e) => setForm({ ...form, body: { ...form.body, [activeLang]: e.target.value } })}
-                                className={inputClass + ' resize-none font-sans leading-relaxed'}
-                                placeholder={activeLang === 'ar' ? 'اكتب محتوى الخبر هنا بالتفصيل...' : 'Détails de l\'article...'}
-                            />
-                        </div>
+                        {showExcerpt && (
+                            <div>
+                                <label className="block text-admin-text-muted text-[11px] font-bold uppercase tracking-wider mb-2">
+                                    {isTender ? (activeLang === 'ar' ? 'المرجع أو الوصف' : "Brève description") : (activeLang === 'ar' ? 'الملخص' : "Extrait (Résumé)")} ({activeLang.toUpperCase()})
+                                </label>
+                                <textarea
+                                    rows={2}
+                                    value={form.excerpt[activeLang] || ''}
+                                    onChange={(e) => setForm({ ...form, excerpt: { ...form.excerpt, [activeLang]: e.target.value } })}
+                                    className={inputClass + ' resize-none'}
+                                    placeholder={isTender ? (activeLang === 'ar' ? 'مرجع أو ملخص المناقصة...' : 'Référence ou résumé...') : (activeLang === 'ar' ? 'اكتب ملخصاً قصيراً...' : 'Résumé...')}
+                                />
+                            </div>
+                        )}
+                        {showBody && (
+                            <div>
+                                <label className="block text-admin-text-muted text-[11px] font-bold uppercase tracking-wider mb-2">
+                                    {activeLang === 'ar' ? 'نص الخبر' : "Corps de l'article"} ({activeLang.toUpperCase()})
+                                </label>
+                                <textarea
+                                    rows={12}
+                                    value={form.body[activeLang] || ''}
+                                    onChange={(e) => setForm({ ...form, body: { ...form.body, [activeLang]: e.target.value } })}
+                                    className={inputClass + ' resize-none font-sans leading-relaxed'}
+                                    placeholder={activeLang === 'ar' ? 'اكتب محتوى الخبر هنا بالتفصيل...' : 'Détails de l\'article...'}
+                                />
+                            </div>
+                        )}
                     </div>
                 </div>
 
                 <div className="grid lg:grid-cols-3 gap-6">
                     <div className="lg:col-span-2 space-y-6">
                         {/* Media */}
-                        <div className="bg-admin-surface rounded-3xl border border-admin-border p-8 shadow-xl">
+                        {showGallery && (
+                            <div className="bg-admin-surface rounded-3xl border border-admin-border p-8 shadow-xl">
                             <h3 className="text-admin-text font-bold mb-6 flex items-center gap-3">
                                 <span className="w-1.5 h-6 bg-emerald-500 rounded-full" />
                                 🖼️ Media & Galerie
@@ -331,6 +341,7 @@ export default function EditContentPage({
                                 </div>
                             </div>
                         </div>
+                        )}
                     </div>
 
                     <div className="space-y-6">
@@ -367,21 +378,45 @@ export default function EditContentPage({
                                         <option value="urgent">🚨 Urgent</option>
                                     </select>
                                 </div>
+
+                                {form.category === 'evenement' && (
+                                    <div className="space-y-4 pt-4 border-t border-white/5">
+                                        <div>
+                                            <label className="block text-admin-text-muted text-[10px] font-bold uppercase mb-1.5">Date de l'événement</label>
+                                            <input type="datetime-local" value={form.eventDate || ''} onChange={(e) => setForm({ ...form, eventDate: e.target.value })} className={inputClass + ' text-xs'} />
+                                        </div>
+                                        <div>
+                                            <label className="block text-admin-text-muted text-[10px] font-bold uppercase mb-1.5">Lieu</label>
+                                            <input type="text" value={form.eventLocation || ''} onChange={(e) => setForm({ ...form, eventLocation: e.target.value })} className={inputClass + ' text-xs'} placeholder="Nouadhibou..." />
+                                        </div>
+                                    </div>
+                                )}
+                                {isTender && (
+                                    <div className="space-y-4 pt-4 border-t border-white/5">
+                                        <div>
+                                            <label className="block text-admin-text-muted text-[10px] font-bold uppercase mb-1.5">Date limite (Deadline)</label>
+                                            <input type="datetime-local" value={form.expiresAt || ''} onChange={(e) => setForm({ ...form, expiresAt: e.target.value })} className={inputClass + ' text-xs'} />
+                                        </div>
+                                    </div>
+                                )}
+
                                 <div>
                                     <label className="block text-admin-text-muted text-[10px] font-bold uppercase mb-2">Tags</label>
                                     <input type="text" value={form.tags} onChange={(e) => setForm({ ...form, tags: e.target.value })} className={inputClass} placeholder="infrastructure, port..." />
                                 </div>
 
                                 <div className="pt-5 border-t border-white/5 space-y-4">
-                                    <h5 className="text-[10px] font-bold text-white/40 uppercase">Liens externes</h5>
+                                    <h5 className="text-[10px] font-bold text-white/40 uppercase">{isTender ? "Documents Attachés" : "Liens externes"}</h5>
                                     <div>
-                                        <label className="block text-admin-text-muted text-[10px] font-bold uppercase mb-1.5">Lien Document (URL)</label>
-                                        <input type="url" value={form.externalLink} onChange={(e) => setForm({ ...form, externalLink: e.target.value })} className={inputClass + ' text-[11px]'} placeholder="https://..." />
+                                        <label className="block text-admin-text-muted text-[10px] font-bold uppercase mb-1.5">{isTender ? "Lien du document (PDF) *" : "Lien Document (URL)"}</label>
+                                        <input type="url" value={form.externalLink || ''} onChange={(e) => setForm({ ...form, externalLink: e.target.value })} className={inputClass + ' text-[11px]'} placeholder="https://..." />
                                     </div>
-                                    <div>
-                                        <label className="block text-admin-text-muted text-[10px] font-bold uppercase mb-1.5">Lien Vidéo (URL)</label>
-                                        <input type="url" value={form.videoLink} onChange={(e) => setForm({ ...form, videoLink: e.target.value })} className={inputClass + ' text-[11px]'} placeholder="https://youtube.com/..." />
-                                    </div>
+                                    {!isTender && (
+                                        <div>
+                                            <label className="block text-admin-text-muted text-[10px] font-bold uppercase mb-1.5">Lien Vidéo (URL)</label>
+                                            <input type="url" value={form.videoLink || ''} onChange={(e) => setForm({ ...form, videoLink: e.target.value })} className={inputClass + ' text-[11px]'} placeholder="https://youtube.com/..." />
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         </div>
