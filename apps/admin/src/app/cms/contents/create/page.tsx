@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { createContentAction, uploadFileAction, preTranslateAction } from '../../../actions';
 import { slugify } from '@pan/shared';
@@ -33,6 +33,16 @@ export default function CreateContentPage() {
     });
     const [activeLang, setActiveLang] = useState(locale);
     const [translating, setTranslating] = useState(false);
+
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            const urlParams = new URLSearchParams(window.location.search);
+            const cat = urlParams.get('category');
+            if (cat) {
+                setForm(prev => ({ ...prev, category: cat as ContentCategory }));
+            }
+        }
+    }, []);
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const files = Array.from(e.target.files || []);
