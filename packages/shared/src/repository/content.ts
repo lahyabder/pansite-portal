@@ -6,6 +6,9 @@ import { getSupabase, getSupabaseAdmin } from '../supabase';
  * Replaced JSON persistence with real-time database access.
  */
 
+// Selected columns for list views to massively reduce payload bloat by omitting the 'body' column
+const LIST_COLUMNS = 'id, slug, title, excerpt, cover_image, category, tags, status, priority, author_id, event_date, event_end_date, event_location, images, external_link, video_link, expires_at, published_at, created_at, updated_at';
+
 function now() {
     return new Date().toISOString();
 }
@@ -16,7 +19,7 @@ function mapToContent(row: any): Content {
         id: row.id,
         slug: row.slug,
         title: row.title,
-        body: row.body,
+        body: row.body || { fr: '', ar: '', en: '', es: '' },
         excerpt: row.excerpt,
         coverImage: row.cover_image,
         category: row.category as ContentCategory,
@@ -78,7 +81,7 @@ export async function getAllContents(): Promise<Content[]> {
 export async function getPublishedContents(filters?: ContentFilters): Promise<PaginatedResult<Content>> {
     let query = getSupabaseAdmin()
         .from('contents')
-        .select('*', { count: 'exact' })
+        .select(LIST_COLUMNS, { count: 'exact' })
         .eq('status', 'published')
         .is('deleted_at', null);
 
@@ -140,7 +143,7 @@ export async function getContentById(id: string): Promise<Content | undefined> {
 export async function getContentsByCategory(category: ContentCategory): Promise<Content[]> {
     const { data, error } = await getSupabaseAdmin()
         .from('contents')
-        .select('*')
+        .select(LIST_COLUMNS)
         .eq('category', category)
         .eq('status', 'published')
         .is('deleted_at', null)
@@ -154,7 +157,7 @@ export async function getActiveAlerts(): Promise<Content[]> {
     const today = new Date().toISOString();
     const { data, error } = await getSupabaseAdmin()
         .from('contents')
-        .select('*')
+        .select(LIST_COLUMNS)
         .eq('category', 'alerte')
         .eq('status', 'published')
         .is('deleted_at', null)
@@ -167,7 +170,7 @@ export async function getActiveAlerts(): Promise<Content[]> {
 export async function getLatestContents(limit: number = 4): Promise<Content[]> {
     const { data, error } = await getSupabaseAdmin()
         .from('contents')
-        .select('*')
+        .select(LIST_COLUMNS)
         .eq('status', 'published')
         .is('deleted_at', null)
         .order('published_at', { ascending: false })
@@ -180,7 +183,7 @@ export async function getLatestContents(limit: number = 4): Promise<Content[]> {
 export async function getAdminContents(filters?: ContentFilters): Promise<PaginatedResult<Content>> {
     let query = getSupabaseAdmin()
         .from('contents')
-        .select('*', { count: 'exact' })
+        .select(LIST_COLUMNS, { count: 'exact' })
         .is('deleted_at', null);
 
     if (filters?.category) query = query.eq('category', filters.category);

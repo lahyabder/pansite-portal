@@ -3,7 +3,7 @@ import { t, formatDate } from '@pan/shared';
 import { mockServices, mockStatistics } from '@pan/shared';
 import { getLatestContents } from '@pan/shared';
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 60;
 
 import { getDictionary } from '@/lib/dictionaries';
 import Link from 'next/link';
