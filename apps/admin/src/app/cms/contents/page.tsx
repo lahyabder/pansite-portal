@@ -131,6 +131,9 @@ export default function AdminContentsPage() {
         return true;
     });
 
+    const showTypeCol = !filterCategory;
+    const showPriorityCol = !filterCategory || ['actualite', 'communique', 'alerte'].includes(filterCategory);
+
     return (
         <RequirePermission module="content">
             <div className="space-y-6">
@@ -180,16 +183,18 @@ export default function AdminContentsPage() {
                         onChange={(e) => setSearchQuery(e.target.value)}
                         className="px-4 py-2 bg-admin-surface border border-admin-border rounded-xl text-admin-text text-sm w-64 focus:outline-none focus:ring-2 focus:ring-admin-primary/50"
                     />
-                    <select
-                        value={filterCategory}
-                        onChange={(e) => setFilterCategory(e.target.value as ContentCategory | '')}
-                        className="px-4 py-2 bg-admin-surface border border-admin-border rounded-xl text-admin-text text-sm focus:outline-none focus:ring-2 focus:ring-admin-primary/50"
-                    >
-                        <option value="">{t.common.filter} ({t.common.status})</option>
-                        {Object.entries(categoryConfig).map(([key, { label, icon }]) => (
-                            <option key={key} value={key}>{icon} {label}</option>
-                        ))}
-                    </select>
+                    {!filterCategory && (
+                        <select
+                            value={filterCategory}
+                            onChange={(e) => setFilterCategory(e.target.value as ContentCategory | '')}
+                            className="px-4 py-2 bg-admin-surface border border-admin-border rounded-xl text-admin-text text-sm focus:outline-none focus:ring-2 focus:ring-admin-primary/50"
+                        >
+                            <option value="">{t.common.filter} ({t.common.type})</option>
+                            {Object.entries(categoryConfig).map(([key, { label, icon }]) => (
+                                <option key={key} value={key}>{icon} {label}</option>
+                            ))}
+                        </select>
+                    )}
                     <select
                         value={filterStatus}
                         onChange={(e) => setFilterStatus(e.target.value as ContentStatus | '')}
@@ -200,24 +205,6 @@ export default function AdminContentsPage() {
                             <option key={key} value={key}>{label}</option>
                         ))}
                     </select>
-                </div>
-
-                {/* Status workflow overview */}
-                <div className="grid grid-cols-4 gap-3">
-                    {(Object.entries(statusConfig) as [ContentStatus, typeof statusConfig[ContentStatus]][]).map(([key, { label, color }]) => {
-                        const count = contents.filter((c) => c.status === key).length;
-                        return (
-                            <button
-                                key={key}
-                                onClick={() => setFilterStatus(filterStatus === key ? '' : key)}
-                                className={`bg-admin-surface rounded-xl p-4 border transition-all ${filterStatus === key ? 'border-admin-primary' : 'border-admin-border hover:border-admin-primary/30'
-                                    }`}
-                            >
-                                <span className={`text-[10px] px-2 py-0.5 rounded-full font-semibold ${color}`}>{label}</span>
-                                <div className="text-2xl font-bold text-admin-text mt-2">{count}</div>
-                            </button>
-                        );
-                    })}
                 </div>
 
                 {error && (
@@ -251,9 +238,9 @@ export default function AdminContentsPage() {
                             <thead>
                                 <tr className="border-b border-admin-border">
                                     <th className="text-start px-5 py-3.5 text-admin-text-muted text-xs font-semibold uppercase tracking-wider">{t.common.title}</th>
-                                    <th className="text-start px-5 py-3.5 text-admin-text-muted text-xs font-semibold uppercase tracking-wider">{t.common.type}</th>
+                                    {showTypeCol && <th className="text-start px-5 py-3.5 text-admin-text-muted text-xs font-semibold uppercase tracking-wider">{t.common.type}</th>}
                                     <th className="text-start px-5 py-3.5 text-admin-text-muted text-xs font-semibold uppercase tracking-wider">{t.common.status}</th>
-                                    <th className="text-start px-5 py-3.5 text-admin-text-muted text-xs font-semibold uppercase tracking-wider">{t.common.priority}</th>
+                                    {showPriorityCol && <th className="text-start px-5 py-3.5 text-admin-text-muted text-xs font-semibold uppercase tracking-wider">{t.common.priority}</th>}
                                     <th className="text-end px-5 py-3.5 text-admin-text-muted text-xs font-semibold uppercase tracking-wider">{t.common.actions}</th>
                                 </tr>
                             </thead>
@@ -286,25 +273,29 @@ export default function AdminContentsPage() {
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td className="px-5 py-4">
-                                                <span className="text-admin-text-muted text-sm">{cat.icon} {cat.label}</span>
-                                            </td>
+                                            {showTypeCol && (
+                                                <td className="px-5 py-4">
+                                                    <span className="text-admin-text-muted text-sm">{cat.icon} {cat.label}</span>
+                                                </td>
+                                            )}
                                             <td className="px-5 py-4">
                                                 <span className={`text-[10px] px-2.5 py-1 rounded-full font-semibold ${status.color}`}>
                                                     {status.label}
                                                 </span>
                                             </td>
-                                            <td className="px-5 py-4">
-                                                {content.priority === 'urgent' && (
-                                                    <span className="text-[10px] px-2 py-0.5 rounded-full font-semibold bg-red-500/15 text-red-400">🚨 {t.contentManagement.priorities.urgent}</span>
-                                                )}
-                                                {content.priority === 'important' && (
-                                                    <span className="text-[10px] px-2 py-0.5 rounded-full font-semibold bg-amber-500/15 text-amber-400">⚡ {t.contentManagement.priorities.important}</span>
-                                                )}
-                                                {(!content.priority || content.priority === 'normal') && (
-                                                    <span className="text-admin-text-muted text-xs">{t.contentManagement.priorities.normal}</span>
-                                                )}
-                                            </td>
+                                            {showPriorityCol && (
+                                                <td className="px-5 py-4">
+                                                    {content.priority === 'urgent' && (
+                                                        <span className="text-[10px] px-2 py-0.5 rounded-full font-semibold bg-red-500/15 text-red-400">🚨 {t.contentManagement.priorities.urgent}</span>
+                                                    )}
+                                                    {content.priority === 'important' && (
+                                                        <span className="text-[10px] px-2 py-0.5 rounded-full font-semibold bg-amber-500/15 text-amber-400">⚡ {t.contentManagement.priorities.important}</span>
+                                                    )}
+                                                    {(!content.priority || content.priority === 'normal') && (
+                                                        <span className="text-admin-text-muted text-xs">{t.contentManagement.priorities.normal}</span>
+                                                    )}
+                                                </td>
+                                            )}
                                             <td className="px-5 py-4 text-end">
                                                 <div className="flex items-center gap-1.5 justify-end">
                                                     {/* Workflow actions */}
