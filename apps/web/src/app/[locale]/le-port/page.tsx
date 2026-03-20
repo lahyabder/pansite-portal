@@ -1,11 +1,16 @@
 import type { Locale } from '@pan/shared';
 import { getDictionary } from '@/lib/dictionaries';
 import { PageHero } from '@/components/PageHero';
+import { getPublishedContents } from '@pan/shared';
+import { ContentCard } from '@/components/ContentCard';
 
 export default async function LePortPage({ params }: { params: Promise<{ locale: string }> }) {
     const { locale: lp } = await params;
     const locale = (['ar', 'fr', 'en', 'es'].includes(lp) ? lp : 'fr') as Locale;
     const dict = getDictionary(locale);
+
+    const initialData = await getPublishedContents({ pageSize: 12, category: 'le-port' });
+    const items = initialData.items;
 
     return (
         <>
@@ -171,6 +176,25 @@ export default async function LePortPage({ params }: { params: Promise<{ locale:
                     </div>
                 </div>
             </section>
+
+            {/* Dynamic CMS Content */}
+            {items.length > 0 && (
+                <section className="py-24 bg-pan-gray-50 border-t border-pan-navy/5">
+                    <div className="max-w-7xl mx-auto px-6">
+                        <div className="mb-12">
+                            <h2 className="text-3xl font-bold text-pan-navy mb-4">
+                                {dict.content.categories['le-port']}
+                            </h2>
+                            <div className="h-1 w-20 bg-pan-gold rounded-full" />
+                        </div>
+                        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            {items.map((item) => (
+                                <ContentCard key={item.id} item={item} locale={locale} dict={dict} />
+                            ))}
+                        </div>
+                    </div>
+                </section>
+            )}
         </>
     );
 }

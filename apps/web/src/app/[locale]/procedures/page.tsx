@@ -1,6 +1,10 @@
 import type { Locale } from '@pan/shared';
 import { getDictionary } from '@/lib/dictionaries';
 import { PageHero } from '@/components/PageHero';
+import { getPublishedContents } from '@pan/shared';
+import { ContentCard } from '@/components/ContentCard';
+
+export const revalidate = 60;
 
 export default async function ProceduresPage({ params }: { params: Promise<{ locale: string }> }) {
     const { locale: lp } = await params;
@@ -25,6 +29,9 @@ export default async function ProceduresPage({ params }: { params: Promise<{ loc
             subtitle: 'Nuestro equipo comercial está a su disposición para acompañarle en sus gestiones.'
         }
     }[locale];
+
+    const initialData = await getPublishedContents({ pageSize: 12, category: 'procedures' });
+    const items = initialData.items;
 
     return (
         <>
@@ -71,6 +78,25 @@ export default async function ProceduresPage({ params }: { params: Promise<{ loc
                     </a>
                 </div>
             </section>
+
+            {/* Dynamic CMS Content */}
+            {items.length > 0 && (
+                <section className="py-24 bg-pan-gray-50 border-t border-pan-navy/5 text-start">
+                    <div className="max-w-7xl mx-auto px-6">
+                        <div className="mb-12">
+                            <h2 className="text-3xl font-bold text-pan-navy mb-4">
+                                {dict.content.categories['procedures']}
+                            </h2>
+                            <div className="h-1 w-20 bg-pan-gold rounded-full" />
+                        </div>
+                        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            {items.map((item) => (
+                                <ContentCard key={item.id} item={item} locale={locale} dict={dict} />
+                            ))}
+                        </div>
+                    </div>
+                </section>
+            )}
         </>
     );
 }

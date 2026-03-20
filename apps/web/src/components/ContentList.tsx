@@ -5,6 +5,7 @@ import { t, formatDate } from '@pan/shared';
 import type { Dictionary } from '@/lib/dictionaries';
 import Link from 'next/link';
 import { useState } from 'react';
+import { ContentCard } from './ContentCard';
 
 interface ContentListProps {
     locale: Locale;
@@ -41,20 +42,6 @@ export function ContentList({ locale, dict, initialCategory, initialItems }: Con
         setCurrentPage(1);
     };
 
-    const categoryColors: Record<string, string> = {
-        actualite: 'bg-blue-100 text-blue-700',
-        communique: 'bg-purple-100 text-purple-700',
-        evenement: 'bg-emerald-100 text-emerald-700',
-        alerte: 'bg-amber-100 text-amber-700',
-    };
-
-    const categoryRoute: Record<string, string> = {
-        actualite: 'actualites',
-        communique: 'communiques',
-        evenement: 'evenements',
-        alerte: 'alertes',
-    };
-
     return (
         <div>
             {/* Filter tabs */}
@@ -89,71 +76,7 @@ export function ContentList({ locale, dict, initialCategory, initialItems }: Con
             ) : (
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {items.map((item) => (
-                        <article
-                            key={item.id}
-                            className="group bg-white rounded-2xl overflow-hidden border border-pan-gray-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex flex-col"
-                        >
-                            {/* Card header */}
-                            <div className="h-44 bg-gradient-to-br from-pan-blue to-pan-sky relative overflow-hidden flex items-center justify-center">
-                                <div className="absolute inset-0 bg-pan-navy/20 group-hover:bg-pan-navy/10 transition-colors duration-300 z-10" />
-
-                                {item.images && item.images.length > 0 ? (
-                                    // eslint-disable-next-line @next/next/no-img-element
-                                    <img
-                                        src={item.images[0]}
-                                        alt={t(item.title, locale)}
-                                        className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-all duration-700"
-                                    />
-                                ) : item.coverImage ? (
-                                    // eslint-disable-next-line @next/next/no-img-element
-                                    <img
-                                        src={item.coverImage}
-                                        alt={t(item.title, locale)}
-                                        className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-all duration-700"
-                                    />
-                                ) : null}
-                                {item.priority === 'urgent' && (
-                                    <div className="absolute top-3 end-3 bg-red-500 text-white text-[10px] font-bold px-2 py-1 rounded-full animate-pulse">
-                                        {{
-                                            ar: 'عاجل',
-                                            fr: 'URGENT',
-                                            en: 'URGENT',
-                                            es: 'URGENTE'
-                                        }[locale]}
-                                    </div>
-                                )}
-                                <div className="absolute bottom-3 start-3 flex items-center gap-2">
-                                    <span className={`text-xs font-semibold px-3 py-1 rounded-full ${categoryColors[item.category] || 'bg-gray-100 text-gray-700'}`}>
-                                        {dict.content.categories[item.category]}
-                                    </span>
-                                </div>
-                            </div>
-
-                            {/* Card body */}
-                            <div className="p-5 flex-1 flex flex-col">
-                                <div className="text-xs text-pan-gray-400 mb-2">
-                                    {item.publishedAt && formatDate(item.publishedAt, locale)}
-                                    {item.category === 'evenement' && item.eventDate && (
-                                        <span className="ms-2 text-emerald-600">
-                                            📅 {formatDate(item.eventDate, locale)}
-                                        </span>
-                                    )}
-                                </div>
-                                <h3 className="text-base font-semibold text-pan-navy mb-2 line-clamp-2 group-hover:text-pan-sky transition-colors duration-300">
-                                    {t(item.title, locale)}
-                                </h3>
-                                <p className="text-pan-gray-500 text-sm leading-relaxed mb-4 line-clamp-3 flex-1">
-                                    {t(item.excerpt, locale)}
-                                </p>
-                                <Link
-                                    href={`/${locale}/${categoryRoute[item.category] || 'actualites'}/${item.slug}`}
-                                    className="text-pan-sky font-medium text-sm hover:text-pan-blue transition-colors inline-flex items-center gap-1 mt-auto"
-                                >
-                                    {dict.news.readMore}
-                                    <span aria-hidden="true">{locale === 'ar' ? '←' : '→'}</span>
-                                </Link>
-                            </div>
-                        </article>
+                        <ContentCard key={item.id} item={item} locale={locale} dict={dict} />
                     ))}
                 </div>
             )}
