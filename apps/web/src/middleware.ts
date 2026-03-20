@@ -24,6 +24,13 @@ function getLocale(request: NextRequest): string {
 export function middleware(request: NextRequest) {
     const { pathname } = request.nextUrl;
 
+    // Redirect localized admin paths (e.g., /fr/admin) to the base admin path (/admin)
+    if (pathname.match(new RegExp(`^/(${locales.join('|')})/admin(/.*)?$`))) {
+        const url = request.nextUrl.clone();
+        url.pathname = pathname.replace(new RegExp(`^/(${locales.join('|')})`), '');
+        return NextResponse.redirect(url);
+    }
+
     // Skip for assets, api, _next
     if (
         pathname.startsWith('/_next') ||
