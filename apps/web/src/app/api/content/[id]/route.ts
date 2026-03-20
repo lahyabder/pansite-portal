@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import { getContentById, updateContent, deleteContent } from '@pan/shared';
 
 const CORS_HEADERS = {
@@ -25,6 +26,10 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
         const { userId = 'usr-001', ...data } = body;
         const updated = await updateContent(id, data, userId);
         if (!updated) return NextResponse.json({ error: 'Not found' }, { status: 404, headers: CORS_HEADERS });
+        
+        // Force Web App cache invalidation
+        revalidatePath('/', 'layout');
+        
         return NextResponse.json(updated, { headers: CORS_HEADERS });
     } catch {
         return NextResponse.json({ error: 'Invalid body' }, { status: 400, headers: CORS_HEADERS });
@@ -37,5 +42,9 @@ export async function DELETE(req: NextRequest, { params }: { params: Promise<{ i
     const userId = searchParams.get('userId') || 'usr-001';
     const ok = await deleteContent(id, userId);
     if (!ok) return NextResponse.json({ error: 'Not found' }, { status: 404, headers: CORS_HEADERS });
+    
+    // Force Web App cache invalidation
+    revalidatePath('/', 'layout');
+    
     return NextResponse.json({ success: true }, { headers: CORS_HEADERS });
 }

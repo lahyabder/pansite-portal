@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import { getAllContents, getPublishedContents, createContent, getContentBySlug, getAdminContents } from '@pan/shared';
 import type { ContentCategory, ContentStatus } from '@pan/shared';
 
@@ -73,6 +74,9 @@ export async function POST(req: NextRequest) {
             tags: data.tags || [],
             status,
         });
+
+        // Force Web App cache invalidation
+        revalidatePath('/', 'layout');
 
         return NextResponse.json(content, { status: 201, headers: CORS_HEADERS });
     } catch (err: any) {
