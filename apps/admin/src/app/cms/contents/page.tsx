@@ -1,33 +1,18 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Newspaper, Ship, Globe, ExternalLink, Trash2, Edit3, Eye, PlusCircle } from 'lucide-react';
+import { Newspaper, ExternalLink, Trash2, Edit3, PlusCircle } from 'lucide-react';
 
-import {
-    getAllContents,
-    submitForReview,
-    publishContent,
-    archiveContent,
-    restoreContent,
-} from '@pan/shared';
 import type { Content, ContentCategory, ContentStatus, LocalizedString } from '@pan/shared';
-import { getAllContentsAction, publishContentAction, updateContentAction, deleteContentAction } from '../../actions';
+import { getAllContentsAction, deleteContentAction } from '../../actions';
 import { RequirePermission, useAuth } from '@/lib/auth';
 import { useI18n } from '@/lib/i18n';
-import { useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 
 export default function AdminContentsPage() {
     const { session, can } = useAuth();
     const { t, locale } = useI18n();
-
-    const statusConfig: Record<ContentStatus, { label: string; color: string }> = {
-        draft: { label: t.contentManagement.statuses.draft, color: 'bg-gray-500/15 text-gray-400' },
-        pending_approval: { label: t.contentManagement.statuses.pending_approval, color: 'bg-amber-500/15 text-amber-400' },
-        published: { label: t.contentManagement.statuses.published, color: 'bg-emerald-500/15 text-emerald-400' },
-        archived: { label: t.contentManagement.statuses.archived, color: 'bg-red-500/15 text-red-400' },
-    };
 
     const categoryConfig: Record<ContentCategory, { label: string; icon: string }> = {
         actualite: { label: t.contentManagement.categories.actualite, icon: '📰' },
@@ -46,28 +31,24 @@ export default function AdminContentsPage() {
     };
 
     const searchParams = useSearchParams();
-    const initialStatus = (searchParams.get('status') || '') as ContentStatus | '';
     const initialCategory = (searchParams.get('category') || '') as ContentCategory | '';
 
     const [contents, setContents] = useState<Content[]>([]);
     const [loading, setLoading] = useState(true);
     const [filterCategory, setFilterCategory] = useState<ContentCategory | ''>(initialCategory);
-    const [filterStatus, setFilterStatus] = useState<ContentStatus | ''>(initialStatus);
     const [searchQuery, setSearchQuery] = useState('');
     const [toast, setToast] = useState<string | null>(null);
     const [error, setError] = useState<string | null>(null);
 
+    useEffect(() => {
+        setFilterCategory(initialCategory || '');
+        refresh();
+    }, [initialCategory]);
 
     const showToast = (msg: string) => {
         setToast(msg);
         setTimeout(() => setToast(null), 3000);
     };
-
-    useEffect(() => {
-        setFilterCategory(initialCategory || '');
-        setFilterStatus(initialStatus || '');
-        refresh();
-    }, [initialCategory, initialStatus]);
 
     const refresh = async () => {
         setLoading(true);
@@ -80,7 +61,6 @@ export default function AdminContentsPage() {
             } else {
                 setContents(Array.isArray(result.data) ? result.data : (result.data.items || []));
             }
-
         } catch (err: any) {
             console.error('Failed to fetch contents:', err);
             setError(err.message || 'FETCH_EXCEPTION');
@@ -90,49 +70,23 @@ export default function AdminContentsPage() {
         }
     };
 
-    const handleAction = async (id: string, action: string) => {
-        if (!session) return;
-        const userId = session.user.id;
-        let result;
-        switch (action) {
-            case 'submit':
-                result = await updateContentAction(id, { status: 'pending_approval' }, userId);
-                if (result) showToast(t.contentManagement.messages.submitted);
-                break;
-            case 'publish':
-                result = await publishContentAction(id, userId);
-                if (result) showToast(t.contentManagement.messages.published);
-                break;
-            case 'archive':
-                result = await updateContentAction(id, { status: 'archived' }, userId);
-                if (result) showToast(t.contentManagement.messages.archived);
-                break;
-            case 'restore':
-                result = await updateContentAction(id, { status: 'draft' }, userId);
-                if (result) showToast(t.contentManagement.messages.restored);
-                break;
-            case 'delete':
-                if (window.confirm(t.contentManagement.messages.confirmDelete)) {
-                    await deleteContentAction(id, userId);
-                    showToast(t.contentManagement.messages.deleted);
-                }
-                break;
+    const handleDelete = async (id: string) => {
+        if (!session || !can('content', 'delete')) return;
+        if (window.confirm(t.contentManagement.messages.confirmDelete)) {
+            await deleteContentAction(id, session.user.id);
+            showToast(t.contentManagement.messages.deleted);
+            refresh();
         }
-        refresh();
     };
 
     const getT = (text: LocalizedString) => text[locale] || text.fr || '';
 
     const filtered = contents.filter((c) => {
         if (filterCategory && c.category !== filterCategory) return false;
-        if (filterStatus && c.status !== filterStatus) return false;
         const title = getT(c.title).toLowerCase();
         if (searchQuery && !title.includes(searchQuery.toLowerCase())) return false;
         return true;
     });
-
-    const showTypeCol = !filterCategory;
-    const showPriorityCol = !filterCategory || ['actualite', 'communique', 'alerte'].includes(filterCategory);
 
     return (
         <RequirePermission module="content">
@@ -153,12 +107,12 @@ export default function AdminContentsPage() {
                         </div>
                         <h2 className="text-3xl font-bold text-admin-text italic">
                             {filterCategory 
-                                ? `Gestion des ${categoryConfig[filterCategory as ContentCategory]?.label}`
+                                ? `${categoryConfig[filterCategory as ContentCategory]?.label}`
                                 : t.topbar.titles.contents}
                         </h2>
                         <p className="text-admin-text-muted text-sm mt-3 flex items-center gap-2">
                             <span className="w-1.5 h-1.5 bg-pan-gold rounded-full animate-pulse" />
-                            {filtered.length} documents répertoriés
+                            {filtered.length} éléments en ligne
                         </p>
                     </div>
                     <div className="flex items-center gap-3">
@@ -174,37 +128,27 @@ export default function AdminContentsPage() {
                     </div>
                 </div>
 
-                {/* Filters */}
-                <div className="flex flex-wrap items-center gap-3">
+                {/* Simplest Search Filter */}
+                <div className="flex items-center gap-3">
                     <input
                         type="text"
                         placeholder={`${t.common.search}...`}
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
-                        className="px-4 py-2 bg-admin-surface border border-admin-border rounded-xl text-admin-text text-sm w-64 focus:outline-none focus:ring-2 focus:ring-admin-primary/50"
+                        className="px-4 py-3 bg-admin-surface border border-admin-border rounded-xl text-admin-text text-sm w-full max-w-md focus:outline-none focus:ring-2 focus:ring-admin-primary/50"
                     />
                     {!filterCategory && (
                         <select
                             value={filterCategory}
                             onChange={(e) => setFilterCategory(e.target.value as ContentCategory | '')}
-                            className="px-4 py-2 bg-admin-surface border border-admin-border rounded-xl text-admin-text text-sm focus:outline-none focus:ring-2 focus:ring-admin-primary/50"
+                            className="px-4 py-3 bg-admin-surface border border-admin-border rounded-xl text-admin-text text-sm focus:outline-none focus:ring-2 focus:ring-admin-primary/50"
                         >
-                            <option value="">{t.common.filter} ({t.common.type})</option>
+                            <option value="">Tous les types</option>
                             {Object.entries(categoryConfig).map(([key, { label, icon }]) => (
                                 <option key={key} value={key}>{icon} {label}</option>
                             ))}
                         </select>
                     )}
-                    <select
-                        value={filterStatus}
-                        onChange={(e) => setFilterStatus(e.target.value as ContentStatus | '')}
-                        className="px-4 py-2 bg-admin-surface border border-admin-border rounded-xl text-admin-text text-sm focus:outline-none focus:ring-2 focus:ring-admin-primary/50"
-                    >
-                        <option value="">{t.common.filter} ({t.common.status})</option>
-                        {Object.entries(statusConfig).map(([key, { label }]) => (
-                            <option key={key} value={key}>{label}</option>
-                        ))}
-                    </select>
                 </div>
 
                 {error && (
@@ -213,168 +157,114 @@ export default function AdminContentsPage() {
                             <span className="text-4xl">⚠️</span>
                             <div>
                                 <p className="font-bold">Erreur de chargement</p>
-                                <p className="text-sm opacity-70 mt-1">Impossible de récupérer les contenus: {error}</p>
-                                <p className="text-[10px] opacity-50 mt-2 font-mono">Consultez <Link href="/cms/debug" className="underline text-pan-gold">/cms/debug</Link> pour diagnostiquer la connexion</p>
+                                <p className="text-sm opacity-70 mt-1">{error}</p>
                             </div>
-
                             <button onClick={refresh} className="px-4 py-2 bg-admin-primary text-white rounded-lg text-sm font-bold">Réessayer</button>
                         </div>
                     </div>
                 )}
 
-
                 {loading && (
-                    <div className="flex items-center justify-center p-20 bg-admin-surface rounded-xl border border-admin-border">
-                        <div className="flex flex-col items-center gap-4">
-                            <div className="w-10 h-10 border-4 border-pan-gold border-t-transparent rounded-full animate-spin" />
-                            <p className="text-admin-text-muted text-sm font-medium">Chargement des contenus...</p>
-                        </div>
+                    <div className="flex items-center justify-center p-20">
+                        <div className="w-10 h-10 border-4 border-pan-gold border-t-transparent rounded-full animate-spin" />
                     </div>
                 )}
 
-                {!loading && !error && (
-                    <div className="bg-admin-surface rounded-xl border border-admin-border overflow-hidden">
-                        <table className="w-full">
-                            <thead>
-                                <tr className="border-b border-admin-border">
-                                    <th className="text-start px-5 py-3.5 text-admin-text-muted text-xs font-semibold uppercase tracking-wider">{t.common.title}</th>
-                                    {showTypeCol && <th className="text-start px-5 py-3.5 text-admin-text-muted text-xs font-semibold uppercase tracking-wider">{t.common.type}</th>}
-                                    <th className="text-start px-5 py-3.5 text-admin-text-muted text-xs font-semibold uppercase tracking-wider">{t.common.status}</th>
-                                    {showPriorityCol && <th className="text-start px-5 py-3.5 text-admin-text-muted text-xs font-semibold uppercase tracking-wider">{t.common.priority}</th>}
-                                    <th className="text-end px-5 py-3.5 text-admin-text-muted text-xs font-semibold uppercase tracking-wider">{t.common.actions}</th>
-                                </tr>
-                            </thead>
-                            <tbody className="divide-y divide-admin-border">
-                                {filtered.map((content) => {
-                                    const cat = categoryConfig[content.category];
-                                    const status = statusConfig[content.status];
-                                    return (
-                                        <tr key={content.id} className="hover:bg-admin-surface-alt/50 transition-colors">
-                                            <td className="px-5 py-4">
-                                                <div className="flex items-center gap-3">
-                                                    <div className="w-10 h-10 bg-white/5 rounded-lg flex items-center justify-center shrink-0">
-                                                        {cat.icon}
-                                                    </div>
-                                                    <div>
-                                                        <div className="text-admin-text text-sm font-bold line-clamp-1">{getT(content.title)}</div>
-                                                        <div className="flex items-center gap-2 mt-0.5">
-                                                            <span className="text-admin-text-muted text-[10px] uppercase font-mono">{content.id}</span>
-                                                            {content.status === 'published' && (
-                                                                <a
-                                                                    href={`http://localhost:3000/${locale}/actualites/${content.slug}`}
-                                                                    target="_blank"
-                                                                    className="text-pan-gold hover:text-white transition-colors flex items-center gap-1 text-[10px] font-bold"
-                                                                >
-                                                                    <ExternalLink className="w-3 h-3" />
-                                                                    Voir en ligne
-                                                                </a>
-                                                            )}
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            {showTypeCol && (
-                                                <td className="px-5 py-4">
-                                                    <span className="text-admin-text-muted text-sm">{cat.icon} {cat.label}</span>
-                                                </td>
-                                            )}
-                                            <td className="px-5 py-4">
-                                                <span className={`text-[10px] px-2.5 py-1 rounded-full font-semibold ${status.color}`}>
-                                                    {status.label}
-                                                </span>
-                                            </td>
-                                            {showPriorityCol && (
-                                                <td className="px-5 py-4">
-                                                    {content.priority === 'urgent' && (
-                                                        <span className="text-[10px] px-2 py-0.5 rounded-full font-semibold bg-red-500/15 text-red-400">🚨 {t.contentManagement.priorities.urgent}</span>
-                                                    )}
-                                                    {content.priority === 'important' && (
-                                                        <span className="text-[10px] px-2 py-0.5 rounded-full font-semibold bg-amber-500/15 text-amber-400">⚡ {t.contentManagement.priorities.important}</span>
-                                                    )}
-                                                    {(!content.priority || content.priority === 'normal') && (
-                                                        <span className="text-admin-text-muted text-xs">{t.contentManagement.priorities.normal}</span>
-                                                    )}
-                                                </td>
-                                            )}
-                                            <td className="px-5 py-4 text-end">
-                                                <div className="flex items-center gap-1.5 justify-end">
-                                                    {/* Workflow actions */}
-                                                    {(content.status === 'draft' && can('content', 'approve')) && (
-                                                        <button
-                                                            onClick={() => handleAction(content.id, 'submit')}
-                                                            className="px-3 py-1.5 rounded-lg bg-amber-500 text-pan-navy text-[10px] font-bold hover:bg-amber-400 transition-all shadow-lg shadow-amber-500/10"
-                                                            title={t.contentManagement.workflow.submit}
-                                                        >
-                                                            {t.contentManagement.workflow.submit}
-                                                        </button>
-                                                    )}
-                                                    {(content.status === 'draft' && can('content', 'publish')) && (
-                                                        <button
-                                                            onClick={() => handleAction(content.id, 'publish')}
-                                                            className="px-3 py-1.5 rounded-lg bg-emerald-500 text-pan-navy text-[10px] font-bold hover:bg-emerald-400 transition-all shadow-lg shadow-emerald-500/10"
-                                                            title={t.contentManagement.workflow.publish}
-                                                        >
-                                                            {t.contentManagement.workflow.publish}
-                                                        </button>
-                                                    )}
-                                                    {(content.status === 'pending_approval' && can('content', 'approve')) && (
-                                                        <button
-                                                            onClick={() => handleAction(content.id, 'publish')}
-                                                            className="px-3 py-1.5 rounded-lg bg-emerald-500 text-pan-navy text-[10px] font-bold hover:bg-emerald-400 transition-all shadow-lg shadow-emerald-500/10"
-                                                            title={t.contentManagement.workflow.approve}
-                                                        >
-                                                            {t.contentManagement.workflow.approve}
-                                                        </button>
-                                                    )}
-                                                    {(content.status === 'published' && can('content', 'edit')) && (
-                                                        <button
-                                                            onClick={() => handleAction(content.id, 'archive')}
-                                                            className="px-3 py-1.5 rounded-lg bg-gray-600 text-white text-[10px] font-bold hover:bg-gray-500 transition-all"
-                                                            title={t.contentManagement.workflow.archive}
-                                                        >
-                                                            {t.contentManagement.workflow.archive}
-                                                        </button>
-                                                    )}
-                                                    {(content.status === 'archived' && can('content', 'edit')) && (
-                                                        <button
-                                                            onClick={() => handleAction(content.id, 'restore')}
-                                                            className="px-3 py-1.5 rounded-lg bg-sky-500 text-pan-navy text-[10px] font-bold hover:bg-sky-400 transition-all"
-                                                            title={t.contentManagement.workflow.restore}
-                                                        >
-                                                            {t.contentManagement.workflow.restore}
-                                                        </button>
-                                                    )}
-                                                    
-                                                    {can('content', 'edit') && (
-                                                        <Link
-                                                            href={`/cms/contents/${content.id}/edit`}
-                                                            className="p-2 rounded-lg bg-white/5 text-white hover:bg-pan-gold hover:text-pan-navy transition-all border border-white/5"
-                                                            title={t.common.edit}
-                                                        >
-                                                            <Edit3 className="w-4 h-4" />
-                                                        </Link>
-                                                    )}
-                                                    
-                                                    {can('content', 'delete') && (
-                                                        <button
-                                                            onClick={() => handleAction(content.id, 'delete')}
-                                                            className="p-2 rounded-lg bg-red-500/10 text-red-400 hover:bg-red-500 hover:text-white transition-all border border-red-500/20"
-                                                            title={t.common.delete}
-                                                        >
-                                                            <Trash2 className="w-4 h-4" />
-                                                        </button>
-                                                    )}
+                {!loading && !error && filtered.length === 0 && (
+                    <div className="flex flex-col items-center justify-center p-20 bg-admin-surface/50 rounded-2xl border border-admin-border border-dashed text-center">
+                        <div className="w-16 h-16 bg-admin-surface-alt rounded-full flex items-center justify-center mb-4 text-3xl">
+                            {filterCategory ? categoryConfig[filterCategory].icon : '📭'}
+                        </div>
+                        <h3 className="text-white font-bold text-xl mb-2">Aucun contenu trouvé</h3>
+                        <p className="text-admin-text-muted text-sm max-w-sm">Prêt à publier quelque chose de nouveau ? Cliquez sur le bouton "Nouveau contenu" en haut à droite pour commencer.</p>
+                    </div>
+                )}
 
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    );
-                                })}
-                            </tbody>
-                        </table>
+                {!loading && !error && filtered.length > 0 && (
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                        {filtered.map((content) => {
+                            const cat = categoryConfig[content.category];
+                            const date = new Date(content.publishedAt || content.createdAt).toLocaleDateString(locale, { year: 'numeric', month: 'short', day: 'numeric' });
+                            
+                            return (
+                                <div key={content.id} className="bg-admin-surface rounded-2xl border border-admin-border overflow-hidden hover:border-admin-primary/50 transition-all flex flex-col group shadow-lg shadow-black/20">
+                                    {/* Cover Image */}
+                                    <div className="h-44 bg-admin-surface-alt relative flex items-center justify-center border-b border-admin-border overflow-hidden">
+                                        {content.coverImage || content.images?.[0] ? (
+                                            <img 
+                                                src={content.coverImage || content.images?.[0]} 
+                                                alt={getT(content.title)} 
+                                                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                                            />
+                                        ) : (
+                                            <div className="text-6xl opacity-20 group-hover:opacity-100 group-hover:scale-125 transition-all duration-500">
+                                                {cat.icon}
+                                            </div>
+                                        )}
+                                        {/* Category Badge showing on top left */}
+                                        {!filterCategory && (
+                                            <div className="absolute top-3 left-3 px-2 py-1.5 bg-black/70 backdrop-blur-md rounded-lg flex items-center gap-1.5 text-xs font-bold text-white border border-white/10 shadow-lg">
+                                                <span>{cat.icon}</span>
+                                                {cat.label}
+                                            </div>
+                                        )}
+                                        {/* Priority Badge */}
+                                        {['important', 'urgent'].includes(content.priority || '') && (
+                                            <div className={`absolute top-3 right-3 px-2 py-1.5 rounded-lg flex items-center gap-1 text-[10px] font-bold text-white shadow-lg ${content.priority === 'urgent' ? 'bg-red-500' : 'bg-amber-500'}`}>
+                                                {content.priority === 'urgent' ? '🚨 URGENT' : '⚡ IMPORTANT'}
+                                            </div>
+                                        )}
+                                    </div>
+                                    
+                                    {/* Content Info */}
+                                    <div className="p-5 flex-1 flex flex-col">
+                                        <h3 className="text-white font-bold text-base leading-snug line-clamp-2 mb-2 group-hover:text-pan-gold transition-colors">
+                                            {getT(content.title)}
+                                        </h3>
+                                        <div className="flex flex-wrap items-center gap-3 text-admin-text-muted text-[11px] mb-5">
+                                            <span>📅 {date}</span>
+                                            {content.status === 'published' && (
+                                                <a
+                                                    href={`http://localhost:3000/${locale}/actualites/${content.slug}`}
+                                                    target="_blank"
+                                                    className="flex items-center gap-1 text-pan-gold hover:underline"
+                                                    onClick={(e) => e.stopPropagation()}
+                                                >
+                                                    <ExternalLink className="w-3 h-3" />
+                                                    Voir sur le site
+                                                </a>
+                                            )}
+                                        </div>
+                                        
+                                        {/* Actions */}
+                                        <div className="mt-auto pt-4 flex items-center gap-2 border-t border-admin-border/50">
+                                            {can('content', 'edit') && (
+                                                <Link 
+                                                    href={`/cms/contents/${content.id}/edit`} 
+                                                    className="flex-1 py-2.5 flex items-center justify-center gap-2 rounded-xl bg-pan-gold/10 text-pan-gold hover:bg-pan-gold hover:text-pan-navy font-bold text-xs transition-colors"
+                                                >
+                                                    <Edit3 className="w-4 h-4" />
+                                                    Modifier
+                                                </Link>
+                                            )}
+                                            {can('content', 'delete') && (
+                                                <button 
+                                                    onClick={() => handleDelete(content.id)} 
+                                                    className="p-2.5 rounded-xl bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white transition-colors"
+                                                    title="Supprimer"
+                                                >
+                                                    <Trash2 className="w-4 h-4" />
+                                                </button>
+                                            )}
+                                        </div>
+                                    </div>
+                                </div>
+                            );
+                        })}
                     </div>
                 )}
             </div>
         </RequirePermission>
     );
 }
+

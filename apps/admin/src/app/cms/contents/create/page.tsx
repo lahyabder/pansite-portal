@@ -87,7 +87,7 @@ export default function CreateContentPage() {
         }
     };
 
-    const handleSubmit = async (asDraft: boolean) => {
+    const handleSubmit = async () => {
         const mainTitle = form.title.fr || form.title.ar || form.title.en || form.title.es || '';
         if (!mainTitle.trim()) return;
         setSaving(true);
@@ -110,10 +110,10 @@ export default function CreateContentPage() {
                 body: form.body,
                 category: form.category,
                 tags: form.tags.split(',').map((t) => t.trim()).filter(Boolean),
-                status: asDraft ? 'draft' : 'published',
+                status: 'published',
                 priority: form.priority,
                 authorId: session?.user.id || 'system',
-                publishedAt: asDraft ? undefined : new Date().toISOString(),
+                publishedAt: new Date().toISOString(),
                 eventDate: form.eventDate || undefined,
                 eventEndDate: form.eventEndDate || undefined,
                 eventLocation: form.eventLocation || undefined,
@@ -161,18 +161,12 @@ export default function CreateContentPage() {
                     </div>
                     <div className="flex items-center gap-3">
                         <button
-                            onClick={() => handleSubmit(true)}
+                            onClick={() => handleSubmit()}
                             disabled={saving || !(form.title as any)[activeLang]}
-                            className="px-5 py-2.5 text-admin-text-muted text-sm font-bold hover:text-admin-text transition-all"
+                            className="px-6 py-3 bg-emerald-600 text-white text-sm font-bold rounded-xl hover:bg-emerald-700 shadow-xl shadow-emerald-500/20 disabled:opacity-40 transition-all flex items-center gap-2"
                         >
-                            {saving ? dict.cms.creation.saving : dict.cms.creation.draft}
-                        </button>
-                        <button
-                            onClick={() => handleSubmit(false)}
-                            disabled={saving || !(form.title as any)[activeLang]}
-                            className="px-6 py-2.5 bg-emerald-600 text-white text-sm font-bold rounded-xl hover:bg-emerald-700 shadow-xl shadow-emerald-500/20 disabled:opacity-40 transition-all flex items-center gap-2"
-                        >
-                            <Rocket className="w-4 h-4" /> {saving ? dict.cms.creation.publishing : dict.cms.creation.publish}
+                            <Rocket className="w-5 h-5" /> 
+                            {saving ? "Enregistrement en cours..." : "Publier directement sur le site"}
                         </button>
                     </div>
                 </div>

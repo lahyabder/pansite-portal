@@ -113,7 +113,7 @@ export default function EditContentPage({
         }
     };
 
-    const handleSave = async (published: boolean = false) => {
+    const handleSave = async () => {
         setSaving(true);
 
         // 1. Upload new images if any
@@ -141,7 +141,9 @@ export default function EditContentPage({
             externalLink: form.externalLink || undefined,
             videoLink: form.videoLink || undefined,
             images: allImages,
-            ...(published ? { status: 'published', publishedAt: new Date().toISOString() } : {})
+            status: 'published',
+            // If it wasn't published before, we set the published date now
+            ...(content?.status !== 'published' ? { publishedAt: new Date().toISOString() } : {})
         }, session?.user.id || 'system');
 
         router.push('/cms/contents');
@@ -199,21 +201,12 @@ export default function EditContentPage({
                         </div>
                     </div>
                     <div className="flex items-center gap-3">
-                        {content.status !== 'published' && (
-                            <button
-                                onClick={() => handleSave(true)}
-                                disabled={saving}
-                                className="px-5 py-2.5 bg-emerald-600 text-white text-sm font-bold rounded-xl hover:bg-emerald-700 disabled:opacity-40 transition-all flex items-center gap-2"
-                            >
-                                <Upload className="w-4 h-4" /> {saving ? 'Publication...' : 'Enregistrer & Publier'}
-                            </button>
-                        )}
                         <button
-                            onClick={() => handleSave(false)}
+                            onClick={() => handleSave()}
                             disabled={saving}
-                            className="px-5 py-2.5 bg-admin-primary text-white text-sm font-bold rounded-xl hover:bg-admin-primary/80 disabled:opacity-40 transition-all flex items-center gap-2"
+                            className="px-6 py-3 bg-pan-gold text-pan-navy text-sm font-bold rounded-xl hover:bg-pan-gold-light disabled:opacity-40 transition-all flex items-center gap-2 shadow-lg hover:shadow-pan-gold/20"
                         >
-                            <Save className="w-4 h-4" /> {saving ? 'Enregistrement...' : 'Enregistrer'}
+                            <Save className="w-5 h-5" /> {saving ? 'Enregistrement en cours...' : 'Enregistrer les modifications'}
                         </button>
                     </div>
                 </div>
