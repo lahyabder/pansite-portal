@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { createContentAction, updateContentAction, uploadFileAction } from '@/app/actions';
 import { slugify } from '@pan/shared';
-import type { Content, ContentCategory } from '@pan/shared';
+import type { Content, ContentCategory, ContentStatus } from '@pan/shared';
 import { Save, ArrowLeft, Globe, Loader2, Upload, X } from 'lucide-react';
 
 type Locale = 'fr' | 'ar' | 'en' | 'es';
@@ -58,13 +58,13 @@ export function ContentForm({ initial, isEdit }: ContentFormProps) {
 
     // Meta fields
     const [category, setCategory] = useState<ContentCategory>(initial?.category || 'actualite');
-    const [status, setStatus] = useState(initial?.status || 'draft');
+    const [status, setStatus] = useState<ContentStatus>(initial?.status || 'draft');
     const [slug, setSlug] = useState(initial?.slug || '');
     const [coverImage, setCoverImage] = useState(initial?.coverImage || '');
     const [eventDate, setEventDate] = useState(initial?.eventDate || '');
     const [expiresAt, setExpiresAt] = useState(initial?.expiresAt || '');
     const [externalLink, setExternalLink] = useState(initial?.externalLink || '');
-    const [priority, setPriority] = useState(initial?.priority || 'normal');
+    const [priority, setPriority] = useState<'normal' | 'important' | 'urgent'>(initial?.priority || 'normal');
 
     // Auto-generate slug
     useEffect(() => {
@@ -141,11 +141,11 @@ export function ContentForm({ initial, isEdit }: ContentFormProps) {
                     {/* Status */}
                     <select
                         value={status}
-                        onChange={e => setStatus(e.target.value)}
+                        onChange={e => setStatus(e.target.value as ContentStatus)}
                         className="px-3 py-2 border border-pan-gray-200 rounded-xl text-sm bg-white"
                     >
                         <option value="draft">Brouillon</option>
-                        <option value="pending">Soumettre pour révision</option>
+                        <option value="pending_approval">Soumettre pour révision</option>
                         <option value="published">Publié</option>
                         <option value="archived">Archivé</option>
                     </select>
@@ -257,11 +257,11 @@ export function ContentForm({ initial, isEdit }: ContentFormProps) {
                             <label className="block text-xs font-bold text-pan-gray-500 uppercase tracking-wider mb-2">Priorité</label>
                             <select
                                 value={priority}
-                                onChange={e => setPriority(e.target.value)}
+                                onChange={e => setPriority(e.target.value as 'normal' | 'important' | 'urgent')}
                                 className="w-full px-3 py-2.5 border border-pan-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-pan-sky/20 bg-white"
                             >
                                 <option value="normal">Normale</option>
-                                <option value="high">Haute</option>
+                                <option value="important">Importante</option>
                                 <option value="urgent">🔴 Urgente</option>
                             </select>
                         </div>
