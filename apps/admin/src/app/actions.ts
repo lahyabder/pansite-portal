@@ -187,14 +187,30 @@ export async function preTranslateAction(data: {
 
 // ─── Content CRUD via Web API ─────────────────────────────────────────────────
 
-export async function getAllContentsAction() {
+export async function getAllContentsAction(filters?: {
+    category?: string;
+    status?: string;
+    search?: string;
+    page?: number;
+    pageSize?: number;
+}) {
     try {
-        const data = await contentFetch('?admin=true');
-        if (data === null) return { error: 'API_RESPONSE_NULL' };
-        return { data };
+        const params = new URLSearchParams({ admin: 'true' });
+        if (filters?.category) params.append('category', filters.category);
+        if (filters?.status)   params.append('status',   filters.status);
+        if (filters?.search)   params.append('search',   filters.search);
+        if (filters?.page)     params.append('page',     filters.page.toString());
+        if (filters?.pageSize) params.append('pageSize', filters.pageSize.toString());
+
+        const data = await contentFetch(`?${params.toString()}`);
+        if (data === null) return { items: [], total: 0 };
+
+        // Handle both array response and paginated {items, total} response
+        if (Array.isArray(data)) return { items: data, total: data.length };
+        return { items: data.items ?? data.data ?? [], total: data.total ?? 0 };
     } catch (err: any) {
         console.error('getAllContentsAction failed:', err);
-        return { error: err.message || 'FETCH_FAILED' };
+        return { items: [], total: 0 };
     }
 }
 
