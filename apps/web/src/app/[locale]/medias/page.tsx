@@ -8,14 +8,14 @@ export default async function MediaPage({ params }: { params: Promise<{ locale: 
     const locale = (['ar', 'fr', 'en', 'es'].includes(lp) ? lp : 'fr') as Locale;
     const dict = getDictionary(locale);
 
-    // Mock images for the gallery
+    // Mock images for the gallery with safe access
     const photoGallery = [
-        { id: 1, src: '/images/hero/hero-1.jpg', title: dict.pages.media.news.items[0].title },
-        { id: 2, src: '/images/hero/hero-2.jpg', title: dict.pages.media.news.items[1].title },
-        { id: 3, src: '/images/hero/hero-3.jpg', title: dict.pages.media.news.items[2].title },
-        { id: 4, src: '/images/hero/hero-4.jpg', title: dict.pages.media.news.items[3].title },
-        { id: 5, src: '/images/hero/hero-5.jpg', title: dict.pages.infrastructure.gallery.items[0].title },
-        { id: 6, src: '/images/hero/hero-6.jpg', title: dict.pages.infrastructure.gallery.items[1].title },
+        { id: 1, src: '/images/hero/hero-1.jpg', title: dict.pages.media?.news?.items?.[0]?.title || dict.pages.media.title },
+        { id: 2, src: '/images/hero/hero-2.jpg', title: dict.pages.media?.news?.items?.[1]?.title || dict.pages.media.title },
+        { id: 3, src: '/images/hero/hero-3.jpg', title: dict.pages.media?.news?.items?.[2]?.title || dict.pages.media.title },
+        { id: 4, src: '/images/hero/hero-4.jpg', title: dict.pages.media?.news?.items?.[3]?.title || dict.pages.media.title },
+        { id: 5, src: '/images/hero/hero-5.jpg', title: dict.pages.infrastructure?.gallery?.items?.[0]?.title || dict.pages.infrastructure.title },
+        { id: 6, src: '/images/hero/hero-6.jpg', title: dict.pages.infrastructure?.gallery?.items?.[1]?.title || dict.pages.infrastructure.title },
     ];
 
     return (
