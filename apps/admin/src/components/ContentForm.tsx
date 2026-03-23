@@ -2,10 +2,10 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { createContentAction, updateContentAction, uploadFileAction } from '@/app/actions';
+import { createContentAction, updateContentAction, uploadFileAction, preTranslateAction } from '@/app/actions';
 import { slugify } from '@pan/shared';
 import type { Content, ContentCategory, ContentStatus } from '@pan/shared';
-import { Save, ArrowLeft, Globe, Loader2, Upload, X } from 'lucide-react';
+import { Save, ArrowLeft, Globe, Loader2, Upload, X, Sparkles } from 'lucide-react';
 
 type Locale = 'fr' | 'ar' | 'en' | 'es';
 const LOCALES: { key: Locale; label: string; dir: 'ltr' | 'rtl' }[] = [
@@ -39,6 +39,7 @@ export function ContentForm({ initial, isEdit }: ContentFormProps) {
     const [locale, setLocale] = useState<Locale>('fr');
     const [saving, setSaving] = useState(false);
     const [uploadingImage, setUploadingImage] = useState(false);
+    const [isTranslating, setIsTranslating] = useState(false);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
 
@@ -82,6 +83,42 @@ export function ContentForm({ initial, isEdit }: ContentFormProps) {
         const urls = await uploadFileAction(formData);
         if (urls?.[0]) setCoverImage(urls[0]);
         setUploadingImage(false);
+    };
+
+    const handleAutoTranslate = async () => {
+        if (!titles[locale]) {
+            setError("Veuillez d'abord saisir un titre dans la langue actuelle avant de traduire.");
+            return;
+        }
+        
+        setIsTranslating(true);
+        setError('');
+        
+        try {
+            const trans = await preTranslateAction({
+                title: titles[locale],
+                excerpt: excerpts[locale] || '',
+                body: bodies[locale] || '',
+                sourceLang: locale
+            });
+            
+            if (trans?.title) {
+                setTitles(prev => ({ ...prev, ...trans.title }));
+            }
+            if (trans?.excerpt) {
+                setExcerpts(prev => ({ ...prev, ...trans.excerpt }));
+            }
+            if (trans?.body) {
+                setBodies(prev => ({ ...prev, ...trans.body }));
+            }
+            setSuccess('Traduction réussie !');
+            setTimeout(() => setSuccess(''), 3000);
+        } catch (e) {
+            console.error(e);
+            setError("Une erreur est survenue lors de la traduction.");
+        } finally {
+            setIsTranslating(false);
+        }
     };
 
     const handleSubmit = async (newStatus?: string) => {
@@ -180,18 +217,29 @@ export function ContentForm({ initial, isEdit }: ContentFormProps) {
                 <div className="lg:col-span-2 space-y-5">
                     {/* Language tabs */}
                     <div className="bg-white rounded-2xl shadow-sm border border-pan-gray-100 overflow-hidden">
-                        <div className="flex border-b border-pan-gray-100 px-1 pt-1">
-                            {LOCALES.map(l => (
-                                <button
-                                    key={l.key}
-                                    onClick={() => setLocale(l.key)}
-                                    className={`flex items-center gap-2 px-4 py-3 text-sm font-bold rounded-t-xl transition-all ${l.key === locale ? 'text-pan-sky border-b-2 border-pan-sky' : 'text-pan-gray-400 hover:text-pan-navy'}`}
-                                >
-                                    <Globe className="w-3.5 h-3.5" />
-                                    {l.label}
-                                    {titles[l.key] && l.key !== locale && <span className="w-2 h-2 rounded-full bg-green-400 block" />}
-                                </button>
-                            ))}
+                        <div className="flex items-center justify-between border-b border-pan-gray-100 pr-3">
+                            <div className="flex px-1 pt-1 overflow-x-auto no-scrollbar">
+                                {LOCALES.map(l => (
+                                    <button
+                                        key={l.key}
+                                        onClick={() => setLocale(l.key)}
+                                        className={`flex items-center gap-2 px-4 py-3 text-sm font-bold rounded-t-xl transition-all whitespace-nowrap ${l.key === locale ? 'text-pan-sky border-b-2 border-pan-sky' : 'text-pan-gray-400 hover:text-pan-navy'}`}
+                                    >
+                                        <Globe className="w-3.5 h-3.5" />
+                                        {l.label}
+                                        {titles[l.key] && l.key !== locale && <span className="w-2 h-2 rounded-full bg-green-400 block flex-shrink-0" />}
+                                    </button>
+                                ))}
+                            </div>
+                            <button
+                                onClick={handleAutoTranslate}
+                                disabled={isTranslating || !titles[locale]}
+                                className="flex-shrink-0 flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold text-pan-navy bg-pan-sky/10 hover:bg-pan-sky/20 rounded-lg transition-colors disabled:opacity-50"
+                                title={`Traduire automatiquement depuis ${activeLocaleConfig.label}`}
+                            >
+                                {isTranslating ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Sparkles className="w-3.5 h-3.5 text-amber-500" />}
+                                Traduire ({locale.toUpperCase()})
+                            </button>
                         </div>
 
                         <div className="p-6 space-y-4" dir={activeLocaleConfig.dir}>
