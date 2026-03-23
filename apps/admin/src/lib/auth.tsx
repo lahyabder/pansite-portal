@@ -31,7 +31,7 @@ const SESSION_DURATION = 8 * 60 * 60 * 1000; // 8 hours
 
 // Mock credentials: email → password
 const MOCK_CREDENTIALS: Record<string, string> = {
-    'admin@pan.mr': 'admin2025',
+    'admin@pan.mr': 'admin',
 };
 
 interface LoginAttempt {
