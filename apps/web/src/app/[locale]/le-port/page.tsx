@@ -151,6 +151,15 @@ export default async function LePortPage({ params }: { params: Promise<{ locale:
                             </div>
                         ))}
                     </div>
+
+                    <div className="mt-16 relative h-64 md:h-96 w-full max-w-5xl mx-auto rounded-3xl overflow-hidden shadow-xl border border-pan-navy/5">
+                        <Image 
+                            src="/images/hero/hero-5.jpg" 
+                            alt={dict.pages.port.history.title} 
+                            fill 
+                            className="object-cover hover:scale-105 transition-transform duration-700 sepia-[.3]"
+                        />
+                    </div>
                 </div>
             </section>
 
