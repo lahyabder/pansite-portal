@@ -99,7 +99,7 @@ export function Header({ locale, dict }: HeaderProps) {
                     <div className="flex items-center justify-between h-16 lg:h-[72px]">
                         {/* Logo */}
                         <Link href={`/${locale}`} className="flex items-center gap-3 group shrink-0">
-                            <img src="/logo-pan.png" alt="Port Autonome de Nouadhibou" className="h-10 lg:h-12 w-auto object-contain" />
+                            <img src="/logo-horizontal.png" alt="Port Autonome de Nouadhibou" className="h-8 lg:h-10 w-auto object-contain" />
                         </Link>
 
                         {/* Desktop Nav */}

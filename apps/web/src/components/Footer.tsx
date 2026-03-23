@@ -33,7 +33,7 @@ export function Footer({ locale, dict }: FooterProps) {
                     {/* About / Logo */}
                     <div className="lg:col-span-1">
                         <div className="flex items-center gap-3 mb-6 bg-white p-3 rounded-xl w-fit">
-                            <img src="/logo-pan.png" alt="PAN Logo" className="h-10 w-auto object-contain" />
+                            <img src="/logo-horizontal.png" alt="PAN Logo" className="h-12 w-auto object-contain transition-opacity hover:opacity-80" />
                         </div>
                         <p className="text-pan-light/60 text-sm leading-relaxed mb-6">
                             {dict.footer.description}
