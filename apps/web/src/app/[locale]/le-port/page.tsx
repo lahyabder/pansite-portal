@@ -129,36 +129,101 @@ export default async function LePortPage({ params }: { params: Promise<{ locale:
                 </div>
             </section>
 
-            {/* History Timeline */}
-            <section className="py-24 bg-white relative overflow-hidden">
-                <div className="max-w-7xl mx-auto px-6">
-                    <div className="text-center mb-16">
-                        <h2 className="text-3xl font-bold text-pan-navy mb-4">{dict.pages.port.history.title}</h2>
-                        <div className="h-1 w-20 bg-pan-gold mx-auto rounded-full" />
+            {/* ═══ Premium History Section (Museum Style) ═══ */}
+            <section className="py-32 bg-pan-navy relative overflow-hidden">
+                {/* Decorative Elements */}
+                <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-pan-gold/40 to-transparent" />
+                <div className="absolute -top-64 -right-64 w-[600px] h-[600px] bg-pan-blue/10 rounded-full blur-[120px]" />
+                <div className="absolute -bottom-64 -left-64 w-[600px] h-[600px] bg-pan-gold/5 rounded-full blur-[120px]" />
+
+                <div className="max-w-7xl mx-auto px-6 relative z-10">
+                    {/* Header */}
+                    <div className="flex flex-col items-center text-center mb-24">
+                        <span className="inline-block px-4 py-1.5 bg-pan-gold/10 text-pan-gold text-[10px] font-black uppercase tracking-[0.3em] rounded-full border border-pan-gold/20 mb-6">
+                            Est. 1955
+                        </span>
+                        <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-white mb-6 tracking-tight">
+                            {dict.pages.port.history.title}
+                        </h2>
+                        <div className="flex items-center gap-4">
+                            <div className="h-px w-12 bg-pan-gold/30" />
+                            <div className="w-2 h-2 rounded-full bg-pan-gold" />
+                            <div className="h-px w-12 bg-pan-gold/30" />
+                        </div>
                     </div>
 
-                    <div className="grid gap-12 lg:gap-8 lg:grid-cols-7 relative">
-                        {dict.pages.port.history.milestones.map((milestone, idx) => (
-                            <div key={idx} className="relative z-10 flex flex-col items-center text-center">
-                                <div className="w-12 h-12 rounded-full bg-white border-4 border-pan-gold shadow-md flex items-center justify-center text-pan-navy font-bold text-sm mb-4">
-                                    {milestone.year}
+                    {/* Timeline Grid */}
+                    <div className="relative mb-32">
+                        {/* Connecting Line */}
+                        <div className="absolute top-[4.5rem] left-0 right-0 h-px bg-gradient-to-r from-transparent via-pan-gold/50 to-transparent hidden lg:block" />
+                        
+                        <div className="grid gap-12 lg:gap-6 lg:grid-cols-4 relative group/timeline">
+                            {dict.pages.port.history.milestones.map((milestone, idx) => (
+                                <div key={idx} className="relative z-10 flex flex-col items-center group/item">
+                                    {/* Vertical line for mobile */}
+                                    {idx !== dict.pages.port.history.milestones.length - 1 && (
+                                        <div className="absolute top-24 bottom-[-3rem] w-px bg-gradient-to-b from-pan-gold/50 to-transparent left-1/2 -translate-x-1/2 lg:hidden" />
+                                    )}
+
+                                    {/* Year Bubble */}
+                                    <div className="relative mb-10">
+                                        <div className="absolute inset-0 bg-pan-gold rounded-full scale-[1.3] opacity-0 group-hover/item:opacity-20 group-hover/item:scale-[1.8] blur-xl transition-all duration-700" />
+                                        <div className="w-20 h-20 rounded-full bg-pan-navy border-[3px] border-pan-gold/40 flex flex-col items-center justify-center shadow-[0_0_30px_rgba(234,179,8,0.1)] group-hover/item:border-pan-gold group-hover/item:shadow-[0_0_40px_rgba(234,179,8,0.25)] transition-all duration-700 relative z-20">
+                                            <span className="text-pan-gold text-lg font-black tracking-tight">{milestone.year}</span>
+                                            <div className="w-1 h-1 bg-pan-gold rounded-full mt-1 opacity-50" />
+                                        </div>
+                                    </div>
+                                    
+                                    {/* Card */}
+                                    <div className="w-full p-8 rounded-[2rem] bg-white/5 border border-white/10 backdrop-blur-xl hover:bg-white/[0.08] hover:border-white/20 hover:-translate-y-3 transition-all duration-700 group/card relative">
+                                        {/* Decorative Corner */}
+                                        <div className="absolute top-0 right-0 p-3 opacity-20 group-hover/card:opacity-60 transition-opacity">
+                                            <div className="w-6 h-6 border-t font-extralight border-r border-pan-gold" />
+                                        </div>
+                                        
+                                        <p className="text-sm md:text-base text-pan-light/70 font-medium leading-relaxed group-hover/card:text-pan-light transition-colors">
+                                            {milestone.event}
+                                        </p>
+                                    </div>
                                 </div>
-                                <div className="p-4 rounded-xl bg-pan-pale/40 border border-pan-navy/5 shadow-sm hover:shadow-md transition-shadow duration-300 w-full min-h-[100px] flex items-center justify-center">
-                                    <p className="text-xs text-pan-gray-700 font-bold leading-relaxed">
-                                        {milestone.event}
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* Museum-style High Quality Archival Image */}
+                    <div className="relative max-w-5xl mx-auto">
+                        <div className="absolute -inset-4 bg-pan-gold/5 rounded-[2.5rem] blur-xl" />
+                        <div className="relative rounded-[2rem] overflow-hidden border-[12px] border-white shadow-[0_30px_60px_rgba(0,0,0,0.5)] group/frame">
+                            <div className="absolute inset-0 bg-black/40 z-10 opacity-30 group-hover/frame:opacity-0 transition-opacity duration-1000" />
+                            <div className="relative h-64 md:h-[600px] w-full">
+                                <Image 
+                                    src="/images/hero/hero-5.jpg" 
+                                    alt={dict.pages.port.history.title} 
+                                    fill 
+                                    className="object-cover grayscale hover:grayscale-0 transition-all duration-1000 group-hover/frame:scale-105"
+                                />
+                            </div>
+                            
+                            {/* Museum Tag */}
+                            <div className="absolute bottom-10 left-10 z-20 pointer-events-none translate-y-4 opacity-0 group-hover/frame:translate-y-0 group-hover/frame:opacity-100 transition-all duration-700">
+                                <div className="bg-pan-navy/80 backdrop-blur-md p-8 border-l border-pan-gold max-w-md shadow-2xl">
+                                    <span className="text-pan-gold text-[10px] font-black uppercase tracking-[0.4em] mb-3 block">
+                                        {locale === 'ar' ? 'أرشيف تاريخي' : locale === 'en' ? 'Historical Archives' : 'Archives Historiques'}
+                                    </span>
+                                    <h4 className="text-white text-2xl font-bold mb-3">{dict.pages.port.title}</h4>
+                                    <p className="text-pan-light/60 text-xs leading-relaxed uppercase tracking-widest italic">
+                                        Photographie originale des premières installations portuaires
                                     </p>
                                 </div>
                             </div>
-                        ))}
-                    </div>
-
-                    <div className="mt-16 relative h-64 md:h-96 w-full max-w-5xl mx-auto rounded-3xl overflow-hidden shadow-xl border border-pan-navy/5">
-                        <Image 
-                            src="/images/hero/hero-5.jpg" 
-                            alt={dict.pages.port.history.title} 
-                            fill 
-                            className="object-cover hover:scale-105 transition-transform duration-700 sepia-[.3]"
-                        />
+                        </div>
+                        
+                        {/* Artistic Overlay Text */}
+                        <div className="absolute -right-8 -bottom-16 opacity-10 select-none pointer-events-none hidden lg:block">
+                            <span className="text-[12rem] font-black text-white leading-none tracking-tighter">
+                                PAN
+                            </span>
+                        </div>
                     </div>
                 </div>
             </section>

@@ -200,9 +200,9 @@ export default function ContentManagemement({ category, basePath = '/news' }: { 
                                                         <div className="w-10 h-10 rounded-lg bg-pan-gray-100 flex items-center justify-center text-pan-gray-400 flex-shrink-0 text-lg">📄</div>
                                                     )}
                                                     <div>
-                                                        <p className="text-sm font-semibold text-pan-navy truncate max-w-xs">{fr || '—'}</p>
-                                                        {ar && <p className="text-xs text-pan-gray-400 truncate max-w-xs mt-0.5 font-arabic" dir="rtl">{ar}</p>}
-                                                        <p className="text-[10px] text-pan-gray-300 mt-0.5">{item.slug}</p>
+                                                        <p className="text-sm font-semibold text-pan-navy line-clamp-2">{fr || '—'}</p>
+                                                        {ar && <p className="text-xs text-pan-gray-400 line-clamp-1 mt-0.5 font-arabic" dir="rtl">{ar}</p>}
+                                                        <p className="text-[10px] text-pan-gray-300 mt-0.5 max-w-sm truncate">{item.slug}</p>
                                                     </div>
                                                 </div>
                                             </td>

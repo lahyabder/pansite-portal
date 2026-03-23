@@ -134,8 +134,8 @@ export default async function DashboardPage() {
                                 return (
                                     <tr key={item.id} className="hover:bg-pan-gray-50 transition-colors">
                                         <td className="px-6 py-4">
-                                            <p className="text-sm font-semibold text-pan-navy truncate max-w-xs">{fr || '—'}</p>
-                                            <p className="text-xs text-pan-gray-400 mt-0.5 truncate">{item.slug}</p>
+                                            <p className="text-sm font-semibold text-pan-navy line-clamp-2">{fr || '—'}</p>
+                                            <p className="text-xs text-pan-gray-400 mt-0.5 truncate max-w-sm">{item.slug}</p>
                                         </td>
                                         <td className="px-6 py-4">
                                             <span className={`inline-flex items-center text-xs font-bold px-2.5 py-1 rounded-full ${cat.color}`}>{cat.label}</span>

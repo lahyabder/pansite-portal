@@ -2,10 +2,10 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { createContentAction, updateContentAction, uploadFileAction, preTranslateAction } from '@/app/actions';
+import { createContentAction, updateContentAction, uploadFileAction, preTranslateAction, deleteContentAction } from '@/app/actions';
 import { slugify } from '@pan/shared';
 import type { Content, ContentCategory, ContentStatus } from '@pan/shared';
-import { Save, ArrowLeft, Globe, Loader2, Upload, X, Sparkles } from 'lucide-react';
+import { Save, ArrowLeft, Globe, Loader2, Upload, X, Sparkles, Trash2 } from 'lucide-react';
 
 type Locale = 'fr' | 'ar' | 'en' | 'es';
 const LOCALES: { key: Locale; label: string; dir: 'ltr' | 'rtl' }[] = [
@@ -39,6 +39,7 @@ export function ContentForm({ initial, isEdit, basePath = '/news' }: ContentForm
     const router = useRouter();
     const [locale, setLocale] = useState<Locale>('fr');
     const [saving, setSaving] = useState(false);
+    const [deleting, setDeleting] = useState(false);
     const [uploadingImage, setUploadingImage] = useState(false);
     const [isTranslating, setIsTranslating] = useState(false);
     const [error, setError] = useState('');
@@ -136,6 +137,21 @@ export function ContentForm({ initial, isEdit, basePath = '/news' }: ContentForm
         }
     };
 
+    const handleDelete = async () => {
+        if (!initial?.id) return;
+        if (!confirm(`Supprimer « ${titles[locale] || slug || 'ce contenu'} » ? Cette action est irréversible.`)) return;
+        setDeleting(true);
+        setError('');
+        try {
+            await deleteContentAction(initial.id, 'admin');
+            router.push(basePath);
+        } catch (e: any) {
+            console.error(e);
+            setError(`Erreur lors de la suppression : ${e.message || String(e)}`);
+            setDeleting(false);
+        }
+    };
+
     const handleSubmit = async (newStatus?: string) => {
         setSaving(true);
         setError('');
@@ -225,7 +241,7 @@ export function ContentForm({ initial, isEdit, basePath = '/news' }: ContentForm
 
                     <button
                         onClick={() => handleSubmit()}
-                        disabled={saving}
+                        disabled={saving || deleting}
                         className="inline-flex items-center gap-2 px-5 py-2.5 bg-pan-sky text-white rounded-xl font-semibold text-sm hover:bg-pan-blue transition-all shadow-sm disabled:opacity-60"
                     >
                         {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
@@ -233,11 +249,21 @@ export function ContentForm({ initial, isEdit, basePath = '/news' }: ContentForm
                     </button>
                     <button
                         onClick={() => handleSubmit('published')}
-                        disabled={saving}
+                        disabled={saving || deleting}
                         className="inline-flex items-center gap-2 px-5 py-2.5 bg-green-600 text-white rounded-xl font-semibold text-sm hover:bg-green-700 transition-all shadow-sm disabled:opacity-60"
                     >
                         🚀 Publier
                     </button>
+                    {isEdit && (
+                        <button
+                            onClick={handleDelete}
+                            disabled={saving || deleting}
+                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-red-50 text-red-600 rounded-xl font-semibold text-sm hover:bg-red-100 transition-all shadow-sm border border-red-200 disabled:opacity-60"
+                        >
+                            {deleting ? <Loader2 className="w-4 h-4 animate-spin" /> : <Trash2 className="w-4 h-4" />}
+                            Supprimer
+                        </button>
+                    )}
                 </div>
             </div>
 
