@@ -1,6 +1,24 @@
 import { getAllContentsAction, getAuditLogAction } from '@/app/actions';
 import { formatDate } from '@pan/shared';
 import type { Content } from '@pan/shared';
+import Link from 'next/link';
+
+const getCategoryPath = (cat: string) => {
+    switch (cat) {
+        case 'le-port':
+        case 'infrastructure': return '/pages';
+        case 'services': return '/services';
+        case 'procedures': return '/procedures';
+        case 'tariffs': return '/tariffs';
+        case 'tenders': return '/tenders';
+        case 'media': return '/media';
+        case 'actualite':
+        case 'communique':
+        case 'alerte':
+        case 'evenement':
+        default: return '/news';
+    }
+};
 
 const categoryLabels: Record<string, { label: string; color: string }> = {
     actualite:    { label: 'Actualité',         color: 'bg-blue-100 text-blue-700' },
@@ -80,7 +98,7 @@ export default async function DashboardPage() {
                         <p className="font-semibold text-amber-800">{pendingCount} élément(s) en attente de validation</p>
                         <p className="text-amber-600 text-sm">Ces contenus ont été soumis et attendent d'être publiés ou rejetés.</p>
                     </div>
-                    <a href="/news" className="ml-auto px-4 py-2 bg-amber-500 text-white text-sm font-bold rounded-xl hover:bg-amber-600 transition-colors whitespace-nowrap">Voir les contenus</a>
+                    <Link href="/news" className="ml-auto px-4 py-2 bg-amber-500 text-white text-sm font-bold rounded-xl hover:bg-amber-600 transition-colors whitespace-nowrap">Voir les contenus</Link>
                 </div>
             )}
 
@@ -88,7 +106,7 @@ export default async function DashboardPage() {
             <div className="bg-white rounded-2xl shadow-sm border border-pan-gray-100 overflow-hidden">
                 <div className="flex items-center justify-between px-6 py-4 border-b border-pan-gray-100">
                     <h3 className="text-base font-bold text-pan-navy">Derniers contenus</h3>
-                    <a href="/news" className="text-pan-sky text-sm font-bold hover:underline">Voir tout →</a>
+                    <Link href="/news" className="text-pan-sky text-sm font-bold hover:underline">Voir tout →</Link>
                 </div>
 
                 <div className="overflow-x-auto">
@@ -129,7 +147,7 @@ export default async function DashboardPage() {
                                             {date ? formatDate(date, 'fr') : '—'}
                                         </td>
                                         <td className="px-6 py-4 text-right">
-                                            <a href={`/news/${item.id}/edit`} className="text-xs font-bold text-pan-sky hover:text-pan-blue transition-colors">Modifier</a>
+                                            <Link href={`${getCategoryPath(item.category)}/${item.id}/edit`} className="text-xs font-bold text-pan-sky hover:text-pan-blue transition-colors">Modifier</Link>
                                         </td>
                                     </tr>
                                 );
