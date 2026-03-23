@@ -172,6 +172,7 @@ export async function getLatestContents(limit: number = 4): Promise<Content[]> {
         .from('contents')
         .select(LIST_COLUMNS)
         .eq('status', 'published')
+        .in('category', ['actualite', 'communique', 'evenement', 'alerte'])
         .is('deleted_at', null)
         .order('published_at', { ascending: false })
         .limit(limit);
