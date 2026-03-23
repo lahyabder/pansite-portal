@@ -150,11 +150,16 @@ export default async function AppelsOffresPage({ params }: { params: Promise<{ l
                                             <td className="px-6 py-5">
                                                 <div className="flex flex-col gap-2">
                                                     {tender.docs.map((d, i) => (
-                                                        <button key={i} className="inline-flex items-center gap-2 text-xs font-semibold text-pan-navy hover:text-pan-blue bg-white border border-pan-gray-200 hover:border-pan-blue rounded px-3 py-1.5 w-fit shadow-sm hover:shadow transition-all">
-                                                            <FileText className="w-3.5 h-3.5 text-pan-sky" />
+                                                        <a 
+                                                            key={i} 
+                                                            href="/documents/tender-sample.pdf"
+                                                            download={`${tender.id}-${d.replace(/\s+/g, '_')}.pdf`}
+                                                            className="inline-flex items-center gap-2 text-xs font-semibold text-pan-navy hover:text-pan-sky bg-white border border-pan-gray-200 hover:border-pan-sky rounded px-3 py-1.5 w-fit shadow-sm hover:shadow-md transition-all group/doc"
+                                                        >
+                                                            <FileText className="w-3.5 h-3.5 text-pan-sky group-hover/doc:scale-110 transition-transform" />
                                                             {d}
-                                                            <Download className="w-3.5 h-3.5 ms-2 opacity-50" />
-                                                        </button>
+                                                            <Download className="w-3.5 h-3.5 ms-2 opacity-30 group-hover/doc:opacity-100 group-hover/doc:translate-y-0.5 transition-all" />
+                                                        </a>
                                                     ))}
                                                 </div>
                                             </td>
