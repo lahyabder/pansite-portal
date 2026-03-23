@@ -62,6 +62,7 @@ export function ContentForm({ initial, isEdit, basePath = '/news' }: ContentForm
     const [category, setCategory] = useState<ContentCategory>(initial?.category || 'actualite');
     const [status, setStatus] = useState<ContentStatus>(initial?.status || 'draft');
     const [slug, setSlug] = useState(initial?.slug || '');
+    const [images, setImages] = useState<string[]>(initial?.images || (initial?.coverImage ? [initial.coverImage] : []));
     const [coverImage, setCoverImage] = useState(initial?.coverImage || '');
     const [eventDate, setEventDate] = useState(initial?.eventDate || '');
     const [expiresAt, setExpiresAt] = useState(initial?.expiresAt || '');
@@ -76,14 +77,27 @@ export function ContentForm({ initial, isEdit, basePath = '/news' }: ContentForm
     }, [titles.fr, isEdit]);
 
     const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0];
-        if (!file) return;
+        const files = e.target.files;
+        if (!files || files.length === 0) return;
         setUploadingImage(true);
         const formData = new FormData();
-        formData.append('files', file);
+        Array.from(files).forEach(file => formData.append('files', file));
+        
         const urls = await uploadFileAction(formData);
-        if (urls?.[0]) setCoverImage(urls[0]);
+        if (urls && urls.length > 0) {
+            setImages(prev => [...prev, ...urls]);
+            if (!coverImage) {
+                setCoverImage(urls[0]);
+            }
+        }
         setUploadingImage(false);
+    };
+
+    const removeImage = (url: string) => {
+        setImages(prev => prev.filter(img => img !== url));
+        if (coverImage === url) {
+            setCoverImage(images.find(img => img !== url) || '');
+        }
     };
 
     const handleAutoTranslate = async () => {
@@ -134,7 +148,8 @@ export function ContentForm({ initial, isEdit, basePath = '/news' }: ContentForm
             slug,
             category,
             status: newStatus || status,
-            coverImage,
+            coverImage: coverImage || images[0] || '',
+            images,
             eventDate: eventDate || null,
             expiresAt: expiresAt || null,
             externalLink: externalLink || null,
@@ -373,21 +388,63 @@ export function ContentForm({ initial, isEdit, basePath = '/news' }: ContentForm
                         </div>
                     </div>
 
-                    {/* Cover image */}
+                    {/* Media / Images */}
                     <div className="bg-white rounded-2xl shadow-sm border border-pan-gray-100 p-5 space-y-3">
-                        <h3 className="text-sm font-bold text-pan-navy uppercase tracking-wider">Image de couverture</h3>
+                        <h3 className="text-sm font-bold text-pan-navy uppercase tracking-wider flex items-center justify-between">
+                            Images & Couverture
+                            <span className="text-xs font-normal text-pan-gray-400 capitalize bg-pan-gray-50 px-2 py-0.5 rounded">Galerie acceptée</span>
+                        </h3>
 
-                        {coverImage ? (
-                            <div className="relative group rounded-xl overflow-hidden aspect-video bg-pan-gray-50">
-                                {/* eslint-disable-next-line @next/next/no-img-element */}
-                                <img src={coverImage} alt="Cover" className="w-full h-full object-cover" />
-                                <div className="absolute inset-0 bg-black/30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                                    <button
-                                        onClick={() => setCoverImage('')}
-                                        className="p-2 bg-red-500 text-white rounded-full hover:bg-red-600 transition-colors"
-                                    >
-                                        <X className="w-4 h-4" />
-                                    </button>
+                        {images.length > 0 ? (
+                            <div className="space-y-4">
+                                {/* Selected Cover */}
+                                <div className="relative group rounded-xl overflow-hidden aspect-video bg-pan-gray-50 border-2 border-pan-sky/20">
+                                    <div className="absolute top-2 left-2 z-10 bg-pan-sky text-white text-[10px] font-bold px-2 py-1 rounded-md uppercase tracking-wider shadow-sm">
+                                        ⭐ Couverture
+                                    </div>
+                                    <img src={coverImage || images[0]} alt="Cover" className="w-full h-full object-cover" />
+                                </div>
+                                
+                                {/* Thumbnails Gallery */}
+                                <div className="grid grid-cols-4 sm:grid-cols-5 gap-2">
+                                    {images.map((url, i) => {
+                                        const isCover = (coverImage || images[0]) === url;
+                                        return (
+                                            <div key={i} className={`relative group aspect-square rounded-lg overflow-hidden bg-pan-gray-50 border-2 transition-all ${isCover ? 'border-pan-sky' : 'border-transparent hover:border-pan-gray-300'}`}>
+                                                <img src={url} alt={`Image ${i+1}`} className="w-full h-full object-cover" />
+                                                <div className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity gap-1">
+                                                    {!isCover && (
+                                                        <button
+                                                            type="button"
+                                                            onClick={() => setCoverImage(url)}
+                                                            className="p-1.5 bg-pan-sky text-white rounded hover:bg-pan-blue transition-colors text-[10px] font-bold"
+                                                            title="Définir comme couverture"
+                                                        >
+                                                            ⭐
+                                                        </button>
+                                                    )}
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => removeImage(url)}
+                                                        className="p-1.5 bg-red-500 text-white rounded hover:bg-red-600 transition-colors"
+                                                        title="Supprimer"
+                                                    >
+                                                        <X className="w-3 h-3" />
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        );
+                                    })}
+                                    
+                                    {/* Add More Button */}
+                                    <label className="flex flex-col items-center justify-center aspect-square bg-pan-gray-50 border-2 border-dashed border-pan-gray-200 rounded-lg cursor-pointer hover:border-pan-sky hover:bg-pan-sky/5 transition-all">
+                                        {uploadingImage ? (
+                                            <Loader2 className="w-4 h-4 text-pan-sky animate-spin" />
+                                        ) : (
+                                            <Upload className="w-5 h-5 text-pan-gray-400" />
+                                        )}
+                                        <input type="file" multiple className="hidden" accept="image/*" onChange={handleImageUpload} />
+                                    </label>
                                 </div>
                             </div>
                         ) : (
@@ -397,23 +454,49 @@ export function ContentForm({ initial, isEdit, basePath = '/news' }: ContentForm
                                 ) : (
                                     <>
                                         <Upload className="w-8 h-8 text-pan-gray-300 mb-2" />
-                                        <span className="text-xs font-bold text-pan-gray-400">Cliquer pour uploader</span>
-                                        <span className="text-[10px] text-pan-gray-300 mt-1">JPG, PNG, WebP · Max 5 MB</span>
+                                        <span className="text-xs font-bold text-pan-gray-400">Cliquer pour uploader (une ou plusieurs)</span>
+                                        <span className="text-[10px] text-pan-gray-300 mt-1">JPG, PNG, WebP · Max 5 MB / image</span>
                                     </>
                                 )}
-                                <input type="file" className="hidden" accept="image/*" onChange={handleImageUpload} />
+                                <input type="file" multiple className="hidden" accept="image/*" onChange={handleImageUpload} />
                             </label>
                         )}
 
                         <div>
-                            <label className="block text-xs font-bold text-pan-gray-500 mb-1.5">Ou entrez une URL</label>
-                            <input
-                                type="url"
-                                value={coverImage}
-                                onChange={e => setCoverImage(e.target.value)}
-                                className="w-full px-3 py-2 border border-pan-gray-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-pan-sky/20"
-                                placeholder="https://..."
-                            />
+                            <label className="block text-xs font-bold text-pan-gray-500 mb-1.5">Ou entrez une URL (ajoute à la galerie)</label>
+                            <div className="flex gap-2">
+                                <input
+                                    type="url"
+                                    id="url-input"
+                                    className="flex-1 px-3 py-2 border border-pan-gray-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-pan-sky/20"
+                                    placeholder="https://..."
+                                    onKeyDown={(e) => {
+                                        if (e.key === 'Enter') {
+                                            e.preventDefault();
+                                            const val = e.currentTarget.value;
+                                            if (val) {
+                                                setImages(prev => [...prev, val]);
+                                                if (!coverImage) setCoverImage(val);
+                                                e.currentTarget.value = '';
+                                            }
+                                        }
+                                    }}
+                                />
+                                <button 
+                                    type="button"
+                                    className="px-3 py-2 bg-pan-gray-100 text-pan-gray-600 rounded-xl text-xs font-bold hover:bg-pan-gray-200"
+                                    onClick={() => {
+                                        const input = document.getElementById('url-input') as HTMLInputElement;
+                                        if (input?.value) {
+                                            setImages(prev => [...prev, input.value]);
+                                            if (!coverImage) setCoverImage(input.value);
+                                            input.value = '';
+                                        }
+                                    }}
+                                >
+                                    Ajouter
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
