@@ -154,7 +154,7 @@ export function ContentForm({ initial, isEdit, basePath = '/news' }: ContentForm
             expiresAt: expiresAt || null,
             externalLink: externalLink || null,
             priority,
-            publishedAt: (newStatus === 'published' || status === 'published') ? new Date().toISOString() : undefined,
+            publishedAt: (newStatus === 'published' || status === 'published') ? new Date().toISOString() : null,
         };
 
         try {
@@ -184,11 +184,13 @@ export function ContentForm({ initial, isEdit, basePath = '/news' }: ContentForm
                     };
                     
                     setTimeout(() => router.push(`${getCategoryPath(category)}/${res.id}/edit`), 1200);
+                } else {
+                    throw new Error("API n'a retourné aucun ID. L'action a échoué silencieusement.");
                 }
             }
-        } catch (e) {
+        } catch (e: any) {
             console.error(e);
-            setError("Une erreur est survenue lors de l'enregistrement.");
+            setError(`Une erreur est survenue : ${e.message || String(e)}`);
         } finally {
             setSaving(false);
         }
