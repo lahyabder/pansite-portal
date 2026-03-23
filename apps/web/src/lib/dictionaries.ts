@@ -784,7 +784,7 @@ const dictionaries: Record<Locale, Dictionary> = {
                 tariffs: 'التعريفات',
                 stopovers: 'الرسو',
                 tenders: 'المناقصات',
-                media: 'الإعلام',
+                media: 'ميلتيميديا',
                 contact: 'اتصال',
                 all: 'الكل',
             },

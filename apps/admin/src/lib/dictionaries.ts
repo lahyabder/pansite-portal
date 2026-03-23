@@ -565,7 +565,7 @@ export const dictionaries: Record<Locale, AdminDictionary> = {
             tariffs: 'التعريفات',
             stopovers: 'حركة السفن',
             tenders: 'المناقصات',
-            media: 'الإعلام',
+            media: 'ميلتيميديا',
             contact: 'اتصل بنا',
             administration: 'النظام',
             users: 'المستخدمون',
@@ -640,7 +640,7 @@ export const dictionaries: Record<Locale, AdminDictionary> = {
                 tariffs: 'التعريفات',
                 stopovers: 'حركة السفن',
                 tenders: 'المناقصات',
-                media: 'الإعلام',
+                media: 'ميلتيميديا',
                 contact: 'اتصل بنا',
             },
             statuses: {
