@@ -697,7 +697,7 @@ const dictionaries: Record<Locale, Dictionary> = {
     },
     ar: {
         nav: {
-            home: 'الرئيسية',
+            home: 'الرئيسية!!',
             port: 'الميناء',
             infrastructure: 'البنية التحتية',
             services: 'الخدمات',
