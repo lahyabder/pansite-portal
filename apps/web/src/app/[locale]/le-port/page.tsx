@@ -3,6 +3,7 @@ import { getDictionary } from '@/lib/dictionaries';
 import { PageHero } from '@/components/PageHero';
 import { getPublishedContents } from '@pan/shared';
 import { ContentCard } from '@/components/ContentCard';
+import Image from 'next/image';
 
 export default async function LePortPage({ params }: { params: Promise<{ locale: string }> }) {
     const { locale: lp } = await params;
@@ -46,6 +47,15 @@ export default async function LePortPage({ params }: { params: Promise<{ locale:
                                     </li>
                                 ))}
                             </ul>
+                            
+                            <div className="relative h-64 md:h-80 w-full rounded-2xl overflow-hidden shadow-lg mt-8">
+                                <Image 
+                                    src="/images/hero/hero-1.jpg" 
+                                    alt={dict.pages.port.role.title} 
+                                    fill 
+                                    className="object-cover hover:scale-105 transition-transform duration-700"
+                                />
+                            </div>
                         </div>
 
                         {/* Geography & Evolution */}
@@ -74,6 +84,15 @@ export default async function LePortPage({ params }: { params: Promise<{ locale:
                                     {dict.pages.port.evolution.description}
                                 </p>
                             </div>
+                            
+                            <div className="relative h-64 w-full rounded-2xl overflow-hidden shadow-lg mt-2">
+                                <Image 
+                                    src="/images/hero/hero-2.jpg" 
+                                    alt={dict.pages.port.geography.title} 
+                                    fill 
+                                    className="object-cover hover:scale-105 transition-transform duration-700"
+                                />
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -85,17 +104,27 @@ export default async function LePortPage({ params }: { params: Promise<{ locale:
                     <div className="text-center mb-12">
                         <h2 className="text-3xl font-bold text-pan-navy">{dict.pages.port.equipment.title}</h2>
                     </div>
-                    <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {dict.pages.port.equipment.list.map((item, i) => (
-                            <div key={i} className="flex items-center gap-4 p-5 rounded-2xl bg-white shadow-sm border border-pan-navy/5">
-                                <div className="w-10 h-10 rounded-xl bg-pan-gold/10 flex items-center justify-center text-pan-gold shrink-0">
-                                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                    </svg>
+                    <div className="grid lg:grid-cols-5 gap-12 items-center">
+                        <div className="lg:col-span-3 grid sm:grid-cols-2 gap-6">
+                            {dict.pages.port.equipment.list.map((item, i) => (
+                                <div key={i} className="flex items-center gap-4 p-5 rounded-2xl bg-white shadow-sm border border-pan-navy/5">
+                                    <div className="w-10 h-10 rounded-xl bg-pan-gold/10 flex items-center justify-center text-pan-gold shrink-0">
+                                        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                    </div>
+                                    <p className="text-sm font-medium text-pan-gray-700 leading-snug">{item}</p>
                                 </div>
-                                <p className="text-sm font-medium text-pan-gray-700 leading-snug">{item}</p>
-                            </div>
-                        ))}
+                            ))}
+                        </div>
+                        <div className="lg:col-span-2 relative h-[400px] w-full rounded-3xl overflow-hidden shadow-xl">
+                            <Image 
+                                src="/images/hero/hero-3.jpg" 
+                                alt={dict.pages.port.equipment.title} 
+                                fill 
+                                className="object-cover hover:scale-105 transition-transform duration-700"
+                            />
+                        </div>
                     </div>
                 </div>
             </section>
@@ -157,6 +186,15 @@ export default async function LePortPage({ params }: { params: Promise<{ locale:
                                         }[locale]}
                                     </div>
                                 </div>
+                            </div>
+                            
+                            <div className="relative h-64 w-full rounded-2xl overflow-hidden shadow-lg mt-8">
+                                <Image 
+                                    src="/images/hero/hero-4.jpg" 
+                                    alt={dict.pages.port.impact.title} 
+                                    fill 
+                                    className="object-cover hover:scale-105 transition-transform duration-700 opacity-90"
+                                />
                             </div>
                         </div>
 
