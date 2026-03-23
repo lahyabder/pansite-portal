@@ -1,8 +1,17 @@
 import type { Locale } from '@pan/shared';
-import { t, mockServices } from '@pan/shared';
 import { getDictionary } from '@/lib/dictionaries';
 import { PageHero } from '@/components/PageHero';
+import { Package, RefreshCw, Box, Truck, Anchor, Layout } from 'lucide-react';
 import Link from 'next/link';
+
+const ICON_MAP: Record<string, any> = {
+    crane: Package,
+    'refresh-cw': RefreshCw,
+    box: Box,
+    truck: Truck,
+    anchor: Anchor,
+    layout: Layout,
+};
 
 export default async function ServicesPage({ params }: { params: Promise<{ locale: string }> }) {
     const { locale: lp } = await params;
@@ -21,48 +30,64 @@ export default async function ServicesPage({ params }: { params: Promise<{ local
                 ]}
             />
 
-            <section className="py-16 bg-pan-gray-50">
+            <section className="py-20 bg-white border-b border-pan-gray-100">
+                <div className="max-w-4xl mx-auto px-6 text-center">
+                    <h2 className="text-3xl md:text-4xl font-bold text-pan-navy mb-6">
+                        {dict.services.title}
+                    </h2>
+                    <p className="text-lg text-pan-gray-500 leading-relaxed">
+                        {dict.services.subtitle}
+                    </p>
+                </div>
+            </section>
+
+            <section className="py-20 bg-pan-gray-50">
                 <div className="max-w-7xl mx-auto px-6">
-                    <div className="grid md:grid-cols-2 gap-6">
-                        {mockServices.filter(s => s.isActive).map((service) => (
-                            <div
-                                key={service.id}
-                                className="group bg-white rounded-2xl p-8 border border-pan-gray-100 hover:border-pan-sky/30 hover:shadow-lg transition-all duration-300"
-                            >
-                                <div className="flex items-start gap-5">
-                                    <div className="w-14 h-14 bg-pan-pale rounded-xl flex items-center justify-center shrink-0 group-hover:bg-pan-sky transition-colors duration-300">
-                                        <span className="text-pan-sky group-hover:text-white text-2xl font-bold transition-colors">
-                                            {service.icon.charAt(0).toUpperCase()}
-                                        </span>
-                                    </div>
-                                    <div className="flex-1">
-                                        <h3 className="text-xl font-bold text-pan-navy mb-3">
-                                            {t(service.name, locale)}
-                                        </h3>
-                                        <p className="text-pan-gray-500 leading-relaxed mb-4">
-                                            {t(service.description, locale)}
-                                        </p>
-                                        <ul className="space-y-2 mb-5">
-                                            {service.features.map((feature, i) => (
-                                                <li key={i} className="flex items-center gap-2 text-sm text-pan-gray-600">
-                                                    <svg className="w-4 h-4 text-pan-sky shrink-0" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
-                                                        <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-                                                    </svg>
-                                                    {t(feature, locale)}
-                                                </li>
-                                            ))}
-                                        </ul>
-                                        <Link
-                                            href={`/${locale}/services/${service.slug}`}
-                                            className="text-pan-sky font-medium text-sm hover:text-pan-blue transition-colors inline-flex items-center gap-1"
-                                        >
-                                            {dict.common.learnMore}
-                                            <span aria-hidden="true">{locale === 'ar' ? '←' : '→'}</span>
-                                        </Link>
+                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        {dict.pages.services.list.map((service, index) => {
+                            const Icon = ICON_MAP[service.icon] || Anchor;
+                            return (
+                                <div
+                                    key={index}
+                                    className="group bg-white rounded-2xl p-8 border border-pan-gray-100 hover:border-pan-sky/30 hover:shadow-xl transition-all duration-500"
+                                >
+                                    <div className="flex flex-col gap-6">
+                                        <div className="w-16 h-16 bg-pan-pale rounded-2xl flex items-center justify-center shrink-0 group-hover:bg-pan-sky transition-all duration-500 transform group-hover:scale-110 group-hover:rotate-3">
+                                            <Icon className="w-8 h-8 text-pan-sky group-hover:text-white transition-colors duration-500" />
+                                        </div>
+                                        <div className="flex-1">
+                                            <h3 className="text-xl font-bold text-pan-navy mb-4 group-hover:text-pan-sky transition-colors duration-300">
+                                                {service.title}
+                                            </h3>
+                                            <p className="text-pan-gray-500 leading-relaxed mb-6 text-sm">
+                                                {service.desc}
+                                            </p>
+                                            <ul className="space-y-3 mb-8">
+                                                {service.points.map((point, i) => (
+                                                    <li key={i} className="flex items-start gap-3 text-sm text-pan-gray-600">
+                                                        <div className="mt-1 bg-pan-sky/10 rounded-full p-0.5">
+                                                            <svg className="w-3.5 h-3.5 text-pan-sky" fill="none" viewBox="0 0 24 24" strokeWidth={3} stroke="currentColor">
+                                                                <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                                                            </svg>
+                                                        </div>
+                                                        <span className="flex-1">{point}</span>
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                            <Link
+                                                href={`/${locale}/services`}
+                                                className="w-full justify-center text-pan-sky font-bold text-sm bg-pan-pale group-hover:bg-pan-sky group-hover:text-white py-3 px-6 rounded-xl transition-all duration-300 inline-flex items-center gap-2 group/btn"
+                                            >
+                                                {dict.common.learnMore}
+                                                <span className="transition-transform duration-300 group-hover/btn:translate-x-1 rtl:group-hover/btn:-translate-x-1">
+                                                    {locale === 'ar' ? '←' : '→'}
+                                                </span>
+                                            </Link>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        ))}
+                            );
+                        })}
                     </div>
                 </div>
             </section>

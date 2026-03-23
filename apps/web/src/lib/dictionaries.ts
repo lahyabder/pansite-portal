@@ -303,8 +303,8 @@ const dictionaries: Record<Locale, Dictionary> = {
         quickAccess: 'Accès Rapide',
         urgent: 'Urgent',
         services: {
-            title: 'Nos Services',
-            subtitle: 'Des solutions portuaires complètes pour répondre à tous vos besoins logistiques.',
+            title: 'Services & Activités',
+            subtitle: 'Optimisation, Sécurité, Performance',
             viewAll: 'Voir tous les services',
             description: 'Description détaillée',
             features: 'Points forts',
@@ -554,8 +554,8 @@ const dictionaries: Record<Locale, Dictionary> = {
                 },
             },
             services: {
-                title: 'Nos Services',
-                subtitle: 'Le Port Autonome de Nouadhibou propose une gamme complète de services portuaires et logistiques pour répondre à tous vos besoins.',
+                title: 'Services & Activités',
+                subtitle: 'Optimisation, Sécurité, Performance',
                 list: [
                     {
                         title: 'Manutention',
@@ -722,8 +722,8 @@ const dictionaries: Record<Locale, Dictionary> = {
         quickAccess: 'وصول سريع',
         urgent: 'عاجل',
         services: {
-            title: 'خدماتنا',
-            subtitle: 'حلول مينائية شاملة لتلبية جميع احتياجاتكم اللوجستية.',
+            title: 'الخدمات والأنشطة',
+            subtitle: 'الأمثل، الأمن، الأداء',
             viewAll: 'عرض جميع الخدمات',
             description: 'وصف مفصل',
             features: 'المميزات',
@@ -973,8 +973,8 @@ const dictionaries: Record<Locale, Dictionary> = {
                 },
             },
             services: {
-                title: 'خدماتنا',
-                subtitle: 'يقدم ميناء نواذيبو المستقل مجموعة كاملة من الخدمات المينائية واللوجستية لتلبية جميع احتياجاتكم.',
+                title: 'الخدمات والأنشطة',
+                subtitle: 'الأمثل، الأمن، الأداء',
                 list: [
                     {
                         title: 'المناولة',
@@ -1141,8 +1141,8 @@ const dictionaries: Record<Locale, Dictionary> = {
         quickAccess: 'Quick Access',
         urgent: 'Urgent',
         services: {
-            title: 'Our Services',
-            subtitle: 'Comprehensive port solutions to meet all your logistical needs.',
+            title: 'Services & Activities',
+            subtitle: 'Optimization, Security, Performance',
             viewAll: 'View all services',
             description: 'Detailed description',
             features: 'Highlights',
@@ -1356,8 +1356,8 @@ const dictionaries: Record<Locale, Dictionary> = {
                 },
             },
             services: {
-                title: 'Our Services',
-                subtitle: 'The Nouadhibou Autonomous Port offers a full range of port and logistical services to meet all your needs.',
+                title: 'Services & Activities',
+                subtitle: 'Optimization, Security, Performance',
                 list: [
                     {
                         title: 'Handling',
@@ -1739,8 +1739,8 @@ const dictionaries: Record<Locale, Dictionary> = {
                 },
             },
             services: {
-                title: 'Nuestros Servicios',
-                subtitle: 'El Puerto Autónomo de Nouadhibou ofrece una gama completa de servicios portuarios y logísticos para satisfacer todas sus necesidades.',
+                title: 'Servicios y Actividades',
+                subtitle: 'Optimización, Seguridad, Rendimiento',
                 list: [
                     {
                         title: 'Manipulación',
