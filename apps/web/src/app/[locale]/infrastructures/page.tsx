@@ -2,6 +2,7 @@ import type { Locale } from '@pan/shared';
 import { getDictionary } from '@/lib/dictionaries';
 import { PageHero } from '@/components/PageHero';
 import { InfrastructureMap } from '@/components/InfrastructureMap';
+import { QuaisGrid } from '@/components/infrastructures/QuaisGrid';
 import { getPublishedContents } from '@pan/shared';
 import { ContentCard } from '@/components/ContentCard';
 
@@ -53,43 +54,7 @@ export default async function InfrastructuresPage({ params }: { params: Promise<
             {/* Detailed Cards Section */}
             <section className="py-24 pb-32">
                 <div className="max-w-7xl mx-auto px-6">
-                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
-                        {dict.pages.infrastructure.quais.items.map((quai, i) => (
-                            <div 
-                                key={i} 
-                                className="group relative bg-white rounded-3xl p-1 shadow-xl shadow-pan-navy/5 hover:shadow-2xl hover:shadow-pan-navy/10 transition-all duration-500 hover:-translate-y-2 border border-pan-navy/5"
-                            >
-                                {/* Decorative Gradient */}
-                                <div className="absolute inset-0 bg-gradient-to-br from-pan-navy/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
-                                
-                                <div className="relative p-8 pt-10">
-                                    {/* Icon/Number */}
-                                    <div className="absolute top-0 right-8 -translate-y-1/2 w-12 h-12 rounded-2xl bg-gradient-to-br from-pan-navy to-pan-blue flex items-center justify-center text-white font-bold shadow-lg shadow-pan-navy/20">
-                                        0{i + 1}
-                                    </div>
-
-                                    <h3 className="text-2xl font-bold text-pan-navy mb-4 group-hover:text-pan-sky transition-colors">{quai.name}</h3>
-                                    <p className="text-pan-gray-500 text-sm leading-relaxed mb-8 line-clamp-3 group-hover:text-pan-gray-700 transition-colors">{quai.info}</p>
-                                    
-                                    <div className="space-y-4">
-                                        <div className="flex items-center justify-between p-4 rounded-2xl bg-pan-pale group-hover:bg-white transition-colors border border-transparent group-hover:border-pan-navy/5">
-                                            <span className="text-xs font-bold text-pan-gray-400 uppercase tracking-widest">{dict.pages.infrastructure.labels.length}</span>
-                                            <span className="text-lg font-black text-pan-navy">{quai.length}</span>
-                                        </div>
-                                        <div className="flex items-center justify-between p-4 rounded-2xl bg-pan-pale group-hover:bg-white transition-colors border border-transparent group-hover:border-pan-navy/5">
-                                            <span className="text-xs font-bold text-pan-gray-400 uppercase tracking-widest">{dict.pages.infrastructure.labels.draft}</span>
-                                            <span className="text-lg font-black text-pan-sky">{quai.draft}</span>
-                                        </div>
-                                    </div>
-
-                                    <button className="mt-8 w-full py-4 rounded-2xl bg-pan-navy text-white text-sm font-bold uppercase tracking-widest hover:bg-pan-sky transition-all shadow-lg shadow-pan-navy/10 flex items-center justify-center gap-2 group/btn">
-                                        {dict.pages.infrastructure.technicalDetails}
-                                        <span className="transition-transform group-hover/btn:translate-x-1">→</span>
-                                    </button>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
+                    <QuaisGrid dict={dict} />
                 </div>
             </section>
 

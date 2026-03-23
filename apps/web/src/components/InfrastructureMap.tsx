@@ -20,8 +20,8 @@ const hotspots: Hotspot[] = [
     {
         id: 'commerce',
         name: 'Quai de Commerce',
-        top: '30%',
-        left: '25%',
+        top: '45%',
+        left: '48%',
         status: 'active',
         details: {
             length: '350m',
@@ -32,8 +32,8 @@ const hotspots: Hotspot[] = [
     {
         id: 'pesche',
         name: 'Quai de Pêche',
-        top: '60%',
-        left: '70%',
+        top: '80%',
+        left: '72%',
         status: 'active',
         details: {
             length: '280m',
@@ -44,8 +44,8 @@ const hotspots: Hotspot[] = [
     {
         id: 'petrolier',
         name: 'Terminal Pétrolier',
-        top: '20%',
-        left: '60%',
+        top: '25%',
+        left: '46%',
         status: 'available',
         details: {
             length: '200m',
@@ -62,14 +62,14 @@ export const InfrastructureMap = () => {
         <div className="relative w-full aspect-[16/9] rounded-3xl overflow-hidden shadow-2xl border border-white/10 group bg-pan-navy/20">
             {/* Base Image */}
             <Image
-                src="/images/infrastructure-map.png"
+                src="/images/map-drone.png"
                 alt="Port Map"
                 fill
                 className="object-cover transition-transform duration-1000 group-hover:scale-105"
             />
             
-            {/* Subtle Overlay */}
-            <div className="absolute inset-0 bg-pan-navy/20 mix-blend-multiply" />
+            {/* Subtle Overlay - Reduced for better visibility of drone shot */}
+            <div className="absolute inset-0 bg-pan-navy/5 mix-blend-multiply" />
 
             {/* Hotspots */}
             {hotspots.map((spot) => (

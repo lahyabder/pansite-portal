@@ -180,7 +180,7 @@ export type Dictionary = {
             };
             quais: {
                 title: string;
-                items: { name: string; info: string; length: string; draft: string }[];
+                items: { name: string; info: string; length: string; draft: string; technicalDetails?: string[] }[];
             };
             interactiveMapTitle: string;
             interactiveMapDesc: string;
@@ -493,9 +493,45 @@ const dictionaries: Record<Locale, Dictionary> = {
                 quais: {
                     title: 'Quais & Terminaux',
                     items: [
-                        { name: 'Quai de Commerce', info: 'Quai principal dédié aux activités commerciales et au transport de marchandises diverses.', length: '350m', draft: '9.0m' },
-                        { name: 'Quai de Pêche Industrielle', info: 'Infrastructure spécialisée pour les navires de pêche hauturière avec installations de déchargement.', length: '280m', draft: '7.0m' },
-                        { name: 'Terminal Pétrolier', info: 'Terminal spécialisé pour le déchargement des produits pétroliers avec systèmes de sécurité avancés.', length: '200m', draft: '12.0m' },
+                        { 
+                            name: 'Quai de Commerce', 
+                            info: 'Quai principal dédié aux activités commerciales et au transport de marchandises diverses.', 
+                            length: '350m', 
+                            draft: '9.0m',
+                            technicalDetails: [
+                                'Capacité annuelle : 1.5M tonnes',
+                                'Surface de stockage : 20 Hectares',
+                                'Équipement : 4 Grues mobiles, 10 Reachstackers',
+                                'Sécurité : Certifié ISPS Niveau 1',
+                                'Type de fret : Conteneurs, Vrac, Roulier (RO-RO)'
+                            ]
+                        },
+                        { 
+                            name: 'Quai de Pêche Industrielle', 
+                            info: 'Infrastructure spécialisée pour les navires de pêche hauturière avec installations de déchargement.', 
+                            length: '280m', 
+                            draft: '7.0m',
+                            technicalDetails: [
+                                'Capacité de déchargement : 2000 tonnes/jour',
+                                'Unités de froid : 5 Chambres froides à proximité',
+                                'Services : Avitaillement en glace et carburant',
+                                'Accès : Zone sécurisée 24h/24',
+                                'Spécificité : Proximité immédiate des usines de transformation'
+                            ]
+                        },
+                        { 
+                            name: 'Terminal Pétrolier', 
+                            info: 'Terminal spécialisé pour le déchargement des produits pétroliers avec systèmes de sécurité avancés.', 
+                            length: '200m', 
+                            draft: '12.0m',
+                            technicalDetails: [
+                                'Débit de déchargement : 2000 m3/heure',
+                                'Sécurité : Système anti-incendie automatisé',
+                                'Capacité navire : Jusqu\'à 50,000 DWT',
+                                'Connexion : Pipelines directs vers les dépôts',
+                                'Surveillance : Contrôle radar et environnemental'
+                            ]
+                        },
                     ],
                 },
                 interactiveMapTitle: 'Vue Interactive du Port',
@@ -874,9 +910,45 @@ const dictionaries: Record<Locale, Dictionary> = {
                 quais: {
                     title: 'الأرصفة والمحطات',
                     items: [
-                        { name: 'رصيف الصيد', info: 'مخصص لسفن الصيد بأعالي البحار والصيد التقليدي.', length: '300م', draft: '6.0م' },
-                        { name: 'الرصيف التجاري', info: 'متعدد الاختصاصات للبضائع العامة والحاويات.', length: '660م', draft: '10.5م' },
-                        { name: 'محطة النفط', info: 'منشآت آمنة لتفريغ المحروقات والمواد البترولية.', length: '200م', draft: '12.0م' },
+                        { 
+                            name: 'رصيف الصيد', 
+                            info: 'مخصص لسفن الصيد بأعالي البحار والصيد التقليدي.', 
+                            length: '300م', 
+                            draft: '6.0م',
+                            technicalDetails: [
+                                'قدرة التفريغ: 2000 طن/يوم',
+                                'وحدات التبريد: 5 غرف تبريد كبرى بمحيط الرصيف',
+                                'الخدمات: التزويد بالثلج والوقود مباشرة',
+                                'الأمن: منطقة مراقبة على مدار الساعة',
+                                'الميزة: القرب المباشر من مصانع معالجة الأسماك'
+                            ]
+                        },
+                        { 
+                            name: 'الرصيف التجاري', 
+                            info: 'متعدد الاختصاصات للبضائع العامة والحاويات.', 
+                            length: '660م', 
+                            draft: '10.5م',
+                            technicalDetails: [
+                                'القدرة السنوية: 1.5 مليون طن',
+                                'مساحة التخزين: 20 هكتاراً',
+                                'المعدات: 4 رافعات متحركة، 10 رافعات حاويات',
+                                'الأمن: معتمد وفق معايير ISPS المستوى 1',
+                                'نوع الشحن: حاويات، بضائع صب، دحرجة (RO-RO)'
+                            ]
+                        },
+                        { 
+                            name: 'محطة النفط', 
+                            info: 'منشآت آمنة لتفريغ المحروقات والمواد البترولية.', 
+                            length: '200م', 
+                            draft: '12.0م',
+                            technicalDetails: [
+                                'سرعة التفريغ: 2000 متر مكعب/ساعة',
+                                'الأمان: نظام آلي لمكافحة الحرائق',
+                                'سعة السفن: حتى 50,000 طن حمولة ساكنة',
+                                'التوصيل: أنابيب مباشرة إلى مستودعات التخزين',
+                                'المراقبة: رادار وتحكم بيئي متطور'
+                            ]
+                        },
                     ],
                 },
                 interactiveMapTitle: 'خريطة تفاعلية للميناء',
