@@ -1,4 +1,4 @@
 import ContentManagement from '@/components/ContentManagement';
-export default function ProceduresPage() {
-    return <ContentManagement category="procedures" />;
+export default function Page() {
+    return <ContentManagement category="procedures" basePath="/procedures" />;
 }

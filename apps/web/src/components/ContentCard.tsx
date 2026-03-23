@@ -39,8 +39,9 @@ export function ContentCard({ item, locale, dict }: ContentCardProps) {
     const categoryName = dict.content.categories[item.category] || item.category;
 
     return (
-        <article className="group bg-white rounded-2xl overflow-hidden border border-pan-gray-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex flex-col h-full">
-            {/* Card header */}
+        <Link href={`/${locale}/${categoryRoute[item.category] || 'actualites'}/${item.slug}`} className="block h-full group">
+            <article className="bg-white rounded-2xl overflow-hidden border border-pan-gray-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex flex-col h-full">
+                {/* Card header */}
             <div className="h-44 bg-gradient-to-br from-pan-blue to-pan-sky relative overflow-hidden flex items-center justify-center">
                 <div className="absolute inset-0 bg-pan-navy/20 group-hover:bg-pan-navy/10 transition-colors duration-300 z-10" />
 
@@ -100,21 +101,21 @@ export function ContentCard({ item, locale, dict }: ContentCardProps) {
                 
                 {/* Actions bottom */}
                 <div className="mt-auto pt-4 border-t border-pan-gray-50 flex items-center justify-between">
-                    <Link
-                        href={`/${locale}/${categoryRoute[item.category] || 'actualites'}/${item.slug}`}
-                        className="text-pan-sky font-medium text-sm hover:text-pan-blue transition-colors inline-flex items-center gap-1"
-                    >
+                    <span className="text-pan-sky font-medium text-sm group-hover:text-pan-blue transition-colors inline-flex items-center gap-1">
                         {dict.news.readMore}
                         <span aria-hidden="true">{locale === 'ar' ? '←' : '→'}</span>
-                    </Link>
+                    </span>
                     
                     {item.externalLink && (
-                        <a href={item.externalLink} target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full bg-pan-pale text-pan-navy flex items-center justify-center hover:bg-pan-sky hover:text-white transition-colors" title="Download Document">
-                            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
-                        </a>
+                        <object>
+                            <a href={item.externalLink} target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full bg-pan-pale text-pan-navy flex items-center justify-center hover:bg-pan-sky hover:text-white transition-colors" title="Download Document" onClick={(e) => e.stopPropagation()}>
+                                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
+                            </a>
+                        </object>
                     )}
                 </div>
             </div>
-        </article>
+            </article>
+        </Link>
     );
 }

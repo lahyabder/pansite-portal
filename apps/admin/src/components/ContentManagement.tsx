@@ -34,7 +34,7 @@ interface FiltersState {
     page: number;
 }
 
-export default function ContentManagemement({ category }: { category?: string }) {
+export default function ContentManagemement({ category, basePath = '/news' }: { category?: string; basePath?: string }) {
     const router = useRouter();
     const [isPending, startTransition] = useTransition();
     const [contents, setContents] = useState<Content[]>([]);
@@ -102,7 +102,7 @@ export default function ContentManagemement({ category }: { category?: string })
                     </p>
                 </div>
                 <Link
-                    href="/news/create"
+                    href={`${basePath}/create`}
                     className="inline-flex items-center gap-2 px-5 py-2.5 bg-pan-navy text-white rounded-xl font-semibold text-sm hover:bg-pan-blue transition-all shadow-sm hover:shadow-md"
                 >
                     <Plus className="w-4 h-4" />
@@ -220,7 +220,7 @@ export default function ContentManagemement({ category }: { category?: string })
                                             <td className="px-5 py-3.5">
                                                 <div className="flex items-center justify-end gap-2">
                                                     <Link
-                                                        href={`/news/${item.id}/edit`}
+                                                        href={`${basePath}/${item.id}/edit`}
                                                         className="p-2 rounded-lg text-pan-sky hover:bg-pan-sky/10 transition-colors"
                                                         title="Modifier"
                                                     >

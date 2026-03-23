@@ -32,9 +32,10 @@ const CATEGORIES: { key: ContentCategory; label: string }[] = [
 interface ContentFormProps {
     initial?: Partial<Content>;
     isEdit?: boolean;
+    basePath?: string;
 }
 
-export function ContentForm({ initial, isEdit }: ContentFormProps) {
+export function ContentForm({ initial, isEdit, basePath = '/news' }: ContentFormProps) {
     const router = useRouter();
     const [locale, setLocale] = useState<Locale>('fr');
     const [saving, setSaving] = useState(false);
@@ -149,7 +150,25 @@ export function ContentForm({ initial, isEdit }: ContentFormProps) {
                 const res = await createContentAction(payload as any);
                 if (res?.id) {
                     setSuccess('Contenu créé avec succès !');
-                    setTimeout(() => router.push(`/news/${res.id}/edit`), 1200);
+                    
+                    const getCategoryPath = (cat: string) => {
+                        switch (cat) {
+                            case 'le-port':
+                            case 'infrastructure': return '/pages';
+                            case 'services': return '/services';
+                            case 'procedures': return '/procedures';
+                            case 'tariffs': return '/tariffs';
+                            case 'tenders': return '/tenders';
+                            case 'media': return '/media';
+                            case 'actualite':
+                            case 'communique':
+                            case 'alerte':
+                            case 'evenement':
+                            default: return '/news';
+                        }
+                    };
+                    
+                    setTimeout(() => router.push(`${getCategoryPath(category)}/${res.id}/edit`), 1200);
                 }
             }
         } catch (e) {
@@ -167,7 +186,7 @@ export function ContentForm({ initial, isEdit }: ContentFormProps) {
             {/* Topbar */}
             <div className="flex items-center justify-between flex-wrap gap-3">
                 <button
-                    onClick={() => router.push('/news')}
+                    onClick={() => router.push(basePath)}
                     className="flex items-center gap-2 text-pan-gray-500 hover:text-pan-navy text-sm font-medium transition-colors"
                 >
                     <ArrowLeft className="w-4 h-4" />
@@ -221,6 +240,7 @@ export function ContentForm({ initial, isEdit }: ContentFormProps) {
                             <div className="flex px-1 pt-1 overflow-x-auto no-scrollbar">
                                 {LOCALES.map(l => (
                                     <button
+                                        type="button"
                                         key={l.key}
                                         onClick={() => setLocale(l.key)}
                                         className={`flex items-center gap-2 px-4 py-3 text-sm font-bold rounded-t-xl transition-all whitespace-nowrap ${l.key === locale ? 'text-pan-sky border-b-2 border-pan-sky' : 'text-pan-gray-400 hover:text-pan-navy'}`}
@@ -232,6 +252,7 @@ export function ContentForm({ initial, isEdit }: ContentFormProps) {
                                 ))}
                             </div>
                             <button
+                                type="button"
                                 onClick={handleAutoTranslate}
                                 disabled={isTranslating || !titles[locale]}
                                 className="flex-shrink-0 flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold text-pan-navy bg-pan-sky/10 hover:bg-pan-sky/20 rounded-lg transition-colors disabled:opacity-50"

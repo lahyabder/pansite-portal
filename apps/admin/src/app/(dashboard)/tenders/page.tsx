@@ -1,4 +1,4 @@
 import ContentManagement from '@/components/ContentManagement';
-export default function TendersPage() {
-    return <ContentManagement category="tenders" />;
+export default function Page() {
+    return <ContentManagement category="tenders" basePath="/tenders" />;
 }
