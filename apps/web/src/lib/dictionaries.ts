@@ -200,7 +200,7 @@ export type Dictionary = {
         services: {
             title: string;
             subtitle: string;
-            list: { title: string; desc: string; icon: string; points: string[] }[];
+            list: { slug: string; title: string; desc: string; icon: string; points: string[] }[];
         };
         procedures: {
             title: string;
@@ -558,36 +558,42 @@ const dictionaries: Record<Locale, Dictionary> = {
                 subtitle: 'Optimisation, Sécurité, Performance',
                 list: [
                     {
+                        slug: 'manutention',
                         title: 'Manutention',
                         desc: 'Services de chargement et déchargement optimisés pour tous types de marchandises avec un matériel spécialisé garantissant une manutention sécurisée et efficace.',
                         icon: 'crane',
                         points: ['Chargement et déchargement optimisés', 'Matériel spécialisé pour manutention sécurisée', 'Personnel qualifié et expérimenté', 'Opérations 24/7'],
                     },
                     {
+                        slug: 'transbordements',
                         title: 'Transbordements',
                         desc: 'Opérations rapides sans stockage intermédiaire permettant une réduction significative des coûts logistiques et une optimisation de la chaîne d\'approvisionnement.',
                         icon: 'refresh-cw',
                         points: ['Opérations rapides sans stockage', 'Réduction des coûts logistiques', 'Coordination optimisée', 'Suivi en temps réel'],
                     },
                     {
+                        slug: 'entreposage',
                         title: 'Entreposage',
                         desc: 'Espaces de stockage diversifiés incluant des zones sous douane, des installations frigorifiques et des entrepôts sécurisés accessibles 24h/24 et 7j/7.',
                         icon: 'box',
                         points: ['Espaces sous douane', 'Zones frigorifiques', 'Stockage sécurisé', 'Accès 24/7'],
                     },
                     {
+                        slug: 'transit-logistique',
                         title: 'Transit & Logistique',
                         desc: 'Services complets de coordination entre transport maritime et terrestre avec une gestion douanière simplifiée pour fluidifier vos opérations logistiques.',
                         icon: 'truck',
                         points: ['Coordination transport maritime/terrestre', 'Gestion douanière simplifiée', 'Solutions logistiques intégrées', 'Suivi administratif complet'],
                     },
                     {
+                        slug: 'services-navires',
                         title: 'Services aux Navires',
                         desc: 'Assistance complète pour les navires incluant le pilotage, le remorquage, l\'avitaillement et la fourniture d\'eau douce pour garantir des escales optimales.',
                         icon: 'anchor',
                         points: ['Pilotage professionnel', 'Services de remorquage', 'Avitaillement', 'Fourniture d\'eau douce'],
                     },
                     {
+                        slug: 'gestion-terminaux',
                         title: 'Gestion des Terminaux',
                         desc: 'Exploitation efficace des terminaux spécialisés pour conteneurs, vracs et marchandises diverses avec des équipements modernes et un personnel qualifié.',
                         icon: 'layout',
@@ -977,36 +983,42 @@ const dictionaries: Record<Locale, Dictionary> = {
                 subtitle: 'الأمثل، الأمن، الأداء',
                 list: [
                     {
+                        slug: 'manutention',
                         title: 'المناولة',
                         desc: 'خدمات شحن وتفريغ محسنة لجميع أنواع البضائع مع معدات متخصصة تضمن مناولة آمنة وفعالة.',
                         icon: 'crane',
                         points: ['شحن وتفريغ محسن', 'معدات متخصصة لمناولة آمنة', 'طاقم مؤهل وذو خبرة', 'عمليات على مدار الساعة'],
                     },
                     {
+                        slug: 'transbordements',
                         title: 'المسافنة',
                         desc: 'عمليات سريعة بدون تخزين وسيط تسمح بخفض كبير في التكاليف اللوجستية وتحسين سلسلة التوريد.',
                         icon: 'refresh-cw',
                         points: ['عمليات سريعة بدون تخزين', 'خفض التكاليف اللوجستية', 'تنسيق محسن', 'تتبع في الوقت الفعلي'],
                     },
                     {
+                        slug: 'entreposage',
                         title: 'التخزين',
                         desc: 'مساحات تخزين متنوعة تشمل مناطق مستودعات جمركية، منشآت تبريد ومستودعات آمنة متاحة على مدار الساعة.',
                         icon: 'box',
                         points: ['مناطق مستودعات جمركية', 'مناطق تبريد', 'تخزين آمن', 'وصول 24/7'],
                     },
                     {
+                        slug: 'transit-logistique',
                         title: 'العبور والخدمات اللوجستية',
                         desc: 'خدمات تنسيق كاملة بين النقل البحري والبري مع إدارة جمركية مبسطة لتسهيل عملياتكم اللوجستية.',
                         icon: 'truck',
                         points: ['تنسيق النقل البحري/البري', 'إدارة جمركية مبسطة', 'حلول لوجستية متكاملة', 'متابعة إدارية كاملة'],
                     },
                     {
+                        slug: 'services-navires',
                         title: 'خدمات السفن',
                         desc: 'مساعدة كاملة للسفن تشمل الإرشاد، القطر، التزويد بالوقود وتوفير المياه العذبة لضمان رسو مثالي.',
                         icon: 'anchor',
                         points: ['إرشاد مهني', 'خدمات القطر', 'التزويد بالوقود', 'توفير المياه العذبة'],
                     },
                     {
+                        slug: 'gestion-terminaux',
                         title: 'تسيير المحطات',
                         desc: 'استغلال فعال للمحطات المتخصصة للحاويات، الصب والبضائع المتنوعة مع معدات حديثة وطاقم مؤهل.',
                         icon: 'layout',
@@ -1360,36 +1372,42 @@ const dictionaries: Record<Locale, Dictionary> = {
                 subtitle: 'Optimization, Security, Performance',
                 list: [
                     {
+                        slug: 'manutention',
                         title: 'Handling',
                         desc: 'Optimized loading and unloading services for all types of cargo with specialized equipment guaranteeing secure and efficient handling.',
                         icon: 'crane',
                         points: ['Optimized loading/unloading', 'Specialized secure equipment', 'Qualified personnel', '24/7 operations'],
                     },
                     {
+                        slug: 'transbordements',
                         title: 'Transshipments',
                         desc: 'Rapid operations without intermediate storage allowing significant reduction in logistical costs and supply chain optimization.',
                         icon: 'refresh-cw',
                         points: ['Rapid operations', 'Logistical cost reduction', 'Optimized coordination', 'Real-time tracking'],
                     },
                     {
+                        slug: 'entreposage',
                         title: 'Warehousing',
                         desc: 'Diversified storage spaces including bonded areas, cold storage facilities, and secure warehouses accessible 24/7.',
                         icon: 'box',
                         points: ['Bonded areas', 'Cold storage', 'Secure warehousing', '24/7 access'],
                     },
                     {
+                        slug: 'transit-logistique',
                         title: 'Transit & Logistics',
                         desc: 'Comprehensive coordination services between maritime and land transport with simplified customs management to fluidize your logistical operations.',
                         icon: 'truck',
                         points: ['Maritime/land coordination', 'Simplified customs', 'Integrated solutions', 'Full admin follow-up'],
                     },
                     {
+                        slug: 'services-navires',
                         title: 'Vessel Services',
                         desc: 'Complete assistance for vessels including pilotage, towing, bunkering, and fresh water supply to guarantee optimal stopovers.',
                         icon: 'anchor',
                         points: ['Professional pilotage', 'Towing services', 'Bunkering', 'Fresh water supply'],
                     },
                     {
+                        slug: 'gestion-terminaux',
                         title: 'Terminal Management',
                         desc: 'Efficient exploitation of specialized terminals for containers, bulk, and general cargo with modern equipment and qualified personnel.',
                         icon: 'layout',
@@ -1743,36 +1761,42 @@ const dictionaries: Record<Locale, Dictionary> = {
                 subtitle: 'Optimización, Seguridad, Rendimiento',
                 list: [
                     {
+                        slug: 'manutention',
                         title: 'Manipulación',
                         desc: 'Servicios de carga y descarga optimizados para todo tipo de mercancías con equipos especializados que garantizan una manipulación segura y eficiente.',
                         icon: 'crane',
                         points: ['Carga/descarga optimizada', 'Equipos seguros especializados', 'Personal cualificado', 'Operaciones 24/7'],
                     },
                     {
+                        slug: 'transbordements',
                         title: 'Transbordos',
                         desc: 'Operaciones rápidas sin almacenamiento intermedio que permiten una reducción significativa de los costes logísticos y la optimización de la cadena de suministro.',
                         icon: 'refresh-cw',
                         points: ['Operaciones rápidas', 'Reducción de costes logísticos', 'Coordinación optimizada', 'Seguimiento en tiempo real'],
                     },
                     {
+                        slug: 'entreposage',
                         title: 'Almacenamiento',
                         desc: 'Espacios de almacenamiento diversificados que incluyen zonas francas, instalaciones de almacenamiento en frío y almacenes seguros accesibles las 24 horas, los 7 días de la semana.',
                         icon: 'box',
                         points: ['Zonas francas', 'Almacenamiento en frío', 'Almacenes seguros', 'Acceso 24/7'],
                     },
                     {
+                        slug: 'transit-logistique',
                         title: 'Tránsito y Logística',
                         desc: 'Servicios de coordinación integral entre el transporte marítimo y terrestre con una gestión aduanera simplificada para agilizar sus operaciones logísticas.',
                         icon: 'truck',
                         points: ['Coordinación mar/tierra', 'Aduana simplificada', 'Soluciones integradas', 'Seguimiento administrativo'],
                     },
                     {
+                        slug: 'services-navires',
                         title: 'Servicios a Buques',
                         desc: 'Asistencia completa para buques que incluye practicaje, remolque, abastecimiento de combustible y suministro de agua dulce para garantizar escalas óptimas.',
                         icon: 'anchor',
                         points: ['Practicaje profesional', 'Remolque especializado', 'Abastecimiento de combustible', 'Suministro de agua dulce'],
                     },
                     {
+                        slug: 'gestion-terminaux',
                         title: 'Gestión de Terminales',
                         desc: 'Explotación eficiente de terminales especializadas para contenedores, graneles y mercancías diversas con equipos modernos y personal cualificado.',
                         icon: 'layout',

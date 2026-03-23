@@ -75,7 +75,7 @@ export default async function ServicesPage({ params }: { params: Promise<{ local
                                                 ))}
                                             </ul>
                                             <Link
-                                                href={`/${locale}/services`}
+                                                href={`/${locale}/services/${service.slug}`}
                                                 className="w-full justify-center text-pan-sky font-bold text-sm bg-pan-pale group-hover:bg-pan-sky group-hover:text-white py-3 px-6 rounded-xl transition-all duration-300 inline-flex items-center gap-2 group/btn"
                                             >
                                                 {dict.common.learnMore}
