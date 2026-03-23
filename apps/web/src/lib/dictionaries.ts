@@ -285,7 +285,7 @@ const dictionaries: Record<Locale, Dictionary> = {
             tariffs: 'Tarifs',
             stopovers: 'Escales',
             tenders: 'Appels d\'Offres',
-            media: 'Médias',
+            media: 'Multimédia',
             contact: 'Contact',
             search: 'Rechercher',
             searchPlaceholder: 'Rechercher sur le site...',
@@ -634,18 +634,20 @@ const dictionaries: Record<Locale, Dictionary> = {
                 subtitle: 'Consultez les appels d\'offres et marchés publics en cours.',
             },
             media: {
-                title: 'Médias',
-                subtitle: 'Restez informé de l\'actualité portuaire et des événements majeurs.',
+                title: 'Multimédia',
+                subtitle: 'Découvrez notre médiathèque regroupant les moments forts du port en images et en vidéos.',
                 news: {
-                    title: 'Actualités Récentes',
+                    title: 'Photothèque',
                     items: [
-                        { title: 'Inauguration du nouveau terminal', date: '2024-02-28', category: 'Infrastructure', excerpt: 'Le PAN franchit une nouvelle étape avec l\'ouverture d\'un terminal moderne...' },
-                        { title: 'Signature d\'un partenariat logistique', date: '2024-02-15', category: 'Partenariat', excerpt: 'Un accord stratégique a été signé pour renforcer les capacités de stockage...' },
+                        { title: 'Opérations au terminal', date: '2024-03-05', category: 'Photo', excerpt: 'Vue aérienne du terminal à conteneurs en pleine activité.' },
+                        { title: 'Inauguration nouveaux équipements', date: '2024-02-20', category: 'Photo', excerpt: 'Cérémonie de réception des nouveaux portiques de quai.' },
+                        { title: 'Formation technique', date: '2024-01-15', category: 'Photo', excerpt: 'Session de formation pour les opérateurs de grue.' },
+                        { title: 'Maintenance navires', date: '2023-12-10', category: 'Photo', excerpt: 'Opérations de maintenance de routine sur le quai de commerce.' },
                     ],
                 },
                 gallery: {
-                    title: 'Galerie Photos',
-                    desc: 'Découvrez en images la vie quotidienne au port et nos installations.',
+                    title: 'Vidéothèque',
+                    desc: 'Retrouvez nos reportages et démonstrations techniques en format vidéo.',
                 },
             },
             contact: {
@@ -703,7 +705,7 @@ const dictionaries: Record<Locale, Dictionary> = {
             tariffs: 'التعريفات',
             stopovers: 'الرسو',
             tenders: 'المناقصات',
-            media: 'الإعلام',
+            media: 'ميلتيميديا',
             contact: 'اتصل بنا',
             search: 'بحث',
             searchPlaceholder: 'ابحث في الموقع...',
@@ -1051,18 +1053,20 @@ const dictionaries: Record<Locale, Dictionary> = {
                 subtitle: 'اطلع على المناقصات والصفقات العمومية الجارية.',
             },
             media: {
-                title: 'الإعلام',
-                subtitle: 'ابق على اطلاع بآخر أخبار الميناء والفعاليات الكبرى.',
+                title: 'ميلتيميديا',
+                subtitle: 'شاهد أبرز لحظات الميناء والأنشطة الميدانية من خلال الصور والفيديوهات.',
                 news: {
-                    title: 'أهم الأخبار',
+                    title: 'معرض الصور',
                     items: [
-                        { title: 'تدشين المحطة الجديدة للحاويات', date: '2024-02-28', category: 'البنية التحتية', excerpt: 'يخطو ميناء نواذيبو خطوة جديدة نحو العصرنة عبر تدشين مجمع مجهز...' },
-                        { title: 'توقيع شراكة لوجستية استراتيجية', date: '2024-02-15', category: 'شراكات', excerpt: 'تم توقيع اتفاقية لتعزيز القدرات الاستيعابية والتخزينية للميناء...' },
+                        { title: 'عمليات المحطة التجارية', date: '2024-03-05', category: 'صورة', excerpt: 'مشهد جوي لمحطة الحاويات أثناء العمليات.' },
+                        { title: 'تدشين معدات جديدة', date: '2024-02-20', category: 'صورة', excerpt: 'حفل استقبال الرافعات الجسرية الجديدة.' },
+                        { title: 'دورة تدريبية تقنية', date: '2024-01-15', category: 'صورة', excerpt: 'جلسة تدريبية لمشغلي الرافعات في الميناء.' },
+                        { title: 'صيانة السفن', date: '2023-12-10', category: 'صورة', excerpt: 'عمليات صيانة دورية على الرصيف التجاري.' },
                     ],
                 },
                 gallery: {
-                    title: 'معرض الصور',
-                    desc: 'اكتشف بالصور الحياة اليومية ومنشآت ميناء نواذيبو المستقل.',
+                    title: 'معرض الفيديو',
+                    desc: 'شاهد تقاريرنا وعروضنا التقنية بصيغة الفيديو.',
                 },
             },
             contact: {
