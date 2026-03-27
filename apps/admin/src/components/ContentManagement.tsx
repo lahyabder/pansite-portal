@@ -41,6 +41,7 @@ export default function ContentManagemement({ category, basePath = '/news' }: { 
     const [total, setTotal] = useState(0);
     const [loading, setLoading] = useState(true);
     const [deletingId, setDeletingId] = useState<string | null>(null);
+    const [confirmingDeleteId, setConfirmingDeleteId] = useState<string | null>(null);
     const [filters, setFilters] = useState<FiltersState>({
         search: '',
         category: category || '',
@@ -76,9 +77,13 @@ export default function ContentManagemement({ category, basePath = '/news' }: { 
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filters]);
 
-    const handleDelete = async (id: string, title: string) => {
-        if (!confirm(`Supprimer « ${title} » ? Cette action est irréversible.`)) return;
+    const handleDeleteClick = (id: string) => {
+        setConfirmingDeleteId(id);
+    };
+
+    const handleDeleteConfirm = async (id: string) => {
         setDeletingId(id);
+        setConfirmingDeleteId(null);
         try {
             await deleteContentAction(id, 'admin');
             await loadData();
@@ -87,6 +92,10 @@ export default function ContentManagemement({ category, basePath = '/news' }: { 
         } finally {
             setDeletingId(null);
         }
+    };
+
+    const handleDeleteCancel = () => {
+        setConfirmingDeleteId(null);
     };
 
     const totalPages = Math.ceil(total / pageSize);
@@ -226,14 +235,34 @@ export default function ContentManagemement({ category, basePath = '/news' }: { 
                                                     >
                                                         <Pencil className="w-4 h-4" />
                                                     </Link>
-                                                    <button
-                                                        onClick={() => handleDelete(item.id, fr || item.slug)}
-                                                        disabled={deletingId === item.id}
-                                                        className="p-2 rounded-lg text-red-400 hover:bg-red-50 hover:text-red-600 transition-colors disabled:opacity-40"
-                                                        title="Supprimer"
-                                                    >
-                                                        <Trash2 className="w-4 h-4" />
-                                                    </button>
+                                                    {confirmingDeleteId === item.id ? (
+                                                        <div className="flex items-center gap-1.5">
+                                                            <span className="text-xs text-red-500 font-medium whitespace-nowrap">Supprimer ?</span>
+                                                            <button
+                                                                onClick={() => handleDeleteConfirm(item.id)}
+                                                                className="p-1.5 rounded-lg bg-red-500 text-white hover:bg-red-600 transition-colors"
+                                                                title="Confirmer la suppression"
+                                                            >
+                                                                <Trash2 className="w-3.5 h-3.5" />
+                                                            </button>
+                                                            <button
+                                                                onClick={handleDeleteCancel}
+                                                                className="p-1.5 rounded-lg bg-gray-200 text-gray-600 hover:bg-gray-300 transition-colors"
+                                                                title="Annuler"
+                                                            >
+                                                                ✕
+                                                            </button>
+                                                        </div>
+                                                    ) : (
+                                                        <button
+                                                            onClick={() => handleDeleteClick(item.id)}
+                                                            disabled={deletingId === item.id}
+                                                            className="p-2 rounded-lg text-red-400 hover:bg-red-50 hover:text-red-600 transition-colors disabled:opacity-40"
+                                                            title="Supprimer"
+                                                        >
+                                                            <Trash2 className="w-4 h-4" />
+                                                        </button>
+                                                    )}
                                                 </div>
                                             </td>
                                         </tr>
