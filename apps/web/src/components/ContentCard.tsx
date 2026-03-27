@@ -2,6 +2,7 @@ import type { Locale, Content } from '@pan/shared';
 import { t, formatDate } from '@pan/shared';
 import type { Dictionary } from '@/lib/dictionaries';
 import Link from 'next/link';
+import Image from 'next/image';
 
 interface ContentCardProps {
     item: Content;
@@ -46,19 +47,39 @@ export function ContentCard({ item, locale, dict }: ContentCardProps) {
                 <div className="absolute inset-0 bg-pan-navy/20 group-hover:bg-pan-navy/10 transition-colors duration-300 z-10" />
 
                 {item.images && item.images.length > 0 ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
-                        src={item.images[0]}
-                        alt={t(item.title, locale)}
-                        className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-all duration-700"
-                    />
+                    item.images[0].startsWith('data:') ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img
+                            src={item.images[0]}
+                            alt={t(item.title, locale)}
+                            className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-all duration-700"
+                        />
+                    ) : (
+                        <Image
+                            src={item.images[0]}
+                            alt={t(item.title, locale)}
+                            fill
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                            className="object-cover group-hover:scale-110 transition-all duration-700"
+                        />
+                    )
                 ) : item.coverImage ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
-                        src={item.coverImage}
-                        alt={t(item.title, locale)}
-                        className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-all duration-700"
-                    />
+                    item.coverImage.startsWith('data:') ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img
+                            src={item.coverImage}
+                            alt={t(item.title, locale)}
+                            className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-all duration-700"
+                        />
+                    ) : (
+                        <Image
+                            src={item.coverImage}
+                            alt={t(item.title, locale)}
+                            fill
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                            className="object-cover group-hover:scale-110 transition-all duration-700"
+                        />
+                    )
                 ) : (
                     <div className="absolute inset-0 bg-pan-navy/5 flex items-center justify-center text-white/50 text-5xl">
                         📄

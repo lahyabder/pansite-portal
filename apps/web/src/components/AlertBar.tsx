@@ -12,7 +12,13 @@ export function AlertBar({ locale, dict }: { locale: Locale; dict: Dictionary })
     const [currentIdx, setCurrentIdx] = useState(0);
 
     useEffect(() => {
-        getActiveAlerts().then(setAlerts).catch(console.error);
+        fetch(`/api/content?category=alerte&status=published`)
+            .then(res => res.json())
+            .then(data => {
+                if (data.items) setAlerts(data.items);
+                else if (Array.isArray(data)) setAlerts(data);
+            })
+            .catch(console.error);
     }, []);
 
     const visible = alerts.filter((a) => !dismissed.has(a.id));

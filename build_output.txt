@@ -1,0 +1,206 @@
+
+> pansite@ build /Users/lahyabderrahmane/Desktop/Web-Projects/Clients/pansite
+> pnpm --filter @pan/shared build && pnpm --parallel --filter @pan/web --filter @pan/admin build
+
+
+> @pan/shared@0.1.0 build /Users/lahyabderrahmane/Desktop/Web-Projects/Clients/pansite/packages/shared
+> tsc --noEmit
+
+Scope: 2 of 4 workspace projects
+apps/admin build$ next build
+apps/web build$ next build
+apps/web build: ⚠ Warning: Next.js inferred your workspace root, but it may not be correct.
+apps/web build:  We detected multiple lockfiles and selected the directory of /Users/lahyabderrahmane/package-lock.json as the root directory.
+apps/web build:  To silence this warning, set `turbopack.root` in your Next.js config, or consider removing one of the lockfiles if it's not needed.
+apps/web build:    See https://nextjs.org/docs/app/api-reference/config/next-config-js/turbopack#root-directory for more information.
+apps/web build:  Detected additional lockfiles: 
+apps/web build:    * /Users/lahyabderrahmane/Desktop/Web-Projects/Clients/pansite/pnpm-lock.yaml
+apps/admin build: ⚠ Warning: Next.js inferred your workspace root, but it may not be correct.
+apps/admin build:  We detected multiple lockfiles and selected the directory of /Users/lahyabderrahmane/package-lock.json as the root directory.
+apps/admin build:  To silence this warning, set `turbopack.root` in your Next.js config, or consider removing one of the lockfiles if it's not needed.
+apps/admin build:    See https://nextjs.org/docs/app/api-reference/config/next-config-js/turbopack#root-directory for more information.
+apps/admin build:  Detected additional lockfiles: 
+apps/admin build:    * /Users/lahyabderrahmane/Desktop/Web-Projects/Clients/pansite/pnpm-lock.yaml
+apps/web build: ▲ Next.js 16.1.6 (Turbopack)
+apps/web build: - Environments: .env.local
+apps/web build: ⚠ The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+apps/web build:   Creating an optimized production build ...
+apps/admin build: ▲ Next.js 16.1.6 (Turbopack)
+apps/admin build: - Environments: .env.local
+apps/admin build:   Creating an optimized production build ...
+apps/admin build: ✓ Compiled successfully in 6.8s
+apps/admin build:   Running TypeScript ...
+apps/web build: ✓ Compiled successfully in 7.0s
+apps/web build:   Running TypeScript ...
+apps/web build:   Collecting page data using 9 workers ...
+apps/admin build:   Collecting page data using 9 workers ...
+apps/admin build: [Admin API] Base URL Initialized: http://127.0.0.1:3000
+apps/admin build: [Admin API] Base URL Initialized: http://127.0.0.1:3000
+apps/admin build: [Admin API] Base URL Initialized: http://127.0.0.1:3000
+apps/admin build: [Admin API] Base URL Initialized: http://127.0.0.1:3000
+apps/admin build:   Generating static pages using 9 workers (0/27) ...
+apps/web build:   Generating static pages using 9 workers (0/104) ...
+apps/web build: INIT SUPABASE ADMIN with key prefix: eyJhbGciOiJIUzI
+apps/admin build: [Admin API] Fetching: http://127.0.0.1:3000/api/content?admin=true { method: 'GET' }
+apps/admin build: [Admin API] Fetch error for http://127.0.0.1:3000/api/content?admin=true: Dynamic server usage: Route /dashboard couldn't be rendered statically because it used revalidate: 0 fetch http://127.0.0.1:3000/api/content?admin=true /dashboard. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+apps/web build: INIT SUPABASE ADMIN with key prefix: eyJhbGciOiJIUzI
+apps/admin build:   Generating static pages using 9 workers (6/27) 
+apps/admin build:   Generating static pages using 9 workers (13/27) 
+apps/web build: INIT SUPABASE ADMIN with key prefix: eyJhbGciOiJIUzI
+apps/web build:   Generating static pages using 9 workers (26/104) 
+apps/admin build:   Generating static pages using 9 workers (20/27) 
+apps/admin build: ✓ Generating static pages using 9 workers (27/27) in 297.8ms
+apps/web build: INIT SUPABASE ADMIN with key prefix: eyJhbGciOiJIUzI
+apps/admin build:   Finalizing page optimization ...
+apps/admin build: Route (app)
+apps/admin build: ┌ ○ /
+apps/admin build: ├ ○ /_not-found
+apps/admin build: ├ ○ /activity-log
+apps/admin build: ├ ○ /berthing
+apps/admin build: ├ ƒ /berthing/[id]/edit
+apps/admin build: ├ ○ /berthing/create
+apps/admin build: ├ ƒ /dashboard
+apps/admin build: ├ ○ /login
+apps/admin build: ├ ○ /media
+apps/admin build: ├ ƒ /media/[id]/edit
+apps/admin build: ├ ○ /media/create
+apps/admin build: ├ ○ /menus
+apps/admin build: ├ ○ /messages
+apps/admin build: ├ ○ /news
+apps/admin build: ├ ƒ /news/[id]/edit
+apps/admin build: ├ ○ /news/create
+apps/admin build: ├ ○ /pages
+apps/admin build: ├ ƒ /pages/[id]/edit
+apps/admin build: ├ ○ /pages/create
+apps/admin build: ├ ○ /procedures
+apps/admin build: ├ ƒ /procedures/[id]/edit
+apps/admin build: ├ ○ /procedures/create
+apps/admin build: ├ ○ /roles
+apps/admin build: ├ ○ /services
+apps/admin build: ├ ƒ /services/[id]/edit
+apps/admin build: ├ ○ /services/create
+apps/admin build: ├ ○ /settings
+apps/admin build: ├ ○ /tariffs
+apps/admin build: ├ ƒ /tariffs/[id]/edit
+apps/admin build: ├ ○ /tariffs/create
+apps/admin build: ├ ○ /tenders
+apps/admin build: ├ ƒ /tenders/[id]/edit
+apps/admin build: ├ ○ /tenders/create
+apps/admin build: └ ○ /users
+apps/admin build: ○  (Static)   prerendered as static content
+apps/admin build: ƒ  (Dynamic)  server-rendered on demand
+apps/web build:   Generating static pages using 9 workers (52/104) 
+apps/admin build: Done
+apps/web build:   Generating static pages using 9 workers (78/104) 
+apps/web build: ✓ Generating static pages using 9 workers (104/104) in 2.4s
+apps/web build:   Finalizing page optimization ...
+apps/web build: Route (app)                              Revalidate  Expire
+apps/web build: ┌ ○ /
+apps/web build: ├ ○ /_not-found
+apps/web build: ├ ● /[locale]                                    1m      1y
+apps/web build: │ ├ /fr                                          1m      1y
+apps/web build: │ ├ /ar                                          1m      1y
+apps/web build: │ ├ /en                                          1m      1y
+apps/web build: │ └ /es                                          1m      1y
+apps/web build: ├ ● /[locale]/acces-portail
+apps/web build: │ ├ /fr/acces-portail
+apps/web build: │ ├ /ar/acces-portail
+apps/web build: │ ├ /en/acces-portail
+apps/web build: │ └ /es/acces-portail
+apps/web build: ├ ● /[locale]/actualites                         1m      1y
+apps/web build: │ ├ /fr/actualites                               1m      1y
+apps/web build: │ ├ /ar/actualites                               1m      1y
+apps/web build: │ ├ /en/actualites                               1m      1y
+apps/web build: │ └ /es/actualites                               1m      1y
+apps/web build: ├ ƒ /[locale]/actualites/[slug]
+apps/web build: ├ ● /[locale]/alertes
+apps/web build: │ ├ /fr/alertes
+apps/web build: │ ├ /ar/alertes
+apps/web build: │ ├ /en/alertes
+apps/web build: │ └ /es/alertes
+apps/web build: ├ ƒ /[locale]/alertes/[slug]
+apps/web build: ├ ● /[locale]/appels-offres
+apps/web build: │ ├ /fr/appels-offres
+apps/web build: │ ├ /ar/appels-offres
+apps/web build: │ ├ /en/appels-offres
+apps/web build: │ └ /es/appels-offres
+apps/web build: ├ ● /[locale]/communiques
+apps/web build: │ ├ /fr/communiques
+apps/web build: │ ├ /ar/communiques
+apps/web build: │ ├ /en/communiques
+apps/web build: │ └ /es/communiques
+apps/web build: ├ ƒ /[locale]/communiques/[slug]
+apps/web build: ├ ● /[locale]/contact
+apps/web build: │ ├ /fr/contact
+apps/web build: │ ├ /ar/contact
+apps/web build: │ ├ /en/contact
+apps/web build: │ └ /es/contact
+apps/web build: ├ ● /[locale]/escales
+apps/web build: │ ├ /fr/escales
+apps/web build: │ ├ /ar/escales
+apps/web build: │ ├ /en/escales
+apps/web build: │ └ /es/escales
+apps/web build: ├ ● /[locale]/evenements
+apps/web build: │ ├ /fr/evenements
+apps/web build: │ ├ /ar/evenements
+apps/web build: │ ├ /en/evenements
+apps/web build: │ └ /es/evenements
+apps/web build: ├ ƒ /[locale]/evenements/[slug]
+apps/web build: ├ ● /[locale]/infrastructures                    1m      1y
+apps/web build: │ ├ /fr/infrastructures                          1m      1y
+apps/web build: │ ├ /ar/infrastructures                          1m      1y
+apps/web build: │ ├ /en/infrastructures                          1m      1y
+apps/web build: │ └ /es/infrastructures                          1m      1y
+apps/web build: ├ ● /[locale]/le-port
+apps/web build: │ ├ /fr/le-port
+apps/web build: │ ├ /ar/le-port
+apps/web build: │ ├ /en/le-port
+apps/web build: │ └ /es/le-port
+apps/web build: ├ ● /[locale]/medias
+apps/web build: │ ├ /fr/medias
+apps/web build: │ ├ /ar/medias
+apps/web build: │ ├ /en/medias
+apps/web build: │ └ /es/medias
+apps/web build: ├ ● /[locale]/mentions-legales
+apps/web build: │ ├ /fr/mentions-legales
+apps/web build: │ ├ /ar/mentions-legales
+apps/web build: │ ├ /en/mentions-legales
+apps/web build: │ └ /es/mentions-legales
+apps/web build: ├ ● /[locale]/politique-confidentialite
+apps/web build: │ ├ /fr/politique-confidentialite
+apps/web build: │ ├ /ar/politique-confidentialite
+apps/web build: │ ├ /en/politique-confidentialite
+apps/web build: │ └ /es/politique-confidentialite
+apps/web build: ├ ● /[locale]/procedures                         1m      1y
+apps/web build: │ ├ /fr/procedures                               1m      1y
+apps/web build: │ ├ /ar/procedures                               1m      1y
+apps/web build: │ ├ /en/procedures                               1m      1y
+apps/web build: │ └ /es/procedures                               1m      1y
+apps/web build: ├ ƒ /[locale]/search
+apps/web build: ├ ● /[locale]/services
+apps/web build: │ ├ /fr/services
+apps/web build: │ ├ /ar/services
+apps/web build: │ ├ /en/services
+apps/web build: │ └ /es/services
+apps/web build: ├ ● /[locale]/services/[slug]
+apps/web build: │ ├ /fr/services/manutention
+apps/web build: │ ├ /ar/services/manutention
+apps/web build: │ ├ /en/services/manutention
+apps/web build: │ └ [+21 more paths]
+apps/web build: ├ ● /[locale]/tarifs                             1m      1y
+apps/web build: │ ├ /fr/tarifs                                   1m      1y
+apps/web build: │ ├ /ar/tarifs                                   1m      1y
+apps/web build: │ ├ /en/tarifs                                   1m      1y
+apps/web build: │ └ /es/tarifs                                   1m      1y
+apps/web build: ├ ƒ /api/audit
+apps/web build: ├ ƒ /api/content
+apps/web build: ├ ƒ /api/content/[id]
+apps/web build: ├ ƒ /api/content/[id]/[action]
+apps/web build: ├ ƒ /api/requests
+apps/web build: ├ ○ /robots.txt
+apps/web build: └ ○ /sitemap.xml
+apps/web build: ƒ Proxy (Middleware)
+apps/web build: ○  (Static)   prerendered as static content
+apps/web build: ●  (SSG)      prerendered as static HTML (uses generateStaticParams)
+apps/web build: ƒ  (Dynamic)  server-rendered on demand
+apps/web build: Done

@@ -80,18 +80,35 @@ export function ContentForm({ initial, isEdit, basePath = '/news' }: ContentForm
     const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const files = e.target.files;
         if (!files || files.length === 0) return;
-        setUploadingImage(true);
-        const formData = new FormData();
-        Array.from(files).forEach(file => formData.append('files', file));
-        
-        const urls = await uploadFileAction(formData);
-        if (urls && urls.length > 0) {
-            setImages(prev => [...prev, ...urls]);
-            if (!coverImage) {
-                setCoverImage(urls[0]);
+
+        // Client-side validation
+        const MAX_SIZE = 5 * 1024 * 1024; // 5 MB
+        for (const file of Array.from(files)) {
+            if (file.size > MAX_SIZE) {
+                setError(`Le fichier "${file.name}" dépasse 5 Mo (${(file.size / 1024 / 1024).toFixed(1)} Mo). Veuillez compresser l'image.`);
+                return;
             }
         }
-        setUploadingImage(false);
+
+        setUploadingImage(true);
+        setError('');
+        try {
+            const formData = new FormData();
+            Array.from(files).forEach(file => formData.append('files', file));
+            
+            const urls = await uploadFileAction(formData);
+            if (urls && urls.length > 0) {
+                setImages(prev => [...prev, ...urls]);
+                if (!coverImage) {
+                    setCoverImage(urls[0]);
+                }
+            }
+        } catch (err: any) {
+            console.error('Image upload failed:', err);
+            setError(`Erreur lors de l'upload : ${err.message || String(err)}`);
+        } finally {
+            setUploadingImage(false);
+        }
     };
 
     const removeImage = (url: string) => {
@@ -175,10 +192,16 @@ export function ContentForm({ initial, isEdit, basePath = '/news' }: ContentForm
 
         try {
             if (isEdit && initial?.id) {
-                await updateContentAction(initial.id, payload as any, 'admin');
+                const res = await updateContentAction(initial.id, payload as any, 'admin');
+                if (res?.error) {
+                    throw new Error(res.error);
+                }
                 setSuccess('Contenu mis à jour avec succès !');
             } else {
                 const res = await createContentAction(payload as any);
+                if (res?.error) {
+                    throw new Error(res.error);
+                }
                 if (res?.id) {
                     setSuccess('Contenu créé avec succès !');
                     
@@ -201,7 +224,7 @@ export function ContentForm({ initial, isEdit, basePath = '/news' }: ContentForm
                     
                     setTimeout(() => router.push(`${getCategoryPath(category)}/${res.id}/edit`), 1200);
                 } else {
-                    throw new Error("API n'a retourné aucun ID. L'action a échoué silencieusement.");
+                    throw new Error("L'API n'a retourné aucun ID. Vérifiez la connexion au serveur web.");
                 }
             }
         } catch (e: any) {

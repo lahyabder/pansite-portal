@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import type { Locale } from '@pan/shared';
 import type { Dictionary } from '@/lib/dictionaries';
@@ -99,7 +100,7 @@ export function Header({ locale, dict }: HeaderProps) {
                     <div className="flex items-center justify-between h-16 lg:h-[72px]">
                         {/* Logo */}
                         <Link href={`/${locale}`} className="flex items-center gap-3 group shrink-0">
-                            <img src="/logo-horizontal.png" alt="Port Autonome de Nouadhibou" className="h-8 lg:h-10 w-auto object-contain" />
+                            <Image src="/logo-horizontal.png" alt="Port Autonome de Nouadhibou" width={160} height={40} priority className="h-8 lg:h-10 w-auto object-contain" />
                         </Link>
 
                         {/* Desktop Nav */}

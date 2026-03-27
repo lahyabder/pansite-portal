@@ -1,30 +1,22 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import { writeFile } from 'fs/promises';
-import { join } from 'path';
+import { createClient } from '@supabase/supabase-js';
 
 
 // ─── Base URL for the web app Content API ────────────────────────────────────
 // In dev, web runs on 3000; in prod, override via WEB_API_BASE_URL env var
 const WEB_API_BASE = process.env.WEB_API_BASE_URL || 
-                     (process.env.VERCEL_URL ? 
-                        (process.env.VERCEL_URL.includes('pan.afrikyia.com') || process.env.VERCEL_URL.includes('pan.mr') ? 
-                            'https://www.pan.mr' : 
-                            `https://www.pan.mr`) : // Default to production if in Vercel but URL is strange
-                        'http://127.0.0.1:3000');
+                     (process.env.NEXT_PUBLIC_SITE_URL) || // Prioritize the public site URL if set
+                     (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://127.0.0.1:3000');
 
 
-
-console.log('[Admin API] Base URL Initialized:', WEB_API_BASE);
 
 
 async function contentFetch(path: string, options?: RequestInit) {
     const url = `${WEB_API_BASE}/api/content${path}`;
     const controller = new AbortController();
     const id = setTimeout(() => controller.abort(), 8000); // Increased timeout
-
-    console.log(`[Admin API] Fetching: ${url}`, { method: options?.method || 'GET' });
 
     try {
         const res = await fetch(url, {
@@ -42,7 +34,6 @@ async function contentFetch(path: string, options?: RequestInit) {
         }
         
         const data = await res.json();
-        console.log(`[Admin API] Success for ${url} (${Array.isArray(data) ? data.length : '1'} items)`);
         return data;
     } catch (err: any) {
         clearTimeout(id);
@@ -55,25 +46,101 @@ async function contentFetch(path: string, options?: RequestInit) {
     }
 }
 
+/** Strict variant for write operations — throws with the actual API error message */
+async function contentFetchStrict(path: string, options?: RequestInit) {
+    const url = `${WEB_API_BASE}/api/content${path}`;
+    const controller = new AbortController();
+    const id = setTimeout(() => controller.abort(), 15000); // Longer timeout for writes
 
-// ─── File Upload ──────────────────────────────────────────────────────────────
+    try {
+        const res = await fetch(url, {
+            ...options,
+            headers: { 'Content-Type': 'application/json', ...(options?.headers || {}) },
+            cache: 'no-store',
+            signal: controller.signal,
+        });
+        clearTimeout(id);
+        
+        if (!res.ok) {
+            const text = await res.text();
+            console.error(`[Admin API] Error ${res.status} for ${url}:`, text);
+            let errorMessage = `Erreur API (${res.status})`;
+            try {
+                const parsed = JSON.parse(text);
+                if (parsed.error) errorMessage = parsed.error;
+            } catch {
+                if (text) errorMessage = text;
+            }
+            throw new Error(errorMessage);
+        }
+        
+        const data = await res.json();
+        return data;
+    } catch (err: any) {
+        clearTimeout(id);
+        if (err.name === 'AbortError') {
+            throw new Error("Délai d'attente dépassé (15s). Le serveur web ne répond pas.");
+        }
+        throw err;
+    }
+}
+
+
+// ─── File Upload via Supabase Storage ─────────────────────────────────────────
 export async function uploadFileAction(formData: FormData) {
     const files = formData.getAll('files') as File[];
     if (files.length === 0 || (files.length === 1 && files[0].name === 'undefined')) return [];
 
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
+    const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
+    
+    if (!supabaseUrl || !supabaseKey) {
+        throw new Error('Configuration Supabase manquante. Vérifiez NEXT_PUBLIC_SUPABASE_URL et SUPABASE_SERVICE_ROLE_KEY.');
+    }
+
+    const supabase = createClient(supabaseUrl, supabaseKey, {
+        auth: { autoRefreshToken: false, persistSession: false }
+    });
+
     const urls: string[] = [];
+    const BUCKET = 'pan-images';
+    const MAX_SIZE = 5 * 1024 * 1024; // 5 MB
 
     for (const file of files) {
         if (!file.name || file.size === 0) continue;
+        if (file.size > MAX_SIZE) {
+            throw new Error(`Le fichier "${file.name}" dépasse 5 Mo (${(file.size / 1024 / 1024).toFixed(1)} Mo).`);
+        }
 
         const bytes = await file.arrayBuffer();
         const buffer = Buffer.from(bytes);
-        
-        // Convert to Base64 to bypass Vercel's read-only filesystem restrictions
-        // This is a temporary prototype workaround until S3/Blob is configured
-        const base64 = buffer.toString('base64');
-        const mimeType = file.type || 'image/jpeg';
-        urls.push(`data:${mimeType};base64,${base64}`);
+
+        // Generate unique file path: content/YYYY-MM/timestamp-originalname
+        const now = new Date();
+        const month = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
+        const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_').toLowerCase();
+        const filePath = `content/${month}/${Date.now()}-${safeName}`;
+
+        const { error } = await supabase.storage
+            .from(BUCKET)
+            .upload(filePath, buffer, {
+                contentType: file.type || 'image/jpeg',
+                cacheControl: '31536000', // 1 year cache
+                upsert: false,
+            });
+
+        if (error) {
+            console.error(`[Upload] Failed to upload "${file.name}":`, error.message);
+            throw new Error(`Échec de l'upload de "${file.name}": ${error.message}`);
+        }
+
+        // Get public URL
+        const { data: urlData } = supabase.storage
+            .from(BUCKET)
+            .getPublicUrl(filePath);
+
+        urls.push(urlData.publicUrl);
+        console.log(`[Upload] ✅ Uploaded "${file.name}" → ${urlData.publicUrl}`);
     }
 
     return urls;
@@ -224,48 +291,63 @@ export async function getContentByIdAction(id: string) {
 }
 
 export async function createContentAction(data: Record<string, unknown>) {
-    if (typeof data.title === 'string') {
-        const trans = await preTranslateAction({
-            title: data.title as string,
-            excerpt: (data.excerpt as string) || '',
-            body: (data.body as string) || '',
-            sourceLang: 'fr'
-        });
-        data.title = trans.title;
-        data.excerpt = trans.excerpt;
-        data.body = trans.body;
-    }
+    try {
+        if (typeof data.title === 'string') {
+            const trans = await preTranslateAction({
+                title: data.title as string,
+                excerpt: (data.excerpt as string) || '',
+                body: (data.body as string) || '',
+                sourceLang: 'fr'
+            });
+            data.title = trans.title;
+            data.excerpt = trans.excerpt;
+            data.body = trans.body;
+        }
 
-    const result = await contentFetch('', {
-        method: 'POST',
-        body: JSON.stringify(data),
-    });
-    revalidatePath('/cms/contents');
-    revalidatePath('/cms');
-    return result;
+        const result = await contentFetchStrict('', {
+            method: 'POST',
+            body: JSON.stringify(data),
+        });
+
+        try { revalidatePath('/cms/contents'); revalidatePath('/cms'); } catch { /* ignore revalidation errors */ }
+
+        if (!result || !result.id) {
+            throw new Error("L'API n'a retourné aucun ID. L'insertion a peut-être échoué côté Supabase.");
+        }
+
+        return result;
+    } catch (err: any) {
+        console.error('[createContentAction] Error:', err);
+        return { error: err.message || 'Erreur lors de la création du contenu.' };
+    }
 }
 
 export async function updateContentAction(id: string, data: Record<string, unknown>, userId: string) {
-    if (typeof data.title === 'string') {
-        const trans = await preTranslateAction({
-            title: data.title as string,
-            excerpt: (data.excerpt as string) || '',
-            body: (data.body as string) || '',
-            sourceLang: 'fr'
-        });
-        data.title = trans.title;
-        data.excerpt = trans.excerpt;
-        data.body = trans.body;
-    }
+    try {
+        if (typeof data.title === 'string') {
+            const trans = await preTranslateAction({
+                title: data.title as string,
+                excerpt: (data.excerpt as string) || '',
+                body: (data.body as string) || '',
+                sourceLang: 'fr'
+            });
+            data.title = trans.title;
+            data.excerpt = trans.excerpt;
+            data.body = trans.body;
+        }
 
-    const result = await contentFetch(`/${id}`, {
-        method: 'PUT',
-        body: JSON.stringify({ ...data, userId }),
-    });
-    revalidatePath('/cms/contents');
-    revalidatePath(`/cms/contents/${id}/edit`);
-    revalidatePath('/cms');
-    return result;
+        const result = await contentFetchStrict(`/${id}`, {
+            method: 'PUT',
+            body: JSON.stringify({ ...data, userId }),
+        });
+
+        try { revalidatePath('/cms/contents'); revalidatePath(`/cms/contents/${id}/edit`); revalidatePath('/cms'); } catch { /* ignore revalidation errors */ }
+
+        return result;
+    } catch (err: any) {
+        console.error('[updateContentAction] Error:', err);
+        return { error: err.message || 'Erreur lors de la mise à jour du contenu.' };
+    }
 }
 
 export async function publishContentAction(id: string, userId: string) {
@@ -324,7 +406,7 @@ export async function getAuditLogAction(entityId?: string) {
 }
 
 export async function deleteContentAction(id: string, userId: string) {
-    await contentFetch(`/${id}?userId=${encodeURIComponent(userId)}`, { method: 'DELETE' });
+    await contentFetchStrict(`/${id}?userId=${encodeURIComponent(userId)}`, { method: 'DELETE' });
     revalidatePath('/cms/contents');
     revalidatePath('/cms');
     return true;

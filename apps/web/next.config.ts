@@ -3,6 +3,16 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   reactCompiler: true,
   transpilePackages: ["@pan/shared"],
+  images: {
+    formats: ['image/webp'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '*.supabase.co',
+        pathname: '/storage/v1/object/public/**',
+      },
+    ],
+  },
   async rewrites() {
     return [
       {
@@ -29,7 +39,7 @@ const nextConfig: NextConfig = {
         // Allow Admin panel (localhost:3001) to call Content API
         source: "/api/:path*",
         headers: [
-          { key: "Access-Control-Allow-Origin", value: process.env.NODE_ENV === "production" ? "https://admin.pan.mr" : "http://localhost:3001" },
+          { key: "Access-Control-Allow-Origin", value: process.env.NEXT_PUBLIC_ADMIN_URL || "*" },
           { key: "Access-Control-Allow-Methods", value: "GET, POST, PUT, DELETE, OPTIONS" },
           { key: "Access-Control-Allow-Headers", value: "Content-Type, Authorization" },
         ],

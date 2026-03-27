@@ -17,11 +17,16 @@ export function getSupabaseAdmin(): SupabaseClient {
     if (!_supabaseAdmin) {
         const url = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
         const key = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
-        console.log("INIT SUPABASE ADMIN with key prefix:", key.substring(0, 15));
         if (!url || !key) throw new Error('Supabase admin credentials are missing. Set NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY.');
         _supabaseAdmin = createClient(url, key, {
             auth: { autoRefreshToken: false, persistSession: false }
         });
     }
     return _supabaseAdmin;
+}
+
+/** Get the public URL for a file in the pan-images bucket */
+export function getStorageUrl(path: string): string {
+    const url = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
+    return `${url}/storage/v1/object/public/pan-images/${path}`;
 }

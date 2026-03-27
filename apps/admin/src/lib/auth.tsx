@@ -178,8 +178,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             return { success: false, error: `Trop de tentatives. Réessayez dans ${secs}s.` };
         }
 
-        console.log(`[Auth] Attempting login for: ${email}`);
-        
         // Simulate network delay
         try {
             await new Promise((resolve, reject) => {
@@ -214,7 +212,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         }
 
         // Success
-        console.log(`[Auth] Login successful for: ${user.name} (${user.role})`);
         loginAttempts.push({ timestamp: Date.now(), success: true });
         const now = new Date();
         const sess: Session = {
@@ -227,7 +224,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         try {
             setSession(sess);
             localStorage.setItem(SESSION_KEY, JSON.stringify(sess));
-            console.log('[Auth] Session saved to localStorage');
         } catch (lsErr) {
             console.error('[Auth] Failed to save session to localStorage', lsErr);
             // We can still proceed if state is set, but session won't persist

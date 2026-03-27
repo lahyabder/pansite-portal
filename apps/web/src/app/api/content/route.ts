@@ -15,7 +15,6 @@ export async function OPTIONS() {
 }
 
 export async function GET(req: NextRequest) {
-    console.log("DEBUG ENV:", process.env.SUPABASE_SERVICE_ROLE_KEY ? "EXISTS" : "MISSING", process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ? "EXISTS" : "MISSING");
     const { searchParams } = req.nextUrl;
     const admin = searchParams.get('admin') === 'true';
     const category = searchParams.get('category') as ContentCategory | null;

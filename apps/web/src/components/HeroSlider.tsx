@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import type { Locale } from '@pan/shared';
 import type { Dictionary } from '@/lib/dictionaries';
 
@@ -16,6 +17,7 @@ const images = [
     '/images/hero/hero-3.jpg',
     '/images/hero/hero-4.jpg',
     '/images/hero/hero-5.jpg',
+    '/images/hero/hero-6.jpg',
 ];
 
 export function HeroSlider({ dict, locale }: HeroSliderProps) {
@@ -37,11 +39,20 @@ export function HeroSlider({ dict, locale }: HeroSliderProps) {
             {images.map((img, index) => (
                 <div
                     key={img}
-                    className={`absolute inset-0 bg-cover bg-center transition-opacity duration-1000 ease-in-out ${
+                    className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
                         index === current ? 'opacity-65' : 'opacity-0'
                     }`}
-                    style={{ backgroundImage: `url('${img}')` }}
-                />
+                >
+                    <Image
+                        src={img}
+                        alt=""
+                        fill
+                        sizes="100vw"
+                        className="object-cover"
+                        priority={index === 0}
+                        loading={index === 0 ? 'eager' : 'lazy'}
+                    />
+                </div>
             ))}
             
             {/* Overlay */}

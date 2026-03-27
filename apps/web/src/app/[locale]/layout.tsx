@@ -1,6 +1,6 @@
 import type { Locale } from '@pan/shared';
 import { getDir } from '@pan/shared';
-import { Inter } from 'next/font/google';
+import { Inter, Tajawal } from 'next/font/google';
 import { getDictionary } from '@/lib/dictionaries';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
@@ -15,7 +15,12 @@ const inter = Inter({
     display: 'swap',
 });
 
-
+const tajawal = Tajawal({
+    variable: '--font-tajawal',
+    subsets: ['arabic', 'latin'],
+    weight: ['200', '300', '400', '500', '700', '800', '900'],
+    display: 'swap',
+});
 
 export function generateStaticParams() {
     return [{ locale: 'fr' }, { locale: 'ar' }, { locale: 'en' }, { locale: 'es' }];
@@ -102,14 +107,14 @@ export default async function LocaleLayout({
             <head>
                 <link rel="preconnect" href="https://fonts.googleapis.com" />
                 <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-                <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800;900&display=swap" rel="stylesheet" />
                 <script
                     type="application/ld+json"
                     dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
                 />
             </head>
             <body
-                className={`${inter.variable} font-sans antialiased bg-pan-white text-pan-gray-900`}
+                className={`${inter.variable} ${tajawal.variable} font-sans antialiased bg-pan-white text-pan-gray-900`}
+                style={locale === 'ar' ? { fontFamily: 'var(--font-tajawal), sans-serif' } : undefined}
             >
                 <Header locale={locale} dict={dict} />
                 <main className="min-h-screen">{children}</main>

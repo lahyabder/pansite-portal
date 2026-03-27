@@ -7,6 +7,7 @@ export const revalidate = 60;
 
 import { getDictionary } from '@/lib/dictionaries';
 import Link from 'next/link';
+import Image from 'next/image';
 import { AlertBar } from '@/components/AlertBar';
 import { HeroSlider } from '@/components/HeroSlider';
 import { Ship, Anchor, Building2, FileText, Calendar, Phone, TrendingUp, ShipWheel } from 'lucide-react';
@@ -134,19 +135,39 @@ export default async function HomePage({
 
                                     {/* Image Rendering */}
                                     {article.images && article.images.length > 0 ? (
-                                        // eslint-disable-next-line @next/next/no-img-element
-                                        <img
-                                            src={article.images[0]}
-                                            alt={t(article.title, locale)}
-                                            className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-all duration-700"
-                                        />
+                                        article.images[0].startsWith('data:') ? (
+                                            // eslint-disable-next-line @next/next/no-img-element
+                                            <img
+                                                src={article.images[0]}
+                                                alt={t(article.title, locale)}
+                                                className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-all duration-700"
+                                            />
+                                        ) : (
+                                            <Image
+                                                src={article.images[0]}
+                                                alt={t(article.title, locale)}
+                                                fill
+                                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                                className="object-cover group-hover:scale-110 transition-all duration-700"
+                                            />
+                                        )
                                     ) : article.coverImage ? (
-                                        // eslint-disable-next-line @next/next/no-img-element
-                                        <img
-                                            src={article.coverImage}
-                                            alt={t(article.title, locale)}
-                                            className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-all duration-700"
-                                        />
+                                        article.coverImage.startsWith('data:') ? (
+                                            // eslint-disable-next-line @next/next/no-img-element
+                                            <img
+                                                src={article.coverImage}
+                                                alt={t(article.title, locale)}
+                                                className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-all duration-700"
+                                            />
+                                        ) : (
+                                            <Image
+                                                src={article.coverImage}
+                                                alt={t(article.title, locale)}
+                                                fill
+                                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                                className="object-cover group-hover:scale-110 transition-all duration-700"
+                                            />
+                                        )
                                     ) : (
                                         <ShipWheel className="w-20 h-20 text-white/10" />
                                     )}
