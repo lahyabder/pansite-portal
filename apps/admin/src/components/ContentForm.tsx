@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { createContentAction, updateContentAction, uploadFileAction, preTranslateAction, deleteContentAction } from '@/app/actions';
+import { createContentAction, updateContentAction, preTranslateAction, deleteContentAction } from '@/app/actions';
+import { getSignedUploadUrl } from '@/app/upload-actions';
 import { slugify } from '@pan/shared';
 import type { Content, ContentCategory, ContentStatus } from '@pan/shared';
 import { Save, ArrowLeft, Globe, Loader2, Upload, X, Sparkles, Trash2 } from 'lucide-react';
@@ -93,14 +94,31 @@ export function ContentForm({ initial, isEdit, basePath = '/news' }: ContentForm
         setUploadingImage(true);
         setError('');
         try {
-            const formData = new FormData();
-            Array.from(files).forEach(file => formData.append('files', file));
-            
-            const urls = await uploadFileAction(formData);
-            if (urls && urls.length > 0) {
-                setImages(prev => [...prev, ...urls]);
+            const uploadedUrls: string[] = [];
+
+            for (const file of Array.from(files)) {
+                // Step 1: Get a signed upload URL from the server (tiny JSON, no binary data)
+                const { signedUrl, publicUrl } = await getSignedUploadUrl(file.name, file.type);
+
+                // Step 2: Upload directly from browser to Supabase (bypasses Vercel's 4.5 MB limit)
+                const uploadRes = await fetch(signedUrl, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': file.type || 'image/jpeg' },
+                    body: file,
+                });
+
+                if (!uploadRes.ok) {
+                    const errText = await uploadRes.text().catch(() => '');
+                    throw new Error(`Échec de l'upload de "${file.name}": ${uploadRes.status} ${errText}`);
+                }
+
+                uploadedUrls.push(publicUrl);
+            }
+
+            if (uploadedUrls.length > 0) {
+                setImages(prev => [...prev, ...uploadedUrls]);
                 if (!coverImage) {
-                    setCoverImage(urls[0]);
+                    setCoverImage(uploadedUrls[0]);
                 }
             }
         } catch (err: any) {
