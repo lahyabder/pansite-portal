@@ -70,6 +70,7 @@ export function ContentForm({ initial, isEdit, basePath = '/news' }: ContentForm
     const [expiresAt, setExpiresAt] = useState(initial?.expiresAt || '');
     const [externalLink, setExternalLink] = useState(initial?.externalLink || '');
     const [priority, setPriority] = useState<'normal' | 'important' | 'urgent'>(initial?.priority || 'normal');
+    const [publishedAt, setPublishedAt] = useState(initial?.publishedAt || '');
 
     // Auto-generate slug
     useEffect(() => {
@@ -205,7 +206,9 @@ export function ContentForm({ initial, isEdit, basePath = '/news' }: ContentForm
             expiresAt: expiresAt || null,
             externalLink: externalLink || null,
             priority,
-            publishedAt: (newStatus === 'published' || status === 'published') ? new Date().toISOString() : null,
+            publishedAt: (newStatus === 'published' || status === 'published') 
+                ? (publishedAt || new Date().toISOString()) 
+                : (publishedAt || null),
         };
 
         try {
@@ -444,6 +447,20 @@ export function ContentForm({ initial, isEdit, basePath = '/news' }: ContentForm
                                     className="w-full px-3 py-2.5 border border-pan-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-pan-sky/20" />
                             </div>
                         )}
+
+                        <div>
+                            <label className="block text-xs font-bold text-pan-gray-500 uppercase tracking-wider mb-2">Date de publication</label>
+                            <input 
+                                type="datetime-local" 
+                                value={publishedAt ? new Date(publishedAt).toISOString().slice(0, 16) : ''} 
+                                onChange={e => {
+                                    const val = e.target.value;
+                                    setPublishedAt(val ? new Date(val).toISOString() : '');
+                                }}
+                                className="w-full px-3 py-2.5 border border-pan-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-pan-sky/20 bg-white" 
+                            />
+                            <p className="mt-1 text-[10px] text-pan-gray-400">Laissez vide pour utiliser la date actuelle lors de la publication.</p>
+                        </div>
 
                         <div>
                             <label className="block text-xs font-bold text-pan-gray-500 uppercase tracking-wider mb-2">Lien externe / PDF</label>

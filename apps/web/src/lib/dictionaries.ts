@@ -477,6 +477,11 @@ const dictionaries: Record<Locale, Dictionary> = {
                         'Terminal à conteneurs de dernière génération',
                     ],
                 },
+                directors: {
+                    title: 'Directeurs Généraux',
+                    subtitle: 'Découvrez les dirigeants qui ont façonné l\'histoire et le développement du Port Autonome de Nouadhibou à travers les décennies.',
+                    deceased: 'Feu',
+                },
             },
             infrastructure: {
                 title: 'Infrastructures',

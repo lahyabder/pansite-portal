@@ -62,7 +62,7 @@ export async function POST(req: NextRequest) {
 
         const status = data.status || 'draft';
 
-        // Auto-set publishedAt when publishing directly
+        // Auto-set publishedAt when publishing directly and no date is provided
         if (status === 'published' && !data.publishedAt) {
             data.publishedAt = new Date().toISOString();
         }
