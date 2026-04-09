@@ -1,5 +1,7 @@
 'use client';
 
+export const dynamic = 'force-dynamic';
+
 import { useState, useEffect } from 'react';
 import { Globe, Shield, Bell, Database, Save, Check, RefreshCw, Upload, Mail, Phone, MapPin, Share2, Search } from 'lucide-react';
 import { getSiteSettingsAction, updateSiteSettingsAction } from '@/app/actions';

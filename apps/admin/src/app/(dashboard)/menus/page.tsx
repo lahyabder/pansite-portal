@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import MenuManager from '@/components/MenuManager';
 
 export default function MenusPage() {
