@@ -1,20 +1,46 @@
 'use client';
 
-import { useState } from 'react';
-import { Globe, Shield, Bell, Database, Save, Check, RefreshCw } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Globe, Shield, Bell, Database, Save, Check, RefreshCw, Upload, Mail, Phone, MapPin, Share2, Search } from 'lucide-react';
+import { getSiteSettingsAction, updateSiteSettingsAction } from '@/app/actions';
+import type { SiteSettings } from '@pan/shared';
 
-interface SettingsSection {
-    id: string;
-    label: string;
-    icon: React.ReactNode;
+const SECTIONS = [
+    { id: 'general',   label: 'Identité & Contact', icon: <Globe className="w-4 h-4" /> },
+    { id: 'social',    label: 'Réseaux Sociaux',    icon: <Share2 className="w-4 h-4" /> },
+    { id: 'seo',       label: 'SEO Global',         icon: <Search className="w-4 h-4" /> },
+    { id: 'security',  label: 'Sécurité',           icon: <Shield className="w-4 h-4" /> },
+    { id: 'notifications', label: 'Notifications',  icon: <Bell className="w-4 h-4" /> },
+    { id: 'system',    label: 'Système',             icon: <Database className="w-4 h-4" /> },
+];
+
+function SectionTitle({ title, icon }: { title: string; icon: string }) {
+    return (
+        <h2 className="text-base font-bold text-pan-navy mb-4 pb-3 border-b border-pan-gray-100 flex items-center gap-2">
+            <span>{icon}</span> {title}
+        </h2>
+    );
 }
 
-const SECTIONS: SettingsSection[] = [
-    { id: 'general',   label: 'Général',           icon: <Globe className="w-4 h-4" /> },
-    { id: 'security',  label: 'Sécurité',          icon: <Shield className="w-4 h-4" /> },
-    { id: 'notifications', label: 'Notifications', icon: <Bell className="w-4 h-4" /> },
-    { id: 'system',    label: 'Système',            icon: <Database className="w-4 h-4" /> },
-];
+function InputField({ label, value, onChange, type = 'text', hint, icon: Icon }: {
+    label: string; value: string; onChange: (v: string) => void; type?: string; hint?: string; icon?: any;
+}) {
+    return (
+        <div className="py-3 border-b border-pan-gray-50 last:border-0">
+            <label className="block text-xs font-semibold text-pan-gray-500 mb-1.5 uppercase tracking-wide flex items-center gap-2">
+                {Icon && <Icon className="w-3 h-3" />}
+                {label}
+            </label>
+            <input
+                type={type}
+                value={value || ''}
+                onChange={e => onChange(e.target.value)}
+                className="w-full px-4 py-2.5 border border-pan-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-pan-sky/20 focus:border-pan-sky transition-all"
+            />
+            {hint && <p className="text-xs text-pan-gray-400 mt-1">{hint}</p>}
+        </div>
+    );
+}
 
 function Toggle({ checked, onChange, label }: { checked: boolean; onChange: (v: boolean) => void; label: string }) {
     return (
@@ -31,218 +57,172 @@ function Toggle({ checked, onChange, label }: { checked: boolean; onChange: (v: 
     );
 }
 
-function InputField({ label, value, onChange, type = 'text', hint }: {
-    label: string; value: string; onChange: (v: string) => void; type?: string; hint?: string;
-}) {
-    return (
-        <div className="py-3 border-b border-pan-gray-50 last:border-0">
-            <label className="block text-xs font-semibold text-pan-gray-500 mb-1.5 uppercase tracking-wide">{label}</label>
-            <input
-                type={type}
-                value={value}
-                onChange={e => onChange(e.target.value)}
-                className="w-full px-4 py-2.5 border border-pan-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-pan-sky/20 focus:border-pan-sky transition-all"
-            />
-            {hint && <p className="text-xs text-pan-gray-400 mt-1">{hint}</p>}
-        </div>
-    );
-}
-
-function SelectField({ label, value, onChange, options }: {
-    label: string; value: string; onChange: (v: string) => void; options: { value: string; label: string }[];
-}) {
-    return (
-        <div className="py-3 border-b border-pan-gray-50 last:border-0">
-            <label className="block text-xs font-semibold text-pan-gray-500 mb-1.5 uppercase tracking-wide">{label}</label>
-            <select
-                value={value}
-                onChange={e => onChange(e.target.value)}
-                className="w-full px-4 py-2.5 border border-pan-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-pan-sky/20 focus:border-pan-sky bg-white transition-all"
-            >
-                {options.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
-            </select>
-        </div>
-    );
-}
-
 export default function SettingsPage() {
     const [activeSection, setActiveSection] = useState('general');
+    const [loading, setLoading] = useState(true);
+    const [saving, setSaving] = useState(false);
     const [saved, setSaved] = useState(false);
+    
+    // State for site settings
+    const [settings, setSettings] = useState<Partial<SiteSettings>>({
+        siteName: { fr: '', ar: '', en: '', es: '' },
+        slogan: { fr: '', ar: '', en: '', es: '' },
+        contactEmails: [],
+        contactPhones: [],
+        address: { fr: '', ar: '', en: '', es: '' },
+        socialLinks: {},
+        copyright: { fr: '', ar: '', en: '', es: '' },
+        seoGlobal: { titleTemplate: '', defaultDescription: '' }
+    });
 
-    // General
-    const [siteName, setSiteName] = useState('Port Autonome de Nouadhibou');
-    const [siteEmail, setSiteEmail] = useState('contact@pan.mr');
-    const [defaultLang, setDefaultLang] = useState('fr');
-    const [maintenanceMode, setMaintenanceMode] = useState(false);
-    const [analyticsEnabled, setAnalyticsEnabled] = useState(true);
+    useEffect(() => {
+        const fetchSettings = async () => {
+            try {
+                const data = await getSiteSettingsAction();
+                if (data) setSettings(data);
+            } catch (err) {
+                console.error('Failed to fetch settings:', err);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchSettings();
+    }, []);
 
-    // Security
-    const [twoFactorRequired, setTwoFactorRequired] = useState(false);
-    const [sessionTimeout, setSessionTimeout] = useState('8');
-    const [ipWhitelist, setIpWhitelist] = useState('');
-    const [loginAttempts, setLoginAttempts] = useState('5');
-
-    // Notifications
-    const [emailOnPublish, setEmailOnPublish] = useState(true);
-    const [emailOnNewMessage, setEmailOnNewMessage] = useState(true);
-    const [emailOnUrgent, setEmailOnUrgent] = useState(true);
-    const [notifEmail, setNotifEmail] = useState('admin@pan.mr');
-
-    // System
-    const [cacheEnabled, setCacheEnabled] = useState(true);
-    const [debugMode, setDebugMode] = useState(false);
-    const [autoBackup, setAutoBackup] = useState(true);
-
-    const handleSave = () => {
-        setSaved(true);
-        setTimeout(() => setSaved(false), 2500);
+    const handleSave = async () => {
+        setSaving(true);
+        try {
+            await updateSiteSettingsAction(settings);
+            setSaved(true);
+            setTimeout(() => setSaved(false), 3000);
+        } catch (err) {
+            alert('Erreur lors de l\'enregistrement');
+        } finally {
+            setSaving(false);
+        }
     };
+
+    const updateLocString = (field: keyof SiteSettings, lang: string, val: string) => {
+        setSettings(prev => ({
+            ...prev,
+            [field]: { ...(prev[field] as any), [lang]: val }
+        }));
+    };
+
+    if (loading) return (
+        <div className="h-96 flex items-center justify-center text-pan-gray-400">
+            <RefreshCw className="w-8 h-8 animate-spin" />
+        </div>
+    );
 
     return (
         <div className="space-y-6">
-            {/* Header */}
             <div className="flex items-center justify-between">
                 <div>
-                    <h1 className="text-2xl font-bold text-pan-navy">Paramètres du site</h1>
-                    <p className="text-sm text-pan-gray-400 mt-1">Configuration générale de la plateforme</p>
+                    <h1 className="text-2xl font-bold text-pan-navy">Configuration</h1>
+                    <p className="text-sm text-pan-gray-400 mt-1">Gérez l&apos;identité et les paramètres de la plateforme</p>
                 </div>
                 <button
                     onClick={handleSave}
-                    className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-sm transition-all shadow-sm ${
-                        saved
-                            ? 'bg-green-500 text-white'
-                            : 'bg-pan-navy text-white hover:bg-pan-blue hover:shadow-md'
-                    }`}
+                    disabled={saving}
+                    className={`inline-flex items-center gap-2 px-6 py-2.5 rounded-xl font-bold text-sm transition-all shadow-sm ${
+                        saved ? 'bg-green-500 text-white' : 'bg-pan-navy text-white hover:bg-pan-blue'
+                    } disabled:opacity-50`}
                 >
-                    {saved ? <Check className="w-4 h-4" /> : <Save className="w-4 h-4" />}
-                    {saved ? 'Enregistré !' : 'Enregistrer'}
+                    {saving ? <RefreshCw className="w-4 h-4 animate-spin" /> : saved ? <Check className="w-4 h-4" /> : <Save className="w-4 h-4" />}
+                    {saving ? 'Enregistrement...' : saved ? 'Enregistré !' : 'Enregistrer les modifications'}
                 </button>
             </div>
 
             <div className="grid lg:grid-cols-4 gap-6">
-                {/* Sidebar nav */}
                 <div className="lg:col-span-1">
-                    <nav className="bg-white rounded-2xl shadow-sm border border-pan-gray-100 overflow-hidden">
-                        {SECTIONS.map((sec, i) => (
+                    <nav className="bg-white rounded-2xl shadow-sm border border-pan-gray-100 overflow-hidden sticky top-24">
+                        {SECTIONS.map((sec) => (
                             <button
                                 key={sec.id}
                                 onClick={() => setActiveSection(sec.id)}
-                                className={`w-full flex items-center gap-3 px-5 py-3.5 text-sm font-medium transition-all ${
-                                    i > 0 ? 'border-t border-pan-gray-50' : ''
-                                } ${
-                                    activeSection === sec.id
-                                        ? 'bg-pan-navy text-white'
-                                        : 'text-pan-gray-700 hover:bg-pan-gray-50'
+                                className={`w-full flex items-center gap-3 px-5 py-4 text-sm font-bold transition-all border-b border-pan-gray-50 last:border-0 ${
+                                    activeSection === sec.id ? 'bg-pan-gold text-pan-navy' : 'text-pan-gray-500 hover:bg-pan-gray-50'
                                 }`}
                             >
-                                {sec.icon}
-                                {sec.label}
+                                {sec.icon} {sec.label}
                             </button>
                         ))}
                     </nav>
                 </div>
 
-                {/* Main content */}
-                <div className="lg:col-span-3">
-                    <div className="bg-white rounded-2xl shadow-sm border border-pan-gray-100 p-6">
-
+                <div className="lg:col-span-3 space-y-6">
+                    <div className="bg-white rounded-2xl shadow-sm border border-pan-gray-100 p-8">
                         {activeSection === 'general' && (
-                            <div>
-                                <h2 className="text-base font-bold text-pan-navy mb-4 pb-3 border-b border-pan-gray-100">
-                                    ⚙️ Paramètres Généraux
-                                </h2>
-                                <InputField label="Nom du site" value={siteName} onChange={setSiteName} />
-                                <InputField label="Email de contact" value={siteEmail} onChange={setSiteEmail} type="email" hint="Utilisé pour les réponses automatiques aux formulaires." />
-                                <SelectField
-                                    label="Langue par défaut"
-                                    value={defaultLang}
-                                    onChange={setDefaultLang}
-                                    options={[
-                                        { value: 'fr', label: 'Français' },
-                                        { value: 'ar', label: 'العربية' },
-                                        { value: 'en', label: 'English' },
-                                        { value: 'es', label: 'Español' },
-                                    ]}
-                                />
-                                <Toggle label="Mode maintenance" checked={maintenanceMode} onChange={setMaintenanceMode} />
-                                <Toggle label="Activer les analytiques de visite" checked={analyticsEnabled} onChange={setAnalyticsEnabled} />
+                            <div className="space-y-4">
+                                <SectionTitle title="Identité de l'institution" icon="⚓" />
+                                <div className="grid md:grid-cols-2 gap-4">
+                                    <InputField label="Nom du Site (FR)" value={settings.siteName?.fr || ''} onChange={v => updateLocString('siteName', 'fr', v)} />
+                                    <InputField label="Nom du Site (AR)" value={settings.siteName?.ar || ''} onChange={v => updateLocString('siteName', 'ar', v)} />
+                                </div>
+                                <div className="grid md:grid-cols-2 gap-4">
+                                    <InputField label="Slogan (FR)" value={settings.slogan?.fr || ''} onChange={v => updateLocString('slogan', 'fr', v)} />
+                                    <InputField label="Slogan (AR)" value={settings.slogan?.ar || ''} onChange={v => updateLocString('slogan', 'ar', v)} />
+                                </div>
+                                <SectionTitle title="Contact & Localisation" icon="📍" />
+                                <InputField label="Email Principal" value={settings.contactEmails?.[0] || ''} onChange={v => setSettings({...settings, contactEmails: [v]})} icon={Mail} />
+                                <InputField label="Téléphone Principal" value={settings.contactPhones?.[0] || ''} onChange={v => setSettings({...settings, contactPhones: [v]})} icon={Phone} />
+                                <div className="grid md:grid-cols-2 gap-4">
+                                    <InputField label="Adresse (FR)" value={settings.address?.fr || ''} onChange={v => updateLocString('address', 'fr', v)} icon={MapPin} />
+                                    <InputField label="Adresse (AR)" value={settings.address?.ar || ''} onChange={v => updateLocString('address', 'ar', v)} icon={MapPin} />
+                                </div>
+                            </div>
+                        )}
+
+                        {activeSection === 'social' && (
+                            <div className="space-y-4">
+                                <SectionTitle title="Présence Sociale" icon="📱" />
+                                <InputField label="Facebook" value={settings.socialLinks?.facebook || ''} onChange={v => setSettings({...settings, socialLinks: {...settings.socialLinks, facebook: v}})} />
+                                <InputField label="Twitter / X" value={settings.socialLinks?.twitter || ''} onChange={v => setSettings({...settings, socialLinks: {...settings.socialLinks, twitter: v}})} />
+                                <InputField label="LinkedIn" value={settings.socialLinks?.linkedin || ''} onChange={v => setSettings({...settings, socialLinks: {...settings.socialLinks, linkedin: v}})} />
+                                <InputField label="YouTube" value={settings.socialLinks?.youtube || ''} onChange={v => setSettings({...settings, socialLinks: {...settings.socialLinks, youtube: v}})} />
+                            </div>
+                        )}
+
+                        {activeSection === 'seo' && (
+                            <div className="space-y-4">
+                                <SectionTitle title="Référencement (SEO)" icon="🔍" />
+                                <InputField label="Template de Titre" value={settings.seoGlobal?.titleTemplate || ''} onChange={v => setSettings({...settings, seoGlobal: {...settings.seoGlobal, titleTemplate: v}})} hint="Exemple: %s | PAN" />
+                                <div className="py-3">
+                                    <label className="block text-xs font-semibold text-pan-gray-500 mb-1.5 uppercase tracking-wide">Description par défaut</label>
+                                    <textarea 
+                                        value={settings.seoGlobal?.defaultDescription || ''} 
+                                        onChange={e => setSettings({...settings, seoGlobal: {...settings.seoGlobal, defaultDescription: e.target.value}})}
+                                        className="w-full px-4 py-2.5 border border-pan-gray-200 rounded-xl text-sm h-32 focus:outline-none focus:ring-2 focus:ring-pan-sky/20"
+                                    />
+                                </div>
                             </div>
                         )}
 
                         {activeSection === 'security' && (
-                            <div>
-                                <h2 className="text-base font-bold text-pan-navy mb-4 pb-3 border-b border-pan-gray-100">
-                                    🔒 Paramètres de Sécurité
-                                </h2>
-                                <Toggle label="Double authentification obligatoire (2FA)" checked={twoFactorRequired} onChange={setTwoFactorRequired} />
-                                <SelectField
-                                    label="Durée de session (heures)"
-                                    value={sessionTimeout}
-                                    onChange={setSessionTimeout}
-                                    options={[
-                                        { value: '1', label: '1 heure' },
-                                        { value: '4', label: '4 heures' },
-                                        { value: '8', label: '8 heures' },
-                                        { value: '24', label: '24 heures' },
-                                    ]}
-                                />
-                                <SelectField
-                                    label="Tentatives de connexion avant verrouillage"
-                                    value={loginAttempts}
-                                    onChange={setLoginAttempts}
-                                    options={[
-                                        { value: '3', label: '3 tentatives' },
-                                        { value: '5', label: '5 tentatives' },
-                                        { value: '10', label: '10 tentatives' },
-                                    ]}
-                                />
-                                <InputField
-                                    label="IP autorisées (optionnel)"
-                                    value={ipWhitelist}
-                                    onChange={setIpWhitelist}
-                                    hint="Séparez les adresses IP par des virgules. Laissez vide pour autoriser toutes les IPs."
-                                />
-                                <div className="mt-4 bg-amber-50 border border-amber-200 rounded-xl p-4 text-xs text-amber-800">
-                                    <strong>Attention :</strong> Si vous activez la restriction IP, assurez-vous que votre IP actuelle est dans la liste avant d&apos;enregistrer.
-                                </div>
-                            </div>
-                        )}
-
-                        {activeSection === 'notifications' && (
-                            <div>
-                                <h2 className="text-base font-bold text-pan-navy mb-4 pb-3 border-b border-pan-gray-100">
-                                    🔔 Notifications par Email
-                                </h2>
-                                <InputField label="Email de réception des notifications" value={notifEmail} onChange={setNotifEmail} type="email" />
-                                <Toggle label="Notifier lors d'une publication de contenu" checked={emailOnPublish} onChange={setEmailOnPublish} />
-                                <Toggle label="Notifier lors d'un nouveau message de contact" checked={emailOnNewMessage} onChange={setEmailOnNewMessage} />
-                                <Toggle label="Notifier pour les messages urgents" checked={emailOnUrgent} onChange={setEmailOnUrgent} />
+                            <div className="space-y-4">
+                                <SectionTitle title="Sécurité" icon="🔒" />
+                                <Toggle label="Exiger la double authentification" checked={false} onChange={() => {}} />
+                                <Toggle label="Journalisation avancée des accès" checked={true} onChange={() => {}} />
                             </div>
                         )}
 
                         {activeSection === 'system' && (
-                            <div>
-                                <h2 className="text-base font-bold text-pan-navy mb-4 pb-3 border-b border-pan-gray-100">
-                                    🖥️ Paramètres Système
-                                </h2>
-                                <Toggle label="Activer le cache de contenu" checked={cacheEnabled} onChange={setCacheEnabled} />
-                                <Toggle label="Mode débogage (logs détaillés)" checked={debugMode} onChange={setDebugMode} />
-                                <Toggle label="Sauvegarde automatique quotidienne" checked={autoBackup} onChange={setAutoBackup} />
-
-                                <div className="mt-6 space-y-3">
-                                    <div className="p-4 rounded-xl border border-pan-gray-100 bg-pan-gray-50">
-                                        <p className="text-xs font-bold text-pan-gray-500 mb-1 uppercase tracking-wide">Version du système</p>
-                                        <p className="text-sm font-semibold text-pan-navy">Back-Office PAN v2.0.0</p>
+                            <div className="space-y-6">
+                                <SectionTitle title="Système & Maintenance" icon="⚙️" />
+                                <div className="grid grid-cols-2 gap-4">
+                                    <div className="p-6 bg-pan-gray-50 rounded-2xl border border-pan-gray-100">
+                                        <p className="text-xs font-bold text-pan-gray-400 uppercase mb-2">Version</p>
+                                        <p className="text-xl font-bold text-pan-navy">2.1.0-Dynamic</p>
                                     </div>
-                                    <div className="p-4 rounded-xl border border-pan-gray-100 bg-pan-gray-50">
-                                        <p className="text-xs font-bold text-pan-gray-500 mb-1 uppercase tracking-wide">Environnement</p>
-                                        <p className="text-sm font-semibold text-pan-navy capitalize">{process.env.NODE_ENV || 'production'}</p>
+                                    <div className="p-6 bg-pan-gray-50 rounded-2xl border border-pan-gray-100">
+                                        <p className="text-xs font-bold text-pan-gray-400 uppercase mb-2">Database</p>
+                                        <p className="text-xl font-bold text-pan-navy">Supabase Live</p>
                                     </div>
-                                    <button className="w-full flex items-center justify-center gap-2 px-4 py-3 border border-pan-gray-200 rounded-xl text-sm font-medium text-pan-gray-600 hover:border-red-300 hover:text-red-600 hover:bg-red-50 transition-all">
-                                        <RefreshCw className="w-4 h-4" />
-                                        Vider le cache
-                                    </button>
                                 </div>
+                                <button className="w-full py-4 border-2 border-dashed border-pan-gray-200 rounded-2xl text-pan-gray-400 font-bold hover:border-red-300 hover:text-red-500 transition-all">
+                                    Vider le cache système
+                                </button>
                             </div>
                         )}
                     </div>

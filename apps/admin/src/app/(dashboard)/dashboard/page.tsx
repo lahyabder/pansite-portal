@@ -1,6 +1,12 @@
-import { getAllContentsAction, getAuditLogAction } from '@/app/actions';
+import { 
+    getAllContentsAction, 
+    getAuditLogAction, 
+    getAllPagesAction, 
+    getAllMenusAction, 
+    getAllMediaAction 
+} from '@/app/actions';
 import { formatDate } from '@pan/shared';
-import type { Content } from '@pan/shared';
+import type { Content, Page, Menu, MediaAsset } from '@pan/shared';
 import Link from 'next/link';
 
 const getCategoryPath = (cat: string) => {
@@ -55,7 +61,12 @@ function StatCard({ title, value, sub, color, icon }: { title: string; value: nu
 }
 
 export default async function DashboardPage() {
-    const allData = await getAllContentsAction();
+    const [allData, pagesData, menusData, mediaData] = await Promise.all([
+        getAllContentsAction(),
+        getAllPagesAction(),
+        getAllMenusAction(),
+        getAllMediaAction()
+    ]);
 
     const contents = (allData?.items || []) as Content[];
     const totalCount      = allData?.total ?? 0;
@@ -64,6 +75,10 @@ export default async function DashboardPage() {
     const pendingCount    = contents.filter(c => c.status === 'pending_approval').length;
     const tendersCount    = contents.filter(c => c.category === 'tenders').length;
     const newsCount       = contents.filter(c => c.category === 'actualite').length;
+
+    const pagesCount = (pagesData || []).length;
+    const menusCount = (menusData || []).length;
+    const mediaCount = (mediaData || []).length;
 
     const recentItems = [...contents]
         .sort((a, b) => new Date(b.updatedAt || b.createdAt || 0).getTime() - new Date(a.updatedAt || a.createdAt || 0).getTime())
@@ -81,13 +96,22 @@ export default async function DashboardPage() {
             </div>
 
             {/* Stats grid */}
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
-                <StatCard title="Total contenus"    value={totalCount}     icon="📋" color="bg-pan-navy/10" />
-                <StatCard title="Publiés"           value={publishedCount} icon="✅" color="bg-green-100"   sub="En ligne sur le site" />
-                <StatCard title="Brouillons"        value={draftCount}     icon="📝" color="bg-gray-100"    sub="En attente d'édition" />
-                <StatCard title="En révision"       value={pendingCount}   icon="🔍" color="bg-amber-100"   sub="À valider / publier" />
-                <StatCard title="Actualités"        value={newsCount}      icon="📰" color="bg-blue-100" />
-                <StatCard title="Appels d'offres"   value={tendersCount}   icon="📦" color="bg-orange-100" />
+            <div className="space-y-4">
+                <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
+                    <StatCard title="Total contenus"    value={totalCount}     icon="📋" color="bg-pan-navy/10" />
+                    <StatCard title="Publiés"           value={publishedCount} icon="✅" color="bg-green-100"   sub="En ligne sur le site" />
+                    <StatCard title="Brouillons"        value={draftCount}     icon="📝" color="bg-gray-100"    sub="En attente d'édition" />
+                    <StatCard title="En révision"       value={pendingCount}   icon="🔍" color="bg-amber-100"   sub="À valider / publier" />
+                    <StatCard title="Actualités"        value={newsCount}      icon="📰" color="bg-blue-100" />
+                    <StatCard title="Appels d'offres"   value={tendersCount}   icon="📦" color="bg-orange-100" />
+                </div>
+                
+                <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                    <StatCard title="Pages CMS"         value={pagesCount}     icon="📄" color="bg-pan-sky/10" sub="Pages administrables" />
+                    <StatCard title="Menus"             value={menusCount}     icon="🗺️" color="bg-indigo-100"  sub="Navigation dynamique" />
+                    <StatCard title="Médiathèque"       value={mediaCount}     icon="🖼️" color="bg-pink-100"   sub="Images & documents" />
+                    <StatCard title="Alertes actives"   value={contents.filter(c => c.category === 'alerte' && c.status === 'published').length} icon="🔔" color="bg-red-100" />
+                </div>
             </div>
 
             {/* Pending review alert */}

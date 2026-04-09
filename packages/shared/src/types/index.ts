@@ -25,7 +25,10 @@ export type PermissionModule =
     | 'analytics'
     | 'requests'
     | 'audit'
-    | 'settings';
+    | 'settings'
+    | 'pages'
+    | 'menus'
+    | 'media';
 
 export type PermissionMatrix = Record<PermissionModule, PermissionAction[]>;
 
@@ -56,6 +59,9 @@ export const ROLE_PERMISSIONS: Record<UserRole, PermissionMatrix> = {
         requests: ['view', 'create', 'edit', 'delete', 'approve', 'publish'],
         audit: ['view', 'create', 'edit', 'delete', 'approve', 'publish'],
         settings: ['view', 'create', 'edit', 'delete', 'approve', 'publish'],
+        pages: ['view', 'create', 'edit', 'delete', 'approve', 'publish'],
+        menus: ['view', 'create', 'edit', 'delete', 'approve', 'publish'],
+        media: ['view', 'create', 'edit', 'delete', 'approve', 'publish'],
     },
     content_admin: {
         content: ['view', 'create', 'edit', 'delete', 'approve', 'publish'],
@@ -162,7 +168,7 @@ export type AuditAction =
 
 export interface AuditLogEntry {
     id: string;
-    entityType: 'content' | 'service' | 'user' | 'session' | 'request';
+    entityType: 'content' | 'service' | 'user' | 'session' | 'request' | 'page' | 'menu' | 'setting' | 'media';
     entityId: string;
     action: AuditAction;
     userId: string;
@@ -324,4 +330,99 @@ export interface ContentFilters {
     search?: string;
     page?: number;
     pageSize?: number;
+}
+
+// ─── CMS: Specialized Interfaces ──────────────────────────────
+
+export interface PageBlock {
+    id: string;
+    type: 'hero' | 'stats' | 'intro' | 'services_grid' | 'news_strip' | 'map' | 'form' | 'rich_text' | 'gallery' | 'timeline' | 'cta' | 'partners';
+    content: any; // Block specific content
+    settings?: any; // Visual settings (bg, padding, etc)
+    order: number;
+    isActive: boolean;
+}
+
+export interface Page {
+    id: string;
+    slug: string;
+    title: LocalizedString;
+    description?: LocalizedString;
+    hero?: {
+        title: LocalizedString;
+        subtitle?: LocalizedString;
+        backgroundImage?: string;
+        videoUrl?: string;
+        ctaLabel?: LocalizedString;
+        ctaHref?: string;
+    };
+    blocks: PageBlock[];
+    seo?: {
+        title?: string;
+        description?: string;
+        keywords?: string[];
+        ogImage?: string;
+        noIndex?: boolean;
+    };
+    status: ContentStatus;
+    publishedAt?: string;
+    createdAt: string;
+    updatedAt: string;
+}
+
+export interface Menu {
+    id: string;
+    name: string;
+    location: 'main' | 'footer' | 'header_top';
+    items: NavItem[];
+    createdAt: string;
+    updatedAt: string;
+}
+
+export interface SiteSettings {
+    id: string;
+    siteName: LocalizedString;
+    logo?: string;
+    logoFooter?: string;
+    favicon?: string;
+    slogan?: LocalizedString;
+    contactEmails: string[];
+    contactPhones: string[];
+    address: LocalizedString;
+    socialLinks: {
+        facebook?: string;
+        twitter?: string;
+        linkedin?: string;
+        youtube?: string;
+        instagram?: string;
+    };
+    coordinates?: {
+        lat: number;
+        lng: number;
+    };
+    copyright: LocalizedString;
+    seoGlobal?: {
+        titleTemplate: string;
+        defaultDescription: string;
+        defaultOgImage?: string;
+    };
+    updatedAt: string;
+}
+
+export interface MediaAsset {
+    id: string;
+    filename: string;
+    url: string;
+    type: 'image' | 'video' | 'document' | 'other';
+    mimeType: string;
+    size: number;
+    metadata?: {
+        alt?: string;
+        caption?: LocalizedString;
+        width?: number;
+        height?: number;
+    };
+    folder?: string;
+    createdAt: string;
+    updatedAt: string;
 }

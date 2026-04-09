@@ -1,4 +1,4 @@
-import ContentManagement from '@/components/ContentManagement';
+import PageManagement from '@/components/PageManagement';
 export default function Page() {
-    return <ContentManagement basePath="/pages" />;
+    return <PageManagement />;
 }

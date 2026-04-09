@@ -1,17 +1,18 @@
-'use client';
-
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import type { Locale } from '@pan/shared';
+import type { Locale, SiteSettings } from '@pan/shared';
+import { t } from '@pan/shared';
 import type { Dictionary } from '@/lib/dictionaries';
 
 interface HeroSliderProps {
     dict: Dictionary;
     locale: Locale;
+    slides?: { image: string; title: LocalizedString; subtitle: LocalizedString; cta?: string; href?: string }[];
+    settings: SiteSettings | null;
 }
 
-const images = [
+const defaultImages = [
     '/images/hero/hero-1.jpg',
     '/images/hero/hero-2.jpg',
     '/images/port/container-yard.png',
@@ -20,65 +21,64 @@ const images = [
     '/images/hero/hero-6.jpg',
 ];
 
-export function HeroSlider({ dict, locale }: HeroSliderProps) {
+export function HeroSlider({ dict, locale, slides, settings }: HeroSliderProps) {
     const [current, setCurrent] = useState(0);
+
+    const items = slides?.length ? slides : defaultImages.map(img => ({
+        image: img,
+        title: { fr: dict.hero.title, ar: dict.hero.title, en: dict.hero.title, es: dict.hero.title },
+        subtitle: { fr: dict.hero.subtitle, ar: dict.hero.subtitle, en: dict.hero.subtitle, es: dict.hero.subtitle }
+    }));
 
     useEffect(() => {
         const timer = setInterval(() => {
-            setCurrent((prev) => (prev + 1) % images.length);
-        }, 5000);
+            setCurrent((prev) => (prev + 1) % items.length);
+        }, 6000);
         return () => clearInterval(timer);
-    }, []);
+    }, [items.length]);
 
     return (
-        <section
-            id="hero"
-            className="relative bg-pan-navy text-white overflow-hidden min-h-[600px] flex items-center"
-        >
+        <section id="hero" className="relative bg-pan-navy text-white overflow-hidden min-h-[600px] lg:min-h-[800px] flex items-center">
             {/* Background Images */}
-            {images.map((img, index) => (
+            {items.map((item, index) => (
                 <div
-                    key={img}
-                    className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
-                        index === current ? 'opacity-65' : 'opacity-0'
+                    key={index}
+                    className={`absolute inset-0 transition-opacity duration-1500 ease-in-out ${
+                        index === current ? 'opacity-60' : 'opacity-0'
                     }`}
                 >
                     <Image
-                        src={img}
+                        src={item.image}
                         alt=""
                         fill
-                        sizes="100vw"
-                        className="object-cover"
                         priority={index === 0}
-                        loading={index === 0 ? 'eager' : 'lazy'}
+                        className="object-cover scale-105"
                     />
                 </div>
             ))}
             
-            {/* Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-r from-pan-navy/70 to-pan-blue/50" />
+            <div className="absolute inset-0 bg-gradient-to-t from-pan-navy via-pan-navy/20 to-transparent lg:bg-gradient-to-r lg:from-pan-navy lg:to-transparent" />
 
-            {/* Content */}
-            <div className="relative max-w-7xl mx-auto px-6 py-32 sm:py-40 lg:py-48 w-full">
-                <div className="max-w-3xl">
-                    <div className="w-20 h-1.5 bg-pan-gold rounded-full mb-8" />
-                    <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold leading-tight tracking-tight mb-6">
-                        {dict.hero.title}
+            <div className="relative max-w-7xl mx-auto px-6 py-32 w-full z-10">
+                <div className="max-w-4xl">
+                    <div className="w-16 h-1 bg-pan-gold rounded-full mb-8 animate-in slide-in-from-left duration-700" />
+                    <h1 className="text-5xl sm:text-6xl lg:text-8xl font-black leading-[1.1] tracking-tighter mb-8 animate-in slide-in-from-bottom duration-700">
+                        {t(items[current].title, locale)}
                     </h1>
-                    <p className="text-lg sm:text-2xl text-pan-light leading-relaxed mb-10 max-w-2xl font-light">
-                        {dict.hero.subtitle}
+                    <p className="text-xl sm:text-2xl text-pan-light/80 leading-relaxed mb-12 max-w-2xl font-medium animate-in slide-in-from-bottom delay-150 duration-700">
+                        {t(items[current].subtitle, locale)}
                     </p>
-                    <div className="flex flex-wrap gap-4">
+                    <div className="flex flex-wrap gap-4 animate-in slide-in-from-bottom delay-300 duration-700">
                         <Link
-                            href={`/${locale}/le-port`}
-                            className="inline-flex items-center gap-2 px-8 py-4 bg-pan-gold text-pan-navy font-semibold rounded-lg hover:bg-pan-gold-light transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-0.5"
+                            href={items[current].href || `/${locale}/le-port`}
+                            className="inline-flex items-center gap-2 px-10 py-4 bg-pan-gold text-pan-navy font-bold rounded-2xl hover:bg-white transition-all duration-300 shadow-2xl shadow-pan-gold/20 hover:-translate-y-1"
                         >
-                            {dict.hero.cta}
-                            <span aria-hidden="true">{locale === 'ar' ? '←' : '→'}</span>
+                            {items[current].cta || dict.hero.cta}
+                            <span aria-hidden="true" className="text-lg">{locale === 'ar' ? '←' : '→'}</span>
                         </Link>
                         <Link
                             href={`/${locale}/services`}
-                            className="inline-flex items-center gap-2 px-8 py-4 bg-pan-blue/80 backdrop-blur-sm border-2 border-transparent text-white font-semibold rounded-lg hover:bg-pan-blue transition-all duration-300"
+                            className="inline-flex items-center gap-2 px-10 py-4 bg-white/10 backdrop-blur-md border border-white/20 text-white font-bold rounded-2xl hover:bg-white/20 transition-all duration-300"
                         >
                             {dict.hero.ctaSecondary}
                         </Link>
@@ -87,16 +87,20 @@ export function HeroSlider({ dict, locale }: HeroSliderProps) {
             </div>
 
             {/* Pagination Indicators */}
-            <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex gap-3 z-20">
-                {images.map((_, index) => (
+            <div className="absolute bottom-12 left-6 lg:left-12 flex gap-4 z-20">
+                {items.map((_, index) => (
                     <button
                         key={index}
                         onClick={() => setCurrent(index)}
-                        className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                            index === current ? 'bg-pan-gold w-8' : 'bg-white/30 hover:bg-white/50'
+                        className={`group relative h-1.5 transition-all duration-500 rounded-full overflow-hidden ${
+                            index === current ? 'w-24 bg-white/20' : 'w-8 bg-white/10 hover:bg-white/30'
                         }`}
-                        aria-label={`Go to slide ${index + 1}`}
-                    />
+                        aria-label={`Slide ${index + 1}`}
+                    >
+                        {index === current && (
+                            <div className="absolute inset-0 bg-pan-gold animate-progress-bar origin-left" />
+                        )}
+                    </button>
                 ))}
             </div>
         </section>

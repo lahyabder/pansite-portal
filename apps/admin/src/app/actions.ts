@@ -400,16 +400,104 @@ export async function respondToRequestAction(data: { id: string, response: strin
 
 // ─── Audit via Web API ──────────────────────────────────────────────────────
 
-export async function getAuditLogAction(entityId?: string) {
-    const path = entityId ? `/../audit?entityId=${entityId}` : '/../audit';
-    return await contentFetch(path);
-}
-
 export async function deleteContentAction(id: string, userId: string) {
     await contentFetchStrict(`/${id}?userId=${encodeURIComponent(userId)}`, { method: 'DELETE' });
     revalidatePath('/cms/contents');
     revalidatePath('/cms');
     return true;
+}
+
+export async function getAuditLogAction(entityId?: string) {
+    const path = entityId ? `/../audit?entityId=${entityId}` : '/../audit';
+    return await contentFetch(path);
+}
+
+// ─── Pages Actions ───────────────────────────────────────────────────────────
+
+export async function getAllPagesAction() {
+    return await contentFetch('/../pages');
+}
+
+export async function getPageBySlugAction(slug: string) {
+    return await contentFetch(`/../pages?slug=${slug}`);
+}
+
+export async function createPageAction(data: any) {
+    const res = await contentFetchStrict('/../pages', {
+        method: 'POST',
+        body: JSON.stringify(data),
+    });
+    revalidatePath('/pages');
+    revalidatePath('/cms');
+    return res;
+}
+
+export async function updatePageAction(id: string, data: any) {
+    const res = await contentFetchStrict(`/../pages/${id}`, {
+        method: 'PUT',
+        body: JSON.stringify(data),
+    });
+    revalidatePath('/pages');
+    revalidatePath(`/pages/${id}/edit`);
+    revalidatePath('/cms');
+    return res;
+}
+
+export async function deletePageAction(id: string) {
+    const res = await contentFetchStrict(`/../pages/${id}`, { method: 'DELETE' });
+    revalidatePath('/pages');
+    revalidatePath('/cms');
+    return res;
+}
+
+// ─── Menus Actions ───────────────────────────────────────────────────────────
+
+export async function getAllMenusAction() {
+    return await contentFetch('/../menus');
+}
+
+export async function getMenuByLocationAction(location: string) {
+    return await contentFetch(`/../menus?location=${location}`);
+}
+
+export async function upsertMenuAction(data: any) {
+    const res = await contentFetchStrict('/../menus', {
+        method: 'POST',
+        body: JSON.stringify(data),
+    });
+    revalidatePath('/', 'layout');
+    return res;
+}
+
+// ─── Settings Actions ────────────────────────────────────────────────────────
+
+export async function getSiteSettingsAction() {
+    return await contentFetch('/../settings');
+}
+
+export async function updateSiteSettingsAction(data: any) {
+    const res = await contentFetchStrict('/../settings', {
+        method: 'POST',
+        body: JSON.stringify(data),
+    });
+    revalidatePath('/', 'layout');
+    return res;
+}
+
+// ─── Media Actions ───────────────────────────────────────────────────────────
+
+export async function getAllMediaAction(filters?: { type?: string; folder?: string }) {
+    const params = new URLSearchParams();
+    if (filters?.type) params.append('type', filters.type);
+    if (filters?.folder) params.append('folder', filters.folder);
+    return await contentFetch(`/../media?${params.toString()}`);
+}
+
+export async function createMediaAssetAction(data: any) {
+    return await contentFetchStrict('/../media', {
+        method: 'POST',
+        body: JSON.stringify(data),
+    });
 }
 
 export async function testApiConnectionAction() {

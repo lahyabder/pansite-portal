@@ -1,4 +1,5 @@
-import { ContentForm } from '@/components/ContentForm';
-export default function CreateContentPage() {
-    return <ContentForm basePath="/pages" />;
+import PageEditor from '@/components/PageEditor';
+
+export default function Page() {
+    return <PageEditor />;
 }

@@ -1,4 +1,4 @@
-import ContentManagement from '@/components/ContentManagement';
+import MediaLibrary from '@/components/MediaLibrary';
 export default function Page() {
-    return <ContentManagement category="media" basePath="/media" />;
+    return <MediaLibrary />;
 }

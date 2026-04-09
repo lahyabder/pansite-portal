@@ -1,30 +1,26 @@
-'use client';
-
 import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import type { Locale } from '@pan/shared';
+import type { Locale, SiteSettings, Menu } from '@pan/shared';
+import { t } from '@pan/shared';
 import type { Dictionary } from '@/lib/dictionaries';
 
 interface HeaderProps {
     locale: Locale;
     dict: Dictionary;
+    menu: Menu | null;
+    settings: SiteSettings | null;
 }
 
-interface NavGroup {
-    label: string;
-    href: string;
-    children?: { label: string; href: string }[];
-}
-
-export function Header({ locale, dict }: HeaderProps) {
+export function Header({ locale, dict, menu, settings }: HeaderProps) {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [searchOpen, setSearchOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
     const [openDropdown, setOpenDropdown] = useState<string | null>(null);
     const searchInputRef = useRef<HTMLInputElement>(null);
     const pathname = usePathname();
+    
     const locales: { code: Locale; label: string; short: string }[] = [
         { code: 'ar', label: 'العربية', short: 'AR' },
         { code: 'fr', label: 'Français', short: 'FR' },
@@ -32,33 +28,33 @@ export function Header({ locale, dict }: HeaderProps) {
         { code: 'es', label: 'Español', short: 'ES' },
     ];
 
-    const navGroups: NavGroup[] = [
+    // Use dynamic menu if available, otherwise fallback to dict
+    const navItems = menu?.items.map(item => ({
+        label: t(item.title, locale),
+        href: item.href.startsWith('http') ? item.href : `/${locale}${item.href === '/' ? '' : item.href}`,
+        children: item.children?.map(child => ({
+            label: t(child.title, locale),
+            href: child.href.startsWith('http') ? child.href : `/${locale}${child.href}`
+        }))
+    })) || [
         { label: dict.nav.home, href: `/${locale}` },
         { label: dict.nav.port, href: `/${locale}/le-port` },
-        { label: dict.nav.infrastructure, href: `/${locale}/infrastructures` },
         { label: dict.nav.services, href: `/${locale}/services` },
-        { label: dict.nav.procedures, href: `/${locale}/procedures` },
-        { label: dict.nav.tariffs, href: `/${locale}/tarifs` },
-        { label: dict.nav.stopovers, href: `/${locale}/escales` },
-        { label: dict.nav.tenders, href: `/${locale}/appels-offres` },
-        { label: dict.nav.media, href: `/${locale}/medias` },
         { label: dict.nav.contact, href: `/${locale}/contact` },
     ];
 
-    // Focus search input when opened
     useEffect(() => {
         if (searchOpen && searchInputRef.current) {
             searchInputRef.current.focus();
         }
     }, [searchOpen]);
 
-    // Close mobile menu on route change
     useEffect(() => {
         setMobileMenuOpen(false);
         setOpenDropdown(null);
     }, [pathname]);
 
-    const isActive = (href: string) => pathname === href || pathname.startsWith(href + '/');
+    const isActive = (href: string) => pathname === href || (href !== `/${locale}` && pathname.startsWith(href));
 
     return (
         <>
@@ -66,14 +62,18 @@ export function Header({ locale, dict }: HeaderProps) {
             <div className="bg-pan-navy text-white text-xs hidden lg:block">
                 <div className="max-w-7xl mx-auto px-6 flex items-center justify-between h-9">
                     <div className="flex items-center gap-6">
-                        <span className="flex items-center gap-1.5 text-pan-light/70" dir="ltr">
-                            <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" /></svg>
-                            +222 45 74 51 06
-                        </span>
-                        <span className="flex items-center gap-1.5 text-pan-light/70">
-                            <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" /></svg>
-                            contact@pan.mr
-                        </span>
+                        {settings?.contactPhones?.[0] && (
+                            <span className="flex items-center gap-1.5 text-pan-light/70" dir="ltr">
+                                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" /></svg>
+                                {settings.contactPhones[0]}
+                            </span>
+                        )}
+                        {settings?.contactEmails?.[0] && (
+                            <span className="flex items-center gap-1.5 text-pan-light/70">
+                                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" /></svg>
+                                {settings.contactEmails[0]}
+                            </span>
+                        )}
                     </div>
                     <div className="flex items-center gap-4">
                         <div className="flex items-center gap-2" translate="no">
@@ -100,12 +100,12 @@ export function Header({ locale, dict }: HeaderProps) {
                     <div className="flex items-center justify-between h-16 lg:h-[72px]">
                         {/* Logo */}
                         <Link href={`/${locale}`} className="flex items-center gap-3 group shrink-0">
-                            <Image src="/logo-horizontal.png" alt="Port Autonome de Nouadhibou" width={160} height={40} priority className="h-8 lg:h-10 w-auto object-contain" />
+                            <Image src="/logo-horizontal.png" alt={t(settings?.siteName, locale) || "PAN"} width={160} height={40} priority className="h-8 lg:h-10 w-auto object-contain" />
                         </Link>
 
                         {/* Desktop Nav */}
                         <nav className="hidden lg:flex items-center gap-0.5 xl:gap-1 lg:mx-2 xl:mx-4">
-                            {navGroups.map((group) => (
+                            {navItems.map((group) => (
                                 <div
                                     key={group.href}
                                     className="relative"
@@ -152,7 +152,6 @@ export function Header({ locale, dict }: HeaderProps) {
 
                         {/* Right side: Search + Lang + Mobile Toggle */}
                         <div className="flex items-center gap-2">
-                            {/* Search toggle */}
                             <button
                                 onClick={() => setSearchOpen(!searchOpen)}
                                 className="p-2.5 text-pan-gray-500 hover:text-pan-navy hover:bg-pan-gray-50 rounded-lg transition-all"
@@ -163,7 +162,6 @@ export function Header({ locale, dict }: HeaderProps) {
                                 </svg>
                             </button>
 
-                            {/* Language switcher (Desktop + Mobile) */}
                             <div className="flex items-center gap-1 border border-pan-gray-200 rounded-lg overflow-hidden shrink-0" translate="no">
                                 {locales.map((l) => (
                                     <Link
@@ -179,10 +177,6 @@ export function Header({ locale, dict }: HeaderProps) {
                                 ))}
                             </div>
 
-                            {/* CTA Accès Port - REMOVED FOR INVISIBILITY */}
-                            {/* Access via hidden /acces-portail route */}
-
-                            {/* Mobile menu button */}
                             <button
                                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                                 className="lg:hidden p-2 text-pan-gray-600 hover:text-pan-navy hover:bg-pan-gray-50 rounded-lg transition-all"
@@ -199,7 +193,7 @@ export function Header({ locale, dict }: HeaderProps) {
                         </div>
                     </div>
 
-                    {/* Search Bar (expandable) */}
+                    {/* Search Bar */}
                     {searchOpen && (
                         <div className="pb-4 border-t border-pan-gray-100 pt-4 animate-in slide-in-from-top-2 duration-200">
                             <form action={`/${locale}/search`} method="get" className="relative max-w-2xl mx-auto">
@@ -232,7 +226,7 @@ export function Header({ locale, dict }: HeaderProps) {
                     {mobileMenuOpen && (
                         <nav className="lg:hidden pb-4 border-t border-pan-gray-100 pt-4">
                             <div className="flex flex-col gap-0.5 max-h-[70vh] overflow-y-auto">
-                                {navGroups.map((group) => (
+                                {navItems.map((group) => (
                                     <div key={group.href}>
                                         <Link
                                             href={group.href}

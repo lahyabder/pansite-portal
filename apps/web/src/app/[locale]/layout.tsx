@@ -1,5 +1,5 @@
-import type { Locale } from '@pan/shared';
-import { getDir } from '@pan/shared';
+import type { Locale, SiteSettings, Menu } from '@pan/shared';
+import { getDir, t } from '@pan/shared';
 import { Inter, Tajawal } from 'next/font/google';
 import { getDictionary } from '@/lib/dictionaries';
 import { Header } from '@/components/Header';
@@ -8,6 +8,7 @@ import { Analytics } from '@/components/Analytics';
 import { CookieBanner } from '@/components/CookieBanner';
 import { Suspense } from 'react';
 import type { Metadata } from 'next';
+import { getSiteSettings, getMenuByLocation } from '@pan/shared';
 
 const inter = Inter({
     variable: '--font-inter',
@@ -29,37 +30,21 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
     const { locale: localeParam } = await params;
     const locale = (['ar', 'en', 'es'].includes(localeParam) ? localeParam : 'fr') as Locale;
-    const dict = getDictionary(locale);
+    const settings = await getSiteSettings();
 
-    const titles: Record<Locale, string> = {
-        ar: 'ميناء نواذيبو المستقل',
-        fr: 'Port Autonome de Nouadhibou (PAN)',
-        en: 'Nouadhibou Autonomous Port (PAN)',
-        es: 'Puerto Autónomo de Nouadhibou (PAN)',
-    };
-    const title = titles[locale];
-
-    const descriptions: Record<Locale, string> = {
-        ar: 'البوابة الرسمية للميناء المستقل بنواذيبو، المركز الملاحي والتجاري في موريتانيا وغبر إفريقيا.',
-        fr: "Ouverture sur le monde, pôle économique et hub logistique majeur en Mauritanie et en Afrique de l'Ouest.",
-        en: 'Official gateway of the Nouadhibou Autonomous Port, maritime and commercial hub in Mauritania and West Africa.',
-        es: 'Puerta oficial del Puerto Autónomo de Nouadhibou, centro marítimo y comercial en Mauritania y África Occidental.',
-    };
-    const description = descriptions[locale];
+    const title = t(settings?.siteName, locale) || 'Port Autonome de Nouadhibou';
+    const description = t(settings?.seoGlobal?.defaultDescription || settings?.slogan, locale);
 
     return {
         title: {
-            template: `%s | ${title}`,
+            template: settings?.seoGlobal?.titleTemplate || `%s | ${title}`,
             default: title,
         },
         description,
         metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'),
         alternates: {
             languages: {
-                fr: '/fr',
-                ar: '/ar',
-                en: '/en',
-                es: '/es',
+                fr: '/fr', ar: '/ar', en: '/en', es: '/es',
             },
         },
         openGraph: {
@@ -69,15 +54,6 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
             title,
             description,
             siteName: title,
-        },
-        twitter: {
-            card: 'summary_large_image',
-            title,
-            description,
-        },
-        robots: {
-            index: true,
-            follow: true,
         },
     };
 }
@@ -93,11 +69,16 @@ export default async function LocaleLayout({
     const locale = (['ar', 'en', 'es'].includes(localeParam) ? localeParam : 'fr') as Locale;
     const dir = getDir(locale);
     const dict = getDictionary(locale);
+    
+    // Fetch Dynamic Data
+    const settings = await getSiteSettings();
+    const mainMenu = await getMenuByLocation('main');
+    const footerMenu = await getMenuByLocation('footer');
 
     const jsonLd = {
         '@context': 'https://schema.org',
         '@type': 'Organization',
-        name: 'Port Autonome de Nouadhibou',
+        name: t(settings?.siteName, locale),
         url: process.env.NEXT_PUBLIC_SITE_URL || 'https://www.pan.mr',
         logo: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://www.pan.mr'}/icon.png`,
     };
@@ -116,9 +97,9 @@ export default async function LocaleLayout({
                 className={`${inter.variable} ${tajawal.variable} font-sans antialiased bg-pan-white text-pan-gray-900`}
                 style={locale === 'ar' ? { fontFamily: 'var(--font-tajawal), sans-serif' } : undefined}
             >
-                <Header locale={locale} dict={dict} />
+                <Header locale={locale} dict={dict} menu={mainMenu} settings={settings} />
                 <main className="min-h-screen">{children}</main>
-                <Footer locale={locale} dict={dict} />
+                <Footer locale={locale} dict={dict} menu={footerMenu} settings={settings} />
                 <CookieBanner />
                 <Suspense fallback={null}>
                     <Analytics />
