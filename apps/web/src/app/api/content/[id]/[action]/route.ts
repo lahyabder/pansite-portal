@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { publishContent, archiveContent, restoreContent, submitForReview } from '@pan/shared';
+import { revalidatePath } from 'next/cache';
+import { publishContent, archiveContent, restoreContent, submitForReview, approveContent } from '@pan/shared';
 
 const CORS_HEADERS = {
     'Access-Control-Allow-Origin': '*',
@@ -23,24 +24,32 @@ export async function POST(
     let result;
     switch (action) {
         case 'publish':
-            result = publishContent(id, userId);
+            result = await publishContent(id, userId);
+            break;
+        case 'approve':
+            result = await approveContent(id, userId);
             break;
         case 'archive':
-            result = archiveContent(id, userId);
+            result = await archiveContent(id, userId);
             break;
         case 'restore':
-            result = restoreContent(id, userId);
+            result = await restoreContent(id, userId);
             break;
         case 'submit':
-            result = submitForReview(id, userId);
+            result = await submitForReview(id, userId);
             break;
         default:
             return NextResponse.json({ error: `Unknown action: ${action}` }, { status: 400, headers: CORS_HEADERS });
     }
 
+
     if (!result) {
         return NextResponse.json({ error: 'Action failed — check content status' }, { status: 422, headers: CORS_HEADERS });
     }
 
+    // Force Web App cache invalidation
+    revalidatePath('/', 'layout');
+
     return NextResponse.json(result, { headers: CORS_HEADERS });
 }
+

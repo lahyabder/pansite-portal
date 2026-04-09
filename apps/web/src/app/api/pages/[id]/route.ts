@@ -12,9 +12,9 @@ export async function OPTIONS() {
     return new NextResponse(null, { status: 204, headers: CORS_HEADERS });
 }
 
-export async function PUT(req: NextRequest, { params }: { params: { id: string } }) {
+export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
     try {
-        const { id } = params;
+        const { id } = await params;
         const data = await req.json();
         const page = await updatePage(id, data);
         if (!page) {
@@ -27,9 +27,10 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
     }
 }
 
-export async function DELETE(req: NextRequest, { params }: { params: { id: string } }) {
+
+export async function DELETE(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
     try {
-        const { id } = params;
+        const { id } = await params;
         const success = await deletePage(id);
         revalidatePath('/', 'layout');
         return NextResponse.json({ success }, { headers: CORS_HEADERS });
@@ -37,3 +38,4 @@ export async function DELETE(req: NextRequest, { params }: { params: { id: strin
         return NextResponse.json({ error: err.message }, { status: 400, headers: CORS_HEADERS });
     }
 }
+
