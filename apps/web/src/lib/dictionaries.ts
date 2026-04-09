@@ -170,6 +170,11 @@ export type Dictionary = {
                 title: string;
                 list: string[];
             };
+            directors: {
+                title: string;
+                subtitle: string;
+                deceased: string;
+            };
         };
         infrastructure: {
             title: string;
@@ -907,6 +912,11 @@ const dictionaries: Record<Locale, Dictionary> = {
                         'محطة حاويات بإدارة حديثة',
                     ],
                 },
+                directors: {
+                    title: 'المديرون العامون',
+                    subtitle: 'اكتشف القادة الذين ساهموا في تشكيل تاريخ وتطور ميناء نواذيبو المستقل عبر العقود.',
+                    deceased: 'المرحوم',
+                },
             },
             infrastructure: {
                 title: 'البنية التحتية',
@@ -1332,6 +1342,11 @@ const dictionaries: Record<Locale, Dictionary> = {
                         'Latest generation container terminal',
                     ],
                 },
+                directors: {
+                    title: 'General Directors',
+                    subtitle: 'Discover the leaders who have shaped the history and development of the Nouadhibou Autonomous Port through the decades.',
+                    deceased: 'Late',
+                },
             },
             infrastructure: {
                 title: 'Infrastructure',
@@ -1720,6 +1735,11 @@ const dictionaries: Record<Locale, Dictionary> = {
                         'Remolque y asistencia en el mar',
                         'Terminal de contenedores de última generación',
                     ],
+                },
+                directors: {
+                    title: 'Directores Generales',
+                    subtitle: 'Descubra a los líderes que han forجاد la historia y el desarrollo del Puerto Autónomo de Nouadhibou a lo largo de las décadas.',
+                    deceased: 'Difunto',
                 },
             },
             infrastructure: {
