@@ -1,7 +1,10 @@
 import type { Locale } from '@pan/shared';
 import { getDictionary } from '@/lib/dictionaries';
 import { PageHero } from '@/components/PageHero';
-import { FileText, Download, Clock, CheckCircle } from 'lucide-react';
+import { FileText, Download, Clock, CheckCircle, AlertCircle } from 'lucide-react';
+import { getPublishedContents, t, formatDate } from '@pan/shared';
+
+export const revalidate = 60;
 
 export default async function AppelsOffresPage({ params }: { params: Promise<{ locale: string }> }) {
     const { locale: lp } = await params;
@@ -9,87 +12,19 @@ export default async function AppelsOffresPage({ params }: { params: Promise<{ l
     const dict = getDictionary(locale);
 
     const labels = {
-        ar: { title: 'العنوان & المرجع', pub: 'تاريخ النشر', lim: 'الموعد النهائي', docs: 'الوثائق', status: 'الحالة', open: 'مفتوح', closed: 'مغلق' },
-        fr: { title: 'Titre & Référence', pub: 'Date publication', lim: 'Date limite', docs: 'Documents', status: 'Statut', open: 'Ouvert', closed: 'Clôturé' },
-        en: { title: 'Title & Reference', pub: 'Publication Date', lim: 'Deadline', docs: 'Documents', status: 'Status', open: 'Open', closed: 'Closed' },
-        es: { title: 'Título y Referencia', pub: 'Fecha de publicación', lim: 'Fecha límite', docs: 'Documentos', status: 'Estado', open: 'Abierto', closed: 'Cerrado' },
+        ar: { title: 'العنوان & المرجع', pub: 'تاريخ النشر', lim: 'الموعد النهائي', docs: 'الوثائق', status: 'الحالة', open: 'مفتوح', closed: 'مغلق', empty: 'لا توجد مناقصات نشطة حالياً' },
+        fr: { title: 'Titre & Référence', pub: 'Date publication', lim: 'Date limite', docs: 'Documents', status: 'Statut', open: 'Ouvert', closed: 'Clôturé', empty: 'Aucun appel d\'offres actif pour le moment' },
+        en: { title: 'Title & Reference', pub: 'Publication Date', lim: 'Deadline', docs: 'Documents', status: 'Status', open: 'Open', closed: 'Closed', empty: 'No active tenders at the moment' },
+        es: { title: 'Título y Referencia', pub: 'Fecha de publicación', lim: 'Fecha límite', docs: 'Documentos', status: 'Estado', open: 'Abierto', closed: 'Cerrado', empty: 'No hay licitaciones activas en este momento' },
     }[locale];
 
-    // Mock Demo Data for 4 tenders
-    const tenders = [
-        {
-            id: 'AO-2025-001',
-            title: {
-                ar: 'توسعة المحطة البحرية - المرحلة 2',
-                fr: 'Extension du terminal maritime - Phase 2',
-                en: 'Marine Terminal Extension - Phase 2',
-                es: 'Extensión de la terminal marítima - Fase 2'
-            }[locale] || 'Extension du terminal maritime - Phase 2',
-            datePub: '2025-10-15',
-            dateLim: '2025-11-30',
-            docs: {
-                ar: ['دفتر الشروط', 'المخططات التقنية'],
-                fr: ['Cahier des charges', 'Plans techniques'],
-                en: ['Specifications', 'Technical plans'],
-                es: ['Pliego de condiciones', 'Planos técnicos']
-            }[locale] || ['Cahier des charges', 'Plans techniques'],
-            status: 'active'
-        },
-        {
-            id: 'AO-2025-002',
-            title: {
-                ar: 'توريد وتركيب 4 رافعات جسرية جديدة',
-                fr: 'Fourniture et installation de 4 nouveaux portiques',
-                en: 'Supply and installation of 4 new portal cranes',
-                es: 'Suministro e instalación de 4 nuevas grúas pórtico'
-            }[locale] || 'Fourniture et installation de 4 nouveaux portiques',
-            datePub: '2025-09-01',
-            dateLim: '2025-10-15',
-            docs: {
-                ar: ['ملف المناقصة'],
-                fr: ['Dossier complet AO'],
-                en: ['Full tender file'],
-                es: ['Expediente completo de licitación']
-            }[locale] || ['Dossier complet AO'],
-            status: 'closed'
-        },
-        {
-            id: 'AO-2025-003',
-            title: {
-                ar: 'دراسة الأثر البيئي لتجريف قناة الوصول',
-                fr: 'Étude d\'impact environnemental pour le dragage du chenal d\'accès',
-                en: 'Environmental impact study for access channel dredging',
-                es: 'Estudio de impacto ambiental para el dragado del canal de acceso'
-            }[locale] || 'Étude d\'impact environnemental pour le dragage du chenal d\'accès',
-            datePub: '2025-11-01',
-            dateLim: '2025-12-15',
-            docs: {
-                ar: ['شروط المرجعية', 'الملاحق البيئية', 'نماذج الاستمارة'],
-                fr: ['Termes de référence', 'Annexes environnementales', 'Formulaires'],
-                en: ['Terms of reference', 'Environmental annexes', 'Forms'],
-                es: ['Términos de referencia', 'Anexos ambientales', 'Formularios']
-            }[locale] || ['Termes de référence', 'Annexes environnementales', 'Formulaires'],
-            status: 'active'
-        },
-        {
-            id: 'AO-2025-004',
-            title: {
-                ar: 'صيانة نظام المراقبة الأمنية (CCTV)',
-                fr: 'Maintenance du système de vidéosurveillance (CCTV)',
-                en: 'Maintenance of surveillance system (CCTV)',
-                es: 'Mantenimiento del sistema de videovigilancia (CCTV)'
-            }[locale] || 'Maintenance du système de vidéosurveillance (CCTV)',
-            datePub: '2025-11-10',
-            dateLim: '2025-12-05',
-            docs: {
-                ar: ['نظام الاستشارة', 'المواصفات التقنية'],
-                fr: ['Règlement de consultation', 'Spécifications techniques'],
-                en: ['Consultation rules', 'Technical specifications'],
-                es: ['Reglamento de consulta', 'Especificaciones técnicas']
-            }[locale] || ['Règlement de consultation', 'Spécifications techniques'],
-            status: 'active'
-        }
-    ];
+    // Fetch dynamic tenders from database
+    const { items: tenders } = await getPublishedContents({ category: 'tenders', pageSize: 50 });
+
+    const isExpired = (expiryStr?: string | null) => {
+        if (!expiryStr) return false;
+        return new Date(expiryStr) < new Date();
+    };
 
     return (
         <>
@@ -103,85 +38,97 @@ export default async function AppelsOffresPage({ params }: { params: Promise<{ l
                 ]}
             />
 
-            <section className="py-20 bg-pan-gray-50 bg-opacity-50">
+            <section className="py-20 bg-pan-gray-50 bg-opacity-50 min-h-[400px]">
                 <div className="max-w-7xl mx-auto px-6">
-                    <div className="bg-white rounded-2xl shadow-sm border border-pan-gray-200 overflow-hidden">
-                        <div className="overflow-x-auto">
-                            <table className="w-full text-start border-collapse">
-                                <thead>
-                                    <tr className="bg-pan-navy text-white text-sm">
-                                        <th className="px-6 py-4 font-semibold whitespace-nowrap">
-                                            {labels.title}
-                                        </th>
-                                        <th className="px-6 py-4 font-semibold whitespace-nowrap">
-                                            {labels.pub}
-                                        </th>
-                                        <th className="px-6 py-4 font-semibold whitespace-nowrap">
-                                            {labels.lim}
-                                        </th>
-                                        <th className="px-6 py-4 font-semibold">
-                                            {labels.docs}
-                                        </th>
-                                        <th className="px-6 py-4 font-semibold whitespace-nowrap">
-                                            {labels.status}
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody className="divide-y divide-pan-gray-100">
-                                    {tenders.map((tender) => (
-                                        <tr key={tender.id} className="hover:bg-pan-pale transition-colors group">
-                                            <td className="px-6 py-5">
-                                                <div className="font-bold text-pan-navy group-hover:text-pan-blue transition-colors text-[15px] mb-1">
-                                                    {tender.title}
-                                                </div>
-                                                <div className="text-xs text-pan-gray-500 font-mono bg-pan-gray-100 inline-flex px-2 py-0.5 rounded">
-                                                    {tender.id}
-                                                </div>
-                                            </td>
-                                            <td className="px-6 py-5 text-sm text-pan-gray-600 font-medium">
-                                                {tender.datePub}
-                                            </td>
-                                            <td className="px-6 py-5 text-sm">
-                                                <div className={`inline-flex items-center gap-1.5 font-bold ${tender.status === 'active' ? 'text-red-600' : 'text-pan-gray-500'}`}>
-                                                    <Clock className="w-4 h-4" />
-                                                    {tender.dateLim}
-                                                </div>
-                                            </td>
-                                            <td className="px-6 py-5">
-                                                <div className="flex flex-col gap-2">
-                                                    {tender.docs.map((d, i) => (
-                                                        <a 
-                                                            key={i} 
-                                                            href="/documents/tender-sample.pdf"
-                                                            download={`${tender.id}-${d.replace(/\s+/g, '_')}.pdf`}
-                                                            className="inline-flex items-center gap-2 text-xs font-semibold text-pan-navy hover:text-pan-sky bg-white border border-pan-gray-200 hover:border-pan-sky rounded px-3 py-1.5 w-fit shadow-sm hover:shadow-md transition-all group/doc"
-                                                        >
-                                                            <FileText className="w-3.5 h-3.5 text-pan-sky group-hover/doc:scale-110 transition-transform" />
-                                                            {d}
-                                                            <Download className="w-3.5 h-3.5 ms-2 opacity-30 group-hover/doc:opacity-100 group-hover/doc:translate-y-0.5 transition-all" />
-                                                        </a>
-                                                    ))}
-                                                </div>
-                                            </td>
-                                            <td className="px-6 py-5">
-                                                {tender.status === 'active' ? (
-                                                    <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-green-50 text-green-700 text-xs font-bold uppercase rounded-full border border-green-200">
-                                                        <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
-                                                        {labels.open}
-                                                    </span>
-                                                ) : (
-                                                    <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-pan-gray-100 text-pan-gray-600 text-xs font-bold uppercase rounded-full border border-pan-gray-200">
-                                                        <CheckCircle className="w-3 h-3" />
-                                                        {labels.closed}
-                                                    </span>
-                                                )}
-                                            </td>
+                    {tenders.length > 0 ? (
+                        <div className="bg-white rounded-2xl shadow-sm border border-pan-gray-200 overflow-hidden">
+                            <div className="overflow-x-auto">
+                                <table className="w-full text-start border-collapse">
+                                    <thead>
+                                        <tr className="bg-pan-navy text-white text-sm">
+                                            <th className="px-6 py-4 font-semibold whitespace-nowrap text-start">
+                                                {labels.title}
+                                            </th>
+                                            <th className="px-6 py-4 font-semibold whitespace-nowrap text-start">
+                                                {labels.pub}
+                                            </th>
+                                            <th className="px-6 py-4 font-semibold whitespace-nowrap text-start">
+                                                {labels.lim}
+                                            </th>
+                                            <th className="px-6 py-4 font-semibold text-start">
+                                                {labels.docs}
+                                            </th>
+                                            <th className="px-6 py-4 font-semibold whitespace-nowrap text-start">
+                                                {labels.status}
+                                            </th>
                                         </tr>
-                                    ))}
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody className="divide-y divide-pan-gray-100">
+                                        {tenders.map((tender) => {
+                                            const expired = isExpired(tender.expiresAt);
+                                            return (
+                                                <tr key={tender.id} className="hover:bg-pan-pale transition-colors group">
+                                                    <td className="px-6 py-5">
+                                                        <div className="font-bold text-pan-navy group-hover:text-pan-blue transition-colors text-[15px] mb-1">
+                                                            {t(tender.title, locale)}
+                                                        </div>
+                                                        <div className="text-xs text-pan-gray-500 font-mono bg-pan-gray-100 inline-flex px-2 py-0.5 rounded">
+                                                            {tender.slug}
+                                                        </div>
+                                                    </td>
+                                                    <td className="px-6 py-5 text-sm text-pan-gray-600 font-medium whitespace-nowrap">
+                                                        {tender.publishedAt ? formatDate(tender.publishedAt, locale) : '-'}
+                                                    </td>
+                                                    <td className="px-6 py-5 text-sm whitespace-nowrap">
+                                                        <div className={`inline-flex items-center gap-1.5 font-bold ${!expired ? 'text-red-600' : 'text-pan-gray-500'}`}>
+                                                            <Clock className="w-4 h-4" />
+                                                            {tender.expiresAt ? formatDate(tender.expiresAt, locale) : '-'}
+                                                        </div>
+                                                    </td>
+                                                    <td className="px-6 py-5">
+                                                        <div className="flex flex-col gap-2">
+                                                            {tender.externalLink ? (
+                                                                <a 
+                                                                    href={tender.externalLink}
+                                                                    target="_blank"
+                                                                    rel="noopener noreferrer"
+                                                                    className="inline-flex items-center gap-2 text-xs font-semibold text-pan-navy hover:text-pan-sky bg-white border border-pan-gray-200 hover:border-pan-sky rounded px-3 py-1.5 w-fit shadow-sm hover:shadow-md transition-all group/doc"
+                                                                >
+                                                                    <FileText className="w-3.5 h-3.5 text-pan-sky group-hover/doc:scale-110 transition-transform" />
+                                                                    {dict.common.download}
+                                                                    <Download className="w-3.5 h-3.5 ms-2 opacity-30 group-hover/doc:opacity-100 group-hover/doc:translate-y-0.5 transition-all" />
+                                                                </a>
+                                                            ) : (
+                                                                <span className="text-xs text-pan-gray-400 italic">No document</span>
+                                                            )}
+                                                        </div>
+                                                    </td>
+                                                    <td className="px-6 py-5">
+                                                        {!expired ? (
+                                                            <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-green-50 text-green-700 text-xs font-bold uppercase rounded-full border border-green-200">
+                                                                <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+                                                                {labels.open}
+                                                            </span>
+                                                        ) : (
+                                                            <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-pan-gray-100 text-pan-gray-600 text-xs font-bold uppercase rounded-full border border-pan-gray-200">
+                                                                <CheckCircle className="w-3 h-3" />
+                                                                {labels.closed}
+                                                            </span>
+                                                        )}
+                                                    </td>
+                                                </tr>
+                                            );
+                                        })}
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
-                    </div>
+                    ) : (
+                        <div className="bg-white rounded-3xl p-12 text-center border border-pan-gray-200 shadow-sm">
+                            <AlertCircle className="w-12 h-12 text-pan-gray-300 mx-auto mb-4" />
+                            <h3 className="text-xl font-bold text-pan-navy mb-2">{labels.empty}</h3>
+                        </div>
+                    )}
                 </div>
             </section>
         </>
