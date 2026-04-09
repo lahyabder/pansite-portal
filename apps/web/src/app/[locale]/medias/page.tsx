@@ -12,7 +12,7 @@ export default async function MediaPage({ params }: { params: Promise<{ locale: 
     const photoGallery = [
         { id: 1, src: '/images/hero/hero-1.jpg', title: dict.pages.media?.news?.items?.[0]?.title || dict.pages.media.title },
         { id: 2, src: '/images/hero/hero-2.jpg', title: dict.pages.media?.news?.items?.[1]?.title || dict.pages.media.title },
-        { id: 3, src: '/images/hero/hero-3.jpg', title: dict.pages.media?.news?.items?.[2]?.title || dict.pages.media.title },
+        { id: 3, src: '/images/port/container-yard.png', title: dict.pages.media?.news?.items?.[2]?.title || dict.pages.media.title },
         { id: 4, src: '/images/hero/hero-4.jpg', title: dict.pages.media?.news?.items?.[3]?.title || dict.pages.media.title },
         { id: 5, src: '/images/hero/hero-5.jpg', title: dict.pages.infrastructure?.gallery?.items?.[0]?.title || dict.pages.infrastructure.title },
         { id: 6, src: '/images/hero/hero-6.jpg', title: dict.pages.infrastructure?.gallery?.items?.[1]?.title || dict.pages.infrastructure.title },

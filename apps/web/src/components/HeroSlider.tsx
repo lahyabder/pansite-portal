@@ -14,7 +14,7 @@ interface HeroSliderProps {
 const images = [
     '/images/hero/hero-1.jpg',
     '/images/hero/hero-2.jpg',
-    '/images/hero/hero-3.jpg',
+    '/images/port/container-yard.png',
     '/images/hero/hero-4.jpg',
     '/images/hero/hero-5.jpg',
     '/images/hero/hero-6.jpg',
