@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+// Build ID: 20260409-1937
 import { Inter, Tajawal } from 'next/font/google';
 import './globals.css';
 import { AuthProvider } from '@/lib/auth';
