@@ -87,7 +87,7 @@ export default async function LePortPage({ params }: { params: Promise<{ locale:
                             
                             <div className="relative h-64 w-full rounded-2xl overflow-hidden shadow-lg mt-2">
                                 <Image 
-                                    src="/images/hero/hero-2.jpg" 
+                                    src="/images/port/historical-boats.png" 
                                     alt={dict.pages.port.geography.title} 
                                     fill 
                                     className="object-cover hover:scale-105 transition-transform duration-700"
