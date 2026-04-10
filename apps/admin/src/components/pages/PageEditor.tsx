@@ -1,27 +1,6 @@
-'use client';
-
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { 
-  Save, 
-  ChevronLeft, 
-  Plus, 
-  GripVertical, 
-  Trash2, 
-  Layout, 
-  Type, 
-  Image as ImageIcon, 
-  Grid, 
-  MessageSquare, 
-  Settings,
-  Eye,
-  Globe,
-  Check,
-  RefreshCw,
-  MoreHorizontal
-} from 'lucide-react';
 import { updatePageAction, createPageAction } from '@/app/actions';
 import type { Page, PageBlock, LocalizedString } from '@pan/shared';
+import Link from 'next/link';
 
 interface PageEditorProps {
   initialData?: any;
@@ -29,11 +8,11 @@ interface PageEditorProps {
 }
 
 const BLOCK_TYPES = [
-  { type: 'hero',     label: 'Section Hero',    icon: Layout,      desc: 'En-tête premium avec image et titre' },
+  { type: 'hero',     label: 'Hero Slider',    icon: Layout,      desc: 'Carrousel premium avec titres et images' },
+  { type: 'stats',    label: 'Grille Chiffres', icon: Grid,        desc: 'Statistiques clés de l\'activité (Home)' },
   { type: 'rich_text', label: 'Texte Riche',     icon: Type,        desc: 'Éditeur de texte avec formatage' },
   { type: 'features', label: 'Atouts / Features', icon: Grid,        desc: 'Grille d\'icônes et descriptions' },
   { type: 'cta',      label: 'Appel à l\'Action', icon: MessageSquare, desc: 'Bouton et texte d\'action' },
-  { type: 'gallery',  label: 'Galerie Photos',   icon: ImageIcon,   desc: 'Grille d\'images responsive' },
 ];
 
 const LOCALES = [
@@ -224,22 +203,97 @@ export default function PageEditor({ initialData, id }: PageEditorProps) {
                    {/* Conditional inputs based on type */}
                    {block.type === 'hero' && (
                      <div className="space-y-6">
-                        <textarea 
-                          value={block.content.title?.[activeLang] || ''}
-                          onChange={e => {
-                            const newBlocks = [...page.blocks];
-                            newBlocks[idx].content.title = { ...newBlocks[idx].content.title, [activeLang]: e.target.value };
-                            setPage({ ...page, blocks: newBlocks });
-                          }}
-                          placeholder="Headline text..."
-                          className="w-full bg-transparent border-none outline-none text-4xl font-black text-white placeholder:text-slate-800 resize-none"
-                        />
-                        <input 
-                          type="text"
-                          value={block.content.image || ''}
-                          placeholder="Image URL..."
-                          className="w-full bg-white/5 border border-white/5 rounded-xl px-4 py-2 text-sm text-slate-400 outline-none focus:border-white/10"
-                        />
+                        {(block.content.slides || [{}]).map((slide: any, sIdx: number) => (
+                           <div key={sIdx} className="p-6 bg-white/5 rounded-2xl border border-white/5 space-y-4">
+                              <div className="flex justify-between items-center mb-2">
+                                 <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Slide #{sIdx + 1}</span>
+                                 {(block.content.slides?.length > 1) && (
+                                   <button onClick={() => {
+                                      const next = [...page.blocks];
+                                      next[idx].content.slides = next[idx].content.slides.filter((_:any,i:any)=>i!==sIdx);
+                                      setPage({...page, blocks: next});
+                                   }} className="text-red-500 hover:text-red-400 p-1"><Trash2 className="w-3.5 h-3.5" /></button>
+                                 )}
+                              </div>
+                              <textarea 
+                                value={slide.title?.[activeLang] || ''}
+                                onChange={e => {
+                                  const next = [...page.blocks];
+                                  if (!next[idx].content.slides) next[idx].content.slides = [{}];
+                                  next[idx].content.slides[sIdx].title = { ...next[idx].content.slides[sIdx].title, [activeLang]: e.target.value };
+                                  setPage({ ...page, blocks: next });
+                                }}
+                                placeholder="Titre de la slide..."
+                                className="w-full bg-transparent border-none outline-none text-2xl font-black text-white placeholder:text-slate-800 resize-none h-12"
+                              />
+                              <input 
+                                type="text"
+                                value={slide.image || ''}
+                                onChange={e => {
+                                  const next = [...page.blocks];
+                                  if (!next[idx].content.slides) next[idx].content.slides = [{}];
+                                  next[idx].content.slides[sIdx].image = e.target.value;
+                                  setPage({ ...page, blocks: next });
+                                }}
+                                placeholder="Image URL..."
+                                className="w-full bg-slate-950/50 border border-white/5 rounded-xl px-4 py-2 text-xs text-slate-400 outline-none"
+                              />
+                           </div>
+                        ))}
+                        <button 
+                           onClick={() => {
+                              const next = [...page.blocks];
+                              if (!next[idx].content.slides) next[idx].content.slides = [{}];
+                              next[idx].content.slides.push({ title: { fr: '' }, subtitle: { fr: '' }, image: '' });
+                              setPage({...page, blocks: next});
+                           }}
+                           className="w-full py-3 bg-white/5 border border-dashed border-white/10 rounded-2xl text-[10px] font-black text-slate-500 hover:text-white uppercase tracking-widest"
+                        >
+                           <Plus className="w-3 h-3 mx-auto mb-1" />
+                           Ajouter une Slide
+                        </button>
+                     </div>
+                   )}
+
+                   {block.type === 'stats' && (
+                     <div className="grid grid-cols-2 gap-4">
+                        {(block.content.items || []).map((stat: any, sIdx: number) => (
+                          <div key={sIdx} className="bg-white/5 border border-white/5 rounded-2xl p-4 space-y-3 relative group">
+                             <button onClick={() => {
+                                const next = [...page.blocks];
+                                next[idx].content.items = next[idx].content.items.filter((_:any,i:any)=>i!==sIdx);
+                                setPage({...page, blocks: next});
+                             }} className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 text-red-500"><Trash2 className="w-3 h-3" /></button>
+                             <div className="grid grid-cols-2 gap-2">
+                                <input value={stat.value || ''} placeholder="Val (ex: 1.2M)" onChange={e => {
+                                   const next = [...page.blocks];
+                                   if (!next[idx].content.items) next[idx].content.items = [];
+                                   next[idx].content.items[sIdx].value = e.target.value;
+                                   setPage({...page, blocks: next});
+                                }} className="bg-slate-950/50 border border-white/5 rounded-lg px-2 py-1 text-xs text-sky-400 font-bold" />
+                                <input value={stat.unit || ''} placeholder="Unit (ex: T)" onChange={e => {
+                                   const next = [...page.blocks];
+                                   if (!next[idx].content.items) next[idx].content.items = [];
+                                   next[idx].content.items[sIdx].unit = e.target.value;
+                                   setPage({...page, blocks: next});
+                                }} className="bg-slate-950/50 border border-white/5 rounded-lg px-2 py-1 text-xs text-slate-500" />
+                             </div>
+                             <input value={stat.label?.[activeLang] || ''} placeholder="Libellé..." onChange={e => {
+                                const next = [...page.blocks];
+                                if (!next[idx].content.items) next[idx].content.items = [];
+                                next[idx].content.items[sIdx].label = { ...next[idx].content.items[sIdx].label, [activeLang]: e.target.value };
+                                setPage({...page, blocks: next});
+                             }} className="w-full bg-transparent border-none text-[10px] font-black text-white uppercase tracking-widest outline-none" />
+                          </div>
+                        ))}
+                        <button onClick={() => {
+                            const next = [...page.blocks];
+                            if (!next[idx].content.items) next[idx].content.items = [];
+                            next[idx].content.items.push({ value: '', unit: '', label: { fr: '' } });
+                            setPage({...page, blocks: next});
+                        }} className="col-span-2 py-4 border border-dashed border-white/5 rounded-2xl flex items-center justify-center text-slate-700 hover:text-slate-400 transition-colors">
+                           <Plus className="w-5 h-5" />
+                        </button>
                      </div>
                    )}
 
@@ -248,9 +302,9 @@ export default function PageEditor({ initialData, id }: PageEditorProps) {
                         <textarea 
                           value={block.content.text?.[activeLang] || ''}
                           onChange={e => {
-                            const newBlocks = [...page.blocks];
-                            newBlocks[idx].content.text = { ...newBlocks[idx].content.text, [activeLang]: e.target.value };
-                            setPage({ ...page, blocks: newBlocks });
+                            const next = [...page.blocks];
+                            next[idx].content.text = { ...next[idx].content.text, [activeLang]: e.target.value };
+                            setPage({ ...page, blocks: next });
                           }}
                           placeholder="Start writing..."
                           className="w-full bg-transparent border-none outline-none text-lg text-slate-400 placeholder:text-slate-800 min-h-[200px] resize-y"
@@ -267,6 +321,3 @@ export default function PageEditor({ initialData, id }: PageEditorProps) {
   );
 }
 
-function Link({ href, children, ...props }: any) {
-  return <a href={href} {...props}>{children}</a>;
-}
