@@ -113,7 +113,7 @@ export default function PageList() {
                   </span>
                 </td>
                 <td className="px-6 py-5">
-                  <p className="text-sm text-slate-400 font-medium">{formatDate(page.updated_at)}</p>
+                  <p className="text-sm text-slate-400 font-medium">{formatDate(page.updated_at, 'fr')}</p>
                 </td>
                 <td className="px-6 py-5 text-right">
                   <div className="flex items-center justify-end gap-2">

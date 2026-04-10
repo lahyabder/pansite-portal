@@ -140,7 +140,7 @@ export default function MediaVault() {
                 
                 <div className="space-y-1.5">
                   <label className="text-[10px] font-black text-slate-600 uppercase tracking-widest">Added Date</label>
-                  <p className="text-sm font-bold text-slate-300">{formatDate(selected.created_at)}</p>
+                  <p className="text-sm font-bold text-slate-300">{formatDate(selected.created_at, 'fr')}</p>
                 </div>
               </div>
 
