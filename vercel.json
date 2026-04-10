@@ -1,0 +1,5 @@
+{
+  "buildCommand": "pnpm --filter @pan/shared build && pnpm --filter @pan/web build",
+  "outputDirectory": "apps/web/.next",
+  "framework": "nextjs"
+}
