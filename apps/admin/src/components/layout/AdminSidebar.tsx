@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation';
 import { 
     LayoutDashboard, FileText, Newspaper, FileBox, 
     Briefcase, ShieldCheck, DollarSign, Anchor, Image as ImageIcon, 
-    MessageSquare, Menu, Users, Shield, Settings, Activity
+    MessageSquare, Menu, Users, Shield, Settings, Activity, Globe
 } from 'lucide-react';
 
 const navGroups = [
@@ -38,6 +38,7 @@ const navGroups = [
         label: 'Système & Sécurité',
         items: [
             { href: '/menus', label: 'Menus', icon: Menu },
+            { href: '/translations', label: 'Textes et Traductions', icon: Globe },
             { href: '/users', label: 'Utilisateurs', icon: Users },
             { href: '/roles', label: 'Rôles & Permissions', icon: Shield },
             { href: '/settings', label: 'Paramètres du site', icon: Settings },

@@ -68,7 +68,7 @@ export default async function LocaleLayout({
     const { locale: localeParam } = await params;
     const locale = (['ar', 'en', 'es'].includes(localeParam) ? localeParam : 'fr') as Locale;
     const dir = getDir(locale);
-    const dict = getDictionary(locale);
+    const dict = await getDictionary(locale);
     
     // Fetch Dynamic Data
     const settings = await getSiteSettings();

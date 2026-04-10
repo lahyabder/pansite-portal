@@ -34,7 +34,7 @@ export async function generateMetadata({ params }: DynamicPageProps): Promise<Me
 export default async function DynamicCMSPage({ params }: DynamicPageProps) {
     const { locale: lp, slug } = await params;
     const locale = lp as Locale;
-    const dict = getDictionary(locale);
+    const dict = await getDictionary(locale);
     
     const page = await getPageBySlug(slug);
 

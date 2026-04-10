@@ -8,7 +8,7 @@ import Image from 'next/image';
 export default async function LePortPage({ params }: { params: Promise<{ locale: string }> }) {
     const { locale: lp } = await params;
     const locale = (['ar', 'fr', 'en', 'es'].includes(lp) ? lp : 'fr') as Locale;
-    const dict = getDictionary(locale);
+    const dict = await getDictionary(locale);
 
     const initialData = await getPublishedContents({ pageSize: 12, category: 'le-port' });
     const items = initialData.items;
@@ -50,7 +50,7 @@ export default async function LePortPage({ params }: { params: Promise<{ locale:
                             
                             <div className="relative h-64 md:h-80 w-full rounded-2xl overflow-hidden shadow-lg mt-8">
                                 <Image 
-                                    src="/images/hero/hero-1.jpg" 
+                                    src={(dict.pages.port as any).images?.role || "/images/hero/hero-1.jpg"}
                                     alt={dict.pages.port.role.title} 
                                     fill 
                                     className="object-cover hover:scale-105 transition-transform duration-700"
@@ -87,7 +87,7 @@ export default async function LePortPage({ params }: { params: Promise<{ locale:
                             
                             <div className="relative h-64 w-full rounded-2xl overflow-hidden shadow-lg mt-2">
                                 <Image 
-                                    src="/images/port/historical-boats.png" 
+                                    src={(dict.pages.port as any).images?.geography || "/images/port/historical-boats.png"}
                                     alt={dict.pages.port.geography.title} 
                                     fill 
                                     className="object-cover hover:scale-105 transition-transform duration-700"

@@ -175,6 +175,10 @@ export type Dictionary = {
                 subtitle: string;
                 deceased: string;
             };
+            images: {
+                role: string;
+                geography: string;
+            };
         };
         infrastructure: {
             title: string;
@@ -1929,6 +1933,35 @@ const dictionaries: Record<Locale, Dictionary> = {
     },
 };
 
-export function getDictionary(locale: Locale): Dictionary {
-    return dictionaries[locale] || dictionaries.fr;
+import { getSiteSettings } from '@pan/shared';
+
+// Helper function to deep merge objects
+const isObject = (item: any) => item && typeof item === 'object' && !Array.isArray(item);
+
+const deepMerge = (target: any, source: any): any => {
+    let output = Object.assign({}, target);
+    if (isObject(target) && isObject(source)) {
+        Object.keys(source).forEach(key => {
+            if (isObject(source[key])) {
+                if (!(key in target)) Object.assign(output, { [key]: source[key] });
+                else output[key] = deepMerge(target[key], source[key]);
+            } else {
+                Object.assign(output, { [key]: source[key] });
+            }
+        });
+    }
+    return output;
+};
+
+export async function getDictionary(locale: Locale): Promise<Dictionary> {
+    const base = dictionaries[locale] || dictionaries.fr;
+    try {
+        const settings = await getSiteSettings();
+        if (settings?.dictionaries && settings.dictionaries[locale]) {
+            return deepMerge(base, settings.dictionaries[locale]) as Dictionary;
+        }
+    } catch (e) {
+        // Fallback to static base
+    }
+    return base;
 }

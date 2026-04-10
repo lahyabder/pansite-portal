@@ -16,7 +16,7 @@ export default async function HomePage({
 }) {
     const { locale: localeParam } = await params;
     const locale = (['ar', 'fr', 'en', 'es'].includes(localeParam) ? localeParam : 'fr') as Locale;
-    const dict = getDictionary(locale);
+    const dict = await getDictionary(locale);
 
     // Fetch Dynamic Data in Parallel
     const [settings, homePage, latestContent] = await Promise.all([
@@ -40,7 +40,7 @@ export default async function HomePage({
     };
 
     // Dynamic Statistics from Home Page blocks or Settings
-    const statsBlock = homePage?.blocks?.find(b => b.type === 'stats' && b.id === 'stats');
+    const statsBlock = homePage?.blocks?.find(b => b.type === 'stats');
     const displayStats = statsBlock?.content?.items || [
         { label: { fr: 'Trafic Annuel', ar: 'الحركة السنوية' }, value: '1.2M', unit: 'T' },
         { label: { fr: 'Navires / an', ar: 'سفينة / سنة' }, value: '850', unit: '' },

@@ -10,7 +10,7 @@ export default async function AccessPortalPage({
 }) {
     const { locale: localeParam } = await params;
     const locale = (['ar', 'fr', 'en', 'es'].includes(localeParam) ? localeParam : 'fr') as Locale;
-    const dict = getDictionary(locale);
+    const dict = await getDictionary(locale);
 
     return (
         <div className="min-h-screen bg-pan-navy flex items-center justify-center p-6 relative overflow-hidden text-white font-sans">

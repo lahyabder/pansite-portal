@@ -6,7 +6,7 @@ import { Camera, Play, Maximize2, ExternalLink } from 'lucide-react';
 export default async function MediaPage({ params }: { params: Promise<{ locale: string }> }) {
     const { locale: lp } = await params;
     const locale = (['ar', 'fr', 'en', 'es'].includes(lp) ? lp : 'fr') as Locale;
-    const dict = getDictionary(locale);
+    const dict = await getDictionary(locale);
 
     // Mock images for the gallery with safe access
     const photoGallery = [

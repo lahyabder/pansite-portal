@@ -11,7 +11,7 @@ export const revalidate = 60;
 export default async function InfrastructuresPage({ params }: { params: Promise<{ locale: string }> }) {
     const { locale: lp } = await params;
     const locale = (['ar', 'fr', 'en', 'es'].includes(lp) ? lp : 'fr') as Locale;
-    const dict = getDictionary(locale);
+    const dict = await getDictionary(locale);
 
     const initialData = await getPublishedContents({ pageSize: 12, category: 'infrastructure' });
     const items = initialData.items;

@@ -12,7 +12,7 @@ export default async function SearchPage({
     const { locale: lp } = await params;
     const { q: query } = await searchParams;
     const locale = (['ar', 'fr', 'en', 'es'].includes(lp) ? lp : 'fr') as Locale;
-    const dict = getDictionary(locale);
+    const dict = await getDictionary(locale);
 
     return (
         <>

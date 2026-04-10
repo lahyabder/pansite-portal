@@ -420,6 +420,7 @@ export interface SiteSettings {
         defaultDescription: string;
         defaultOgImage?: string;
     };
+    dictionaries?: any; // To store dynamic UI labels and overriding images
     updatedAt: string;
 }
 

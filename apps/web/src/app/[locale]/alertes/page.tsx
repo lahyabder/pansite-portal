@@ -11,7 +11,7 @@ export default async function AlertesPage({
 }) {
     const { locale: localeParam } = await params;
     const locale = (['ar', 'fr', 'en', 'es'].includes(localeParam) ? localeParam : 'fr') as Locale;
-    const dict = getDictionary(locale);
+    const dict = await getDictionary(locale);
 
     const subtitles = {
         ar: 'التنبيهات والإشعارات الهامة.',

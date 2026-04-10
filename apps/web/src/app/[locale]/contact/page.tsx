@@ -5,7 +5,7 @@ import { PageHero } from '@/components/PageHero';
 export default async function ContactPage({ params }: { params: Promise<{ locale: string }> }) {
     const { locale: lp } = await params;
     const locale = (['ar', 'fr', 'en', 'es'].includes(lp) ? lp : 'fr') as Locale;
-    const dict = getDictionary(locale);
+    const dict = await getDictionary(locale);
 
     const labels = {
         ar: {

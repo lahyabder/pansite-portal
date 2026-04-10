@@ -38,7 +38,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 export default async function ServiceDetailPage({ params }: { params: Promise<{ locale: string; slug: string }> }) {
     const { locale: lp, slug } = await params;
     const locale = (['ar', 'fr', 'en', 'es'].includes(lp) ? lp : 'fr') as Locale;
-    const dict = getDictionary(locale);
+    const dict = await getDictionary(locale);
 
     const service = mockServices.find((s) => s.slug === slug);
     if (!service) notFound();

@@ -13,7 +13,7 @@ export default async function ContentDetailPage({
 }) {
     const { locale: localeParam, slug } = await params;
     const locale = (['ar', 'fr', 'en', 'es'].includes(localeParam) ? localeParam : 'fr') as Locale;
-    const dict = getDictionary(locale);
+    const dict = await getDictionary(locale);
 
     const content = await getContentBySlug(slug);
     if (!content || content.status !== 'published') return notFound();

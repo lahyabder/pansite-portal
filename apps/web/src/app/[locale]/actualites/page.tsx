@@ -13,7 +13,7 @@ export default async function ActualitesPage({
 }) {
     const { locale: localeParam } = await params;
     const locale = (['ar', 'fr', 'en', 'es'].includes(localeParam) ? localeParam : 'fr') as Locale;
-    const dict = getDictionary(locale);
+    const dict = await getDictionary(locale);
 
     // Fetch directly from DB instead of API route to avoid SSR edge casing
     const initialData = await getPublishedContents({ pageSize: 12, category: 'actualite' });

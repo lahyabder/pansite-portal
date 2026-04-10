@@ -9,7 +9,7 @@ export const revalidate = 60;
 export default async function AppelsOffresPage({ params }: { params: Promise<{ locale: string }> }) {
     const { locale: lp } = await params;
     const locale = (['ar', 'fr', 'en', 'es'].includes(lp) ? lp : 'fr') as Locale;
-    const dict = getDictionary(locale);
+    const dict = await getDictionary(locale);
 
     const labels = {
         ar: { title: 'العنوان & المرجع', pub: 'تاريخ النشر', lim: 'الموعد النهائي', docs: 'الوثائق', status: 'الحالة', open: 'مفتوح', closed: 'مغلق', empty: 'لا توجد مناقصات نشطة حالياً' },
