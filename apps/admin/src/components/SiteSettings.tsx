@@ -19,15 +19,19 @@ import {
 import { getSettingsAction, updateSettingsAction } from '@/app/actions';
 
 export default function SiteSettings() {
-  const [settings, setSettings] = useState<any>(null);
+  const [settings, setSettings] = useState<any>({});
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
 
   const load = async () => {
     setLoading(true);
-    const data = await getSettingsAction();
-    setSettings(data);
+    try {
+      const data = await getSettingsAction();
+      setSettings(data || {});
+    } catch (e) {
+      setSettings({});
+    }
     setLoading(false);
   };
 
