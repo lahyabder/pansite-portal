@@ -1,59 +1,59 @@
 @import "tailwindcss";
 
-@theme inline {
-  /* === PAN Brand Colors === */
-  --color-pan-navy: #0d2947;
-  --color-pan-blue: #1a5276;
-  --color-pan-sky: #2e86c1;
-  --color-pan-light: #d6eaf8;
-  --color-pan-pale: #eaf4fb;
-  --color-pan-gold: #d4ac0d;
-
-  /* === Gray Palette === */
-  --color-pan-gray-50:  #f8f9fa;
-  --color-pan-gray-100: #f1f3f5;
-  --color-pan-gray-200: #e9ecef;
-  --color-pan-gray-300: #dee2e6;
-  --color-pan-gray-400: #adb5bd;
-  --color-pan-gray-500: #868e96;
-  --color-pan-gray-600: #495057;
-  --color-pan-gray-700: #343a40;
-  --color-pan-gray-900: #212529;
-
-  /* === Status Colors === */
-  --color-status-success: #1fa04a;
-  --color-status-warning: #f59e0b;
-  --color-status-danger:  #ef4444;
-  --color-status-info:    #3b82f6;
-
-  /* === Admin layout tokens === */
-  --color-admin-bg:           #f8f9fb;
-  --color-admin-sidebar:      #0d2947;
-  --color-admin-topbar:       #ffffff;
-  --color-admin-border:       #e9ecef;
-  --color-admin-text:         #0d2947;
-  --color-admin-text-muted:   #868e96;
-
-  --color-background: var(--color-admin-bg);
-  --color-foreground: var(--color-admin-text);
-
-  --font-sans: var(--font-inter, system-ui, sans-serif);
+@theme {
+  --color-pan-navy: #0F172A;
+  --color-pan-blue: #1E293B;
+  --color-pan-sky: #0EA5E9;
+  --color-pan-gold: #F59E0B;
+  --color-pan-gray-50: #F8FAFC;
+  --color-pan-gray-100: #F1F5F9;
+  --color-pan-gray-200: #E2E8F0;
+  --color-pan-gray-300: #CBD5E1;
+  --color-pan-gray-400: #94A3B8;
+  
+  --radius-xl: 1rem;
+  --radius-2xl: 1.5rem;
+  --radius-3xl: 2rem;
 }
 
-/* Base */
-body {
-  background: var(--color-background);
-  color: var(--color-foreground);
-  font-family: var(--font-sans);
-  -webkit-font-smoothing: antialiased;
+@layer base {
+  body {
+    @apply bg-slate-950 text-slate-200 font-sans antialiased selection:bg-sky-500/30;
+  }
 }
 
-::selection {
-  background: var(--color-pan-sky);
-  color: white;
+@layer components {
+  .glass {
+    @apply bg-white/5 backdrop-blur-xl border border-white/10 shadow-2xl;
+  }
+  
+  .glass-card {
+    @apply bg-slate-900/50 backdrop-blur-md border border-slate-800/50 hover:border-slate-700/50 transition-all;
+  }
+  
+  .glass-sidebar {
+    @apply bg-slate-950/80 backdrop-blur-2xl border-r border-white/5;
+  }
 }
 
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: var(--color-pan-gray-100); }
-::-webkit-scrollbar-thumb { background: var(--color-pan-gray-300); border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: var(--color-pan-sky); }
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+::-webkit-scrollbar-thumb {
+  @apply bg-slate-800 rounded-full hover:bg-slate-700;
+}
+
+/* Animation utilities */
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
