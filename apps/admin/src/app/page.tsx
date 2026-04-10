@@ -18,6 +18,9 @@ const STATS = [
   { label: 'Visites (Mois)', value: '1.2k', icon: Activity, trend: '+12%', color: 'bg-amber-500' },
 ];
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export default function DashboardPage() {
   return (
     <div className="space-y-10">

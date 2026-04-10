@@ -7,6 +7,7 @@ import { AlertBar } from '@/components/AlertBar';
 import { HeroSlider } from '@/components/HeroSlider';
 import { Ship, Anchor, Building2, FileText, Calendar, Phone, TrendingUp, ShipWheel, BarChart3, Globe } from 'lucide-react';
 
+export const dynamic = 'force-dynamic';
 export const revalidate = 60; // Revalidate every minute
 
 export default async function HomePage({
