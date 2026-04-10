@@ -132,7 +132,7 @@ export function Footer({ locale, dict, menu, settings }: FooterProps) {
                 <div className="max-w-7xl mx-auto px-6 py-8">
                     <div className="flex flex-col md:flex-row items-center justify-between gap-6">
                         <div className="flex flex-col items-center md:items-start gap-1 text-[10px] text-pan-light/30 uppercase font-black tracking-widest">
-                            <p>© {new Date().getFullYear()} {t(settings?.siteName, locale) || 'PAN'} - {dict.footer.rights}</p>
+                            <p>© {new Date().getFullYear()} {t(settings?.siteName, locale) || 'PAN'} - {t(settings?.copyright, locale) || dict.footer.rights}</p>
                             <p className="flex items-center gap-1.5 opacity-50">
                                 Powered by <a href="https://afrikyia.com" target="_blank" className="text-pan-gold hover:text-white transition-colors">Afrikyia</a>
                             </p>

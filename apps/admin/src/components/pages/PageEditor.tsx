@@ -29,6 +29,8 @@ interface PageEditorProps {
 const BLOCK_TYPES = [
   { type: 'hero',     label: 'Hero Slider',    icon: Layout,      desc: 'Carrousel premium avec titres et images' },
   { type: 'stats',    label: 'Grille Chiffres', icon: Grid,        desc: 'Statistiques clés de l\'activité (Home)' },
+  { type: 'quick_services', label: 'Services Rapides', icon: Grid, desc: 'Grille d\'icônes de services interactifs' },
+  { type: 'latest_news', label: 'Flux d\'Actualités', icon: Layout, desc: 'Affiche dynamiquement les actus' },
   { type: 'rich_text', label: 'Texte Riche',     icon: Type,        desc: 'Éditeur de texte avec formatage' },
   { type: 'features', label: 'Atouts / Features', icon: Grid,        desc: 'Grille d\'icônes et descriptions' },
   { type: 'cta',      label: 'Appel à l\'Action', icon: MessageSquare, desc: 'Bouton et texte d\'action' },
@@ -313,6 +315,107 @@ export default function PageEditor({ initialData, id }: PageEditorProps) {
                         }} className="col-span-2 py-4 border border-dashed border-white/5 rounded-2xl flex items-center justify-center text-slate-700 hover:text-slate-400 transition-colors">
                            <Plus className="w-5 h-5" />
                         </button>
+                     </div>
+                   )}
+
+                   {block.type === 'quick_services' && (
+                     <div className="space-y-6">
+                        <div className="grid grid-cols-2 gap-4">
+                           <input value={block.content.subtitle?.[activeLang] || ''} placeholder="Surtitre (ex: Portail Services)" onChange={e => {
+                              const next = [...page.blocks];
+                              if (!next[idx].content) next[idx].content = {};
+                              next[idx].content.subtitle = { ...next[idx].content.subtitle, [activeLang]: e.target.value };
+                              setPage({...page, blocks: next});
+                           }} className="bg-slate-950/50 outline-none border border-white/5 rounded-xl px-4 py-2 text-xs text-sky-400" />
+                           <input value={block.content.title?.[activeLang] || ''} placeholder="Grand Titre (ex: Accès Rapide)" onChange={e => {
+                              const next = [...page.blocks];
+                              if (!next[idx].content) next[idx].content = {};
+                              next[idx].content.title = { ...next[idx].content.title, [activeLang]: e.target.value };
+                              setPage({...page, blocks: next});
+                           }} className="bg-slate-950/50 outline-none border border-white/5 rounded-xl px-4 py-2 text-xs text-white uppercase" />
+                        </div>
+                        
+                        <div className="grid grid-cols-2 gap-4">
+                           {(block.content.items || []).map((srv: any, sIdx: number) => (
+                              <div key={sIdx} className="bg-white/5 border border-white/5 rounded-2xl p-4 space-y-3 relative group">
+                                 <button onClick={() => {
+                                    const next = [...page.blocks];
+                                    next[idx].content.items = next[idx].content.items.filter((_:any,i:any)=>i!==sIdx);
+                                    setPage({...page, blocks: next});
+                                 }} className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 text-red-500"><Trash2 className="w-3 h-3" /></button>
+                                 <input value={srv.icon || ''} placeholder="Icone (ex: Ship, Anchor, Phone)" onChange={e => {
+                                    const next = [...page.blocks];
+                                    if (!next[idx].content.items) next[idx].content.items = [];
+                                    next[idx].content.items[sIdx].icon = e.target.value;
+                                    setPage({...page, blocks: next});
+                                 }} className="w-full bg-slate-950/50 border border-white/5 rounded-lg px-2 py-2 text-xs text-sky-400 font-bold" />
+                                 <input value={srv.title?.[activeLang] || ''} placeholder="Libellé du Service..." onChange={e => {
+                                    const next = [...page.blocks];
+                                    if (!next[idx].content.items) next[idx].content.items = [];
+                                    next[idx].content.items[sIdx].title = { ...next[idx].content.items[sIdx].title, [activeLang]: e.target.value };
+                                    setPage({...page, blocks: next});
+                                 }} className="w-full bg-transparent border-none text-xs font-black text-white outline-none" />
+                                 <input value={srv.href || ''} placeholder="Lien (/services)" onChange={e => {
+                                    const next = [...page.blocks];
+                                    if (!next[idx].content.items) next[idx].content.items = [];
+                                    next[idx].content.items[sIdx].href = e.target.value;
+                                    setPage({...page, blocks: next});
+                                 }} className="w-full bg-slate-950/50 border border-white/5 rounded-lg px-2 py-2 text-[10px] text-slate-400" />
+                              </div>
+                           ))}
+                           <button onClick={() => {
+                               const next = [...page.blocks];
+                               if (!next[idx].content.items) next[idx].content.items = [];
+                               next[idx].content.items.push({ icon: 'Ship', title: { fr: '' }, href: '/' });
+                               setPage({...page, blocks: next});
+                           }} className="py-4 border border-dashed border-white/5 rounded-2xl flex items-center justify-center text-slate-700 hover:text-slate-400 transition-colors">
+                              <Plus className="w-5 h-5" />
+                           </button>
+                        </div>
+                     </div>
+                   )}
+
+                   {block.type === 'latest_news' && (
+                     <div className="space-y-4 bg-white/5 p-6 rounded-2xl border border-white/5">
+                        <div className="space-y-2">
+                           <label className="text-[10px] font-black text-slate-500 uppercase">Titre Surligné (ex: Actualités & Presse)</label>
+                           <input 
+                             value={block.content.subtitle?.[activeLang] || ''}
+                             onChange={e => {
+                                const next = [...page.blocks];
+                                if (!next[idx].content) next[idx].content = {};
+                                next[idx].content.subtitle = { ...next[idx].content.subtitle, [activeLang]: e.target.value };
+                                setPage({ ...page, blocks: next });
+                             }}
+                             className="w-full bg-slate-950/50 outline-none border border-white/5 rounded-xl px-4 py-2 text-sm text-sky-400"
+                           />
+                        </div>
+                        <div className="space-y-2">
+                           <label className="text-[10px] font-black text-slate-500 uppercase">Grand Titre</label>
+                           <input 
+                             value={block.content.title?.[activeLang] || ''}
+                             onChange={e => {
+                                const next = [...page.blocks];
+                                if (!next[idx].content) next[idx].content = {};
+                                next[idx].content.title = { ...next[idx].content.title, [activeLang]: e.target.value };
+                                setPage({ ...page, blocks: next });
+                             }}
+                             className="w-full bg-slate-950/50 outline-none border border-white/5 rounded-xl px-4 py-2 text-sm text-white"
+                           />
+                        </div>
+                        <div className="space-y-2">
+                           <label className="text-[10px] font-black text-slate-500 uppercase">Description (Optionnelle)</label>
+                           <textarea 
+                             value={block.content.description?.[activeLang] || ''}
+                             onChange={e => {
+                                const next = [...page.blocks];
+                                if (!next[idx].content) next[idx].content = {};
+                                next[idx].content.description = { ...next[idx].content.description, [activeLang]: e.target.value };
+                                setPage({ ...page, blocks: next });
+                             }}
+                             className="w-full bg-slate-950/50 outline-none border border-white/5 rounded-xl px-4 py-2 text-sm text-slate-400 h-20"
+                           />
+                        </div>
                      </div>
                    )}
 

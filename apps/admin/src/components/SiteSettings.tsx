@@ -222,6 +222,33 @@ export default function SiteSettings() {
               </div>
            </section>
 
+           <section className="glass-card rounded-[2.5rem] p-10 space-y-8">
+              <div className="flex items-center gap-4 text-pink-500">
+                 <Layout className="w-6 h-6" />
+                 <h2 className="text-xl font-bold text-white">Textes du Pied de Page</h2>
+              </div>
+              <div className="space-y-6">
+                 <div className="space-y-2">
+                    <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Description (FR)</label>
+                    <textarea 
+                      value={settings.slogan?.fr || ''}
+                      onChange={e => setSettings({...settings, slogan: {...settings.slogan, fr: e.target.value}})}
+                      className="w-full bg-slate-950/50 border border-slate-800 rounded-xl px-4 py-2 text-[12px] text-slate-400 outline-none focus:border-sky-500/50 h-24"
+                    />
+                 </div>
+                 <div className="space-y-2">
+                    <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Droits / Copyright (FR)</label>
+                    <input 
+                      type="text" 
+                      value={settings.copyright?.fr || ''}
+                      onChange={e => setSettings({...settings, copyright: {...settings.copyright, fr: e.target.value}})}
+                      placeholder="ex: Tous droits réservés"
+                      className="w-full bg-slate-950/50 border border-slate-800 rounded-xl px-4 py-2 text-[12px] text-slate-400 outline-none focus:border-sky-500/50"
+                    />
+                 </div>
+              </div>
+           </section>
+
            <div className="glass-card rounded-[2.5rem] p-10 bg-gradient-to-br from-indigo-500/10 to-purple-500/10 border-indigo-500/20 text-center">
               <div className="w-20 h-20 bg-indigo-500 rounded-3xl mx-auto flex items-center justify-center shadow-2xl shadow-indigo-500/30 mb-6">
                  <Settings className="text-white w-10 h-10 animate-[spin_10s_linear_infinite]" />
