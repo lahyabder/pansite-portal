@@ -3,7 +3,7 @@ import { getDictionary } from '@/lib/dictionaries';
 import { PageHero } from '@/components/PageHero';
 import { Package, RefreshCw, Box, Truck, Anchor, Layout, Info } from 'lucide-react';
 import Link from 'next/link';
-import { getPublishedContents, t } from '@pan/shared';
+import { getPublishedContents, getPageBySlug, resolveLocalized, t } from '@pan/shared';
 
 export const revalidate = 60;
 
@@ -30,6 +30,10 @@ export default async function ServicesPage({ params }: { params: Promise<{ local
     // Fetch dynamic services from database
     const { items: dbServices } = await getPublishedContents({ category: 'services', pageSize: 20 });
     
+    const dbPage = await getPageBySlug('services');
+    const pageData = dbPage?.content ? resolveLocalized(dbPage.content, locale) : dict.pages.services;
+    const resolvedTitle = dbPage?.title ? resolveLocalized(dbPage.title, locale) : dict.pages.services.title;
+    
     // Fallback to dictionary mock services if DB is empty to maintain content during first deploy
     const services = dbServices.length > 0 
         ? dbServices.map(item => ({
@@ -40,17 +44,17 @@ export default async function ServicesPage({ params }: { params: Promise<{ local
             points: item.tags?.slice(1) || [],
             isDynamic: true
         }))
-        : dict.pages.services.list.map(s => ({ ...s, isDynamic: false }));
+        : pageData.list.map((s: any) => ({ ...s, isDynamic: false }));
 
     return (
         <>
             <PageHero
-                title={dict.pages.services.title}
-                subtitle={dict.pages.services.subtitle}
+                title={resolvedTitle}
+                subtitle={pageData.subtitle}
                 locale={locale}
                 breadcrumbs={[
                     { label: dict.nav.home, href: `/${locale}` },
-                    { label: dict.pages.services.title },
+                    { label: resolvedTitle },
                 ]}
             />
 

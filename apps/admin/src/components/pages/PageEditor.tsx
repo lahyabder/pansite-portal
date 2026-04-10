@@ -20,6 +20,7 @@ import {
   Settings, 
   Trash2 
 } from 'lucide-react';
+import { AutoJsonEditor } from './AutoJsonEditor';
 
 interface PageEditorProps {
   initialData?: any;
@@ -50,8 +51,11 @@ export default function PageEditor({ initialData, id }: PageEditorProps) {
     slug: '',
     status: 'draft',
     blocks: [],
+    content: {},
     hero: { title: { fr: '' } }
   });
+  
+  const isCmsFormPage = page.content && Object.keys(page.content).length > 0;
   
   const [activeLang, setActiveLang] = useState('fr');
   const [saving, setSaving] = useState(false);
@@ -135,6 +139,31 @@ export default function PageEditor({ initialData, id }: PageEditorProps) {
       </header>
 
       <div className="flex flex-1 min-h-0">
+        {isCmsFormPage ? (
+          <main className="flex-1 bg-slate-950/50 p-12 overflow-y-auto">
+             <div className="max-w-4xl mx-auto space-y-6">
+               <div className="bg-slate-900 border border-white/5 p-8 md:p-12 rounded-[2.5rem] shadow-2xl">
+                 <div className="flex items-center gap-4 mb-8 pb-8 border-b border-white/5">
+                   <div className="w-12 h-12 rounded-2xl bg-sky-500/10 flex items-center justify-center">
+                     <Layout className="w-6 h-6 text-sky-500" />
+                   </div>
+                   <div>
+                     <h2 className="text-2xl font-bold text-white">Éditeur de Page Structurée</h2>
+                     <p className="text-slate-500 text-sm mt-1">Modifiez directement les textes et images des sections fixes.</p>
+                   </div>
+                 </div>
+                 <AutoJsonEditor 
+                   label="Sections de la page" 
+                   value={page.content} 
+                   onChange={(val: any) => setPage({ ...page, content: val })} 
+                   activeLang={activeLang}
+                   depth={0} 
+                 />
+               </div>
+             </div>
+          </main>
+        ) : (
+          <>
         {/* ─── Block Library ─── */}
         <aside className="w-80 border-r border-white/5 p-6 space-y-8 overflow-y-auto">
           <div>
@@ -438,6 +467,8 @@ export default function PageEditor({ initialData, id }: PageEditorProps) {
             ))}
           </div>
         </main>
+        </>
+        )}
       </div>
     </div>
   );

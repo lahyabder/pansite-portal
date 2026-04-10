@@ -3,7 +3,7 @@ import { getDictionary } from '@/lib/dictionaries';
 import { PageHero } from '@/components/PageHero';
 import { InfrastructureMap } from '@/components/InfrastructureMap';
 import { QuaisGrid } from '@/components/infrastructures/QuaisGrid';
-import { getPublishedContents } from '@pan/shared';
+import { getPublishedContents, getPageBySlug, resolveLocalized } from '@pan/shared';
 import { ContentCard } from '@/components/ContentCard';
 
 export const revalidate = 60;
@@ -16,15 +16,19 @@ export default async function InfrastructuresPage({ params }: { params: Promise<
     const initialData = await getPublishedContents({ pageSize: 12, category: 'infrastructure' });
     const items = initialData.items;
 
+    const dbPage = await getPageBySlug('infrastructures');
+    const pageData = dbPage?.content ? resolveLocalized(dbPage.content, locale) : dict.pages.infrastructure;
+    const resolvedTitle = dbPage?.title ? resolveLocalized(dbPage.title, locale) : dict.pages.infrastructure.title;
+
     return (
         <div className="bg-pan-pale min-h-screen">
             <PageHero
-                title={dict.pages.infrastructure.title}
-                subtitle={dict.pages.infrastructure.subtitle}
+                title={resolvedTitle}
+                subtitle={pageData.subtitle}
                 locale={locale}
                 breadcrumbs={[
                     { label: dict.nav.home, href: `/${locale}` },
-                    { label: dict.pages.infrastructure.title },
+                    { label: resolvedTitle },
                 ]}
             />
 
@@ -36,10 +40,10 @@ export default async function InfrastructuresPage({ params }: { params: Promise<
                             <div>
                                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-pan-navy/5 text-pan-navy text-[10px] font-bold uppercase tracking-widest mb-4">
                                     <span className="w-1.5 h-1.5 rounded-full bg-pan-sky animate-pulse" />
-                                    {dict.pages.infrastructure.quais.title}
+                                    {pageData.quais.title}
                                 </div>
-                                <h2 className="text-3xl font-bold text-pan-navy tracking-tight">{dict.pages.infrastructure.interactiveMapTitle}</h2>
-                                <p className="text-pan-gray-500 mt-2 text-sm max-w-xl">{dict.pages.infrastructure.interactiveMapDesc}</p>
+                                <h2 className="text-3xl font-bold text-pan-navy tracking-tight">{pageData.interactiveMapTitle}</h2>
+                                <p className="text-pan-gray-500 mt-2 text-sm max-w-xl">{pageData.interactiveMapDesc}</p>
                             </div>
                             <div className="flex items-center gap-4 text-xs font-medium text-pan-gray-400">
                                 <span className="flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-pan-sky" /> {dict.pages.infrastructure.labels.operational}</span>
@@ -54,7 +58,7 @@ export default async function InfrastructuresPage({ params }: { params: Promise<
             {/* Detailed Cards Section */}
             <section className="py-24 pb-32">
                 <div className="max-w-7xl mx-auto px-6">
-                    <QuaisGrid dict={dict} />
+                    <QuaisGrid dict={dict} quais={pageData.quais} />
                 </div>
             </section>
 
@@ -68,14 +72,14 @@ export default async function InfrastructuresPage({ params }: { params: Promise<
                 <div className="max-w-7xl mx-auto px-6 relative z-10">
                     <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-12 mb-20">
                         <div className="max-w-xl">
-                            <h2 className="text-4xl sm:text-5xl font-bold text-white mb-6 leading-tight">{dict.pages.infrastructure.zones.title}</h2>
+                            <h2 className="text-4xl sm:text-5xl font-bold text-white mb-6 leading-tight">{pageData.zones.title}</h2>
                             <p className="text-pan-light/60 text-lg">Des espaces spécialisés conçus pour optimiser chaque maillon de la chaîne logistique et industrielle du port.</p>
                         </div>
                         <div className="h-0.5 w-32 bg-pan-gold hidden lg:block" />
                     </div>
 
                     <div className="grid lg:grid-cols-3 gap-8">
-                        {dict.pages.infrastructure.zones.items.map((zone, i) => (
+                        {pageData.zones.items.map((zone: any, i: number) => (
                             <div key={i} className="group p-10 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-md hover:bg-white/10 transition-all duration-500">
                                 <div className="text-pan-gold font-black text-2xl mb-4 group-hover:scale-110 transition-transform origin-left">{zone.area}</div>
                                 <h3 className="text-2xl font-bold text-white mb-4">{zone.name}</h3>
@@ -83,7 +87,7 @@ export default async function InfrastructuresPage({ params }: { params: Promise<
                                 
                                 <div className="mt-8 pt-8 border-t border-white/10 flex items-center gap-4 opacity-0 group-hover:opacity-100 transition-opacity">
                                     <div className="w-1.5 h-1.5 rounded-full bg-pan-gold" />
-                                    <span className="text-white/60 text-[10px] font-bold uppercase tracking-widest">{dict.pages.infrastructure.strategicZone}</span>
+                                    <span className="text-white/60 text-[10px] font-bold uppercase tracking-widest">{pageData.strategicZone}</span>
                                 </div>
                             </div>
                         ))}

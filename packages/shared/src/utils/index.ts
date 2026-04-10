@@ -3,9 +3,25 @@ import type { Locale, LocalizedString } from '../types';
 /**
  * Get localized value from a LocalizedString
  */
-export function t(localized: LocalizedString | undefined | null, locale: Locale): string {
+export function t(localized: LocalizedString | string | undefined | null, locale: Locale): string {
     if (!localized) return '';
+    if (typeof localized === 'string') return localized;
     return localized[locale] || localized.fr || '';
+}
+
+/**
+ * Deep resolve a localized JSON object based on locale
+ */
+export function resolveLocalized(obj: any, locale: Locale): any {
+    if (!obj) return obj;
+    if (typeof obj === 'object') {
+        if ('fr' in obj || 'ar' in obj) return obj[locale] || obj.fr || '';
+        if (Array.isArray(obj)) return obj.map(item => resolveLocalized(item, locale));
+        const res: any = {};
+        for (const k in obj) res[k] = resolveLocalized(obj[k], locale);
+        return res;
+    }
+    return obj;
 }
 
 /**

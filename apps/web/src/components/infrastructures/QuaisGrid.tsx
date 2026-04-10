@@ -5,17 +5,18 @@ import type { Dictionary } from '@/lib/dictionaries';
 
 interface QuaisGridProps {
     dict: Dictionary;
+    quais: any;
 }
 
-export function QuaisGrid({ dict }: QuaisGridProps) {
+export function QuaisGrid({ dict, quais }: QuaisGridProps) {
     const [selectedQuaiIndex, setSelectedQuaiIndex] = useState<number | null>(null);
 
-    const selectedQuai = selectedQuaiIndex !== null ? dict.pages.infrastructure.quais.items[selectedQuaiIndex] : null;
+    const selectedQuai = selectedQuaiIndex !== null ? quais.items[selectedQuaiIndex] : null;
 
     return (
         <>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
-                {dict.pages.infrastructure.quais.items.map((quai, i) => (
+                {quais.items.map((quai, i) => (
                     <div 
                         key={i} 
                         className="group relative bg-white rounded-3xl p-1 shadow-xl shadow-pan-navy/5 hover:shadow-2xl hover:shadow-pan-navy/10 transition-all duration-500 hover:-translate-y-2 border border-pan-navy/5"
@@ -23,9 +24,9 @@ export function QuaisGrid({ dict }: QuaisGridProps) {
                         {/* Decorative Gradient */}
                         <div className="absolute inset-0 bg-gradient-to-br from-pan-navy/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
                         
-                        <div className="relative p-8 pt-10 text-right md:text-inherit" dir={dict.pages.infrastructure.quais.title === 'الأرصفة والمحطات' ? 'rtl' : 'ltr'}>
+                        <div className="relative p-8 pt-10 text-right md:text-inherit" dir={quais.title === 'الأرصفة والمحطات' ? 'rtl' : 'ltr'}>
                             {/* Icon/Number */}
-                            <div className={`absolute top-0 ${dict.pages.infrastructure.quais.title === 'الأرصفة والمحطات' ? 'left-8' : 'right-8'} -translate-y-1/2 w-12 h-12 rounded-2xl bg-gradient-to-br from-pan-navy to-pan-blue flex items-center justify-center text-white font-bold shadow-lg shadow-pan-navy/20`}>
+                            <div className={`absolute top-0 ${quais.title === 'الأرصفة والمحطات' ? 'left-8' : 'right-8'} -translate-y-1/2 w-12 h-12 rounded-2xl bg-gradient-to-br from-pan-navy to-pan-blue flex items-center justify-center text-white font-bold shadow-lg shadow-pan-navy/20`}>
                                 0{i + 1}
                             </div>
 
@@ -48,7 +49,7 @@ export function QuaisGrid({ dict }: QuaisGridProps) {
                                 className="mt-8 w-full py-4 rounded-2xl bg-pan-navy text-white text-sm font-bold uppercase tracking-widest hover:bg-pan-sky transition-all shadow-lg shadow-pan-navy/10 flex items-center justify-center gap-2 group/btn"
                             >
                                 {dict.pages.infrastructure.technicalDetails}
-                                <span className={`transition-transform ${dict.pages.infrastructure.quais.title === 'الأرصفة والمحطات' ? 'group-hover/btn:-translate-x-1 rotate-180' : 'group-hover/btn:translate-x-1'}`}>→</span>
+                                <span className={`transition-transform ${quais.title === 'الأرصفة والمحطات' ? 'group-hover/btn:-translate-x-1 rotate-180' : 'group-hover/btn:translate-x-1'}`}>→</span>
                             </button>
                         </div>
                     </div>
@@ -74,7 +75,7 @@ export function QuaisGrid({ dict }: QuaisGridProps) {
                                 ✕
                             </button>
                             
-                            <div className="relative z-10" dir={dict.pages.infrastructure.quais.title === 'الأرصفة والمحطات' ? 'rtl' : 'ltr'}>
+                            <div className="relative z-10" dir={quais.title === 'الأرصفة والمحطات' ? 'rtl' : 'ltr'}>
                                 <span className="inline-block px-3 py-1 rounded-full bg-pan-gold/20 text-pan-gold text-[10px] font-black uppercase tracking-widest mb-4 border border-pan-gold/20">
                                     {dict.pages.infrastructure.technicalDetails}
                                 </span>
@@ -83,7 +84,7 @@ export function QuaisGrid({ dict }: QuaisGridProps) {
                         </div>
 
                         {/* Modal Content */}
-                        <div className="p-8 md:p-10" dir={dict.pages.infrastructure.quais.title === 'الأرصفة والمحطات' ? 'rtl' : 'ltr'}>
+                        <div className="p-8 md:p-10" dir={quais.title === 'الأرصفة والمحطات' ? 'rtl' : 'ltr'}>
                             <div className="grid grid-cols-2 gap-4 mb-10">
                                 <div className="p-5 rounded-2xl bg-pan-pale/50 border border-pan-navy/5 text-center md:text-inherit">
                                     <div className="text-[10px] font-black text-pan-gray-400 uppercase tracking-widest mb-1">{dict.pages.infrastructure.labels.length}</div>
