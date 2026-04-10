@@ -51,11 +51,10 @@ export default function PageEditor({ initialData, id }: PageEditorProps) {
     slug: '',
     status: 'draft',
     blocks: [],
-    content: {},
     hero: { title: { fr: '' } }
   });
   
-  const isCmsFormPage = page.content && Object.keys(page.content).length > 0;
+  const isCmsFormPage = page.blocks && page.blocks.length === 1 && page.blocks[0]?.type === 'custom_page_data';
   
   const [activeLang, setActiveLang] = useState('fr');
   const [saving, setSaving] = useState(false);
@@ -154,8 +153,12 @@ export default function PageEditor({ initialData, id }: PageEditorProps) {
                  </div>
                  <AutoJsonEditor 
                    label="Sections de la page" 
-                   value={page.content} 
-                   onChange={(val: any) => setPage({ ...page, content: val })} 
+                   value={page.blocks[0].content} 
+                   onChange={(val: any) => {
+                     const nextBlocks = [...page.blocks];
+                     nextBlocks[0].content = val;
+                     setPage({ ...page, blocks: nextBlocks });
+                   }} 
                    activeLang={activeLang}
                    depth={0} 
                  />

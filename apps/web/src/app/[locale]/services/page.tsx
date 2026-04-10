@@ -31,7 +31,8 @@ export default async function ServicesPage({ params }: { params: Promise<{ local
     const { items: dbServices } = await getPublishedContents({ category: 'services', pageSize: 20 });
     
     const dbPage = await getPageBySlug('services');
-    const pageData = dbPage?.content ? resolveLocalized(dbPage.content, locale) : dict.pages.services;
+    const pageDataObj = dbPage?.blocks?.[0]?.type === 'custom_page_data' ? dbPage.blocks[0].content : null;
+    const pageData = pageDataObj ? resolveLocalized(pageDataObj, locale) : dict.pages.services;
     const resolvedTitle = dbPage?.title ? resolveLocalized(dbPage.title, locale) : dict.pages.services.title;
     
     // Fallback to dictionary mock services if DB is empty to maintain content during first deploy

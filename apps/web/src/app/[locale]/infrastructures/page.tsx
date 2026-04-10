@@ -17,7 +17,8 @@ export default async function InfrastructuresPage({ params }: { params: Promise<
     const items = initialData.items;
 
     const dbPage = await getPageBySlug('infrastructures');
-    const pageData = dbPage?.content ? resolveLocalized(dbPage.content, locale) : dict.pages.infrastructure;
+    const pageDataObj = dbPage?.blocks?.[0]?.type === 'custom_page_data' ? dbPage.blocks[0].content : null;
+    const pageData = pageDataObj ? resolveLocalized(pageDataObj, locale) : dict.pages.infrastructure;
     const resolvedTitle = dbPage?.title ? resolveLocalized(dbPage.title, locale) : dict.pages.infrastructure.title;
 
     return (
