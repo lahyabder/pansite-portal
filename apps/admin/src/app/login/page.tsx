@@ -73,7 +73,7 @@ export default function LoginPage() {
            </form>
         </div>
 
-        <p className="text-center text-[10px] font-black text-slate-700 uppercase tracking-[0.2em]">Authorized Access Only • System v4.0</p>
+        <p className="text-center text-[10px] font-black text-slate-700 uppercase tracking-[0.2em]">Accès Autorisé Seulement • Système v4.0</p>
       </div>
     </div>
   );

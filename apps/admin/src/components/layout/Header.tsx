@@ -5,14 +5,14 @@ import { Bell, Search, User, Globe } from 'lucide-react';
 export default function Header() {
   return (
     <header className="h-20 glass border-0 border-b border-white/5 px-8 flex items-center justify-between sticky top-0 z-40">
-      <div className="flex items-center gap-4 bg-slate-900/50 border border-slate-800 rounded-2xl px-4 py-2 w-96">
-        <Search className="w-4 h-4 text-slate-500" />
+      <div className="relative w-96 hidden md:block group">
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-sky-500 transition-colors" />
         <input 
           type="text" 
-          placeholder="Search for pages, images, or settings..." 
-          className="bg-transparent border-none outline-none text-sm text-white w-full placeholder:text-slate-600"
+          placeholder="Rechercher des pages, médias, ou paramètres..." 
+          className="w-full bg-slate-950/50 border border-slate-800 rounded-full pl-10 pr-4 py-2 text-sm text-slate-300 focus:outline-none focus:border-sky-500/50 transition-all font-medium"
         />
-        <span className="text-[10px] font-bold text-slate-700 bg-slate-800 px-1.5 py-0.5 rounded border border-slate-700">⌘K</span>
+        <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-700 bg-slate-800 px-1.5 py-0.5 rounded border border-slate-700">⌘K</span>
       </div>
 
       <div className="flex items-center gap-6">

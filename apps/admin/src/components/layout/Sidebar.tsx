@@ -18,12 +18,12 @@ import {
 import { useState } from 'react';
 
 const MENU_ITEMS = [
-  { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard, href: '/' },
-  { id: 'pages', label: 'Pages & Sites', icon: FileText, href: '/pages' },
-  { id: 'media', label: 'Media Vault', icon: ImageIcon, href: '/media' },
-  { id: 'translations', label: 'Translations', icon: Languages, href: '/translations' },
+  { id: 'dashboard', label: 'Tableau de Bord', icon: LayoutDashboard, href: '/' },
+  { id: 'pages', label: 'Pages', icon: FileText, href: '/pages' },
+  { id: 'media', label: 'Médiathèque', icon: ImageIcon, href: '/media' },
+  { id: 'translations', label: 'Traductions', icon: Languages, href: '/translations' },
   { id: 'navigation', label: 'Navigation', icon: MenuIcon, href: '/menus' },
-  { id: 'settings', label: 'Site Settings', icon: Settings, href: '/settings' },
+  { id: 'settings', label: 'Paramètres Généraux', icon: Settings, href: '/settings' },
 ];
 
 export default function Sidebar() {

@@ -34,7 +34,7 @@ export default function PageList() {
   }, []);
 
   const handleDelete = async (id: string) => {
-    if (!confirm('Are you sure you want to delete this page?')) return;
+    if (!confirm('Êtes-vous sûr de vouloir supprimer cette page ?')) return;
     await deletePageAction(id);
     load();
   };
@@ -51,7 +51,7 @@ export default function PageList() {
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
           <input 
             type="text" 
-            placeholder="Search pages..." 
+            placeholder="Rechercher des pages..." 
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="w-full pl-12 pr-4 py-3 bg-slate-900 border border-slate-800 rounded-2xl text-sm focus:border-sky-500/50 transition-all outline-none"
@@ -84,11 +84,11 @@ export default function PageList() {
           <tbody className="divide-y divide-white/5">
             {loading && pages.length === 0 ? (
               <tr>
-                <td colSpan={4} className="px-6 py-12 text-center text-slate-500 font-medium">Loading pages hub...</td>
+                <td colSpan={4} className="px-6 py-12 text-center text-slate-500 font-medium">Chargement du hub des pages...</td>
               </tr>
             ) : filtered.length === 0 ? (
               <tr>
-                <td colSpan={4} className="px-6 py-12 text-center text-slate-500 font-medium">No pages found.</td>
+                <td colSpan={4} className="px-6 py-12 text-center text-slate-500 font-medium">Aucune page trouvée.</td>
               </tr>
             ) : filtered.map((page) => (
               <tr key={page.id} className="hover:bg-white/[0.02] transition-colors group">
@@ -121,21 +121,21 @@ export default function PageList() {
                       href={`https://pan.afrikyia.com/fr/${page.slug === 'home' ? '' : page.slug}`} 
                       target="_blank"
                       className="p-2 hover:bg-white/5 rounded-lg text-slate-500 hover:text-sky-400 transition-colors"
-                      title="Preview"
+                      title="Aperçu"
                     >
                       <ExternalLink className="w-4 h-4" />
                     </a>
                     <Link 
                       href={`/pages/${page.id}/edit`}
                       className="p-2 hover:bg-white/5 rounded-lg text-slate-500 hover:text-white transition-colors"
-                      title="Edit"
+                      title="Éditer"
                     >
                       <Pencil className="w-4 h-4" />
                     </Link>
                     <button 
                       onClick={() => handleDelete(page.id)}
                       className="p-2 hover:bg-red-500/10 rounded-lg text-slate-500 hover:text-red-500 transition-colors"
-                      title="Delete"
+                      title="Supprimer"
                     >
                       <Trash2 className="w-4 h-4" />
                     </button>

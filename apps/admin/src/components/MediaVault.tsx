@@ -35,7 +35,7 @@ export default function MediaVault() {
   }, []);
 
   const handleDelete = async (id: string) => {
-    if (!confirm('Delete this asset?')) return;
+    if (!confirm('Voulez-vous supprimer ce média ?')) return;
     await deleteMediaAction(id);
     setSelected(null);
     load();
@@ -48,13 +48,13 @@ export default function MediaVault() {
       {/* ─── Media Header ─── */}
       <header className="h-20 glass border-0 border-b border-white/5 px-8 flex items-center justify-between shrink-0">
         <div className="flex items-center gap-6">
-          <h1 className="font-outfit text-2xl font-black text-white">Media Vault</h1>
+          <h1 className="font-outfit text-2xl font-black text-white">Médiathèque</h1>
           <div className="h-8 w-[1px] bg-white/5"></div>
           <div className="relative w-80">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-600" />
             <input 
               type="text" 
-              placeholder="Search assets..." 
+              placeholder="Rechercher un média..." 
               value={search}
               onChange={e => setSearch(e.target.value)}
               className="w-full pl-9 pr-3 py-2 bg-slate-900 border border-slate-800 rounded-xl text-xs text-white outline-none focus:border-sky-500/50 transition-all font-medium"
@@ -65,7 +65,7 @@ export default function MediaVault() {
         <div className="flex items-center gap-4">
            <button className="flex items-center gap-2 px-6 py-2.5 bg-sky-500 text-white rounded-xl font-black text-sm hover:scale-105 active:scale-95 transition-all shadow-xl shadow-sky-500/10">
               <Upload className="w-4 h-4" />
-              Upload Asset
+              Ajouter un Fichier
            </button>
         </div>
       </header>
@@ -76,12 +76,12 @@ export default function MediaVault() {
           {loading && media.length === 0 ? (
             <div className="h-full flex flex-col items-center justify-center text-slate-600 space-y-4">
                <RefreshCw className="w-10 h-10 animate-spin" />
-               <p className="font-bold">Accessing your vault...</p>
+               <p className="font-bold">Chargement de la médiathèque...</p>
             </div>
           ) : filtered.length === 0 ? (
             <div className="h-full flex flex-col items-center justify-center text-slate-700">
                <ImageIcon className="w-20 h-20 mb-6 opacity-10" />
-               <p className="font-bold">No assets found in the vault.</p>
+               <p className="font-bold">Aucun média trouvé.</p>
             </div>
           ) : (
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6">
@@ -131,7 +131,7 @@ export default function MediaVault() {
 
               <div className="space-y-4">
                 <div className="space-y-1.5">
-                  <label className="text-[10px] font-black text-slate-600 uppercase tracking-widest">Public URL</label>
+                  <label className="text-[10px] font-black text-slate-600 uppercase tracking-widest">URL Publique</label>
                   <div className="flex gap-2">
                     <input readOnly value={selected.url} className="flex-1 bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-[10px] font-mono text-sky-400 outline-none" />
                     <button className="p-2 bg-slate-800 hover:bg-slate-700 rounded-xl text-slate-400 transition-colors" title="Copy"><RefreshCw className="w-3.5 h-3.5" /></button>
@@ -139,7 +139,7 @@ export default function MediaVault() {
                 </div>
                 
                 <div className="space-y-1.5">
-                  <label className="text-[10px] font-black text-slate-600 uppercase tracking-widest">Added Date</label>
+                  <label className="text-[10px] font-black text-slate-600 uppercase tracking-widest">Date d'Ajout</label>
                   <p className="text-sm font-bold text-slate-300">{formatDate(selected.created_at, 'fr')}</p>
                 </div>
               </div>
@@ -151,7 +151,7 @@ export default function MediaVault() {
                   className="flex-1 flex items-center justify-center gap-2 py-3 bg-white/5 hover:bg-white/10 border border-white/5 rounded-2xl text-white font-bold text-sm transition-all"
                 >
                   <Download className="w-4 h-4" />
-                  Download
+                  Télécharger
                 </a>
                 <button 
                   onClick={() => handleDelete(selected.id)}
@@ -164,7 +164,7 @@ export default function MediaVault() {
           ) : (
             <div className="h-full flex flex-col items-center justify-center text-slate-800 text-center">
                <Info className="w-12 h-12 mb-4 opacity-10" />
-               <p className="text-sm font-bold opacity-20">Select an asset to view details and options.</p>
+               <p className="text-sm font-bold opacity-20">Sélectionnez un fichier pour voir les détails et les options.</p>
             </div>
           )}
         </aside>

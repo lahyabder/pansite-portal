@@ -56,7 +56,7 @@ export default function NavigationManager() {
       setSaved(true);
       setTimeout(() => setSaved(false), 3000);
     } catch (err) {
-      alert('Error saving menu');
+      alert('Erreur lors de l\'enregistrement du menu');
     } finally {
       setSaving(false);
     }
@@ -70,7 +70,7 @@ export default function NavigationManager() {
   if (loading) return (
     <div className="h-96 flex flex-col items-center justify-center text-slate-600 gap-4">
       <RefreshCw className="w-10 h-10 animate-spin" />
-      <p className="font-bold">Accessing navigation trees...</p>
+      <p className="font-bold">Accès aux menus de navigation...</p>
     </div>
   );
 

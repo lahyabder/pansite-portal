@@ -79,7 +79,7 @@ export default function PageEditor({ initialData, id }: PageEditorProps) {
       }
       router.push('/pages');
     } catch (err: any) {
-      alert('Save failed: ' + err.message);
+      alert('Erreur lors de l\'enregistrement : ' + err.message);
     } finally {
       setSaving(false);
     }
@@ -129,7 +129,7 @@ export default function PageEditor({ initialData, id }: PageEditorProps) {
             className="flex items-center gap-2 px-6 py-2.5 bg-white text-slate-950 rounded-xl font-black text-sm hover:scale-105 active:scale-95 transition-all shadow-xl shadow-white/10 disabled:opacity-50"
           >
             {saving ? <RefreshCw className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
-            {saving ? 'Saving...' : 'Publish Changes'}
+            {saving ? 'Enregistrement...' : 'Publier les Modifications'}
           </button>
         </div>
       </header>
@@ -138,11 +138,11 @@ export default function PageEditor({ initialData, id }: PageEditorProps) {
         {/* ─── Block Library ─── */}
         <aside className="w-80 border-r border-white/5 p-6 space-y-8 overflow-y-auto">
           <div>
-            <h3 className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-4">Site Assets</h3>
+            <h3 className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-4">Ressources</h3>
             <div className="grid grid-cols-2 gap-3">
               <div className="glass-card p-4 rounded-2xl flex flex-col items-center justify-center gap-2 cursor-pointer hover:bg-white/5 transition-colors group">
                 <ImageIcon className="w-6 h-6 text-indigo-400 group-hover:scale-110 transition-transform" />
-                <span className="text-[10px] font-bold text-slate-400">Library</span>
+                <span className="text-[10px] font-bold text-slate-400">Médiathèque</span>
               </div>
               <div className="glass-card p-4 rounded-2xl flex flex-col items-center justify-center gap-2 cursor-pointer hover:bg-white/5 transition-colors group text-emerald-400">
                 <Globe className="w-6 h-6 group-hover:scale-110 transition-transform" />
@@ -152,7 +152,7 @@ export default function PageEditor({ initialData, id }: PageEditorProps) {
           </div>
 
           <div>
-            <h3 className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-4">Add Blocks</h3>
+            <h3 className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-4">Ajouter des Blocs</h3>
             <div className="space-y-3">
               {BLOCK_TYPES.map(block => (
                 <button
@@ -181,8 +181,8 @@ export default function PageEditor({ initialData, id }: PageEditorProps) {
                 <div className="w-20 h-20 bg-white/5 rounded-3xl flex items-center justify-center mb-6">
                   <Plus className="w-10 h-10 text-slate-700" />
                 </div>
-                <h3 className="text-xl font-bold text-slate-600">Your canvas is empty</h3>
-                <p className="text-sm text-slate-700 mt-2">Start adding blocks from the sidebar to build your page.</p>
+                <h3 className="text-xl font-bold text-slate-600">Votre page est vide</h3>
+                <p className="text-sm text-slate-700 mt-2">Commencez à ajouter des blocs depuis la barre latérale pour la construire.</p>
               </div>
             )}
 
@@ -428,7 +428,7 @@ export default function PageEditor({ initialData, id }: PageEditorProps) {
                             next[idx].content.text = { ...next[idx].content.text, [activeLang]: e.target.value };
                             setPage({ ...page, blocks: next });
                           }}
-                          placeholder="Start writing..."
+                          placeholder="Commencez à écrire..."
                           className="w-full bg-transparent border-none outline-none text-lg text-slate-400 placeholder:text-slate-800 min-h-[200px] resize-y"
                         />
                      </div>
