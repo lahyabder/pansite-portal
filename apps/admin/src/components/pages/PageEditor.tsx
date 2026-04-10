@@ -1,6 +1,25 @@
+'use client';
+
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { updatePageAction, createPageAction } from '@/app/actions';
 import type { Page, PageBlock, LocalizedString } from '@pan/shared';
 import Link from 'next/link';
+import { 
+  Layout, 
+  Grid, 
+  Type, 
+  MessageSquare, 
+  ChevronLeft, 
+  Save, 
+  RefreshCw, 
+  Image as ImageIcon, 
+  Globe, 
+  Plus, 
+  GripVertical, 
+  Settings, 
+  Trash2 
+} from 'lucide-react';
 
 interface PageEditorProps {
   initialData?: any;

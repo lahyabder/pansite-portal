@@ -1,3 +1,6 @@
+'use client';
+
+import { useState, useEffect } from 'react';
 import { 
   Menu as MenuIcon, 
   Save, 
@@ -12,6 +15,12 @@ import {
   Check
 } from 'lucide-react';
 import { getMenuAction, updateMenuAction, createMenuAction } from '@/app/actions';
+
+const MENU_LOCATIONS = [
+  { id: 'main', label: 'Menu Principal' },
+  { id: 'header_top', label: 'Lien du Haut' },
+  { id: 'footer', label: 'Menu Pied de Page' },
+];
 
 export default function NavigationManager() {
   const [activeLocation, setActiveLocation] = useState<'main' | 'header_top' | 'footer'>('main');

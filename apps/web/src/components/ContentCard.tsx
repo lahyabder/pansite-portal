@@ -1,3 +1,5 @@
+'use client';
+
 import type { Locale, Content } from '@pan/shared';
 import { t, formatDate } from '@pan/shared';
 import type { Dictionary } from '@/lib/dictionaries';

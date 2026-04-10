@@ -1,5 +1,3 @@
-'use client';
-
 import { 
   FileText, 
   Image as ImageIcon, 
@@ -11,15 +9,15 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 const STATS = [
   { label: 'Pages Publiées', value: '12', icon: FileText, trend: '+2 ce mois-ci', color: 'bg-sky-500' },
   { label: 'Média Assets', value: '148', icon: ImageIcon, trend: '4.2 GB utilisés', color: 'bg-indigo-500' },
   { label: 'Utilisateurs', value: '3', icon: Users, trend: '2 en ligne', color: 'bg-emerald-500' },
   { label: 'Visites (Mois)', value: '1.2k', icon: Activity, trend: '+12%', color: 'bg-amber-500' },
 ];
-
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
 
 export default function DashboardPage() {
   return (
