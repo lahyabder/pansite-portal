@@ -8,3 +8,4 @@ export * from './repository/pages';
 export * from './repository/menus';
 export * from './repository/settings';
 export * from './repository/media';
+export * from './supabase';

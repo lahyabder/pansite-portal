@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import type { Locale, SiteSettings } from '@pan/shared';
+import type { Locale, SiteSettings, LocalizedString } from '@pan/shared';
 import { t } from '@pan/shared';
 import type { Dictionary } from '@/lib/dictionaries';
 
@@ -24,10 +24,12 @@ const defaultImages = [
 export function HeroSlider({ dict, locale, slides, settings }: HeroSliderProps) {
     const [current, setCurrent] = useState(0);
 
-    const items = slides?.length ? slides : defaultImages.map(img => ({
+    const items: NonNullable<HeroSliderProps['slides']> = slides?.length ? slides : defaultImages.map(img => ({
         image: img,
         title: { fr: dict.hero.title, ar: dict.hero.title, en: dict.hero.title, es: dict.hero.title },
-        subtitle: { fr: dict.hero.subtitle, ar: dict.hero.subtitle, en: dict.hero.subtitle, es: dict.hero.subtitle }
+        subtitle: { fr: dict.hero.subtitle, ar: dict.hero.subtitle, en: dict.hero.subtitle, es: dict.hero.subtitle },
+        cta: undefined,
+        href: undefined
     }));
 
     useEffect(() => {

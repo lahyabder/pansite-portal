@@ -3,8 +3,9 @@ import type { Locale, LocalizedString } from '../types';
 /**
  * Get localized value from a LocalizedString
  */
-export function t(localized: LocalizedString, locale: Locale): string {
-    return localized[locale] || localized.fr;
+export function t(localized: LocalizedString | undefined | null, locale: Locale): string {
+    if (!localized) return '';
+    return localized[locale] || localized.fr || '';
 }
 
 /**

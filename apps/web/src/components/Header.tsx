@@ -30,17 +30,17 @@ export function Header({ locale, dict, menu, settings }: HeaderProps) {
 
     // Use dynamic menu if available, otherwise fallback to dict
     const navItems = menu?.items.map(item => ({
-        label: t(item.title, locale),
+        label: t(item.label, locale),
         href: item.href.startsWith('http') ? item.href : `/${locale}${item.href === '/' ? '' : item.href}`,
         children: item.children?.map(child => ({
-            label: t(child.title, locale),
+            label: t(child.label, locale),
             href: child.href.startsWith('http') ? child.href : `/${locale}${child.href}`
         }))
     })) || [
-        { label: dict.nav.home, href: `/${locale}` },
-        { label: dict.nav.port, href: `/${locale}/le-port` },
-        { label: dict.nav.services, href: `/${locale}/services` },
-        { label: dict.nav.contact, href: `/${locale}/contact` },
+        { label: dict.nav.home, href: `/${locale}`, children: undefined },
+        { label: dict.nav.port, href: `/${locale}/le-port`, children: undefined },
+        { label: dict.nav.services, href: `/${locale}/services`, children: undefined },
+        { label: dict.nav.contact, href: `/${locale}/contact`, children: undefined },
     ];
 
     useEffect(() => {

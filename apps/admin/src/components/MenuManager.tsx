@@ -8,7 +8,7 @@ import {
     Link as LinkIcon, ExternalLink, RefreshCw,
     Check, X, Globe, Map
 } from 'lucide-react';
-import type { Menu, MenuItem, LocalizedString } from '@pan/shared';
+import type { Menu, NavItem, LocalizedString } from '@pan/shared';
 
 const LOCATIONS = [
     { id: 'main',       label: 'Menu Principal' },
@@ -24,7 +24,7 @@ export default function MenuManager() {
     const [saved, setSaved] = useState(false);
     
     // Current menu state
-    const [currentItems, setCurrentItems] = useState<MenuItem[]>([]);
+    const [currentItems, setCurrentItems] = useState<NavItem[]>([]);
     const [editingItemId, setEditingItemId] = useState<string | null>(null);
 
     useEffect(() => {
@@ -49,23 +49,23 @@ export default function MenuManager() {
     };
 
     const addItem = () => {
-        const newItem: MenuItem = {
+        const newItem: NavItem = {
             id: Math.random().toString(36).substr(2, 9),
-            title: { fr: 'Nouveau Lien', ar: 'رابط جديد', en: '', es: '' },
+            label: { fr: 'Nouveau Lien', ar: 'رابط جديد', en: '', es: '' },
             href: '/',
             order: currentItems.length,
             children: []
         };
         setCurrentItems([...currentItems, newItem]);
-        setEditingItemId(newItem.id);
+        setEditingItemId(newItem.id!);
     };
 
     const removeItem = (id: string) => {
-        setCurrentItems(currentItems.filter(item => item.id !== id));
+        setCurrentItems(currentItems.filter((item: any) => item.id !== id));
     };
 
-    const updateItem = (id: string, updates: Partial<MenuItem>) => {
-        setCurrentItems(currentItems.map(item => item.id === id ? { ...item, ...updates } : item));
+    const updateItem = (id: string, updates: Partial<NavItem>) => {
+        setCurrentItems(currentItems.map((item: any) => item.id === id ? { ...item, ...updates } : item));
     };
 
     const handleSave = async () => {
@@ -162,16 +162,16 @@ export default function MenuManager() {
                                                                 <input 
                                                                     placeholder="Label (FR)" 
                                                                     className="w-full bg-white border border-pan-gray-200 rounded-lg px-3 py-1.5 text-xs font-bold"
-                                                                    value={item.title.fr}
-                                                                    onChange={e => updateItem(item.id, { title: { ...item.title, fr: e.target.value } })}
+                                                                    value={item.label.fr}
+                                                                    onChange={e => updateItem(item.id!, { label: { ...item.label, fr: e.target.value } })}
                                                                 />
                                                             </div>
                                                             <div dir="rtl">
                                                                 <input 
                                                                     placeholder="العنوان (AR)" 
                                                                     className="w-full bg-white border border-pan-gray-200 rounded-lg px-3 py-1.5 text-xs font-arabic"
-                                                                    value={item.title.ar}
-                                                                    onChange={e => updateItem(item.id, { title: { ...item.title, ar: e.target.value } })}
+                                                                    value={item.label.ar}
+                                                                    onChange={e => updateItem(item.id!, { label: { ...item.label, ar: e.target.value } })}
                                                                 />
                                                             </div>
                                                         </div>
@@ -180,21 +180,22 @@ export default function MenuManager() {
                                                                 placeholder="URL (/page or https://...)" 
                                                                 className="flex-1 bg-white border border-pan-gray-200 rounded-lg px-3 py-1.5 text-xs font-mono"
                                                                 value={item.href}
-                                                                onChange={e => updateItem(item.id, { href: e.target.value })}
+                                                                onChange={e => updateItem(item.id!, { href: e.target.value })}
                                                             />
                                                             <button onClick={() => setEditingItemId(null)} className="p-2 bg-pan-navy text-white rounded-lg"><Check className="w-4 h-4" /></button>
-                                                        </>
-                                                    ) : (
+                                                        </div>
+                                                    </>
+                                                ) : (
                                                     <>
                                                         <div className="flex flex-col">
-                                                            <span className="text-sm font-bold text-pan-navy">{item.title.fr}</span>
-                                                            <span className="text-[10px] text-pan-gray-300 font-arabic" dir="rtl">{item.title.ar}</span>
+                                                            <span className="text-sm font-bold text-pan-navy">{item.label.fr}</span>
+                                                            <span className="text-[10px] text-pan-gray-300 font-arabic" dir="rtl">{item.label.ar}</span>
                                                         </div>
                                                         <div className="flex items-center justify-between">
                                                             <span className="text-[10px] bg-pan-gray-100 px-2 py-1 rounded text-pan-gray-500 font-mono">{item.href}</span>
                                                             <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                                                                <button onClick={() => setEditingItemId(item.id)} className="p-1.5 text-pan-gray-400 hover:text-pan-sky transition-colors"><Pencil className="w-4 h-4" /></button>
-                                                                <button onClick={() => removeItem(item.id)} className="p-1.5 text-pan-gray-400 hover:text-red-500 transition-colors"><Trash2 className="w-4 h-4" /></button>
+                                                                <button onClick={() => setEditingItemId(item.id!)} className="p-1.5 text-pan-gray-400 hover:text-pan-sky transition-colors"><Pencil className="w-4 h-4" /></button>
+                                                                <button onClick={() => removeItem(item.id!)} className="p-1.5 text-pan-gray-400 hover:text-red-500 transition-colors"><Trash2 className="w-4 h-4" /></button>
                                                             </div>
                                                         </div>
                                                     </>

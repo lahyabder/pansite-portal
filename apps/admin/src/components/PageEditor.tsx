@@ -6,7 +6,7 @@ import {
     Save, X, Plus, GripVertical, Trash2, 
     Settings, Layout, Type, Image as ImageIcon, 
     Grid, MessageSquare, List, ArrowDown, ArrowUp,
-    ChevronDown, ChevronUp, Check, Globe, Search
+    ChevronDown, ChevronUp, Check, Globe, Search, RefreshCw
 } from 'lucide-react';
 import type { Page, PageBlock, LocalizedString } from '@pan/shared';
 import { updatePageAction, createPageAction, getPageBySlugAction } from '@/app/actions';
@@ -18,7 +18,7 @@ interface PageEditorProps {
 
 const BLOCK_TYPES = [
     { type: 'hero',     label: 'Hero Section',    icon: Layout,      desc: 'En-tête de page avec image et titre' },
-    { type: 'text',     label: 'Texte Libre',     icon: Type,        desc: 'Éditeur de texte riche multilingue' },
+    { type: 'rich_text', label: 'Texte Libre',     icon: Type,        desc: 'Éditeur de texte riche multilingue' },
     { type: 'features', label: 'Grille Atouts',   icon: Grid,        desc: 'Liste d\'icônes avec descriptions' },
     { type: 'gallery',  label: 'Galerie Images',  icon: ImageIcon,   desc: 'Grille d\'images avec légendes' },
     { type: 'cta',      label: 'Bouton d\'Action', icon: MessageSquare, desc: 'Bouton d\'appel à l\'action' },
@@ -32,7 +32,7 @@ export default function PageEditor({ initialData, id }: PageEditorProps) {
         slug: '',
         status: 'draft',
         blocks: [],
-        seo: { title: { fr: '', ar: '', en: '', es: '' }, description: { fr: '', ar: '', en: '', es: '' } }
+        seo: { title: '', description: '' }
     });
     
     const [activeBlockIndex, setActiveBlockIndex] = useState<number | null>(null);
@@ -45,7 +45,7 @@ export default function PageEditor({ initialData, id }: PageEditorProps) {
             type: type as any,
             content: {},
             order: page.blocks?.length || 0,
-            isVisible: true
+            isActive: true
         };
         setPage(prev => ({ ...prev, blocks: [...(prev.blocks || []), newBlock] }));
         setActiveBlockIndex((page.blocks?.length || 0));
@@ -244,7 +244,7 @@ export default function PageEditor({ initialData, id }: PageEditorProps) {
                                                 />
                                             </div>
                                         )}
-                                        {block.type === 'text' && (
+                                        {block.type === 'rich_text' && (
                                             <textarea 
                                                 className="w-full bg-transparent border-none text-sm text-pan-gray-600 focus:ring-0 min-h-[100px]"
                                                 value={block.content.body?.fr || ''}
@@ -252,7 +252,7 @@ export default function PageEditor({ initialData, id }: PageEditorProps) {
                                                 placeholder="Saisissez votre contenu texte ici..."
                                             />
                                         )}
-                                        {block.type !== 'hero' && block.type !== 'text' && (
+                                        {block.type !== 'hero' && block.type !== 'rich_text' && (
                                             <div className="py-10 text-center border-2 border-dashed border-pan-gray-100 rounded-2xl text-pan-gray-300 font-bold uppercase text-[10px] tracking-widest">
                                                 Configuration: {block.type}
                                             </div>

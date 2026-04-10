@@ -1,5 +1,5 @@
 import PageEditor from '@/components/PageEditor';
-import { getSupabaseAdmin } from '@pan/shared/src/supabase';
+import { getSupabaseAdmin } from '@pan/shared';
 import { notFound } from 'next/navigation';
 
 export default async function Page({ params }: { params: { id: string } }) {

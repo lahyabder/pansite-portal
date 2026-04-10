@@ -189,12 +189,12 @@ export default function SettingsPage() {
                         {activeSection === 'seo' && (
                             <div className="space-y-4">
                                 <SectionTitle title="Référencement (SEO)" icon="🔍" />
-                                <InputField label="Template de Titre" value={settings.seoGlobal?.titleTemplate || ''} onChange={v => setSettings({...settings, seoGlobal: {...settings.seoGlobal, titleTemplate: v}})} hint="Exemple: %s | PAN" />
+                                <InputField label="Template de Titre" value={settings.seoGlobal?.titleTemplate || ''} onChange={v => setSettings({...settings, seoGlobal: {...settings.seoGlobal, titleTemplate: v, defaultDescription: settings.seoGlobal?.defaultDescription || ''}})} hint="Exemple: %s | PAN" />
                                 <div className="py-3">
                                     <label className="block text-xs font-semibold text-pan-gray-500 mb-1.5 uppercase tracking-wide">Description par défaut</label>
                                     <textarea 
                                         value={settings.seoGlobal?.defaultDescription || ''} 
-                                        onChange={e => setSettings({...settings, seoGlobal: {...settings.seoGlobal, defaultDescription: e.target.value}})}
+                                        onChange={e => setSettings({...settings, seoGlobal: {...settings.seoGlobal, defaultDescription: e.target.value, titleTemplate: settings.seoGlobal?.titleTemplate || ''}})}
                                         className="w-full px-4 py-2.5 border border-pan-gray-200 rounded-xl text-sm h-32 focus:outline-none focus:ring-2 focus:ring-pan-sky/20"
                                     />
                                 </div>

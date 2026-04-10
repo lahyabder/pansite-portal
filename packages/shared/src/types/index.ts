@@ -71,6 +71,9 @@ export const ROLE_PERMISSIONS: Record<UserRole, PermissionMatrix> = {
         requests: ['view'],
         audit: [],
         settings: [],
+        pages: ['view', 'create', 'edit', 'delete', 'approve', 'publish'],
+        menus: ['view', 'create', 'edit', 'delete', 'approve', 'publish'],
+        media: ['view', 'create', 'edit', 'delete', 'approve', 'publish'],
     },
     services_manager: {
         content: ['view'],
@@ -80,6 +83,9 @@ export const ROLE_PERMISSIONS: Record<UserRole, PermissionMatrix> = {
         requests: ['view', 'edit', 'approve'],
         audit: [],
         settings: [],
+        pages: ['view'],
+        menus: ['view'],
+        media: ['view'],
     },
     validator: {
         content: ['view', 'approve', 'publish'],
@@ -89,6 +95,9 @@ export const ROLE_PERMISSIONS: Record<UserRole, PermissionMatrix> = {
         requests: ['view'],
         audit: [],
         settings: [],
+        pages: ['view', 'approve', 'publish'],
+        menus: ['view', 'approve', 'publish'],
+        media: ['view', 'approve', 'publish'],
     },
     internal_reader: {
         content: ['view'],
@@ -98,6 +107,9 @@ export const ROLE_PERMISSIONS: Record<UserRole, PermissionMatrix> = {
         requests: [],
         audit: [],
         settings: [],
+        pages: ['view'],
+        menus: ['view'],
+        media: ['view'],
     },
 };
 
@@ -299,8 +311,10 @@ export interface RequestFilters {
 
 // ─── Navigation ───────────────────────────────────────────
 export interface NavItem {
+    id?: string;
     label: LocalizedString;
     href: string;
+    order?: number;
     children?: NavItem[];
 }
 
@@ -336,7 +350,7 @@ export interface ContentFilters {
 
 export interface PageBlock {
     id: string;
-    type: 'hero' | 'stats' | 'intro' | 'services_grid' | 'news_strip' | 'map' | 'form' | 'rich_text' | 'gallery' | 'timeline' | 'cta' | 'partners';
+    type: 'hero' | 'stats' | 'intro' | 'services_grid' | 'news_strip' | 'map' | 'form' | 'rich_text' | 'gallery' | 'timeline' | 'cta' | 'partners' | 'text_image' | 'features';
     content: any; // Block specific content
     settings?: any; // Visual settings (bg, padding, etc)
     order: number;

@@ -40,7 +40,7 @@ export default async function HomePage({
     };
 
     // Dynamic Statistics from Home Page blocks or Settings
-    const statsBlock = homePage?.blocks?.find(b => b.type === 'features' && b.id === 'stats');
+    const statsBlock = homePage?.blocks?.find(b => b.type === 'stats' && b.id === 'stats');
     const displayStats = statsBlock?.content?.items || [
         { label: { fr: 'Trafic Annuel', ar: 'الحركة السنوية' }, value: '1.2M', unit: 'T' },
         { label: { fr: 'Navires / an', ar: 'سفينة / سنة' }, value: '850', unit: '' },
@@ -64,7 +64,7 @@ export default async function HomePage({
             <HeroSlider 
                 dict={dict} 
                 locale={locale} 
-                settings={settings} 
+                settings={settings || null} 
                 slides={homePage?.blocks?.find(b => b.type === 'hero')?.content?.slides}
             />
 
@@ -72,7 +72,7 @@ export default async function HomePage({
             <section id="statistics" className="relative z-10 -mt-16 lg:-mt-20">
                 <div className="max-w-7xl mx-auto px-6">
                     <div className="bg-white rounded-3xl shadow-2xl overflow-hidden grid grid-cols-2 lg:grid-cols-4 border border-pan-gray-100 divide-x divide-pan-gray-50 rtl:divide-x-reverse">
-                        {displayStats.map((stat, i) => (
+                        {displayStats.map((stat: any, i: number) => (
                             <div key={i} className="p-10 text-center group hover:bg-pan-navy transition-all duration-500">
                                 <div className="w-14 h-14 bg-pan-pale rounded-2xl mx-auto flex items-center justify-center text-pan-blue mb-6 group-hover:bg-pan-gold group-hover:text-pan-navy group-hover:rotate-12 transition-all duration-500">
                                     <BarChartIcon i={i} />

@@ -18,7 +18,7 @@ export async function generateMetadata({ params }: DynamicPageProps): Promise<Me
     if (!page) return {};
 
     const title = t(page.title, locale);
-    const description = t(page.excerpt || page.content, locale)?.slice(0, 160);
+    const description = t(page.description, locale)?.slice(0, 160);
 
     return {
         title: title,
@@ -46,7 +46,7 @@ export default async function DynamicCMSPage({ params }: DynamicPageProps) {
         <>
             <PageHero
                 title={t(page.title, locale)}
-                subtitle={t(page.excerpt, locale)}
+                subtitle={t(page.description, locale)}
                 locale={locale}
                 breadcrumbs={[
                     { label: dict.nav.home, href: `/${locale}` },

@@ -33,7 +33,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     const settings = await getSiteSettings();
 
     const title = t(settings?.siteName, locale) || 'Port Autonome de Nouadhibou';
-    const description = t(settings?.seoGlobal?.defaultDescription || settings?.slogan, locale);
+    const description = settings?.seoGlobal?.defaultDescription || t(settings?.slogan, locale);
 
     return {
         title: {
@@ -97,9 +97,9 @@ export default async function LocaleLayout({
                 className={`${inter.variable} ${tajawal.variable} font-sans antialiased bg-pan-white text-pan-gray-900`}
                 style={locale === 'ar' ? { fontFamily: 'var(--font-tajawal), sans-serif' } : undefined}
             >
-                <Header locale={locale} dict={dict} menu={mainMenu} settings={settings} />
+                <Header locale={locale} dict={dict} menu={mainMenu || null} settings={settings || null} />
                 <main className="min-h-screen">{children}</main>
-                <Footer locale={locale} dict={dict} menu={footerMenu} settings={settings} />
+                <Footer locale={locale} dict={dict} menu={footerMenu || null} settings={settings || null} />
                 <CookieBanner />
                 <Suspense fallback={null}>
                     <Analytics />

@@ -14,7 +14,7 @@ interface FooterProps {
 export function Footer({ locale, dict, menu, settings }: FooterProps) {
     // Basic mapping for menu items if dynamic menu exists
     const menuItems = menu?.items.map(item => ({
-        label: t(item.title, locale),
+        label: t(item.label, locale),
         href: item.href.startsWith('http') ? item.href : `/${locale}${item.href}`
     })) || [];
 
@@ -69,7 +69,7 @@ export function Footer({ locale, dict, menu, settings }: FooterProps) {
                     {/* Navigation Columns */}
                     <div>
                         <h3 className="font-bold text-pan-gold text-[10px] mb-6 uppercase tracking-[0.2em]">
-                            {dict.footer.navigation || 'Explorer'}
+                            {'Explorer'}
                         </h3>
                         <ul className="space-y-3">
                             {column1.map((item) => (
