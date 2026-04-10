@@ -6,6 +6,8 @@ import { PageHero } from '@/components/PageHero';
 import { getDictionary } from '@/lib/dictionaries';
 import type { Metadata } from 'next';
 
+export const dynamic = 'force-dynamic';
+
 interface DynamicPageProps {
     params: Promise<{ locale: string; slug: string }>;
 }
