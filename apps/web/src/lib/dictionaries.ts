@@ -175,7 +175,7 @@ export type Dictionary = {
                 subtitle: string;
                 deceased: string;
             };
-            images: {
+            images?: {
                 role: string;
                 geography: string;
             };
