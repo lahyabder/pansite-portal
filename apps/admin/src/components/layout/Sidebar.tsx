@@ -19,7 +19,8 @@ import { useState } from 'react';
 
 const MENU_ITEMS = [
   { id: 'dashboard', label: 'Tableau de Bord', icon: LayoutDashboard, href: '/' },
-  { id: 'pages', label: 'Pages', icon: FileText, href: '/pages' },
+  { id: 'contents', label: 'Actualités & Contenus', icon: FileText, href: '/contents' },
+  { id: 'pages', label: 'Pages Statiques', icon: LayoutDashboard, href: '/pages' },
   { id: 'media', label: 'Médiathèque', icon: ImageIcon, href: '/media' },
   { id: 'translations', label: 'Traductions', icon: Languages, href: '/translations' },
   { id: 'navigation', label: 'Navigation', icon: MenuIcon, href: '/menus' },

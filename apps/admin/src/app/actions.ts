@@ -2,6 +2,11 @@
 
 import { revalidatePath } from 'next/cache';
 import { getSupabaseAdmin } from '@pan/shared';
+import OpenAI from 'openai';
+
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
+});
 
 // ─── Pages Actions ───────────────────────────────────────────────────────────
 
@@ -142,4 +147,44 @@ export async function createMenuAction(data: any) {
     if (error) throw new Error(error.message);
     revalidatePath('/', 'layout');
     return menu;
+}
+
+// ─── AI Actions ──────────────────────────────────────────────────────────────
+
+export async function translateContentAction(text: string, targetLanguage: string) {
+    if (!process.env.OPENAI_API_KEY) {
+        throw new Error("Clé API OpenAI non configurée");
+    }
+    
+    // We expect targetLanguage to be a label like "arabe", "anglais", "espagnol"
+    const langNames: Record<string, string> = {
+        'fr': 'français',
+        'ar': 'arabe',
+        'en': 'anglais',
+        'es': 'espagnol'
+    };
+    
+    const targetName = langNames[targetLanguage] || targetLanguage;
+
+    try {
+        const response = await openai.chat.completions.create({
+            model: 'gpt-4o-mini',
+            messages: [
+                {
+                    role: 'system',
+                    content: `Tu es un expert traducteur professionnel. Traduis le texte suivant en ${targetName}. Le résultat doit être direct, sans commentaires ni guillemets ajoutés.`
+                },
+                {
+                    role: 'user',
+                    content: text
+                }
+            ],
+            temperature: 0.2,
+        });
+
+        return response.choices[0]?.message?.content?.trim() || text;
+    } catch (error) {
+        console.error("Erreur de traduction:", error);
+        throw new Error("La traduction a échoué.");
+    }
 }
