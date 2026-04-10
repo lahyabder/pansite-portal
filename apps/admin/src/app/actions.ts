@@ -1,14 +1,13 @@
-'use server';
-
 import { revalidatePath } from 'next/cache';
 import { createClient } from '@supabase/supabase-js';
+import { getSupabaseAdmin } from '@pan/shared';
 
 
 // ─── Base URL for the web app Content API ────────────────────────────────────
 // In dev, web runs on 3000; in prod, override via WEB_API_BASE_URL env var
 const WEB_API_BASE = process.env.WEB_API_BASE_URL || 
-                     (process.env.NEXT_PUBLIC_SITE_URL) || // Prioritize the public site URL if set
-                     (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://127.0.0.1:3000');
+                     process.env.NEXT_PUBLIC_SITE_URL || 
+                     'https://pan.afrikyia.com'; // Hardcode the prod website URL to ensure stable internal fetches
 
 
 
@@ -415,39 +414,85 @@ export async function getAuditLogAction(entityId?: string) {
 // ─── Pages Actions ───────────────────────────────────────────────────────────
 
 export async function getAllPagesAction() {
-    return await contentFetch('/../pages');
+    const { data, error } = await getSupabaseAdmin()
+        .from('pages')
+        .select('*')
+        .order('created_at', { ascending: false });
+    
+    if (error) {
+        console.error('[getAllPagesAction] Error:', error);
+        return [];
+    }
+    return data;
 }
 
 export async function getPageBySlugAction(slug: string) {
-    return await contentFetch(`/../pages?slug=${slug}`);
+    const { data, error } = await getSupabaseAdmin()
+        .from('pages')
+        .select('*')
+        .eq('slug', slug)
+        .single();
+    
+    if (error) {
+        console.error('[getPageBySlugAction] Error:', error);
+        return null;
+    }
+    return data;
 }
 
 export async function createPageAction(data: any) {
-    const res = await contentFetchStrict('/../pages', {
-        method: 'POST',
-        body: JSON.stringify(data),
-    });
+    const { data: page, error } = await getSupabaseAdmin()
+        .from('pages')
+        .insert([data])
+        .select()
+        .single();
+    
+    if (error) {
+        console.error('[createPageAction] Error:', error);
+        throw new Error(`Erreur lors de la création: ${error.message}`);
+    }
+    
     revalidatePath('/pages');
     revalidatePath('/cms');
-    return res;
+    revalidatePath('/:locale', 'layout');
+    return page;
 }
 
 export async function updatePageAction(id: string, data: any) {
-    const res = await contentFetchStrict(`/../pages/${id}`, {
-        method: 'PUT',
-        body: JSON.stringify(data),
-    });
+    const { data: page, error } = await getSupabaseAdmin()
+        .from('pages')
+        .update(data)
+        .eq('id', id)
+        .select()
+        .single();
+    
+    if (error) {
+        console.error('[updatePageAction] Error:', error);
+        throw new Error(`Erreur lors de la mise à jour: ${error.message}`);
+    }
+    
     revalidatePath('/pages');
-    revalidatePath(`/pages/${id}/edit`);
+    revalidatePath(`/pages/${id}`);
     revalidatePath('/cms');
-    return res;
+    revalidatePath('/:locale', 'layout');
+    return page;
 }
 
 export async function deletePageAction(id: string) {
-    const res = await contentFetchStrict(`/../pages/${id}`, { method: 'DELETE' });
+    const { error } = await getSupabaseAdmin()
+        .from('pages')
+        .delete()
+        .eq('id', id);
+    
+    if (error) {
+        console.error('[deletePageAction] Error:', error);
+        throw new Error(`Erreur lors de la suppression: ${error.message}`);
+    }
+    
     revalidatePath('/pages');
     revalidatePath('/cms');
-    return res;
+    revalidatePath('/:locale', 'layout');
+    return true;
 }
 
 // ─── Menus Actions ───────────────────────────────────────────────────────────
