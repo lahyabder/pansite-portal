@@ -14,7 +14,7 @@ import {
   FolderOpen
 } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
-import { getAllMediaAction, deleteMediaAction, uploadAndSaveMediaAction } from '@/app/actions';
+import { getAllMediaAction, deleteMediaAction, getMediaUploadUrlAction, saveMediaMetadataAction } from '@/app/actions';
 import { formatDate } from '@pan/shared';
 
 export default function MediaVault() {
@@ -53,9 +53,23 @@ export default function MediaVault() {
     
     for (const file of files) {
       try {
-        const formData = new FormData();
-        formData.append('file', file);
-        const asset = await uploadAndSaveMediaAction(formData);
+        const metadata = await getMediaUploadUrlAction(file.name, file.type, file.size);
+        
+        if (!metadata.signedUrl) throw new Error("Impossible d'obtenir l'URL d'upload");
+
+        const res = await fetch(metadata.signedUrl, {
+          method: 'PUT',
+          body: file,
+          headers: {
+            'Content-Type': file.type,
+          }
+        });
+
+        if (!res.ok) {
+           throw new Error("Le stockage a rejeté le fichier");
+        }
+        
+        const asset = await saveMediaMetadataAction(metadata);
         newAssets.push(asset);
         successCount++;
       } catch (error: any) {
