@@ -49,7 +49,7 @@ export default function MediaVault() {
 
     setUploading(true);
     let successCount = 0;
-    const newAssets = [];
+    const newAssets: any[] = [];
     
     for (const file of files) {
       try {
