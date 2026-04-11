@@ -33,6 +33,7 @@ export default function ContentEditor({ initialData, id, onSave, onDelete }: Con
   const [activeLang, setActiveLang] = useState('fr');
   const [saving, setSaving] = useState(false);
   const [translating, setTranslating] = useState(false);
+  const [autoTranslate, setAutoTranslate] = useState(true);
   
   const [content, setContent] = useState<any>(initialData || {
     slug: '',
@@ -97,7 +98,23 @@ export default function ContentEditor({ initialData, id, onSave, onDelete }: Con
   const handleSave = async () => {
     setSaving(true);
     try {
-      await onSave(content);
+      let payload = { ...content };
+
+      if (autoTranslate) {
+        const fields = ['title', 'excerpt', 'body'];
+        for (const field of fields) {
+          const sourceText = payload[field]?.[activeLang];
+          if (sourceText && typeof sourceText === 'string' && sourceText.trim() !== '') {
+            for (const loc of LOCALES) {
+              if (loc.id !== activeLang && (!payload[field][loc.id] || payload[field][loc.id].trim() === '')) {
+                payload[field][loc.id] = await translateContentAction(sourceText, loc.id);
+              }
+            }
+          }
+        }
+      }
+
+      await onSave(payload);
       router.push('/contents');
     } catch (err: any) {
       alert('Erreur lors de la sauvegarde : ' + err.message);
@@ -173,6 +190,17 @@ export default function ContentEditor({ initialData, id, onSave, onDelete }: Con
               </button>
             ))}
           </div>
+
+          <label className="flex items-center gap-2 cursor-pointer bg-slate-900 border border-slate-800 px-3 py-1.5 rounded-xl text-xs font-bold text-indigo-400 hover:bg-slate-800 transition-colors">
+            <input 
+              type="checkbox" 
+              checked={autoTranslate} 
+              onChange={e => setAutoTranslate(e.target.checked)}
+              className="accent-indigo-500"
+            />
+            <Wand2 className="w-3 h-3" />
+            Auto-Traduire (IA)
+          </label>
 
           {onDelete && (
             <button
