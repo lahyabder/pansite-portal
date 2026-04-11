@@ -31,14 +31,14 @@ export default async function LePortPage({ params }: { params: Promise<{ locale:
             />
 
             {/* ═══ Mot du Directeur Général (Premium Section) ═══ */}
-            <section className="py-24 bg-white relative overflow-hidden">
+            <section className="py-16 lg:py-24 bg-white relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-1/3 h-full bg-pan-pale/30 -z-10 skew-x-12 translate-x-20" />
                 
                 <div className="max-w-7xl mx-auto px-6">
-                    <div className="grid lg:grid-cols-12 gap-16 items-center">
+                    <div className="grid lg:grid-cols-12 gap-10 lg:gap-16 items-center">
                         {/* Image Column */}
                         <div className="lg:col-span-5 relative">
-                            <div className="relative aspect-[4/5] rounded-[3rem] overflow-hidden shadow-2xl z-10 border-8 border-white">
+                            <div className="relative aspect-[4/5] lg:aspect-[4/5] rounded-[2rem] lg:rounded-[3rem] overflow-hidden shadow-2xl z-10 border-4 lg:border-8 border-white">
                                 <Image 
                                     src="/images/dg.png" 
                                     alt={dict.pages.port.dg_word.title}
@@ -50,25 +50,25 @@ export default async function LePortPage({ params }: { params: Promise<{ locale:
                             {/* Decorative elements */}
                             <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-pan-gold/10 rounded-full blur-3xl -z-10" />
                             <div className="absolute -top-10 -right-10 w-64 h-64 bg-pan-navy/5 rounded-full blur-3xl -z-10" />
-                            <div className="absolute bottom-10 right-10 p-6 bg-pan-navy text-white rounded-2xl shadow-xl z-20 hidden md:block border-l-4 border-pan-gold">
-                                <div className="text-xl font-bold">Ahmed Ould Sidahmed Ould Die</div>
-                                <div className="text-xs font-black uppercase tracking-[0.2em] text-pan-gold mt-1">Directeur Général - PAN</div>
+                            <div className="absolute bottom-6 right-6 lg:bottom-10 lg:right-10 p-4 lg:p-6 bg-pan-navy text-white rounded-2xl shadow-xl z-20 border-l-4 border-pan-gold">
+                                <div className="text-lg lg:text-xl font-bold">Ahmed Ould Sidahmed Ould Die</div>
+                                <div className="text-[10px] font-black uppercase tracking-[0.2em] text-pan-gold mt-1">Directeur Général - PAN</div>
                             </div>
                         </div>
 
                         {/* Text Column */}
-                        <div className="lg:col-span-7 space-y-8">
+                        <div className="lg:col-span-7 space-y-6 lg:space-y-8">
                             <div>
-                                <span className="inline-block px-4 py-1.5 bg-pan-navy/5 text-pan-navy text-[10px] font-black uppercase tracking-[0.3em] rounded-full mb-6">
+                                <span className="inline-block px-4 py-1.5 bg-pan-navy/5 text-pan-navy text-[10px] font-black uppercase tracking-[0.3em] rounded-full mb-4 lg:mb-6">
                                     Institution Stratégique
                                 </span>
-                                <h2 className="text-4xl lg:text-5xl font-black text-pan-navy leading-tight mb-8">
+                                <h2 className="text-3xl lg:text-5xl font-black text-pan-navy leading-tight mb-6 lg:mb-8">
                                     {dict.pages.port.dg_word.title}
                                 </h2>
-                                <div className="w-20 h-1.5 bg-pan-gold rounded-full mb-12" />
+                                <div className="w-20 h-1.5 bg-pan-gold rounded-full mb-8 lg:mb-12" />
                             </div>
 
-                            <div className="prose prose-lg max-w-none">
+                            <div className="prose prose-base lg:prose-lg max-w-none">
                                 {dict.pages.port.dg_word.content.split('\n\n').map((paragraph: string, i: number) => (
                                     <p key={i} className="text-pan-gray-600 leading-relaxed font-medium mb-6 text-justify">
                                         {paragraph}
@@ -78,15 +78,28 @@ export default async function LePortPage({ params }: { params: Promise<{ locale:
 
                             <div className="pt-8 border-t border-pan-navy/5 flex items-center justify-between">
                                 <div className={locale === 'ar' ? 'text-right' : 'text-left'}>
-                                    <div className="text-2xl font-black text-pan-navy">Le Directeur Général</div>
+                                    <div className="text-xl lg:text-2xl font-black text-pan-navy">Le Directeur Général</div>
                                     <div className="h-1 w-12 bg-pan-gold mt-2 rounded-full" />
                                 </div>
-                                <Image src="/logo-horizontal.png" alt="PAN" width={120} height={30} className="opacity-20 grayscale brightness-0" />
+                                <Image src="/logo-horizontal.png" alt="PAN" width={100} height={25} className="opacity-20 grayscale brightness-0" />
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
+
+            {/* Render any additional blocks from DB (Fallback/Custom) */}
+            {dbPage?.blocks?.map((block: any, bIdx: number) => {
+                if (block.type === 'rich_text') {
+                    if (!block.content?.text?.[locale]) return null;
+                    return (
+                        <section key={`db-block-${bIdx}`} className="py-12 bg-white">
+                            <div className="max-w-7xl mx-auto px-6" dangerouslySetInnerHTML={{ __html: block.content.text[locale] }} />
+                        </section>
+                    );
+                }
+                return null;
+            })}
 
             <section className="py-20 bg-white">
                 <div className="max-w-7xl mx-auto px-6">

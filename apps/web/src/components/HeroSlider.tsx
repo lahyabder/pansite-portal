@@ -66,16 +66,16 @@ export function HeroSlider({ dict, locale, slides, settings }: HeroSliderProps) 
             <div className="relative max-w-7xl mx-auto px-6 py-32 w-full z-10">
                 <div className="max-w-4xl">
                     <div className="w-16 h-1 bg-pan-gold rounded-full mb-8 animate-in slide-in-from-left duration-700" />
-                    <h1 className="text-5xl sm:text-6xl lg:text-8xl font-black leading-[1.1] tracking-tighter mb-8 animate-in slide-in-from-bottom duration-700">
+                    <h1 className="text-4xl sm:text-6xl lg:text-8xl font-black leading-[1.1] tracking-tighter mb-8 animate-in slide-in-from-bottom duration-700">
                         {t(items[current].title, locale)}
                     </h1>
-                    <p className="text-xl sm:text-2xl text-pan-light/80 leading-relaxed mb-12 max-w-2xl font-medium animate-in slide-in-from-bottom delay-150 duration-700">
+                    <p className="text-lg sm:text-2xl text-pan-light/80 leading-relaxed mb-12 max-w-2xl font-medium animate-in slide-in-from-bottom delay-150 duration-700">
                         {t(items[current].subtitle, locale)}
                     </p>
                     <div className="flex flex-wrap gap-4 animate-in slide-in-from-bottom delay-300 duration-700">
                         <Link
                             href={items[current].href || `/${locale}/le-port`}
-                            className="inline-flex items-center gap-2 px-10 py-4 bg-pan-gold text-pan-navy font-bold rounded-2xl hover:bg-white transition-all duration-300 shadow-2xl shadow-pan-gold/20 hover:-translate-y-1"
+                            className="inline-flex items-center gap-2 px-8 sm:px-10 py-3 sm:py-4 bg-pan-gold text-pan-navy font-bold rounded-2xl hover:bg-white transition-all duration-300 shadow-2xl shadow-pan-gold/20 hover:-translate-y-1"
                         >
                             {items[current].cta || dict.hero.cta}
                             <span aria-hidden="true" className="text-lg">{locale === 'ar' ? '←' : '→'}</span>

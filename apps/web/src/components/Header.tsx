@@ -171,10 +171,10 @@ export function Header({ locale, dict, menu, settings }: HeaderProps) {
                         </nav>
 
                         {/* Right side: Search + Lang + Mobile Toggle */}
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-1.5 sm:gap-2">
                             <button
                                 onClick={() => setSearchOpen(!searchOpen)}
-                                className="p-2.5 text-pan-gray-500 hover:text-pan-navy hover:bg-pan-gray-50 rounded-lg transition-all"
+                                className="p-2 text-pan-gray-500 hover:text-pan-navy hover:bg-pan-gray-50 rounded-lg transition-all"
                                 aria-label={dict.nav.search}
                             >
                                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
@@ -182,12 +182,12 @@ export function Header({ locale, dict, menu, settings }: HeaderProps) {
                                 </svg>
                             </button>
 
-                            <div className="flex items-center gap-1 border border-pan-gray-200 rounded-lg overflow-hidden shrink-0" translate="no">
+                            <div className="flex items-center gap-0.5 border border-pan-gray-200 rounded-lg overflow-hidden shrink-0" translate="no">
                                 {locales.map((l) => (
                                     <Link
                                         key={l.code}
                                         href={pathname.replace(`/${locale}`, `/${l.code}`)}
-                                        className={`px-2 py-1.5 text-[10px] font-bold transition-all ${locale === l.code
+                                        className={`px-1.5 sm:px-2 py-2 text-[9px] sm:text-[10px] font-bold transition-all ${locale === l.code
                                             ? 'bg-pan-navy text-white'
                                             : 'text-pan-navy hover:bg-pan-pale'
                                             }`}
