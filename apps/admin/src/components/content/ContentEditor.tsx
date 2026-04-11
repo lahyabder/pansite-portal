@@ -43,10 +43,39 @@ export default function ContentEditor({ initialData, id, onSave, onDelete }: Con
     status: 'draft',
     coverImage: '',
     publishedAt: initialData?.publishedAt || new Date().toISOString().substring(0, 10),
-    tags: []
+    tags: [],
+    images: initialData?.images || []
   });
 
   const [uploadingImage, setUploadingImage] = useState(false);
+  const [uploadingGallery, setUploadingGallery] = useState(false);
+
+  const handleGalleryUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
+
+    setUploadingGallery(true);
+    try {
+      const newUrls = [];
+      for (let i = 0; i < files.length; i++) {
+        const formData = new FormData();
+        formData.append('file', files[i]);
+        const url = await uploadAssetAction(formData);
+        newUrls.push(url);
+      }
+      setContent({ ...content, images: [...(content.images || []), ...newUrls] });
+    } catch (err: any) {
+      alert('Erreur lors du téléchargement de la galerie: ' + err.message);
+    } finally {
+      setUploadingGallery(false);
+    }
+  };
+
+  const removeGalleryImage = (index: number) => {
+    const newImages = [...(content.images || [])];
+    newImages.splice(index, 1);
+    setContent({ ...content, images: newImages });
+  };
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -319,6 +348,54 @@ export default function ContentEditor({ initialData, id, onSave, onDelete }: Con
                 </div>
               )}
             </div>
+
+            {/* Gallery */}
+            <div className="p-8 bg-slate-900 border border-white/5 rounded-3xl">
+              <label className="flex items-center gap-2 text-[10px] font-black text-amber-500 uppercase tracking-widest mb-4">
+                <ImageIcon className="w-3 h-3" /> Galerie d'images (Optionnel)
+              </label>
+              
+              <div className="flex flex-col mb-4 items-start">
+                <label className="relative cursor-pointer group">
+                  <div className="flex items-center gap-2 px-6 py-3 bg-slate-950 border border-white/10 rounded-xl hover:bg-slate-800 transition-colors">
+                    {uploadingGallery ? <RefreshCw className="w-4 h-4 animate-spin text-sky-500" /> : <ImageIcon className="w-4 h-4 text-sky-500" />}
+                    <span className="text-sm font-bold text-white whitespace-nowrap">
+                      {uploadingGallery ? 'Téléchargement...' : 'Ajouter des images supplémentaires'}
+                    </span>
+                  </div>
+                  <input 
+                    type="file" 
+                    accept="image/*" 
+                    multiple
+                    onChange={handleGalleryUpload} 
+                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer disabled:cursor-not-allowed"
+                    disabled={uploadingGallery}
+                  />
+                </label>
+                <p className="text-xs text-slate-500 mt-2">Vous pouvez sélectionner plusieurs images en même temps pour créer un album.</p>
+              </div>
+
+              {content.images && content.images.length > 0 && (
+                <div className="mt-4 grid grid-cols-2 md:grid-cols-4 gap-4">
+                  {content.images.map((img: string, i: number) => (
+                    <div key={i} className="relative group rounded-xl overflow-hidden border border-white/10 aspect-square bg-slate-950">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={img} alt={`Gallery ${i}`} className="w-full h-full object-cover" />
+                      <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                        <button
+                          onClick={() => removeGalleryImage(i)}
+                          className="p-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors"
+                          title="Supprimer cette image"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
             {/* Spacer */}
             <div className="h-20" />
           </div>
