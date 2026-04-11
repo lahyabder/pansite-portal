@@ -155,6 +155,7 @@ export async function getMediaUploadUrlAction(filename: string, fileType: string
         publicUrl,
         assetType,
         filename,
+        mimeType: fileType,
         size: fileSize
     };
 }
@@ -164,6 +165,7 @@ export async function saveMediaMetadataAction(metadata: any) {
         filename: metadata.filename,
         url: metadata.publicUrl,
         type: metadata.assetType,
+        mime_type: metadata.mimeType,
         size: metadata.size
     };
 
