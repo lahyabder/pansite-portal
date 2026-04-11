@@ -117,6 +117,41 @@ export default async function AnciensDirecteursPage({ params }: { params: Promis
             period: '2015 - 2016',
             isFeu: false,
             image: '/images/directors/mohamed-ould-waly-ould-heiba.png',
+        },
+        {
+            nameAr: 'أحمدو ولد جلفون',
+            nameFr: 'AHMEDOU OULD JELVOUNE',
+            period: '2016 - 2018',
+            isFeu: false,
+            image: '/images/directors/ahmedou-ould-jelvoune.png',
+        },
+        {
+            nameAr: 'جبريل حمادي نيانغ',
+            nameFr: 'DJIBRIL HAMADY NIANG',
+            period: '2018 - 2018',
+            isFeu: false,
+            image: '/images/directors/djibril-hamady-niang.png',
+        },
+        {
+            nameAr: 'أحمد سالم ولد التكرور',
+            nameFr: 'AHMED SALEM OULD TEKROUR',
+            period: '2018 - 2019',
+            isFeu: false,
+            image: '/images/directors/ahmed-salem-ould-tekrour-1.png',
+        },
+        {
+            nameAr: 'احمديت ولد الشين',
+            nameFr: 'AHMEDEIT OULD CHEINE',
+            period: '2019 - 2023',
+            isFeu: false,
+            image: '/images/directors/ahmedeit-ould-cheine.png',
+        },
+        {
+            nameAr: 'أحمد سالم ولد التكرور',
+            nameFr: 'AHMED SALEM OULD TEKROUR',
+            period: '2023 - 2025',
+            isFeu: false,
+            image: '/images/directors/ahmed-salem-ould-tekrour-2.png',
         }
     ];
 
