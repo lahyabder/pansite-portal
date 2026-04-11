@@ -4,14 +4,14 @@ import { PageHero } from '@/components/PageHero';
 import { Camera, Play, Maximize2, ExternalLink, ImageIcon } from 'lucide-react';
 import { createClient } from '@supabase/supabase-js';
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://localhost.supabase.co',
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder'
-);
-
 export const revalidate = 0; // ensure fresh data
 
 export default async function MediaPage({ params }: { params: Promise<{ locale: string }> }) {
+    const supabase = createClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL || '',
+        process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''
+    );
+
     const { locale: lp } = await params;
     const locale = (['ar', 'fr', 'en', 'es'].includes(lp) ? lp : 'fr') as Locale;
     const dict = await getDictionary(locale);
