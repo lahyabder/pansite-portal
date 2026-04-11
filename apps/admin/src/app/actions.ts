@@ -58,6 +58,17 @@ export async function updatePageAction(id: string, data: any) {
     return true;
 }
 
+export async function deleteContentAction(id: string) {
+    const { error } = await getSupabaseAdmin()
+        .from('contents')
+        .update({ deleted_at: new Date().toISOString() })
+        .eq('id', id);
+    
+    if (error) throw new Error(error.message);
+    revalidatePath('/contents');
+    return true;
+}
+
 export async function deletePageAction(id: string) {
     const { error } = await getSupabaseAdmin()
         .from('pages')

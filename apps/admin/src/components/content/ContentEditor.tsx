@@ -9,7 +9,8 @@ import {
   RefreshCw, 
   FileText,
   Image as ImageIcon,
-  Wand2
+  Wand2,
+  Trash2
 } from 'lucide-react';
 import { translateContentAction, uploadAssetAction } from '@/app/actions';
 
@@ -24,9 +25,10 @@ interface ContentEditorProps {
   initialData?: any;
   id?: string;
   onSave: (data: any) => Promise<void>;
+  onDelete?: () => Promise<void>;
 }
 
-export default function ContentEditor({ initialData, id, onSave }: ContentEditorProps) {
+export default function ContentEditor({ initialData, id, onSave, onDelete }: ContentEditorProps) {
   const router = useRouter();
   const [activeLang, setActiveLang] = useState('fr');
   const [saving, setSaving] = useState(false);
@@ -142,6 +144,27 @@ export default function ContentEditor({ initialData, id, onSave }: ContentEditor
               </button>
             ))}
           </div>
+
+          {onDelete && (
+            <button
+              onClick={async () => {
+                if (window.confirm('Êtes-vous sûr de vouloir supprimer cet article ? Cette action est irréversible.')) {
+                  setSaving(true);
+                  try {
+                    await onDelete();
+                  } catch (e: any) {
+                    alert('Erreur: ' + e.message);
+                    setSaving(false);
+                  }
+                }
+              }}
+              disabled={saving}
+              className="flex items-center justify-center w-10 h-10 bg-red-500/10 text-red-500 rounded-xl hover:bg-red-500 hover:text-white transition-all border border-red-500/20 disabled:opacity-50"
+              title="Supprimer cet article"
+            >
+              <Trash2 className="w-4 h-4" />
+            </button>
+          )}
 
           <button 
             onClick={handleSave}
