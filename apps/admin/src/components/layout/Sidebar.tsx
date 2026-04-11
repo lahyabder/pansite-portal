@@ -21,8 +21,6 @@ const MENU_ITEMS = [
   { id: 'contents', label: { fr: 'Actualités & Contenus', ar: 'الأخبار والمحتوى' }, icon: FileText, href: '/contents' },
   { id: 'pages', label: { fr: 'Pages Statiques', ar: 'الصفحات الثابتة' }, icon: LayoutDashboard, href: '/pages' },
   { id: 'media', label: { fr: 'Médiathèque', ar: 'مكتبة الوسائط' }, icon: ImageIcon, href: '/media' },
-  { id: 'translations', label: { fr: 'Traductions', ar: 'الترجمات' }, icon: Languages, href: '/translations' },
-  { id: 'navigation', label: { fr: 'Navigation', ar: 'القوائم' }, icon: MenuIcon, href: '/menus' },
   { id: 'settings', label: { fr: 'Paramètres Généraux', ar: 'الإعدادات العامة' }, icon: Settings, href: '/settings' },
 ];
 
