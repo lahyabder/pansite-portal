@@ -44,22 +44,32 @@ export default function MediaVault() {
   };
 
   const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
+    const files = Array.from(e.target.files || []);
+    if (files.length === 0) return;
 
-    try {
-      setUploading(true);
-      const formData = new FormData();
-      formData.append('file', file);
-      
-      const newMedia = await uploadAndSaveMediaAction(formData);
-      setMedia([newMedia, ...media]);
-    } catch (error: any) {
-      alert('Erreur lors du téléchargement : ' + error.message);
-    } finally {
-      setUploading(false);
-      if (fileInputRef.current) fileInputRef.current.value = '';
+    setUploading(true);
+    let successCount = 0;
+    const newAssets = [];
+    
+    for (const file of files) {
+      try {
+        const formData = new FormData();
+        formData.append('file', file);
+        const asset = await uploadAndSaveMediaAction(formData);
+        newAssets.push(asset);
+        successCount++;
+      } catch (error: any) {
+        console.error(`Erreur pour ${file.name}:`, error);
+        alert(`Échec pour ${file.name} : ` + error.message);
+      }
     }
+
+    if (newAssets.length > 0) {
+      setMedia(prev => [...newAssets, ...prev]);
+    }
+    
+    setUploading(false);
+    if (fileInputRef.current) fileInputRef.current.value = '';
   };
 
   const filtered = media.filter(m => m.filename.toLowerCase().includes(search.toLowerCase()));
@@ -90,6 +100,7 @@ export default function MediaVault() {
               onChange={handleUpload} 
               className="hidden" 
               accept="image/*,video/*"
+              multiple
            />
            <button 
               onClick={() => fileInputRef.current?.click()}
