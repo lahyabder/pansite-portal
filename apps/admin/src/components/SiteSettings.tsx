@@ -253,13 +253,6 @@ export default function SiteSettings() {
               </div>
            </section>
 
-           <div className="glass-card rounded-[2.5rem] p-10 bg-gradient-to-br from-indigo-500/10 to-purple-500/10 border-indigo-500/20 text-center">
-              <div className="w-20 h-20 bg-indigo-500 rounded-3xl mx-auto flex items-center justify-center shadow-2xl shadow-indigo-500/30 mb-6">
-                 <Settings className="text-white w-10 h-10 animate-[spin_10s_linear_infinite]" />
-              </div>
-              <h3 className="text-xl font-black text-white">Mode Développeur</h3>
-              <p className="text-sm text-slate-400 mt-2 leading-relaxed">Certaines options avancées (JSON, API, Webhooks) sont configurées automatiquement par le système.</p>
-           </div>
         </div>
       </div>
     </div>
