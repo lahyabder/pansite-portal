@@ -279,18 +279,25 @@ export default function PageEditor({ initialData, id }: PageEditorProps) {
                                 placeholder="Titre de la slide..."
                                 className="w-full bg-transparent border-none outline-none text-2xl font-black text-white placeholder:text-slate-800 resize-none h-12"
                               />
-                              <input 
-                                type="text"
-                                value={slide.image || ''}
-                                onChange={e => {
-                                  const next = [...page.blocks];
-                                  if (!next[idx].content.slides) next[idx].content.slides = [{}];
-                                  next[idx].content.slides[sIdx].image = e.target.value;
-                                  setPage({ ...page, blocks: next });
-                                }}
-                                placeholder="Image URL..."
-                                className="w-full bg-slate-950/50 border border-white/5 rounded-xl px-4 py-2 text-xs text-slate-400 outline-none"
-                              />
+                              <div className="flex items-center gap-2">
+                                <input 
+                                  type="text"
+                                  value={slide.image || ''}
+                                  onChange={e => {
+                                    const next = [...page.blocks];
+                                    if (!next[idx].content.slides) next[idx].content.slides = [{}];
+                                    next[idx].content.slides[sIdx].image = e.target.value;
+                                    setPage({ ...page, blocks: next });
+                                  }}
+                                  placeholder="Coller l'URL ou chemin de l'image..."
+                                  className="flex-1 bg-slate-900 border border-white/10 rounded-xl px-4 py-3 text-xs text-sky-400 outline-none focus:border-sky-500/50 focus:text-sky-300 transition-colors"
+                                />
+                                <div className="w-11 h-11 bg-slate-800 rounded-xl flex items-center justify-center border border-white/5">
+                                  <svg className="w-4 h-4 text-sky-500" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                                  </svg>
+                                </div>
+                              </div>
                            </div>
                         ))}
                         <button 
