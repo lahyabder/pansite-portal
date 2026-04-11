@@ -350,7 +350,7 @@ export interface ContentFilters {
 
 export interface PageBlock {
     id: string;
-    type: 'hero' | 'stats' | 'intro' | 'services_grid' | 'news_strip' | 'map' | 'form' | 'rich_text' | 'gallery' | 'timeline' | 'cta' | 'partners' | 'text_image' | 'features' | 'quick_services' | 'latest_news';
+    type: 'hero' | 'stats' | 'intro' | 'services_grid' | 'news_strip' | 'map' | 'form' | 'rich_text' | 'gallery' | 'timeline' | 'cta' | 'partners' | 'text_image' | 'features' | 'quick_services' | 'latest_news' | 'custom_page_data';
     content: any; // Block specific content
     settings?: any; // Visual settings (bg, padding, etc)
     order: number;

@@ -73,7 +73,7 @@ export default async function ServicesPage({ params }: { params: Promise<{ local
             <section className="py-20 bg-pan-gray-50">
                 <div className="max-w-7xl mx-auto px-6">
                     <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {services.map((service, index) => {
+                        {services.map((service: any, index: number) => {
                             const Icon = ICON_MAP[service.icon] || Anchor;
                             return (
                                 <div
@@ -94,7 +94,7 @@ export default async function ServicesPage({ params }: { params: Promise<{ local
                                             
                                             {service.points && service.points.length > 0 && (
                                                 <ul className="space-y-3 mb-8">
-                                                    {service.points.slice(0, 4).map((point, i) => (
+                                                    {service.points.slice(0, 4).map((point: string, i: number) => (
                                                         <li key={i} className="flex items-start gap-3 text-sm text-pan-gray-600">
                                                             <div className="mt-1 bg-pan-sky/10 rounded-full p-0.5">
                                                                 <svg className="w-3.5 h-3.5 text-pan-sky" fill="none" viewBox="0 0 24 24" strokeWidth={3} stroke="currentColor">

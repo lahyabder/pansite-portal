@@ -43,7 +43,7 @@ export default async function LePortPage({ params }: { params: Promise<{ locale:
                                 {pageData.role.description}
                             </h2>
                             <ul className="space-y-4">
-                                {pageData.role.points.map((point, i) => (
+                                {pageData.role.points.map((point: string, i: number) => (
                                     <li key={i} className="flex items-start gap-4 p-4 rounded-xl bg-pan-pale/50 border border-pan-navy/5">
                                         <div className="w-6 h-6 rounded-full bg-pan-navy text-white flex items-center justify-center text-xs shrink-0 mt-0.5">
                                             {i + 1}
@@ -111,7 +111,7 @@ export default async function LePortPage({ params }: { params: Promise<{ locale:
                     </div>
                     <div className="grid lg:grid-cols-5 gap-12 items-center">
                         <div className="lg:col-span-3 grid sm:grid-cols-2 gap-6">
-                            {pageData.equipment.list.map((item, i) => (
+                            {pageData.equipment.list.map((item: string, i: number) => (
                                 <div key={i} className="flex items-center gap-4 p-5 rounded-2xl bg-white shadow-sm border border-pan-navy/5">
                                     <div className="w-10 h-10 rounded-xl bg-pan-gold/10 flex items-center justify-center text-pan-gold shrink-0">
                                         <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
@@ -163,7 +163,7 @@ export default async function LePortPage({ params }: { params: Promise<{ locale:
                         <div className="absolute top-[4.5rem] left-0 right-0 h-px bg-gradient-to-r from-transparent via-pan-gold/50 to-transparent hidden lg:block" />
                         
                         <div className="grid gap-12 lg:gap-6 lg:grid-cols-4 relative group/timeline">
-                            {pageData.history.milestones.map((milestone, idx) => (
+                            {pageData.history.milestones.map((milestone: any, idx: number) => (
                                 <div key={idx} className="relative z-10 flex flex-col items-center group/item">
                                     {/* Vertical line for mobile */}
                                     {idx !== pageData.history.milestones.length - 1 && (
@@ -280,7 +280,7 @@ export default async function LePortPage({ params }: { params: Promise<{ locale:
                         <div className="space-y-8">
                             <h2 className="text-3xl font-bold">{pageData.services.title}</h2>
                             <div className="grid sm:grid-cols-2 gap-4">
-                                {pageData.services.list.map((service, i) => (
+                                {pageData.services.list.map((service: string, i: number) => (
                                     <div key={i} className="flex items-center gap-4 p-4 rounded-xl bg-white/5 hover:bg-white/15 transition-all border border-white/5 group border-l-4 border-l-pan-gold">
                                         <svg className="w-5 h-5 text-pan-gold/80 group-hover:text-pan-gold transition-colors shrink-0" fill="currentColor" viewBox="0 0 20 20">
                                             <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />

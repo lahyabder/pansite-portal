@@ -16,7 +16,7 @@ export function QuaisGrid({ dict, quais }: QuaisGridProps) {
     return (
         <>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
-                {quais.items.map((quai, i) => (
+                {quais.items.map((quai: any, i: number) => (
                     <div 
                         key={i} 
                         className="group relative bg-white rounded-3xl p-1 shadow-xl shadow-pan-navy/5 hover:shadow-2xl hover:shadow-pan-navy/10 transition-all duration-500 hover:-translate-y-2 border border-pan-navy/5"
@@ -97,7 +97,7 @@ export function QuaisGrid({ dict, quais }: QuaisGridProps) {
                             </div>
 
                             <div className="space-y-4">
-                                {selectedQuai.technicalDetails?.map((detail, idx) => (
+                                {selectedQuai.technicalDetails?.map((detail: string, idx: number) => (
                                     <div key={idx} className="flex items-start gap-4 group/detail">
                                         <div className="mt-1.5 w-2 h-2 rounded-full bg-pan-gold shrink-0 group-hover/detail:scale-125 transition-transform" />
                                         <p className="text-pan-gray-600 font-medium leading-relaxed">{detail}</p>
