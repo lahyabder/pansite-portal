@@ -10,8 +10,9 @@ export type Dictionary = {
         tariffs: string;
         stopovers: string;
         tenders: string;
-        media: string;
+        mediatheque: string;
         contact: string;
+        formerDirectors: string;
         search: string;
         searchPlaceholder: string;
     };
@@ -294,8 +295,9 @@ const dictionaries: Record<Locale, Dictionary> = {
             tariffs: 'Tarifs',
             stopovers: 'Escales',
             tenders: 'Appels d\'Offres',
-            media: 'Multimédia',
+            mediatheque: 'Médiathèque',
             contact: 'Contact',
+            formerDirectors: 'Anciens Directeurs',
             search: 'Rechercher',
             searchPlaceholder: 'Rechercher sur le site...',
         },
@@ -725,8 +727,9 @@ const dictionaries: Record<Locale, Dictionary> = {
             tariffs: 'التعريفات',
             stopovers: 'الرسو',
             tenders: 'المناقصات',
-            media: 'ميلتيميديا',
+            mediatheque: 'المكتبة الوسائطية',
             contact: 'اتصل بنا',
+            formerDirectors: 'المدراء السابقون',
             search: 'بحث',
             searchPlaceholder: 'ابحث في الموقع...',
         },
@@ -1154,8 +1157,9 @@ const dictionaries: Record<Locale, Dictionary> = {
             tariffs: 'Tariffs',
             stopovers: 'Stopovers',
             tenders: 'Tenders',
-            media: 'Media',
+            mediatheque: 'Mediatheque',
             contact: 'Contact',
+            formerDirectors: 'Former Directors',
             search: 'Search',
             searchPlaceholder: 'Search the site...',
         },
@@ -1548,8 +1552,9 @@ const dictionaries: Record<Locale, Dictionary> = {
             tariffs: 'Tarifas',
             stopovers: 'Escalas',
             tenders: 'Licitaciones',
-            media: 'Medios',
+            mediatheque: 'Mediateca',
             contact: 'Contacto',
+            formerDirectors: 'Ex Directores',
             search: 'Buscar',
             searchPlaceholder: 'Buscar en el sitio...',
         },
