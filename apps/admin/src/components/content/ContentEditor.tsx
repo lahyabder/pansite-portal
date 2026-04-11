@@ -209,6 +209,7 @@ export default function ContentEditor({ initialData, id, onSave, onDelete }: Con
                   setSaving(true);
                   try {
                     await onDelete();
+                    router.push('/contents');
                   } catch (e: any) {
                     alert('Erreur: ' + e.message);
                     setSaving(false);

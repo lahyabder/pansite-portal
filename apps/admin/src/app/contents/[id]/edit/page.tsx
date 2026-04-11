@@ -1,6 +1,6 @@
 import ContentEditor from '@/components/content/ContentEditor';
 import { getContentById, updateContent } from '@pan/shared';
-import { notFound, redirect } from 'next/navigation';
+import { notFound } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
 import { deleteContentAction } from '@/app/actions';
 
@@ -22,7 +22,6 @@ export default async function EditContentPage({ params }: { params: Promise<{ id
   const handleDelete = async () => {
     'use server';
     await deleteContentAction(id);
-    redirect('/contents');
   };
 
   return <ContentEditor initialData={contentResp} id={id} onSave={handleSave} onDelete={handleDelete} />;
