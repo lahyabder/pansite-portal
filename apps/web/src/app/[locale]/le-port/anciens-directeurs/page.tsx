@@ -18,35 +18,35 @@ export default async function AnciensDirecteursPage({ params }: { params: Promis
             nameFr: 'SOW MOHAMED DEYNA',
             period: '1979',
             isFeu: true,
-            image: '/images/hero/hero-1.jpg', // Placeholder, user will replace or the DB will link
+            image: '/images/directors/sow-mohamed-deyna.png',
         },
         {
             nameAr: 'اسلمو ولد التونسي',
             nameFr: 'ISSELMOU OULD TOUNSY',
             period: '1979 - 1980',
             isFeu: false,
-            image: '/images/hero/hero-2.jpg',
+            image: '/images/directors/isselmou-ould-tounsy.png',
         },
         {
             nameAr: 'غي سيداتي',
             nameFr: 'GUEYE SIDATY',
             period: '1980 - 1986',
             isFeu: true,
-            image: '/images/hero/hero-3.jpg',
+            image: '/images/directors/gueye-sidaty.png',
         },
         {
             nameAr: 'عمار ولد أحميده',
             nameFr: 'OUMAR OULD HMEIDE',
             period: '1986 - 1987',
             isFeu: true,
-            image: '/images/hero/hero-4.jpg',
+            image: '/images/directors/oumar-ould-hmeide.png',
         },
         {
             nameAr: 'كوني محمود',
             nameFr: 'KONE MAHMOUD',
             period: '1988 - 1994',
             isFeu: true,
-            image: '/images/hero/hero-5.jpg',
+            image: '/images/directors/kone-mahmoud.png',
         }
     ];
 
