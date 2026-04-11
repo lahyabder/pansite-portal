@@ -132,6 +132,52 @@ export async function uploadAssetAction(formData: FormData) {
     return `${url}/storage/v1/object/public/pan-images/${filename}`;
 }
 
+export async function uploadAndSaveMediaAction(formData: FormData) {
+    const file = formData.get('file') as File;
+    if (!file) throw new Error('Aucun fichier sélectionné');
+
+    const bytes = await file.arrayBuffer();
+    const buffer = Buffer.from(bytes);
+
+    const ext = file.name.split('.').pop();
+    const uniqueFilename = `${Date.now()}-${Math.round(Math.random() * 1000)}.${ext}`;
+
+    const { error: storageError } = await getSupabaseAdmin()
+        .storage
+        .from('pan-images')
+        .upload(uniqueFilename, buffer, {
+            contentType: file.type,
+            upsert: false
+        });
+
+    if (storageError) throw new Error(storageError.message);
+
+    const url = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
+    const publicUrl = `${url}/storage/v1/object/public/pan-images/${uniqueFilename}`;
+
+    let assetType = 'document';
+    if (file.type.startsWith('image/')) assetType = 'image';
+    if (file.type.startsWith('video/')) assetType = 'video';
+
+    const mediaRecord = {
+        filename: file.name,
+        url: publicUrl,
+        type: assetType,
+        size: file.size
+    };
+
+    const { data: dbData, error: dbError } = await getSupabaseAdmin()
+        .from('media_assets')
+        .insert([mediaRecord])
+        .select()
+        .single();
+    
+    if (dbError) throw new Error(dbError.message);
+
+    revalidatePath('/media');
+    return dbData;
+}
+
 // ─── Settings Actions ──────────────────────────────────────────────────────────
 
 export async function getSettingsAction() {

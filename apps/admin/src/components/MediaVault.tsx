@@ -13,15 +13,17 @@ import {
   FileText,
   FolderOpen
 } from 'lucide-react';
-import { useState, useEffect } from 'react';
-import { getAllMediaAction, deleteMediaAction } from '@/app/actions';
+import { useState, useEffect, useRef } from 'react';
+import { getAllMediaAction, deleteMediaAction, uploadAndSaveMediaAction } from '@/app/actions';
 import { formatDate } from '@pan/shared';
 
 export default function MediaVault() {
   const [media, setMedia] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [uploading, setUploading] = useState(false);
   const [search, setSearch] = useState('');
   const [selected, setSelected] = useState<any | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const load = async () => {
     setLoading(true);
@@ -39,6 +41,25 @@ export default function MediaVault() {
     await deleteMediaAction(id);
     setSelected(null);
     load();
+  };
+
+  const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    try {
+      setUploading(true);
+      const formData = new FormData();
+      formData.append('file', file);
+      
+      const newMedia = await uploadAndSaveMediaAction(formData);
+      setMedia([newMedia, ...media]);
+    } catch (error: any) {
+      alert('Erreur lors du téléchargement : ' + error.message);
+    } finally {
+      setUploading(false);
+      if (fileInputRef.current) fileInputRef.current.value = '';
+    }
   };
 
   const filtered = media.filter(m => m.filename.toLowerCase().includes(search.toLowerCase()));
@@ -63,9 +84,20 @@ export default function MediaVault() {
         </div>
 
         <div className="flex items-center gap-4">
-           <button className="flex items-center gap-2 px-6 py-2.5 bg-sky-500 text-white rounded-xl font-black text-sm hover:scale-105 active:scale-95 transition-all shadow-xl shadow-sky-500/10">
-              <Upload className="w-4 h-4" />
-              Ajouter un Fichier
+           <input 
+              type="file" 
+              ref={fileInputRef} 
+              onChange={handleUpload} 
+              className="hidden" 
+              accept="image/*,video/*"
+           />
+           <button 
+              onClick={() => fileInputRef.current?.click()}
+              disabled={uploading}
+              className={`flex items-center gap-2 px-6 py-2.5 ${uploading ? 'bg-sky-500/50 cursor-not-allowed' : 'bg-sky-500 hover:scale-105 active:scale-95'} text-white rounded-xl font-black text-sm transition-all shadow-xl shadow-sky-500/10`}
+           >
+              {uploading ? <RefreshCw className="w-4 h-4 animate-spin" /> : <Upload className="w-4 h-4" />}
+              {uploading ? 'Envoi...' : 'Ajouter un Fichier'}
            </button>
         </div>
       </header>
