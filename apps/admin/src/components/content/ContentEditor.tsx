@@ -12,7 +12,7 @@ import {
   Wand2,
   Trash2
 } from 'lucide-react';
-import { translateContentAction, uploadAssetAction } from '@/app/actions';
+import { translateContentAction, translateFullContentAction, uploadAssetAction } from '@/app/actions';
 
 const LOCALES = [
   { id: 'fr', label: 'Français' },
@@ -101,17 +101,7 @@ export default function ContentEditor({ initialData, id, onSave, onDelete }: Con
       let payload = { ...content };
 
       if (autoTranslate) {
-        const fields = ['title', 'excerpt', 'body'];
-        for (const field of fields) {
-          const sourceText = payload[field]?.[activeLang];
-          if (sourceText && typeof sourceText === 'string' && sourceText.trim() !== '') {
-            for (const loc of LOCALES) {
-              if (loc.id !== activeLang && (!payload[field][loc.id] || payload[field][loc.id].trim() === '')) {
-                payload[field][loc.id] = await translateContentAction(sourceText, loc.id);
-              }
-            }
-          }
-        }
+        payload = await translateFullContentAction(payload, activeLang);
       }
 
       await onSave(payload);
