@@ -162,8 +162,8 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
                                         </svg>
                                         <div>
                                             <div className="font-medium text-pan-navy">{labels.phone}</div>
-                                            <div className="mt-1">{dict.footer.phone}</div>
-                                            <div className="text-pan-gray-400 text-xs">Fax: {dict.footer.fax}</div>
+                                            <div className="mt-1"><span dir="ltr" className="inline-block">{dict.footer.phone}</span></div>
+                                            <div className="text-pan-gray-400 text-xs"><span dir="ltr" className="inline-block">Fax: {dict.footer.fax}</span></div>
                                         </div>
                                     </li>
                                     <li className="flex items-start gap-3">
