@@ -24,7 +24,7 @@ export function QuaisGrid({ dict, quais }: QuaisGridProps) {
                         {/* Decorative Gradient */}
                         <div className="absolute inset-0 bg-gradient-to-br from-pan-navy/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
                         
-                        <div className="relative p-8 pt-10 text-right md:text-inherit" dir={quais.title === 'الأرصفة والمحطات' ? 'rtl' : 'ltr'}>
+                        <div className="relative p-8 pt-10 text-start md:text-inherit" dir={quais.title === 'الأرصفة والمحطات' ? 'rtl' : 'ltr'}>
                             {/* Icon/Number */}
                             <div className={`absolute top-0 ${quais.title === 'الأرصفة والمحطات' ? 'left-8' : 'right-8'} -translate-y-1/2 w-12 h-12 rounded-2xl bg-gradient-to-br from-pan-navy to-pan-blue flex items-center justify-center text-white font-bold shadow-lg shadow-pan-navy/20`}>
                                 0{i + 1}
