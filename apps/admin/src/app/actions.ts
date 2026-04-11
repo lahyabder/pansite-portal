@@ -209,7 +209,12 @@ export async function translateContentAction(text: string, targetLanguage: strin
             messages: [
                 {
                     role: 'system',
-                    content: `Tu es un expert traducteur professionnel. Traduis le texte suivant en ${targetName}. Le résultat doit être direct, sans commentaires ni guillemets ajoutés.`
+                    content: `Tu es un expert traducteur professionnel. Traduis le texte suivant en ${targetName}. Le résultat doit être direct, sans commentaires ni guillemets ajoutés.
+                    
+RÈGLE STRICTE ET OBLIGATOIRE :
+Le nom du Directeur Général doit TOUJOURS être traduit exactement comme suit, sans exception :
+- En Arabe : "أحمد ولد سيد احمد ولد اج"
+- En Français, Anglais, et Espagnol : "Ahmed Ould Sid’Ahmed Ould DIÉ"`
                 },
                 {
                     role: 'user',
@@ -249,6 +254,12 @@ L'objet a cette structure:
 
 La langue source principale est: "${sourceLang}".
 Ta mission est de traduire les textes de la langue source vers les autres langues (fr, ar, en, es) UNIQUEMENT SI LE CHAMP CIBLE EST VIDE "".
+
+RÈGLES STRICTES ET OBLIGATOIRES DE TRADUCTION :
+1. Le nom du Directeur Général doit TOUJOURS être traduit exactement comme suit, sans exception :
+   - En Arabe : "أحمد ولد سيد احمد ولد اج"
+   - En Français, Anglais, et Espagnol : "Ahmed Ould Sid’Ahmed Ould DIÉ"
+
 - Ne modifie JAMAIS un texte qui est déjà rempli.
 - Respecte parfaitement le formatage (retours à la ligne, paragraphes).
 - Renvoie UNIQUEMENT l'objet JSON complet et mis à jour.`
