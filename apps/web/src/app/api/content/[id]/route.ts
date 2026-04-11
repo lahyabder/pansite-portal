@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { revalidatePath } from 'next/cache';
-import { getContentById, updateContent, deleteContent } from '@pan/shared';
+import { getContentById, updateContent, deleteContent } from '@/shared_lib';
 
 const CORS_HEADERS = {
     'Access-Control-Allow-Origin': '*',

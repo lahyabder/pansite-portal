@@ -1,5 +1,5 @@
-import type { Locale } from '@pan/shared';
-import { getPageBySlug, t } from '@pan/shared';
+import type { Locale } from '@/shared_lib';
+import { getPageBySlug, t } from '@/shared_lib';
 import { notFound } from 'next/navigation';
 import { BlockRenderer } from '@/components/BlockRenderer';
 import { PageHero } from '@/components/PageHero';

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getAuditLog } from '@pan/shared';
+import { getAuditLog } from '@/shared_lib';
 
 const CORS_HEADERS = {
     'Access-Control-Allow-Origin': '*',

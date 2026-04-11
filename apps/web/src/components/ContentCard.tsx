@@ -1,7 +1,7 @@
 'use client';
 
-import type { Locale, Content } from '@pan/shared';
-import { t, formatDate } from '@pan/shared';
+import type { Locale, Content } from '@/shared_lib';
+import { t, formatDate } from '@/shared_lib';
 import type { Dictionary } from '@/lib/dictionaries';
 import Link from 'next/link';
 import Image from 'next/image';

@@ -1,4 +1,4 @@
-import type { Locale } from '@pan/shared';
+import type { Locale } from '@/shared_lib';
 
 export type Dictionary = {
     nav: {
@@ -1948,7 +1948,7 @@ Je vous invite à découvrir ce portail et à suivre, à travers lui, les évolu
     },
 };
 
-import { getSiteSettings } from '@pan/shared';
+import { getSiteSettings } from '@/shared_lib';
 
 // Helper function to deep merge objects
 const isObject = (item: any) => item && typeof item === 'object' && !Array.isArray(item);

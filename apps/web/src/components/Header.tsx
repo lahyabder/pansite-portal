@@ -4,8 +4,8 @@ import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import type { Locale, SiteSettings, Menu } from '@pan/shared';
-import { t } from '@pan/shared';
+import type { Locale, SiteSettings, Menu } from '@/shared_lib';
+import { t } from '@/shared_lib';
 import type { Dictionary } from '@/lib/dictionaries';
 
 interface HeaderProps {

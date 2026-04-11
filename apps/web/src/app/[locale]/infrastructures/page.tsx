@@ -1,9 +1,9 @@
-import type { Locale } from '@pan/shared';
+import type { Locale } from '@/shared_lib';
 import { getDictionary } from '@/lib/dictionaries';
 import { PageHero } from '@/components/PageHero';
 import { InfrastructureMap } from '@/components/InfrastructureMap';
 import { QuaisGrid } from '@/components/infrastructures/QuaisGrid';
-import { getPublishedContents, getPageBySlug, resolveLocalized } from '@pan/shared';
+import { getPublishedContents, getPageBySlug, resolveLocalized } from '@/shared_lib';
 import { ContentCard } from '@/components/ContentCard';
 
 export const revalidate = 60;

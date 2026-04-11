@@ -1,8 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import type { Locale, RequestType } from '@pan/shared';
-import { createRequest } from '@pan/shared';
+import type { Locale, RequestType } from '@/shared_lib';
+import { createRequest } from '@/shared_lib';
 import type { Dictionary } from '@/lib/dictionaries';
 
 interface Props {

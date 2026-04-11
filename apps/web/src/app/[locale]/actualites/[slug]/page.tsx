@@ -1,6 +1,6 @@
-import type { Locale } from '@pan/shared';
-import { t, formatDate } from '@pan/shared';
-import { getContentBySlug, getPublishedContents } from '@pan/shared';
+import type { Locale } from '@/shared_lib';
+import { t, formatDate } from '@/shared_lib';
+import { getContentBySlug, getPublishedContents } from '@/shared_lib';
 import { getDictionary } from '@/lib/dictionaries';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';

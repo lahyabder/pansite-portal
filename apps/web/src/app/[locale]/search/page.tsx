@@ -1,4 +1,4 @@
-import type { Locale } from '@pan/shared';
+import type { Locale } from '@/shared_lib';
 import { getDictionary } from '@/lib/dictionaries';
 import { PageHero } from '@/components/PageHero';
 

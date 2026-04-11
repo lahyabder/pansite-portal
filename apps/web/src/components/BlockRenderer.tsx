@@ -1,5 +1,5 @@
-import type { Locale, PageBlock } from '@pan/shared';
-import { t } from '@pan/shared';
+import type { Locale, PageBlock } from '@/shared_lib';
+import { t } from '@/shared_lib';
 import Image from 'next/image';
 import Link from 'next/link';
 

@@ -1,9 +1,9 @@
-import type { Locale } from '@pan/shared';
+import type { Locale } from '@/shared_lib';
 import { getDictionary } from '@/lib/dictionaries';
 import { PageHero } from '@/components/PageHero';
 import { Package, RefreshCw, Box, Truck, Anchor, Layout, Info } from 'lucide-react';
 import Link from 'next/link';
-import { getPublishedContents, getPageBySlug, resolveLocalized, t } from '@pan/shared';
+import { getPublishedContents, getPageBySlug, resolveLocalized, t } from '@/shared_lib';
 
 export const revalidate = 60;
 

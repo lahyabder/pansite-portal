@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import type { Locale } from '@pan/shared';
+import type { Locale } from '@/shared_lib';
 
 interface PageHeroProps {
     title: string;

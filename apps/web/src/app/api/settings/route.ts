@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { revalidatePath } from 'next/cache';
-import { getSiteSettings, updateSiteSettings } from '@pan/shared';
+import { getSiteSettings, updateSiteSettings } from '@/shared_lib';
 
 const CORS_HEADERS = {
     'Access-Control-Allow-Origin': '*',

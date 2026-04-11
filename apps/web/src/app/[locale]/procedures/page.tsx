@@ -1,7 +1,7 @@
-import type { Locale } from '@pan/shared';
+import type { Locale } from '@/shared_lib';
 import { getDictionary } from '@/lib/dictionaries';
 import { PageHero } from '@/components/PageHero';
-import { getPublishedContents } from '@pan/shared';
+import { getPublishedContents } from '@/shared_lib';
 import { ContentCard } from '@/components/ContentCard';
 
 export const revalidate = 60;

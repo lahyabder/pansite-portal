@@ -1,5 +1,5 @@
-import type { Locale } from '@pan/shared';
-import { t, mockServices } from '@pan/shared';
+import type { Locale } from '@/shared_lib';
+import { t, mockServices } from '@/shared_lib';
 import { getDictionary } from '@/lib/dictionaries';
 import { PageHero } from '@/components/PageHero';
 import Link from 'next/link';

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getAllMedia, createMediaAsset, deleteMediaAsset } from '@pan/shared';
+import { getAllMedia, createMediaAsset, deleteMediaAsset } from '@/shared_lib';
 
 const CORS_HEADERS = {
     'Access-Control-Allow-Origin': '*',

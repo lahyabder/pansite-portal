@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { revalidatePath } from 'next/cache';
-import { getAllPages, getPageBySlug, createPage, updatePage, deletePage } from '@pan/shared';
+import { getAllPages, getPageBySlug, createPage, updatePage, deletePage } from '@/shared_lib';
 
 const CORS_HEADERS = {
     'Access-Control-Allow-Origin': '*',

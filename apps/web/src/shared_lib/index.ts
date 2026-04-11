@@ -1,4 +1,4 @@
-// @pan/shared — barrel export
+// @/shared_lib — barrel export
 export * from './types';
 export * from './utils';
 export * from './mock';

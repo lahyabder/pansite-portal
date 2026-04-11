@@ -1,5 +1,5 @@
-import type { Locale, SiteSettings, Menu } from '@pan/shared';
-import { getDir, t } from '@pan/shared';
+import type { Locale, SiteSettings, Menu } from '@/shared_lib';
+import { getDir, t } from '@/shared_lib';
 import { Inter, Tajawal } from 'next/font/google';
 import { getDictionary } from '@/lib/dictionaries';
 import { Header } from '@/components/Header';
@@ -8,7 +8,7 @@ import { Analytics } from '@/components/Analytics';
 import { CookieBanner } from '@/components/CookieBanner';
 import { Suspense } from 'react';
 import type { Metadata } from 'next';
-import { getSiteSettings, getMenuByLocation } from '@pan/shared';
+import { getSiteSettings, getMenuByLocation } from '@/shared_lib';
 
 const inter = Inter({
     variable: '--font-inter',

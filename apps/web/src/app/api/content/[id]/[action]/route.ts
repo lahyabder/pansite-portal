@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { revalidatePath } from 'next/cache';
-import { publishContent, archiveContent, restoreContent, submitForReview, approveContent } from '@pan/shared';
+import { publishContent, archiveContent, restoreContent, submitForReview, approveContent } from '@/shared_lib';
 
 const CORS_HEADERS = {
     'Access-Control-Allow-Origin': '*',

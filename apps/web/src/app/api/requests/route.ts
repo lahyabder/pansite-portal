@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getFilteredRequests, getRequestById, createRequest, assignRequest, changeRequestStatus, respondToRequest, getRequestStats } from '@pan/shared';
-import type { RequestStatus, RequestType, RequestPriority, DocumentDirection } from '@pan/shared';
+import { getFilteredRequests, getRequestById, createRequest, assignRequest, changeRequestStatus, respondToRequest, getRequestStats } from '@/shared_lib';
+import type { RequestStatus, RequestType, RequestPriority, DocumentDirection } from '@/shared_lib';
 
 const CORS_HEADERS = {
     'Access-Control-Allow-Origin': '*',

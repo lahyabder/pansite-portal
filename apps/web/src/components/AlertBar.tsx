@@ -1,7 +1,7 @@
 'use client';
 
-import type { Locale } from '@pan/shared';
-import { t, getActiveAlerts } from '@pan/shared';
+import type { Locale } from '@/shared_lib';
+import { t, getActiveAlerts } from '@/shared_lib';
 import type { Dictionary } from '@/lib/dictionaries';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';

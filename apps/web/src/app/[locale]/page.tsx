@@ -1,5 +1,5 @@
-import type { Locale } from '@pan/shared';
-import { t, formatDate, getSiteSettings, getPageBySlug, getLatestContents } from '@pan/shared';
+import type { Locale } from '@/shared_lib';
+import { t, formatDate, getSiteSettings, getPageBySlug, getLatestContents } from '@/shared_lib';
 import { getDictionary } from '@/lib/dictionaries';
 import Link from 'next/link';
 import Image from 'next/image';

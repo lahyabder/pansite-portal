@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { revalidatePath } from 'next/cache';
-import { getAllMenus, getMenuByLocation, upsertMenu } from '@pan/shared';
+import { getAllMenus, getMenuByLocation, upsertMenu } from '@/shared_lib';
 
 const CORS_HEADERS = {
     'Access-Control-Allow-Origin': '*',

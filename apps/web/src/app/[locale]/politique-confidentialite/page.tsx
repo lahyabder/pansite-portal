@@ -1,4 +1,4 @@
-import type { Locale } from '@pan/shared';
+import type { Locale } from '@/shared_lib';
 import { PageHero } from '@/components/PageHero';
 
 export default async function PrivacyPolicyPage({ params }: { params: Promise<{ locale: string }> }) {

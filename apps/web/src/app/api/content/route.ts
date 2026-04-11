@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { revalidatePath } from 'next/cache';
-import { getAllContents, getPublishedContents, createContent, getContentBySlug, getAdminContents } from '@pan/shared';
-import type { ContentCategory, ContentStatus } from '@pan/shared';
+import { getAllContents, getPublishedContents, createContent, getContentBySlug, getAdminContents } from '@/shared_lib';
+import type { ContentCategory, ContentStatus } from '@/shared_lib';
 
 // Allow cross-origin requests from admin panel
 const CORS_HEADERS = {

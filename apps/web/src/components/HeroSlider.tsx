@@ -3,8 +3,8 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import type { Locale, SiteSettings, LocalizedString } from '@pan/shared';
-import { t } from '@pan/shared';
+import type { Locale, SiteSettings, LocalizedString } from '@/shared_lib';
+import { t } from '@/shared_lib';
 import type { Dictionary } from '@/lib/dictionaries';
 
 interface HeroSliderProps {
