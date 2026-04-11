@@ -21,6 +21,7 @@ export function Footer({ locale, dict, menu, settings }: FooterProps) {
     // Split menu items into two columns if many, or use defaults
     const column1 = menuItems.length > 0 ? menuItems.slice(0, Math.ceil(menuItems.length / 2)) : [
         { label: dict.nav.port, href: `/${locale}/le-port` },
+        { label: dict.nav.infrastructure, href: `/${locale}/infrastructures` },
         { label: dict.nav.services, href: `/${locale}/services` },
     ];
 
