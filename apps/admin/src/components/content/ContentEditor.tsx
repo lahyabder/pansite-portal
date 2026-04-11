@@ -253,21 +253,7 @@ export default function ContentEditor({ initialData, id, onSave, onDelete }: Con
               </div>
             </div>
 
-            {/* Extrait */}
-            <div className="p-8 bg-slate-900 border border-white/5 rounded-3xl relative group">
-              <div className="flex justify-between items-center mb-4">
-                <label className="flex items-center gap-2 text-[10px] font-black text-sky-500 uppercase tracking-widest">
-                  <FileText className="w-3 h-3" /> Extrait court (Excerpt)
-                </label>
-              </div>
-              <textarea 
-                value={content.excerpt?.[activeLang] || ''}
-                onChange={e => setLocalizedValue('excerpt', e.target.value)}
-                className="w-full bg-transparent text-slate-300 min-h-[80px] outline-none resize-y"
-                placeholder="Un résumé rapide de 2 phrases..."
-                dir={activeLang === 'ar' ? 'rtl' : 'ltr'}
-              />
-            </div>
+
 
             {/* Corps du texte */}
             <div className="p-8 bg-slate-900 border border-white/5 rounded-3xl relative">
