@@ -129,7 +129,7 @@ export default function ContentEditor({ initialData, id, onSave }: ContentEditor
             className="flex items-center gap-2 px-6 py-2.5 bg-white text-slate-950 rounded-xl font-black text-sm hover:scale-105 active:scale-95 transition-all shadow-xl shadow-white/10 disabled:opacity-50"
           >
             {saving ? <RefreshCw className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
-            {saving ? 'Enregistrement...' : 'Publier'}
+            {saving ? 'Enregistrement...' : 'Enregistrer'}
           </button>
         </div>
       </header>
@@ -145,7 +145,7 @@ export default function ContentEditor({ initialData, id, onSave }: ContentEditor
                   type="text"
                   value={content.slug}
                   onChange={e => setContent({ ...content, slug: e.target.value })}
-                  className="w-full bg-transparent border-b border-white/10 text-white py-2 outline-none focus:border-sky-500 transition-colors"
+                  className="w-full bg-slate-950 border border-white/10 text-white px-3 py-2 rounded-lg outline-none focus:border-sky-500 transition-colors"
                 />
               </div>
               <div className="flex-1 p-6 bg-slate-900 rounded-2xl border border-white/5">
@@ -153,11 +153,22 @@ export default function ContentEditor({ initialData, id, onSave }: ContentEditor
                 <select
                   value={content.category}
                   onChange={e => setContent({ ...content, category: e.target.value })}
-                  className="w-full bg-transparent border-b border-white/10 text-white py-2 outline-none focus:border-sky-500 transition-colors"
+                  className="w-full bg-slate-950 border border-white/10 text-white px-3 py-2 rounded-lg outline-none focus:border-sky-500 transition-colors"
                 >
                   <option value="actualite">Actualité</option>
                   <option value="communique">Communiqué</option>
                   <option value="evenement">Évènement</option>
+                </select>
+              </div>
+              <div className="flex-1 p-6 bg-slate-900 rounded-2xl border border-white/5">
+                <label className="block text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2">Statut</label>
+                <select
+                  value={content.status}
+                  onChange={e => setContent({ ...content, status: e.target.value })}
+                  className="w-full bg-slate-950 border border-white/10 text-white px-3 py-2 rounded-lg outline-none focus:border-sky-500 transition-colors"
+                >
+                  <option value="draft">Brouillon (Draft)</option>
+                  <option value="published">Publié (Published)</option>
                 </select>
               </div>
             </div>
