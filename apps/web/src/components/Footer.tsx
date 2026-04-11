@@ -23,6 +23,7 @@ export function Footer({ locale, dict, menu, settings }: FooterProps) {
         { label: dict.nav.port, href: `/${locale}/le-port` },
         { label: dict.nav.infrastructure, href: `/${locale}/infrastructures` },
         { label: dict.nav.services, href: `/${locale}/services` },
+        { label: dict.nav.media, href: `/${locale}/medias` },
     ];
 
     const column2 = menuItems.length > 0 ? menuItems.slice(Math.ceil(menuItems.length / 2)) : [

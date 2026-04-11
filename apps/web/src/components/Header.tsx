@@ -43,6 +43,7 @@ export function Header({ locale, dict, menu, settings }: HeaderProps) {
         { label: dict.nav.port, href: `/${locale}/le-port`, children: undefined },
         { label: dict.nav.infrastructure, href: `/${locale}/infrastructures`, children: undefined },
         { label: dict.nav.services, href: `/${locale}/services`, children: undefined },
+        { label: dict.nav.media, href: `/${locale}/medias`, children: undefined },
         { label: dict.nav.contact, href: `/${locale}/contact`, children: undefined },
     ];
 
