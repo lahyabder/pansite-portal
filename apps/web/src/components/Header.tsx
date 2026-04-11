@@ -31,7 +31,7 @@ export function Header({ locale, dict, menu, settings }: HeaderProps) {
     ];
 
     // Use dynamic menu if available, otherwise fallback to dict
-    const navItems = menu?.items.map(item => ({
+    let navItems = menu?.items.map(item => ({
         label: t(item.label, locale),
         href: item.href.startsWith('http') ? item.href : `/${locale}${item.href === '/' ? '' : item.href}`,
         children: item.children?.map(child => ({
@@ -47,6 +47,21 @@ export function Header({ locale, dict, menu, settings }: HeaderProps) {
         { label: dict.nav.mediatheque, href: `/${locale}/medias`, children: undefined },
         { label: dict.nav.contact, href: `/${locale}/contact`, children: undefined },
     ];
+
+    // Ensure new items are present in dynamic menu if missing
+    if (menu) {
+        const hasFormerDirectors = navItems.some(item => item.href.includes('anciens-directeurs'));
+        const hasMediatheque = navItems.some(item => item.href.includes('medias'));
+
+        if (!hasFormerDirectors) {
+            // Insert after 'Port' or at index 2
+            navItems.splice(2, 0, { label: dict.nav.formerDirectors, href: `/${locale}/le-port/anciens-directeurs`, children: undefined });
+        }
+        if (!hasMediatheque) {
+            // Insert after 'Services' or at the end
+            navItems.push({ label: dict.nav.mediatheque, href: `/${locale}/medias`, children: undefined });
+        }
+    }
 
     useEffect(() => {
         if (searchOpen && searchInputRef.current) {

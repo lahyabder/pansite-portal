@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev --port 3000 --turbopack",
-    "build": "next build",
+    "build": "cd ../.. && pnpm --filter @pan/shared build && cd apps/web && next build",
     "start": "next start --port 3000",
     "lint": "eslint"
   },
