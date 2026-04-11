@@ -145,11 +145,24 @@ export default function MediaVault() {
               {filtered.map(asset => (
                 <div 
                   key={asset.id} 
-                  onClick={() => setSelected(asset)}
                   className={`group relative aspect-square rounded-3xl overflow-hidden cursor-pointer transition-all border-4 ${
                     selected?.id === asset.id ? 'border-sky-500 scale-95 shadow-2xl' : 'border-transparent bg-slate-900'
                   }`}
                 >
+                  {/* Click area for selection */}
+                  <div className="absolute inset-0 z-10" onClick={() => setSelected(asset)}></div>
+
+                  {/* Delete Button (Floating) */}
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleDelete(asset.id);
+                    }}
+                    className="absolute top-3 right-3 z-20 p-2.5 bg-red-500/80 hover:bg-red-500 text-white rounded-xl backdrop-blur opacity-0 group-hover:opacity-100 transition-all scale-90 group-hover:scale-100 hover:scale-110 shadow-xl"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </button>
+
                   {asset.type === 'image' ? (
                     <img src={asset.url} alt={asset.filename} className="w-full h-full object-cover transition-transform group-hover:scale-110" />
                   ) : (
@@ -158,7 +171,7 @@ export default function MediaVault() {
                        <span className="text-[10px] font-black text-slate-600 uppercase tracking-widest px-2">{asset.filename.split('.').pop()}</span>
                     </div>
                   )}
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-4">
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-4 pointer-events-none">
                      <p className="text-[10px] font-bold text-white truncate">{asset.filename}</p>
                   </div>
                 </div>
