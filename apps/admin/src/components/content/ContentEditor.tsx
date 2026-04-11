@@ -120,27 +120,6 @@ export default function ContentEditor({ initialData, id, onSave, onDelete }: Con
     }));
   };
 
-  const autoTranslate = async (field: string) => {
-    // Translates the field from FR (or active) to the other languages
-    const sourceText = content[field][activeLang];
-    if (!sourceText) return;
-
-    setTranslating(true);
-    try {
-      const translations: any = { ...content[field] };
-      for (const loc of LOCALES) {
-        if (loc.id !== activeLang) {
-          const translated = await translateContentAction(sourceText, loc.id);
-          translations[loc.id] = translated;
-        }
-      }
-      setContent({ ...content, [field]: translations });
-    } catch (err: any) {
-      alert('Erreur IA: ' + err.message);
-    } finally {
-      setTranslating(false);
-    }
-  };
 
   return (
     <div className="flex flex-col h-[calc(100vh-160px)] -m-8 relative">
