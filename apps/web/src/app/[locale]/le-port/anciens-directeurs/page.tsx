@@ -47,6 +47,41 @@ export default async function AnciensDirecteursPage({ params }: { params: Promis
             period: '1988 - 1994',
             isFeu: true,
             image: '/images/directors/kone-mahmoud.png',
+        },
+        {
+            nameAr: 'عبد الله ولد لوليد',
+            nameFr: 'ABDALLAHI OULD LOULEID',
+            period: '1994 - 1995',
+            isFeu: false,
+            image: '/images/directors/abdallahi-ould-louleid.png',
+        },
+        {
+            nameAr: 'حماده ولد الدرويش',
+            nameFr: 'HAMADA OULD DERWICH',
+            period: '1995 - 2002',
+            isFeu: false,
+            image: '/images/directors/hamada-ould-derwich.png',
+        },
+        {
+            nameAr: 'با مامادو الملقب امبار',
+            nameFr: "BA MAMADOU dit M'BARE",
+            period: '2002 - 2004',
+            isFeu: true,
+            image: '/images/directors/ba-mamadou-dit-mbare.png',
+        },
+        {
+            nameAr: 'ببها ولد أحمد يورا',
+            nameFr: 'BEBEHA OULD AHMED YOURA',
+            period: '2005 - 2008',
+            isFeu: false,
+            image: '/images/directors/bebeha-ould-ahmed-youra.png',
+        },
+        {
+            nameAr: 'أحمد ولد محمدن',
+            nameFr: 'AHMED OULD MOHAMEDEN',
+            period: '2008 - 2008',
+            isFeu: false,
+            image: '/images/directors/ahmed-ould-mohameden.png',
         }
     ];
 
