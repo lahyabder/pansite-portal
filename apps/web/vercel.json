@@ -1,5 +1,0 @@
-{
-  "buildCommand": "cd ../.. && pnpm --filter @pan/shared build && cd apps/web && next build",
-  "outputDirectory": ".next",
-  "framework": "nextjs"
-}
