@@ -132,41 +132,39 @@ export async function uploadAssetAction(formData: FormData) {
     return `${url}/storage/v1/object/public/pan-images/${filename}`;
 }
 
-export async function getMediaUploadUrlAction(filename: string, fileType: string, fileSize: number) {
-    const ext = filename.split('.').pop();
+export async function uploadAndSaveMediaAction(formData: FormData) {
+    const file = formData.get('file') as File;
+    if (!file) throw new Error('Aucun fichier sélectionné');
+
+    const bytes = await file.arrayBuffer();
+    const buffer = Buffer.from(bytes);
+
+    const ext = file.name.split('.').pop();
     const uniqueFilename = `${Date.now()}-${Math.round(Math.random() * 1000)}.${ext}`;
 
-    const { data, error } = await getSupabaseAdmin()
+    const { error: storageError } = await getSupabaseAdmin()
         .storage
         .from('pan-images')
-        .createSignedUploadUrl(uniqueFilename);
+        .upload(uniqueFilename, buffer, {
+            contentType: file.type,
+            upsert: false
+        });
 
-    if (error) throw new Error(error.message);
+    if (storageError) throw new Error(storageError.message);
 
     const url = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
     const publicUrl = `${url}/storage/v1/object/public/pan-images/${uniqueFilename}`;
 
     let assetType = 'document';
-    if (fileType.startsWith('image/')) assetType = 'image';
-    if (fileType.startsWith('video/')) assetType = 'video';
+    if (file.type.startsWith('image/')) assetType = 'image';
+    if (file.type.startsWith('video/')) assetType = 'video';
 
-    return {
-        signedUrl: data?.signedUrl,
-        publicUrl,
-        assetType,
-        filename,
-        mimeType: fileType,
-        size: fileSize
-    };
-}
-
-export async function saveMediaMetadataAction(metadata: any) {
     const mediaRecord = {
-        filename: metadata.filename,
-        url: metadata.publicUrl,
-        type: metadata.assetType,
-        mime_type: metadata.mimeType,
-        size: metadata.size
+        filename: file.name,
+        url: publicUrl,
+        type: assetType,
+        mime_type: file.type,
+        size: file.size
     };
 
     const { data: dbData, error: dbError } = await getSupabaseAdmin()
