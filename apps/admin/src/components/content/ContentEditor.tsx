@@ -11,7 +11,7 @@ import {
   Image as ImageIcon,
   Wand2
 } from 'lucide-react';
-import { translateContentAction } from '@/app/actions';
+import { translateContentAction, uploadAssetAction } from '@/app/actions';
 
 const LOCALES = [
   { id: 'fr', label: 'Français' },
@@ -40,8 +40,28 @@ export default function ContentEditor({ initialData, id, onSave }: ContentEditor
     category: 'actualite',
     status: 'draft',
     coverImage: '',
+    publishedAt: initialData?.publishedAt || new Date().toISOString().substring(0, 10),
     tags: []
   });
+
+  const [uploadingImage, setUploadingImage] = useState(false);
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setUploadingImage(true);
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+      const url = await uploadAssetAction(formData);
+      setContent({ ...content, coverImage: url });
+    } catch (err: any) {
+      alert('Erreur lors du téléchargement: ' + err.message);
+    } finally {
+      setUploadingImage(false);
+    }
+  };
 
   const handleSave = async () => {
     setSaving(true);
@@ -171,6 +191,16 @@ export default function ContentEditor({ initialData, id, onSave }: ContentEditor
                   <option value="published">Publié (Published)</option>
                 </select>
               </div>
+              <div className="flex-1 p-6 bg-slate-900 rounded-2xl border border-white/5">
+                <label className="block text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2">Date de publication</label>
+                <input 
+                  type="date"
+                  value={content.publishedAt?.substring(0, 10) || ''}
+                  onChange={e => setContent({ ...content, publishedAt: e.target.value })}
+                  className="w-full bg-slate-950 border border-white/10 text-white px-3 py-2 rounded-lg outline-none focus:border-sky-500 transition-colors"
+                  style={{ colorScheme: 'dark' }}
+                />
+              </div>
             </div>
 
             {/* Extrait */}
@@ -228,13 +258,43 @@ export default function ContentEditor({ initialData, id, onSave }: ContentEditor
               <label className="flex items-center gap-2 text-[10px] font-black text-amber-500 uppercase tracking-widest mb-4">
                 <ImageIcon className="w-3 h-3" /> Image de Couverture
               </label>
-              <input 
-                type="text"
-                value={content.coverImage || ''}
-                onChange={e => setContent({ ...content, coverImage: e.target.value })}
-                className="w-full bg-slate-950/50 border border-white/5 text-slate-300 px-4 py-3 rounded-xl outline-none focus:border-sky-500 transition-colors text-sm"
-                placeholder="URL de l'image (ex: /images/news-1.jpg)"
-              />
+              
+              <div className="flex flex-col md:flex-row gap-4 mb-4 items-center">
+                <label className="flex-shrink-0 relative cursor-pointer group">
+                  <div className="flex items-center gap-2 px-6 py-3 bg-slate-950 border border-white/10 rounded-xl hover:bg-slate-800 transition-colors">
+                    {uploadingImage ? <RefreshCw className="w-4 h-4 animate-spin text-sky-500" /> : <ImageIcon className="w-4 h-4 text-sky-500" />}
+                    <span className="text-sm font-bold text-white whitespace-nowrap">
+                      {uploadingImage ? 'Téléchargement...' : 'Uploader une image'}
+                    </span>
+                  </div>
+                  <input 
+                    type="file" 
+                    accept="image/*" 
+                    onChange={handleImageUpload} 
+                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer disabled:cursor-not-allowed"
+                    disabled={uploadingImage}
+                  />
+                </label>
+                <div className="w-full relative">
+                  <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
+                    <span className="text-xs font-bold text-slate-500 uppercase">ou URL:</span>
+                  </div>
+                  <input 
+                    type="text"
+                    value={content.coverImage || ''}
+                    onChange={e => setContent({ ...content, coverImage: e.target.value })}
+                    className="w-full bg-slate-950/50 border border-white/5 text-slate-300 pl-20 pr-4 py-3 rounded-xl outline-none focus:border-sky-500 transition-colors text-sm"
+                    placeholder="https://..."
+                  />
+                </div>
+              </div>
+
+              {content.coverImage && (
+                <div className="mt-4 rounded-xl overflow-hidden border border-white/10 relative h-64 bg-slate-950 flex items-center justify-center">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={content.coverImage} alt="Cover Preview" className="max-h-full max-w-full object-contain" />
+                </div>
+              )}
             </div>
             {/* Spacer */}
             <div className="h-20" />

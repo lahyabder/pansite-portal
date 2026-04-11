@@ -13,6 +13,7 @@ export default async function EditContentPage({ params }: { params: Promise<{ id
 
   const handleSave = async (data: any) => {
     'use server';
+    data.publishedAt = data.publishedAt ? new Date(data.publishedAt).toISOString() : new Date().toISOString();
     await updateContent(id, data, 'usr-001');
     revalidatePath('/contents');
   };

@@ -95,6 +95,32 @@ export async function deleteMediaAction(id: string) {
     return true;
 }
 
+export async function uploadAssetAction(formData: FormData) {
+    const file = formData.get('file') as File;
+    if (!file) throw new Error('Aucun fichier sélectionné');
+
+    const bytes = await file.arrayBuffer();
+    const buffer = Buffer.from(bytes);
+
+    // unique filename
+    const ext = file.name.split('.').pop();
+    const filename = `${Date.now()}-${Math.round(Math.random() * 1000)}.${ext}`;
+
+    const { data, error } = await getSupabaseAdmin()
+        .storage
+        .from('pan-images')
+        .upload(filename, buffer, {
+            contentType: file.type,
+            upsert: false
+        });
+
+    if (error) throw new Error(error.message);
+
+    // Return the public URL
+    const url = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
+    return `${url}/storage/v1/object/public/pan-images/${filename}`;
+}
+
 // ─── Settings Actions ──────────────────────────────────────────────────────────
 
 export async function getSettingsAction() {

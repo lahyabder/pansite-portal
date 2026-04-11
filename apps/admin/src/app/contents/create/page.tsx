@@ -12,7 +12,7 @@ export default function CreateContentPage() {
     
     // Fallback author for demo
     data.authorId = 'usr-001';
-    data.publishedAt = new Date().toISOString();
+    data.publishedAt = data.publishedAt ? new Date(data.publishedAt).toISOString() : new Date().toISOString();
     
     await createContent(data);
     revalidatePath('/contents');
