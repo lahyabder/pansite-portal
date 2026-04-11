@@ -147,11 +147,11 @@ export default async function AnciensDirecteursPage({ params }: { params: Promis
             image: '/images/directors/ahmedeit-ould-cheine.png',
         },
         {
-            nameAr: 'أحمد سالم ولد التكرور',
-            nameFr: 'AHMED SALEM OULD TEKROUR',
-            period: '2023 - 2025',
+            nameAr: 'أحمد ولد سيد أحمد ولد اج',
+            nameFr: 'AHMED OULD SIDAHMED OULD DIE',
+            period: locale === 'ar' ? '2025' : '2025',
             isFeu: false,
-            image: '/images/directors/ahmed-salem-ould-tekrour-2.png',
+            image: '/images/directors/ahmed-ould-sidahmed-ould-die.png',
         }
     ];
 
