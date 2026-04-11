@@ -82,6 +82,41 @@ export default async function AnciensDirecteursPage({ params }: { params: Promis
             period: '2008 - 2008',
             isFeu: false,
             image: '/images/directors/ahmed-ould-mohameden.png',
+        },
+        {
+            nameAr: 'محمد عبد الرحمن ولد ابراهيم',
+            nameFr: 'MOHAMED ABDERAHMANE OULD BRAHIM',
+            period: '2009 - 2010',
+            isFeu: false,
+            image: '/images/directors/mohamed-abderahmane-ould-brahim.png',
+        },
+        {
+            nameAr: 'الشيخ عبد الله ولد احويبيب',
+            nameFr: 'CHEIKH ABDALLAHI OULD HOUEBIB',
+            period: '2010 - 2013',
+            isFeu: true,
+            image: '/images/directors/cheikh-abdallahi-ould-houebib.png',
+        },
+        {
+            nameAr: 'محمد ولد الداف',
+            nameFr: 'MOHAMED OULD DAF',
+            period: '2013 - 2014',
+            isFeu: false,
+            image: '/images/directors/mohamed-ould-daf.png',
+        },
+        {
+            nameAr: 'أحمد سالم ولد العربي',
+            nameFr: 'AHMED SALEM OULD EL ARBI',
+            period: '2014 - 2015',
+            isFeu: false,
+            image: '/images/directors/ahmed-salem-ould-el-arbi.png',
+        },
+        {
+            nameAr: 'محمد ولد والي ولد هيب',
+            nameFr: 'MOHAMED OULD WALY OULD HEIBA',
+            period: '2015 - 2016',
+            isFeu: false,
+            image: '/images/directors/mohamed-ould-waly-ould-heiba.png',
         }
     ];
 
