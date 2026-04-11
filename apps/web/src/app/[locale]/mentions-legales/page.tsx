@@ -42,10 +42,6 @@ export default async function MentionsLegalesPage({ params }: { params: Promise<
                     Email : contact@pan.mr
                 </p>
 
-                <h2>Hébergement et Réalisation</h2>
-                <p>
-                    Le présent site web a été développé pour le compte de l&apos;Autorité de la Zone Franche de Nouadhibou et est hébergé sur les infrastructures locales ou désignées par l&apos;institution.
-                </p>
 
                 <h2>Propriété Intellectuelle</h2>
                 <p>
@@ -72,10 +68,6 @@ export default async function MentionsLegalesPage({ params }: { params: Promise<
                     البريد الإلكتروني: contact@pan.mr
                 </p>
 
-                <h2>الاستضافة والتطوير</h2>
-                <p>
-                    تم تطوير هذا الموقع لصالح سلطة منطقة نواذيبو الحرة ويتم استضافته على البنية التحتية المحلية أو المخصصة من قبل المؤسسة.
-                </p>
 
                 <h2>الملكية الفكرية</h2>
                 <p>
@@ -102,10 +94,6 @@ export default async function MentionsLegalesPage({ params }: { params: Promise<
                     Email: contact@pan.mr
                 </p>
 
-                <h2>Hosting and Development</h2>
-                <p>
-                    This website was developed for the Nouadhibou Free Zone Authority and is hosted on local or designated infrastructure.
-                </p>
 
                 <h2>Intellectual Property</h2>
                 <p>
@@ -132,10 +120,6 @@ export default async function MentionsLegalesPage({ params }: { params: Promise<
                     Correo electrónico: contact@pan.mr
                 </p>
 
-                <h2>Alojamiento y Realización</h2>
-                <p>
-                    Este sitio web ha sido desarrollado por cuenta de la Autoridad de la Zona Franca de Nouadhibou y está alojado en infraestructuras locales o designadas por la institución.
-                </p>
 
                 <h2>Propiedad Intelectual</h2>
                 <p>
