@@ -415,7 +415,17 @@ const dictionaries: Record<Locale, Dictionary> = {
                 subtitle: 'Découvrez l\'histoire et l\'évolution du Port Autonome de Nouadhibou, ainsi que son impact socio-économique sur la région.',
                 dg_word: {
                     title: 'Mot du Directeur Général',
-                    content: 'Cher visiteur, bienvenue au Port Autonome de Nouadhibou. Notre mission est de garantir une connectivité maritime optimale tout en favorisant la croissance économique régionale.',
+                    content: `C’est avec un profond sens de responsabilité et une vision résolument tournée vers l’avenir que je vous souhaite la bienvenue sur le site officiel du Port Autonome de Nouadhibou.
+
+Institution stratégique au cœur des dynamiques économiques de la Mauritanie, le Port Autonome de Nouadhibou incarne un carrefour essentiel d’échanges, de logistique et de développement, au service des opérateurs nationaux et internationaux. Par sa position géographique privilégiée et la diversité de ses activités, il constitue un levier majeur pour la croissance, l’attractivité et l’ouverture de notre pays sur le monde.
+
+Dans un contexte marqué par des transformations rapides des chaînes logistiques mondiales et des exigences accrues en matière de compétitivité, de transparence et de performance, notre ambition est claire : faire du Port Autonome de Nouadhibou une plateforme portuaire moderne, efficace et durable, répondant aux standards internationaux les plus exigeants.
+
+À travers ce site, nous avons souhaité offrir un espace accessible, fiable et interactif, permettant à nos partenaires, usagers et visiteurs d’accéder à l’ensemble des informations utiles, des services proposés, ainsi qu’aux actualités et opportunités liées à notre port. Il s’inscrit dans notre volonté de modernisation, de digitalisation de nos services et de renforcement de la relation avec nos parties prenantes.
+
+Nous demeurons pleinement engagés dans une démarche d’amélioration continue, fondée sur l’innovation, la qualité de service, la sécurité et le respect de l’environnement. Cette dynamique s’appuie avant tout sur le professionnalisme de nos équipes et sur la confiance de nos partenaires, que nous remercions pour leur accompagnement constant.
+
+Je vous invite à découvrir ce portail et à suivre, à travers lui, les évolutions et les ambitions du Port Autonome de Nouadhibou.`,
                 },
                 role: {
                     title: 'Rôle Stratégique',
