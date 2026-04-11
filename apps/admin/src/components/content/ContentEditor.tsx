@@ -280,15 +280,6 @@ export default function ContentEditor({ initialData, id, onSave, onDelete }: Con
                 <label className="flex items-center gap-2 text-[10px] font-black text-sky-500 uppercase tracking-widest">
                   <FileText className="w-3 h-3" /> Extrait court (Excerpt)
                 </label>
-                <button 
-                  onClick={() => autoTranslate('excerpt')}
-                  disabled={translating}
-                  className="flex items-center gap-1.5 px-3 py-1 bg-indigo-500/10 text-indigo-400 hover:bg-indigo-500 hover:text-white rounded-lg text-[10px] font-bold transition-all border border-indigo-500/20 disabled:opacity-50"
-                  title="Générer les traductions automatiques (Ar, En, Es) à partir du texte actuel"
-                >
-                  <Wand2 className={`w-3 h-3 ${translating ? 'animate-pulse' : ''}`} />
-                  Traduire IA
-                </button>
               </div>
               <textarea 
                 value={content.excerpt?.[activeLang] || ''}
@@ -305,15 +296,6 @@ export default function ContentEditor({ initialData, id, onSave, onDelete }: Con
                 <label className="flex items-center gap-2 text-[10px] font-black text-emerald-500 uppercase tracking-widest">
                   <FileText className="w-3 h-3" /> Corps de l'article (Body)
                 </label>
-                <button 
-                  onClick={() => autoTranslate('body')}
-                  disabled={translating}
-                  className="flex items-center gap-1.5 px-3 py-1 bg-indigo-500/10 text-indigo-400 hover:bg-indigo-500 hover:text-white rounded-lg text-[10px] font-bold transition-all border border-indigo-500/20 disabled:opacity-50"
-                  title="Traduire l'intégralité de l'article pour toutes les langues"
-                >
-                  <Wand2 className={`w-3 h-3 ${translating ? 'animate-pulse' : ''}`} />
-                  Traduire IA
-                </button>
               </div>
               <textarea 
                 value={content.body?.[activeLang] || ''}

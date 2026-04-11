@@ -64,7 +64,7 @@ export default async function MentionsLegalesPage({ params }: { params: Promise<
                     <strong>ميناء نواذيبو المستقل (PAN)</strong><br />
                     مؤسسة عمومية ذات طابع صناعي وتجاري (EPIC)<br />
                     ص.ب 236، نواذيبو، موريتانيا<br />
-                    الهاتف: +222 45 74 51 06<br />
+                    الهاتف: <bdi dir="ltr">+222 45 74 51 06</bdi><br />
                     البريد الإلكتروني: contact@pan.mr
                 </p>
 
