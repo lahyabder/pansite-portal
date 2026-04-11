@@ -178,9 +178,17 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
                                 </ul>
                             </div>
 
-                            {/* Map placeholder */}
-                            <div className="bg-pan-gray-200 rounded-2xl h-48 flex items-center justify-center">
-                                <span className="text-pan-gray-500 text-sm">{labels.map}</span>
+                            {/* Map */}
+                            <div className="rounded-2xl h-64 md:h-80 overflow-hidden shadow-sm border border-pan-gray-100">
+                                <iframe 
+                                    width="100%" 
+                                    height="100%" 
+                                    title={labels.map}
+                                    style={{ border: 0 }}
+                                    loading="lazy"
+                                    referrerPolicy="no-referrer-when-downgrade"
+                                    src="https://maps.google.com/maps?q=VWXW%2BHVV,%20Nouadhibou,%20Mauritanie&t=&z=14&ie=UTF8&iwloc=&output=embed"
+                                />
                             </div>
                         </div>
                     </div>
