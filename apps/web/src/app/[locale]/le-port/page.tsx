@@ -81,8 +81,9 @@ export default async function LePortPage({ params }: { params: Promise<{ locale:
 
                             <div className="pt-8 border-t border-pan-navy/5 flex items-center justify-between">
                                 <div className={locale === 'ar' ? 'text-right' : 'text-left'}>
-                                    <div className="text-xl lg:text-2xl font-black text-pan-navy">{dict.pages.port.dg_word.role}</div>
-                                    <div className="h-1 w-12 bg-pan-gold mt-2 rounded-full" />
+                                    <div className="text-xl lg:text-3xl font-black text-pan-navy">{dict.pages.port.dg_word.name}</div>
+                                    <div className="text-sm font-bold text-pan-gold uppercase tracking-widest mt-1">{dict.pages.port.dg_word.role}</div>
+                                    <div className="h-1 w-12 bg-pan-gold mt-4 rounded-full" />
                                 </div>
                                 <Image src="/logo-horizontal.png" alt="PAN" width={100} height={25} className="opacity-20 grayscale brightness-0" />
                             </div>

@@ -134,9 +134,6 @@ export default async function HomePage({
                     );
                 }
 
-                    );
-                }
-
                 if (block.type === 'quick_services') {
                     const servicesList = block.content?.items || [];
                     if (servicesList.length === 0) return null;

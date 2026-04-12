@@ -425,9 +425,9 @@ Institution stratégique au cœur des dynamiques économiques de la Mauritanie, 
 
 Dans un contexte marqué par des transformations rapides des chaînes logistiques mondiales et des exigences accrues en matière de compétitivité, de transparence et de performance, notre ambition est claire : faire du Port Autonome de Nouadhibou une plateforme portuaire moderne, efficace et durable, répondant aux standards internationaux les plus exigeants.
 
-À travers ce site, nous avons souhaité offrir un espace accessible, fiable et interactif, permettant à nos partenaires, usagers et visiteurs d’accéder à l’ensemble des informations utiles, des services proposés, ainsi qu’aux actualités et opportunités liées à notre port. Il s’inscrit dans notre volonté de modernisation, de digitalisation de nos services et de renforcement de la relation avec nos parties prenantes.
+À travers ce site, nous avons souhaité offrir un espace numérique accessible, fiable et interactif, permettant à nos partenaires, usagers et visiteurs d’accéder à l’ensemble des informations utiles, de découvrir nos services et de suivre les actualités et opportunités liées à notre port. Cette démarche s’inscrit dans notre volonté de modernisation, de digitalisation des services et de renforcement de la relation avec nos parties prenantes.
 
-Nous demeurons pleinement engagés dans une démarche d’amélioration continue, fondée sur l’innovation, la qualité de service, la sécurité et le respect de l’environnement. Cette dynamique s’appuie avant tout sur le professionnalisme de nos équipes et sur la confiance de nos partenaires, que nous remercions pour leur accompagnement constant.
+Nous restons pleinement engagés dans une démarche d’amélioration continue, fondée sur l’innovation, la qualité de service, la sécurité et le respect de l’environnement. Cette dynamique repose avant tout sur le professionnalisme de nos équipes et sur la confiance de nos partenaires, que je tiens à remercier pour leur accompagnement.
 
 Je vous invite à découvrir ce portail et à suivre, à travers lui, les évolutions et les ambitions du Port Autonome de Nouadhibou.`,
                 },
