@@ -10,7 +10,7 @@ export type Dictionary = {
         tariffs: string;
         stopovers: string;
         tenders: string;
-        mediatheque: string;
+        media: string;
         contact: string;
         formerDirectors: string;
         search: string;
@@ -297,7 +297,7 @@ const dictionaries: Record<Locale, Dictionary> = {
             tariffs: 'Tarifs',
             stopovers: 'Escales',
             tenders: 'Appels d\'Offres',
-            mediatheque: 'Médiathèque',
+            media: 'Médiathèque',
             contact: 'Contact',
             formerDirectors: 'Anciens Directeurs',
             search: 'Rechercher',
@@ -741,7 +741,7 @@ Je vous invite à découvrir ce portail et à suivre, à travers lui, les évolu
             tariffs: 'التعريفات',
             stopovers: 'الرسو',
             tenders: 'المناقصات',
-            mediatheque: 'المكتبة الوسائطية',
+            media: 'المكتبة الوسائطية',
             contact: 'اتصل بنا',
             formerDirectors: 'المدراء السابقون',
             search: 'بحث',
@@ -1183,7 +1183,7 @@ Je vous invite à découvrir ce portail et à suivre, à travers lui, les évolu
             tariffs: 'Tariffs',
             stopovers: 'Stopovers',
             tenders: 'Tenders',
-            mediatheque: 'Mediatheque',
+            media: 'Media Center',
             contact: 'Contact',
             formerDirectors: 'Former Directors',
             search: 'Search',
@@ -1590,7 +1590,7 @@ I invite you to explore this platform and follow, through it, the developments a
             tariffs: 'Tarifas',
             stopovers: 'Escalas',
             tenders: 'Licitaciones',
-            mediatheque: 'Mediateca',
+            media: 'Mediateca',
             contact: 'Contacto',
             formerDirectors: 'Ex Directores',
             search: 'Buscar',
