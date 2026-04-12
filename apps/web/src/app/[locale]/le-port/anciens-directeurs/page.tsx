@@ -148,7 +148,7 @@ export default async function AnciensDirecteursPage({ params }: { params: Promis
         },
         {
             nameAr: 'أحمد ولد سيد أحمد ولد اج',
-            nameFr: 'AHMED OULD SIDAHMED OULD DIE',
+            nameFr: 'Ahmed Ould Sid’Ahmed Ould DIÉ',
             period: locale === 'ar' ? '2025' : '2025',
             isFeu: false,
             image: '/images/directors/ahmed-ould-sidahmed-ould-die.png',

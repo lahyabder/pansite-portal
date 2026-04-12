@@ -54,8 +54,8 @@ export default async function LePortPage({ params }: { params: Promise<{ locale:
                             <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-pan-gold/10 rounded-full blur-3xl -z-10" />
                             <div className="absolute -top-10 -right-10 w-64 h-64 bg-pan-navy/5 rounded-full blur-3xl -z-10" />
                             <div className="absolute bottom-6 right-6 lg:bottom-10 lg:right-10 p-4 lg:p-6 bg-pan-navy text-white rounded-2xl shadow-xl z-20 border-l-4 border-pan-gold">
-                                <div className="text-lg lg:text-xl font-bold">Ahmed Ould Sidahmed Ould Die</div>
-                                <div className="text-[10px] font-black uppercase tracking-[0.2em] text-pan-gold mt-1">Directeur Général - PAN</div>
+                                <div className="text-lg lg:text-xl font-bold">{dict.pages.port.dg_word.name}</div>
+                                <div className="text-[10px] font-black uppercase tracking-[0.2em] text-pan-gold mt-1">{dict.pages.port.dg_word.role}</div>
                             </div>
                         </div>
 
@@ -63,7 +63,7 @@ export default async function LePortPage({ params }: { params: Promise<{ locale:
                         <div className="lg:col-span-7 space-y-6 lg:space-y-8">
                             <div>
                                 <span className="inline-block px-4 py-1.5 bg-pan-navy/5 text-pan-navy text-[10px] font-black uppercase tracking-[0.3em] rounded-full mb-4 lg:mb-6">
-                                    Institution Stratégique
+                                    {dict.pages.port.title}
                                 </span>
                                 <h2 className="text-3xl lg:text-5xl font-black text-pan-navy leading-tight mb-6 lg:mb-8">
                                     {dict.pages.port.dg_word.title}
@@ -81,7 +81,7 @@ export default async function LePortPage({ params }: { params: Promise<{ locale:
 
                             <div className="pt-8 border-t border-pan-navy/5 flex items-center justify-between">
                                 <div className={locale === 'ar' ? 'text-right' : 'text-left'}>
-                                    <div className="text-xl lg:text-2xl font-black text-pan-navy">Le Directeur Général</div>
+                                    <div className="text-xl lg:text-2xl font-black text-pan-navy">{dict.pages.port.dg_word.role}</div>
                                     <div className="h-1 w-12 bg-pan-gold mt-2 rounded-full" />
                                 </div>
                                 <Image src="/logo-horizontal.png" alt="PAN" width={100} height={25} className="opacity-20 grayscale brightness-0" />

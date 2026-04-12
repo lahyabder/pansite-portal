@@ -129,6 +129,8 @@ export type Dictionary = {
             subtitle: string;
             dg_word: {
                 title: string;
+                name: string;
+                role: string;
                 content: string;
             };
             role: {
@@ -415,6 +417,8 @@ const dictionaries: Record<Locale, Dictionary> = {
                 subtitle: 'Découvrez l\'histoire et l\'évolution du Port Autonome de Nouadhibou, ainsi que son impact socio-économique sur la région.',
                 dg_word: {
                     title: 'Mot du Directeur Général',
+                    name: 'Ahmed Ould Sid’Ahmed Ould DIÉ',
+                    role: 'Directeur Général - PAN',
                     content: `C’est avec un profond sens de responsabilité et une vision résolument tournée vers l’avenir que je vous souhaite la bienvenue sur le site officiel du Port Autonome de Nouadhibou.
 
 Institution stratégique au cœur des dynamiques économiques de la Mauritanie, le Port Autonome de Nouadhibou incarne un carrefour essentiel d’échanges, de logistique et de développement, au service des opérateurs nationaux et internationaux. Par sa position géographique privilégiée et la diversité de ses activités, il constitue un levier majeur pour la croissance, l’attractivité et l’ouverture de notre pays sur le monde.
@@ -855,18 +859,20 @@ Je vous invite à découvrir ce portail et à suivre, à travers lui, les évolu
                 title: 'الميناء',
                 subtitle: 'اكتشف تاريخ وتطور ميناء نواذيبو المستقل، بالإضافة إلى تأثيره الاجتماعي والاقتصادي على المنطقة.',
                 dg_word: {
-                    title: 'كلمة المدير العام',
-                    content: `بكل اعتزاز وبرؤية تتطلع نحو المستقبل، نرحب بكم في الموقع الرسمي لميناء نواذيبو المستقل.
+                    title: 'مرحبا بكم في ميناء نواذيبو المستقل.',
+                    name: 'أحمد ولد سيد أحمد ولد اج',
+                    role: 'المدير العام - ميناء نواذيبو المستقل',
+                    content: `بإحساس عميق بالمسؤولية وبرؤية واضحة تتجه نحو المستقبل، يسعدني أن أرحب بكم في الموقع الرسمي لميناء نواذيبو المستقل.
 
-يمثل ميناء نواذيبو المستقل، بصفته مؤسسة استراتيجية في قلب الاقتصاد الموريتاني، ملتقى طرق أساسي للتبادل واللوجستيك والتنمية، في خدمة الفاعلين الوطنيين والدوليين. فمن خلال موقعه الجغرافي المتميز وتنوع أنشطته، يشكل الميناء رافعة رئيسية للنمو والجاذبية وانفتاح بلادنا على العالم.
+يشكّل ميناء نواذيبو المستقل مؤسسة استراتيجية في صميم الديناميكيات الاقتصادية لموريتانيا، ويجسّد نقطة التقاء محورية للتبادل والخدمات اللوجستية والتنمية، في خدمة الفاعلين الوطنيين والدوليين. وبفضل موقعه الجغرافي المتميز وتنوع أنشطته، يعد رافعة أساسية لتعزيز النمو وجاذبية البلاد وانفتاحها على العالم.
 
-في سياق يتميز بالتحولات السريعة في سلاسل التوريد العالمية والمتطلبات المتزايدة فيما يتعلق بالتنافسية والشفافية والأداء، فإن طموحنا واضح: جعل ميناء نواذيبو المستقل منصة مينائية حديثة وفعالة ومستدامة، تلبي أكثر المعايير الدولية صرامة.
+وفي سياق يشهد تحولات متسارعة في سلاسل الإمداد العالمية، وتزايدًا في متطلبات التنافسية والشفافية والأداء، فإن طموحنا واضح: العمل على ترسيخ مكانة ميناء نواذيبو المستقل كمنصة مينائية حديثة، فعالة ومستدامة، تستجيب لأعلى المعايير الدولية.
 
-من خلال هذا الموقع، أردنا توفير فضاء متاح وموثوق وتفاعلي، يتيح لشركائنا ومستخدمينا وزوارنا الوصول إلى كافة المعلومات المفيدة والخدمات المقترحة، فضلاً عن الأخبار والفرص المتعلقة بمينائنا. ويندرج ذلك ضمن رغبتنا في التحديث ورقمنة خدماتنا وتعزيز العلاقة مع أصحاب المصلحة.
+ومن خلال هذا الموقع، حرصنا على توفير فضاء رقمي متاح وموثوق وتفاعلي، يمكّن شركاءنا ومستخدمينا وزوارنا من الاطلاع على مختلف المعلومات والخدمات، إلى جانب متابعة مستجدات وأنشطة الميناء. ويأتي ذلك في إطار توجهنا نحو تحديث الإدارة، ورقمنة الخدمات، وتعزيز العلاقة مع مختلف الأطراف المعنية.
 
-نحن ملتزمون تماماً بنهج التحسين المستمر، القائم على الابتكار وجودة الخدمة والأمن واحترام البيئة. وتعتمد هذه الديناميكية قبل كل شيء على مهنية فرقنا وعلى ثقة شركائنا، الذين نشكرهم على مرافقتهم المستمرة.
+ونظل ملتزمين بنهج التحسين المستمر، القائم على الابتكار وجودة الخدمات والسلامة واحترام البيئة. وترتكز هذه الديناميكية على كفاءة فرق العمل، وعلى الثقة التي يضعها فينا شركاءنا، والتي نتقدم لهم بخالص الشكر والتقدير عليها.
 
-أدعوكم لاكتشاف هذه البوابة ومتابعة، من خلالها، تطورات وطموحات ميناء نواذيبو المستقل.`,
+أدعوكم إلى استكشاف هذا الموقع، ومتابعة ما يحمله من تطورات وطموحات تخص ميناء نواذيبو المستقل.`,
                 },
                 role: {
                     title: 'الدور الاستراتيجي',
@@ -1296,8 +1302,20 @@ Je vous invite à découvrir ce portail et à suivre, à travers lui, les évolu
                 title: 'The Port',
                 subtitle: 'Discover the history and evolution of the Nouadhibou Autonomous Port, as well as its socio-economic impact on the region.',
                 dg_word: {
-                    title: 'Message from the Director General',
-                    content: 'Dear visitor, welcome to the Nouadhibou Autonomous Port. Our mission is to guarantee optimal maritime connectivity while promoting regional economic growth.',
+                    title: 'Welcome to the Autonomous Port of Nouadhibou',
+                    name: 'Ahmed Ould Sid’Ahmed Ould DIÉ',
+                    role: 'Director General - PAN',
+                    content: `With a deep sense of responsibility and a forward-looking vision, I am pleased to welcome you to the official website of the Autonomous Port of Nouadhibou.
+
+As a strategic institution at the heart of Mauritania’s economic dynamics, the Autonomous Port of Nouadhibou stands as a vital hub for trade, logistics, and development, serving both national and international stakeholders. Owing to its privileged geographical location and the diversity of its activities, it represents a key driver of growth, attractiveness, and the country’s openness to the world.
+
+In a context marked by rapid transformations in global supply chains and increasing demands for competitiveness, transparency, and performance, our ambition is clear: to position the Autonomous Port of Nouadhibou as a modern, efficient, and sustainable port platform that meets the highest international standards.
+
+Through this website, we have sought to provide an accessible, reliable, and interactive digital space, enabling our partners, users, and visitors to access comprehensive information, discover our services, and stay informed about the latest developments and opportunities related to the port. This initiative reflects our commitment to modernization, digital transformation, and strengthening engagement with all stakeholders.
+
+We remain fully committed to a continuous improvement approach, grounded in innovation, service quality, safety, and environmental responsibility. This dynamic is driven above all by the professionalism of our teams and the trust of our partners, to whom we extend our sincere appreciation.
+
+I invite you to explore this platform and follow, through it, the developments and ambitions of the Autonomous Port of Nouadhibou.`,
                 },
                 role: {
                     title: 'Strategic Role',
@@ -1691,8 +1709,20 @@ Je vous invite à découvrir ce portail et à suivre, à travers lui, les évolu
                 title: 'El Puerto',
                 subtitle: 'Descubra la historia y la evolución del Puerto Autónomo de Nouadhibou, así como su impacto socioeconómico en la región.',
                 dg_word: {
-                    title: 'Mensaje del Director General',
-                    content: 'Estimado visitante, bienvenido al Puerto Autónomo de Nouadhibou. Nuestra misión es garantizar una conectividad marítima óptima fomentando al mismo tiempo el crecimiento económico regional.',
+                    title: 'Bienvenido al Puerto Autónomo de Nuadibú',
+                    name: 'Ahmed Ould Sid’Ahmed Ould DIÉ',
+                    role: 'Director General - PAN',
+                    content: `Con un profundo sentido de responsabilidad y una visión claramente orientada hacia el futuro, me complace darles la bienvenida al sitio web oficial del Puerto Autónomo de Nuadibú.
+
+Como institución estratégica en el corazón de las dinámicas económicas de Mauritania, el Puerto Autónomo de Nuadibú representa un punto clave para el comercio, la logística y el desarrollo, al servicio de los actores nacionales e internacionales. Gracias a su ubicación geográfica privilegiada y a la diversidad de sus actividades, constituye un motor esencial para el crecimiento, la atracción de inversiones y la apertura del país al mundo.
+
+En un contexto marcado por rápidas transformaciones en las cadenas logísticas globales y por exigencias crecientes en términos de competitividad, transparencia y desempeño, nuestra ambición es clara: consolidar al Puerto Autónomo de Nuadibú como una plataforma portuaria moderna, eficiente y sostenible, que responda a los más altos estándares internacionales.
+
+A través de este sitio, hemos querido ofrecer un espacio digital accesible, fiable e interactivo, que permita a nuestros socios, usuarios y visitantes acceder a información completa, conocer nuestros servicios y seguir las novedades y oportunidades relacionadas con el puerto. Esta iniciativa se inscribe en nuestra voluntad de modernización, digitalización de los servicios y fortalecimiento de la relación con nuestras partes interesadas.
+
+Seguimos plenamente comprometidos con un enfoque de mejora continua, basado en la innovación, la calidad del servicio, la seguridad y el respeto al medio ambiente. Esta dinámica se apoya, ante todo, en la profesionalidad de nuestros equipos y en la confianza de nuestros socios, a quienes expresamos nuestro más sincero agradecimiento.
+
+Les invito a descubrir este portal y a seguir, a través de él, las evoluciones y ambiciones del Puerto Autónomo de Nuadibú.`,
                 },
                 role: {
                     title: 'Papel Estratégico',

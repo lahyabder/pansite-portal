@@ -85,8 +85,8 @@ export default async function HomePage({
                                 />
                                 <div className="absolute inset-0 bg-gradient-to-t from-pan-navy via-transparent to-transparent opacity-60 lg:hidden" />
                                 <div className="absolute bottom-6 left-6 right-6 lg:bottom-10 lg:right-10 lg:left-auto lg:right-20 p-6 lg:p-8 bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl text-white shadow-2xl">
-                                    <div className="text-xl lg:text-2xl font-black mb-1">Ahmed Ould Sidahmed Ould Die</div>
-                                    <div className="text-[10px] font-black uppercase tracking-[0.3em] text-pan-gold">Directeur Général - PAN</div>
+                                    <div className="text-xl lg:text-2xl font-black mb-1">{dict.pages.port.dg_word.name}</div>
+                                    <div className="text-[10px] font-black uppercase tracking-[0.3em] text-pan-gold">{dict.pages.port.dg_word.role}</div>
                                 </div>
                             </div>
                         </div>
