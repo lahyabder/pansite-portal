@@ -76,9 +76,6 @@ importers:
 
   apps/web:
     dependencies:
-      '@pan/shared':
-        specifier: workspace:*
-        version: link:../../packages/shared
       lucide-react:
         specifier: ^0.477.0
         version: 0.477.0(react@19.2.3)
