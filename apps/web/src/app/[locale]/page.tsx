@@ -51,48 +51,7 @@ export default async function HomePage({
         <div className="relative">
             <AlertBar locale={locale} dict={dict} />
 
-            {/* ═══ Message du Directeur Général (Permanent Highlight) ═══ */}
-            <section className="py-24 bg-white relative overflow-hidden">
-                <div className="max-w-7xl mx-auto px-6">
-                    <div className="bg-pan-navy rounded-[3rem] overflow-hidden relative shadow-2xl">
-                        <div className="absolute top-0 right-0 w-1/2 h-full bg-pan-blue/10 -skew-x-12 translate-x-20" />
-                        <div className="grid lg:grid-cols-2 items-center">
-                            <div className="p-8 lg:p-20 space-y-6 lg:space-y-8 relative z-10">
-                                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-pan-gold text-[10px] font-black uppercase tracking-widest">
-                                    <span className="w-1.5 h-1.5 rounded-full bg-pan-gold animate-pulse" />
-                                    Vision & Ambition
-                                </div>
-                                <h2 className="text-3xl lg:text-5xl font-black text-white leading-tight">
-                                    {dict.pages.port.dg_word.title}
-                                </h2>
-                                <p className="text-pan-light/70 text-base lg:text-lg leading-relaxed line-clamp-4 font-medium italic">
-                                    "{dict.pages.port.dg_word.content.split('\n\n')[0]}..."
-                                </p>
-                                <Link 
-                                    href={`/${locale}/le-port`} 
-                                    className="inline-flex items-center gap-3 px-8 py-4 bg-pan-gold text-pan-navy font-black text-xs uppercase tracking-widest rounded-2xl hover:bg-white transition-all duration-300 shadow-xl shadow-pan-gold/20"
-                                >
-                                    {dict.common.learnMore}
-                                    <span aria-hidden="true" className="text-lg">{locale === 'ar' ? '←' : '→'}</span>
-                                </Link>
-                            </div>
-                            <div className="relative h-[300px] lg:h-[600px] w-full">
-                                <Image 
-                                    src="/images/dg.png" 
-                                    alt="Directeur Général" 
-                                    fill 
-                                    className="object-cover object-top lg:brightness-110"
-                                />
-                                <div className="absolute inset-0 bg-gradient-to-t from-pan-navy via-transparent to-transparent opacity-60 lg:hidden" />
-                                <div className="absolute bottom-6 left-6 right-6 lg:bottom-10 lg:right-10 lg:left-auto lg:right-20 p-6 lg:p-8 bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl text-white shadow-2xl">
-                                    <div className="text-xl lg:text-2xl font-black mb-1">{dict.pages.port.dg_word.name}</div>
-                                    <div className="text-[10px] font-black uppercase tracking-[0.3em] text-pan-gold">{dict.pages.port.dg_word.role}</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
+
 
             {sortedBlocks.map((block: any, bIdx: number) => {
                 if (block.type === 'hero') {
