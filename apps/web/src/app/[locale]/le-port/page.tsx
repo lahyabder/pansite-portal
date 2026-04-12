@@ -69,7 +69,7 @@ export default async function LePortPage({ params }: { params: Promise<{ locale:
                             </div>
 
                             <div className="prose prose-base lg:prose-lg max-w-none">
-                                {dict.pages.port.dg_word.content.split('\n\n').map((paragraph: string, i: number) => (
+                                {(dict.pages.port.dg_word.content || '').split('\n\n').map((paragraph: string, i: number) => (
                                     <p key={i} className="text-pan-gray-600 leading-relaxed font-medium mb-6 text-justify">
                                         {paragraph}
                                     </p>
