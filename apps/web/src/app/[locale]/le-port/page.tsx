@@ -41,7 +41,7 @@ export default async function LePortPage({ params }: { params: Promise<{ locale:
                             <div className="relative aspect-[4/5] lg:aspect-[4/5] rounded-[2rem] lg:rounded-[3rem] overflow-hidden shadow-2xl z-10 border-4 lg:border-8 border-white">
                                 <Image 
                                     src="/images/dg.png" 
-                                    alt={pageData.dg_word.title}
+                                    alt={dict.pages.port.dg_word.title}
                                     fill
                                     className="object-cover"
                                     priority
@@ -63,13 +63,13 @@ export default async function LePortPage({ params }: { params: Promise<{ locale:
                                     Institution Stratégique
                                 </span>
                                 <h2 className="text-3xl lg:text-5xl font-black text-pan-navy leading-tight mb-6 lg:mb-8">
-                                    {pageData.dg_word.title}
+                                    {dict.pages.port.dg_word.title}
                                 </h2>
                                 <div className="w-20 h-1.5 bg-pan-gold rounded-full mb-8 lg:mb-12" />
                             </div>
 
                             <div className="prose prose-base lg:prose-lg max-w-none">
-                                {pageData.dg_word.content.split('\n\n').map((paragraph: string, i: number) => (
+                                {dict.pages.port.dg_word.content.split('\n\n').map((paragraph: string, i: number) => (
                                     <p key={i} className="text-pan-gray-600 leading-relaxed font-medium mb-6 text-justify">
                                         {paragraph}
                                     </p>
@@ -87,19 +87,6 @@ export default async function LePortPage({ params }: { params: Promise<{ locale:
                     </div>
                 </div>
             </section>
-
-            {/* Render any additional blocks from DB (Fallback/Custom) */}
-            {dbPage?.blocks?.map((block: any, bIdx: number) => {
-                if (block.type === 'rich_text') {
-                    if (!block.content?.text?.[locale]) return null;
-                    return (
-                        <section key={`db-block-${bIdx}`} className="py-12 bg-white">
-                            <div className="max-w-7xl mx-auto px-6" dangerouslySetInnerHTML={{ __html: block.content.text[locale] }} />
-                        </section>
-                    );
-                }
-                return null;
-            })}
 
             <section className="py-20 bg-white">
                 <div className="max-w-7xl mx-auto px-6">
