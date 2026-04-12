@@ -124,7 +124,7 @@ export function Header({ locale, dict, menu, settings }: HeaderProps) {
                         </Link>
 
                         {/* Desktop Nav */}
-                        <nav className="hidden lg:flex items-center gap-0.5 xl:gap-1 lg:mx-2 xl:mx-4">
+                        <nav className="hidden lg:flex items-center gap-0.5 xl:gap-1 lg:mx-2 xl:mx-4" translate="no">
                             {navItems.map((group) => (
                                 <div
                                     key={group.href}
@@ -244,7 +244,7 @@ export function Header({ locale, dict, menu, settings }: HeaderProps) {
 
                     {/* Mobile Nav */}
                     {mobileMenuOpen && (
-                        <nav className="lg:hidden pb-4 border-t border-pan-gray-100 pt-4">
+                        <nav className="lg:hidden pb-4 border-t border-pan-gray-100 pt-4" translate="no">
                             <div className="flex flex-col gap-0.5 max-h-[70vh] overflow-y-auto">
                                 {navItems.map((group) => (
                                     <div key={group.href}>

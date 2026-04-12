@@ -22,7 +22,7 @@ export function PageHero({ title, subtitle, locale = 'fr', breadcrumbs }: PageHe
             <div className="relative max-w-7xl mx-auto px-6 py-16 sm:py-20">
                 {/* Breadcrumbs */}
                 {breadcrumbs && breadcrumbs.length > 0 && (
-                    <nav className="mb-6" aria-label="Breadcrumb">
+                    <nav className="mb-6" aria-label="Breadcrumb" translate="no">
                         <ol className="flex items-center gap-2 text-sm text-pan-light/60">
                             {breadcrumbs.map((crumb, i) => (
                                 <li key={i} className="flex items-center gap-2">
