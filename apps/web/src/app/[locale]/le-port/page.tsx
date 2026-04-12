@@ -18,7 +18,13 @@ export default async function LePortPage({ params }: { params: Promise<{ locale:
 
     const dbPage = await getPageBySlug('le-port');
     const pageDataObj = dbPage?.blocks?.[0]?.type === 'custom_page_data' ? dbPage.blocks[0].content : null;
-    const pageData = pageDataObj ? resolveLocalized(pageDataObj, locale) : dict.pages.port;
+    const resolvedDynamicData = pageDataObj ? resolveLocalized(pageDataObj, locale) : {};
+    
+    // Merge dynamic data with dictionary defaults to prevent crashes if some fields are missing in DB
+    const pageData = {
+        ...dict.pages.port,
+        ...resolvedDynamicData
+    };
     const resolvedTitle = dbPage?.title ? resolveLocalized(dbPage.title, locale) : dict.pages.port.title;
 
     return (
