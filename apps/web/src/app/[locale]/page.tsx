@@ -9,7 +9,7 @@ import { Ship, Anchor, Building2, FileText, Calendar, Phone, TrendingUp, ShipWhe
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0; // Disable cache for verification
-export const version = 'V-ULTIMATE-RESPONSIVE-FIX-V3';
+export const version = 'V-FINAL-VICTORY-V5-FULL-DYNAMIC';
 
 export default async function HomePage({
     params,

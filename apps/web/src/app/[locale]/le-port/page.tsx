@@ -5,6 +5,9 @@ import { getPublishedContents, getPageBySlug, resolveLocalized } from '@/shared_
 import { ContentCard } from '@/components/ContentCard';
 import Image from 'next/image';
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export default async function LePortPage({ params }: { params: Promise<{ locale: string }> }) {
     const { locale: lp } = await params;
     const locale = (['ar', 'fr', 'en', 'es'].includes(lp) ? lp : 'fr') as Locale;
