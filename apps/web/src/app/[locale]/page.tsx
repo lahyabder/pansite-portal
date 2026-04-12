@@ -70,7 +70,7 @@ export default async function HomePage({
                     const displayStats = block.content?.items || [];
                     if (displayStats.length === 0) return null;
                     return (
-                        <section key={`block-${bIdx}`} className="relative z-10 -mt-16 lg:-mt-20">
+                        <section key={`block-${bIdx}`} className="relative z-10 py-16">
                             <div className="max-w-7xl mx-auto px-6">
                                 <div className="bg-white rounded-3xl shadow-2xl overflow-hidden grid grid-cols-2 lg:grid-cols-4 border border-pan-gray-100 divide-x divide-pan-gray-50 rtl:divide-x-reverse">
                                     {displayStats.map((stat: any, i: number) => (
