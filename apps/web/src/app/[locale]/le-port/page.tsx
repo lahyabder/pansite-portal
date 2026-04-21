@@ -23,7 +23,9 @@ export default async function LePortPage({ params }: { params: Promise<{ locale:
     // Merge dynamic data with dictionary defaults to prevent crashes if some fields are missing in DB
     const pageData = {
         ...dict.pages.port,
-        ...resolvedDynamicData
+        ...resolvedDynamicData,
+        // Override any CMS stale data for dg_word with our freshly translated dictionary data
+        dg_word: dict.pages.port.dg_word
     };
     const resolvedTitle = dbPage?.title ? resolveLocalized(dbPage.title, locale) : dict.pages.port.title;
 
