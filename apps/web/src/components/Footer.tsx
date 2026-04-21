@@ -3,6 +3,7 @@ import Image from 'next/image';
 import type { Locale, SiteSettings, Menu } from '@/shared_lib';
 import { t } from '@/shared_lib';
 import type { Dictionary } from '@/lib/dictionaries';
+import { Facebook } from 'lucide-react';
 
 interface FooterProps {
     locale: Locale;
@@ -63,7 +64,11 @@ export function Footer({ locale, dict, menu, settings }: FooterProps) {
                                         className="w-10 h-10 bg-white/5 hover:bg-pan-gold/20 border border-white/10 rounded-xl flex items-center justify-center text-pan-light/60 hover:text-pan-gold transition-all duration-300"
                                         aria-label={platform}
                                     >
-                                        <span className="text-[10px] font-black uppercase tracking-tighter">{platform.slice(0, 2)}</span>
+                                        {platform.toLowerCase() === 'facebook' ? (
+                                            <Facebook className="w-4 h-4" />
+                                        ) : (
+                                            <span className="text-[10px] font-black uppercase tracking-tighter">{platform.slice(0, 2)}</span>
+                                        )}
                                     </a>
                                 )
                             ))}

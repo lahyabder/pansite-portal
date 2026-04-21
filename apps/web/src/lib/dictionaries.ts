@@ -2029,7 +2029,12 @@ export async function getDictionary(locale: Locale): Promise<Dictionary> {
     try {
         const settings = await getSiteSettings();
         if (settings?.dictionaries && settings.dictionaries[locale]) {
-            return deepMerge(base, settings.dictionaries[locale]) as Dictionary;
+            const merged = deepMerge(base, settings.dictionaries[locale]) as Dictionary;
+            // Force the static Director General word to override any DB updates
+            if (merged.pages?.port?.dg_word && base.pages?.port?.dg_word) {
+                merged.pages.port.dg_word = base.pages.port.dg_word;
+            }
+            return merged;
         }
     } catch (e) {
         // Fallback to static base
