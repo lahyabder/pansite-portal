@@ -220,15 +220,15 @@ export default async function AnciensDirecteursPage({ params }: { params: Promis
                                             <div className="absolute -top-20 -right-20 w-40 h-40 bg-pan-gold/10 blur-3xl rounded-full pointer-events-none"></div>
                                             
                                             {/* Photo */}
-                                            <div className="relative w-32 h-32 md:w-40 md:h-40 shrink-0 group/img z-10 hover:z-50">
-                                                <div className="absolute inset-0 bg-pan-navy/5 rounded-full border border-slate-200 transition-all duration-500 group-hover/img:rounded-2xl"></div>
+                                            <div className="relative w-32 h-32 md:w-40 md:h-40 shrink-0 group/img z-10 hover:z-[100]">
+                                                <div className="absolute inset-0 bg-pan-navy/5 rounded-full border border-slate-200 transition-all duration-500 group-hover/img:opacity-0"></div>
                                                 <img 
                                                     src={director.image} 
                                                     alt={locale === 'ar' ? director.nameAr : director.nameFr} 
-                                                    className="w-full h-full object-cover rounded-full shadow-inner border-4 border-white transition-all duration-500 group-hover/img:rounded-2xl group-hover/img:scale-[1.8] group-hover/img:shadow-2xl cursor-pointer relative"
+                                                    className="w-full h-full object-cover rounded-full shadow-inner border-4 border-white transition-all duration-500 group-hover/img:rounded-xl group-hover/img:object-contain group-hover/img:scale-[2.5] group-hover/img:shadow-[0_0_40px_rgba(0,0,0,0.3)] group-hover/img:bg-white cursor-pointer relative z-50"
                                                 />
                                                 {director.isFeu && (
-                                                    <div className="absolute -bottom-2 inset-x-0 flex justify-center z-20 transition-all duration-500 group-hover/img:translate-y-4 group-hover/img:scale-110">
+                                                    <div className="absolute -bottom-2 inset-x-0 flex justify-center z-20 transition-all duration-500 group-hover/img:opacity-0 pointer-events-none">
                                                         <span className="bg-yellow-400 text-slate-900 text-[10px] font-black uppercase px-3 py-1 rounded-full shadow-md">
                                                             {getFeuLabel()}
                                                         </span>
