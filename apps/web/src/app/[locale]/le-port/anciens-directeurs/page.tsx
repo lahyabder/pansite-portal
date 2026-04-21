@@ -225,7 +225,7 @@ export default async function AnciensDirecteursPage({ params }: { params: Promis
                                                 <img 
                                                     src={director.image} 
                                                     alt={locale === 'ar' ? director.nameAr : director.nameFr} 
-                                                    className="w-full h-full object-cover rounded-full shadow-inner border-4 border-white transition-all duration-500 group-hover/img:rounded-xl group-hover/img:object-contain group-hover/img:scale-[2.5] group-hover/img:shadow-[0_0_40px_rgba(0,0,0,0.3)] group-hover/img:bg-white cursor-pointer relative z-50"
+                                                    className="w-full h-full object-cover rounded-full shadow-inner border-4 border-white transition-all duration-500 group-hover/img:rounded-xl group-hover/img:object-contain group-hover/img:scale-[2.5] group-hover/img:shadow-[0_0_40px_rgba(0,0,0,0.3)] group-hover/img:bg-white cursor-pointer relative z-10 group-hover/img:z-50"
                                                 />
                                                 {director.isFeu && (
                                                     <div className="absolute -bottom-2 inset-x-0 flex justify-center z-20 transition-all duration-500 group-hover/img:opacity-0 pointer-events-none">
