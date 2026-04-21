@@ -419,17 +419,21 @@ const dictionaries: Record<Locale, Dictionary> = {
                     title: 'Mot du Directeur Général',
                     name: 'Ahmed Ould Sid’Ahmed Ould DIÉ',
                     role: 'Directeur Général - PAN',
-                    content: `C’est avec un profond sens de responsabilité et une vision résolument tournée vers l’avenir que je vous souhaite la bienvenue sur le site officiel du Port Autonome de Nouadhibou.
+                    content: `Le Port Autonome de Nouadhibou (PAN), est une structure résolument tournée vers l’avenir et dotée, pour y arriver, d’un sens aigu de la compréhension des enjeux et d'une intégration raisonnée des exigences de contextes.
 
-Institution stratégique au cœur des dynamiques économiques de la Mauritanie, le Port Autonome de Nouadhibou incarne un carrefour essentiel d’échanges, de logistique et de développement, au service des opérateurs nationaux et internationaux. Par sa position géographique privilégiée et la diversité de ses activités, il constitue un levier majeur pour la croissance, l’attractivité et l’ouverture de notre pays sur le monde.
+Administré sous l’emblème de la compétitivité pugnace  et géré pour satisfaire, sans faillir, les opérateurs nationaux et internationaux, le PAN est également un carrefour  d’échanges,  de logistiques et d’idées de progrès.
 
-Dans un contexte marqué par des transformations rapides des chaînes logistiques mondiales et des exigences accrues en matière de compétitivité, de transparence et de performance, notre ambition est claire : faire du Port Autonome de Nouadhibou une plateforme portuaire moderne, efficace et durable, répondant aux standards internationaux les plus exigeants.
+Par sa position géographique privilégiée et par la diversité de ses activités, il se place au cœur des dynamiques économiques et devient, pour le bien de notre pays, un levier de croissance, un pôle d’attractivité économique et un portail d’ouverture sur le monde.
 
-À travers ce site, nous avons souhaité offrir un espace numérique accessible, fiable et interactif, permettant à nos partenaires, usagers et visiteurs d’accéder à l’ensemble des informations utiles, de découvrir nos services et de suivre les actualités et opportunités liées à notre port. Cette démarche s’inscrit dans notre volonté de modernisation, de digitalisation des services et de renforcement de la relation avec nos parties prenantes.
+Dans un contexte professionnel gouverné par les exigences de compétitivité, de transparence et de performance, nous avons le devoir de convertir le PAN en plateforme moderne, efficace et durable, capable de s’adapter aux transformations des chaînes logistiques et apte à répondre, en permanence,  aux standards internationaux les plus rigoureux.
 
-Nous restons pleinement engagés dans une démarche d’amélioration continue, fondée sur l’innovation, la qualité de service, la sécurité et le respect de l’environnement. Cette dynamique repose avant tout sur le professionnalisme de nos équipes et sur la confiance de nos partenaires, que je tiens à remercier pour leur accompagnement.
+Le PAN demeure pleinement engagé dans une optique d’amélioration continue, axée sur l'esprit d’innovation, l’exigence de qualité, la sécurité érigée en priorité et,  par dessus tout, sur le respect agissant de l’environnement maritime et terrestre.
 
-Je vous invite à découvrir ce portail et à suivre, à travers lui, les évolutions et les ambitions du Port Autonome de Nouadhibou.`,
+Pour relever les défis et gagner les paris de demain, nos stratégies de développement, élaborées en référentiels pertinents et dynamiques, s’appuient avant tout sur le professionnalisme de nos équipes et sur la confiance réitérée de nos partenaires techniques et financiers. Qu’ils veuillent recevoir, en l’occurrence, ́nos sincères remerciements et notre profonde gratitude.
+
+Notre site, conçu dans le cadre d’une volonté de modernisation   et de digitalisation des services constitue un espace fiable et interactif, permettant à nos partenaires, usagers et visiteurs d’accéder à toutes les données  utiles,  aux services proposés,  aux informations diverses …
+
+Je vous prie, chers ineternautes, usagers ou autres, d’y accéder le plus fréquemment possible et d’y laisser, par votre passage et par vos interactions, des réactions utiles et des contributions pertinentes.`,
                 },
                 role: {
                     title: 'Rôle Stratégique',
@@ -862,17 +866,21 @@ Je vous invite à découvrir ce portail et à suivre, à travers lui, les évolu
                     title: 'مرحبا بكم في ميناء نواذيبو المستقل.',
                     name: 'أحمد ولد سيد أحمد ولد اج',
                     role: 'المدير العام - ميناء نواذيبو المستقل',
-                    content: `بإحساس عميق بالمسؤولية وبرؤية واضحة تتجه نحو المستقبل، يسعدني أن أرحب بكم في الموقع الرسمي لميناء نواذيبو المستقل.
+                    content: `يعتبر ميناء نواذيبو المستقل (PAN) مؤسسة تتجه بعزم نحو المستقبل، مزودة بفهم عميق للرهانات ودمج مدروس لمتطلبات السياق لتحقيق ذلك.
 
-يشكّل ميناء نواذيبو المستقل مؤسسة استراتيجية في صميم الديناميكيات الاقتصادية لموريتانيا، ويجسّد نقطة التقاء محورية للتبادل والخدمات اللوجستية والتنمية، في خدمة الفاعلين الوطنيين والدوليين. وبفضل موقعه الجغرافي المتميز وتنوع أنشطته، يعد رافعة أساسية لتعزيز النمو وجاذبية البلاد وانفتاحها على العالم.
+يُدار الميناء تحت شعار التنافسية القوية ويسعى باستمرار لتلبية تطلعات الفاعلين الاقتصاديين الوطنيين والدوليين دون تقصير، ليكون بذلك ملتقى للتبادل والخدمات اللوجستية وأفكار التقدم.
 
-وفي سياق يشهد تحولات متسارعة في سلاسل الإمداد العالمية، وتزايدًا في متطلبات التنافسية والشفافية والأداء، فإن طموحنا واضح: العمل على ترسيخ مكانة ميناء نواذيبو المستقل كمنصة مينائية حديثة، فعالة ومستدامة، تستجيب لأعلى المعايير الدولية.
+بفضل موقعه الجغرافي المتميز وتنوع أنشطته، يقع الميناء في قلب الديناميكيات الاقتصادية ويشكل، لصالح بلدنا، رافعة للنمو وقطباً حقيقياً للجاذبية الاقتصادية وبوابة انفتاح على العالم.
 
-ومن خلال هذا الموقع، حرصنا على توفير فضاء رقمي متاح وموثوق وتفاعلي، يمكّن شركاءنا ومستخدمينا وزوارنا من الاطلاع على مختلف المعلومات والخدمات، إلى جانب متابعة مستجدات وأنشطة الميناء. ويأتي ذلك في إطار توجهنا نحو تحديث الإدارة، ورقمنة الخدمات، وتعزيز العلاقة مع مختلف الأطراف المعنية.
+في سياق مهني تحكمه متطلبات التنافسية والشفافية والأداء، يقع على عاتقنا واجب تحويل ميناء نواذيبو المستقل إلى منصة حديثة وفعالة ومستدامة، قادرة على التكيف مع تحولات سلاسل التوريد وتلبية أدق المعايير الدولية بشكل دائم.
 
-ونظل ملتزمين بنهج التحسين المستمر، القائم على الابتكار وجودة الخدمات والسلامة واحترام البيئة. وترتكز هذه الديناميكية على كفاءة فرق العمل، وعلى الثقة التي يضعها فينا شركاءنا، والتي نتقدم لهم بخالص الشكر والتقدير عليها.
+يظل ميناء نواذيبو المستقل ملتزماً تماماً بنهج التحسين المستمر، الذي يرتكز على روح الابتكار، والالتزام بالجودة، وجعل السلامة أولوية قصوى، وقبل كل شيء احترام البيئة البحرية والبرية والعمل على حمايتها.
 
-أدعوكم إلى استكشاف هذا الموقع، ومتابعة ما يحمله من تطورات وطموحات تخص ميناء نواذيبو المستقل.`,
+لمواجهة التحديات وكسب رهانات المستقبل، تعتمد استراتيجياتنا التنموية، المصممة وفق معايير ديناميكية ودقيقة، في المقام الأول على احترافية فرقنا وعلى الثقة المتجددة لشركائنا الفنيين والماليين، الذين نتوجه إليهم بهذه المناسبة بخالص الشكر وعميق الامتنان.
+
+يمثل موقعنا الإلكتروني، الذي تم تصميمه ضمن إرادة تحديث الخدمات ورقمنتها، فضاءً موثوقاً وتفاعلياً يتيح لشركائنا ومستخدمينا وزوارنا الوصول إلى جميع البيانات المفيدة والخدمات المقدمة والمعلومات المتنوعة...
+
+أدعوكم، متصفحي الإنترنت الأعزاء والمستخدمين وغيرهم، إلى تصفحه بشكل متكرر، وإثراء الموقع من خلال زيارتكم وتفاعلاتكم بردود فعل مفيدة وإسهامات قيمة.`,
                 },
                 role: {
                     title: 'الدور الاستراتيجي',
@@ -1305,17 +1313,21 @@ Je vous invite à découvrir ce portail et à suivre, à travers lui, les évolu
                     title: 'Welcome to the Autonomous Port of Nouadhibou',
                     name: 'Ahmed Ould Sid’Ahmed Ould DIÉ',
                     role: 'Director General - PAN',
-                    content: `With a deep sense of responsibility and a forward-looking vision, I am pleased to welcome you to the official website of the Autonomous Port of Nouadhibou.
+                    content: `The Nouadhibou Autonomous Port (PAN) is a forward-looking institution, equipped with a deep understanding of the challenges and a thoughtful integration of contextual requirements to achieve its goals.
 
-As a strategic institution at the heart of Mauritania’s economic dynamics, the Autonomous Port of Nouadhibou stands as a vital hub for trade, logistics, and development, serving both national and international stakeholders. Owing to its privileged geographical location and the diversity of its activities, it represents a key driver of growth, attractiveness, and the country’s openness to the world.
+Administered under the banner of strong competitiveness and managed to reliably satisfy national and international operators, PAN also stands as a hub for trade, logistics, and progressive ideas.
 
-In a context marked by rapid transformations in global supply chains and increasing demands for competitiveness, transparency, and performance, our ambition is clear: to position the Autonomous Port of Nouadhibou as a modern, efficient, and sustainable port platform that meets the highest international standards.
+Through its privileged geographic location and the diversity of its activities, it places itself at the heart of economic dynamics, serving as an engine of growth, an economic attraction pole, and a gateway to the world for our country.
 
-Through this website, we have sought to provide an accessible, reliable, and interactive digital space, enabling our partners, users, and visitors to access comprehensive information, discover our services, and stay informed about the latest developments and opportunities related to the port. This initiative reflects our commitment to modernization, digital transformation, and strengthening engagement with all stakeholders.
+In a professional environment driven by the demands of competitiveness, transparency, and performance, it is our duty to transform PAN into a modern, efficient, and sustainable platform, capable of adapting to the evolving supply chains and consistently meeting the most rigorous international standards.
 
-We remain fully committed to a continuous improvement approach, grounded in innovation, service quality, safety, and environmental responsibility. This dynamic is driven above all by the professionalism of our teams and the trust of our partners, to whom we extend our sincere appreciation.
+PAN remains fully committed to a philosophy of continuous improvement, centered on innovation, quality standards, making safety a top priority, and above all, actively respecting both the marine and terrestrial environment.
 
-I invite you to explore this platform and follow, through it, the developments and ambitions of the Autonomous Port of Nouadhibou.`,
+To meet the challenges and win the bets of tomorrow, our development strategies, built on relevant and dynamic frameworks, rely above all on the professionalism of our teams and the continued trust of our technical and financial partners, to whom we express our sincere thanks and deep gratitude.
+
+Our website, designed as part of a commitment to modernizing and digitizing our services, is a reliable and interactive space that gives our partners, users, and visitors access to all essential data, offered services, and various information...
+
+I warmly invite you, dear internet users, partners, and visitors, to browse it as frequently as possible and to leave behind, through your visits and interactions, useful reactions and relevant contributions.`,
                 },
                 role: {
                     title: 'Strategic Role',
@@ -1712,17 +1724,21 @@ I invite you to explore this platform and follow, through it, the developments a
                     title: 'Bienvenido al Puerto Autónomo de Nuadibú',
                     name: 'Ahmed Ould Sid’Ahmed Ould DIÉ',
                     role: 'Director General - PAN',
-                    content: `Con un profundo sentido de responsabilidad y una visión claramente orientada hacia el futuro, me complace darles la bienvenida al sitio web oficial del Puerto Autónomo de Nuadibú.
+                    content: `El Puerto Autónomo de Nuadibú (PAN) es una institución decididamente orientada hacia el futuro, dotada de una profunda comprensión de los desafíos y una cuidadosa integración de las exigencias del entorno para lograrlo.
 
-Como institución estratégica en el corazón de las dinámicas económicas de Mauritania, el Puerto Autónomo de Nuadibú representa un punto clave para el comercio, la logística y el desarrollo, al servicio de los actores nacionales e internacionales. Gracias a su ubicación geográfica privilegiada y a la diversidad de sus actividades, constituye un motor esencial para el crecimiento, la atracción de inversiones y la apertura del país al mundo.
+Administrado bajo el emblema de una fuerte competitividad y gestionado para satisfacer sin fallas a los operadores nacionales e internacionales, el PAN también se erige como una encrucijada de intercambios, logística e ideas de progreso.
 
-En un contexto marcado por rápidas transformaciones en las cadenas logísticas globales y por exigencias crecientes en términos de competitividad, transparencia y desempeño, nuestra ambición es clara: consolidar al Puerto Autónomo de Nuadibú como una plataforma portuaria moderna, eficiente y sostenible, que responda a los más altos estándares internacionales.
+Gracias a su ubicación geográfica privilegiada y a la diversidad de sus actividades, se sitúa en el centro de las dinámicas económicas, convirtiéndose para nuestro país en un motor de crecimiento, un polo de atracción económica y una puerta de apertura al mundo.
 
-A través de este sitio, hemos querido ofrecer un espacio digital accesible, fiable e interactivo, que permita a nuestros socios, usuarios y visitantes acceder a información completa, conocer nuestros servicios y seguir las novedades y oportunidades relacionadas con el puerto. Esta iniciativa se inscribe en nuestra voluntad de modernización, digitalización de los servicios y fortalecimiento de la relación con nuestras partes interesadas.
+En un contexto profesional regido por las exigencias de competitividad, transparencia y rendimiento, tenemos el deber de convertir al PAN en una plataforma moderna, eficaz y sostenible, capaz de adaptarse a las transformaciones de las cadenas logísticas y de responder permanentemente a las normas internacionales más rigurosas.
 
-Seguimos plenamente comprometidos con un enfoque de mejora continua, basado en la innovación, la calidad del servicio, la seguridad y el respeto al medio ambiente. Esta dinámica se apoya, ante todo, en la profesionalidad de nuestros equipos y en la confianza de nuestros socios, a quienes expresamos nuestro más sincero agradecimiento.
+El PAN sigue plenamente comprometido con un enfoque de mejora continua, centrado en el espíritu de innovación, los estándares de calidad, la seguridad como máxima prioridad y, sobre todo, un respeto activo por el entorno marítimo y terrestre.
 
-Les invito a descubrir este portal y a seguir, a través de él, las evoluciones y ambiciones del Puerto Autónomo de Nuadibú.`,
+Para enfrentar los desafíos y ganar las apuestas del mañana, nuestras estrategias de desarrollo, basadas en marcos dinámicos y pertinentes, se apoyan sobre todo en la profesionalidad de nuestros equipos y en la confianza constante de nuestros socios técnicos y financieros, a quienes extendemos hoy nuestro más sincero agradecimiento y profunda gratitud.
+
+Nuestro sitio web, diseñado como parte del esfuerzo de modernización y digitalización de nuestros servicios, es un espacio confiable e interactivo que permite a nuestros socios, usuarios y visitantes acceder a todos los datos útiles, servicios ofrecidos e información diversa...
+
+Les invito, queridos internautas, usuarios y otros visitantes, a navegarlo con la mayor frecuencia posible y a dejar, a través de sus visitas e interacciones, reacciones útiles y contribuciones pertinentes.`,
                 },
                 role: {
                     title: 'Papel Estratégico',

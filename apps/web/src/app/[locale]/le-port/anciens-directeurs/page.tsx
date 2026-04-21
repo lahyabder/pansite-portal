@@ -14,6 +14,13 @@ export default async function AnciensDirecteursPage({ params }: { params: Promis
     // Sequence of directors
     const directors = [
         {
+            nameAr: 'أحمد مسكه ولد حي',
+            nameFr: 'AHMED MISKE OULD HAYE',
+            period: locale === 'ar' ? 'أول مدير عام' : 'Premier Directeur Général',
+            isFeu: true,
+            image: '/images/directors/ahmed-miske-ould-haye.png',
+        },
+        {
             nameAr: 'صو محمد دينا',
             nameFr: 'SOW MOHAMED DEYNA',
             period: '1979',

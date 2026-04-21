@@ -35,8 +35,10 @@ export function Footer({ locale, dict, menu, settings }: FooterProps) {
         { label: dict.footer.legalNotice, href: `/${locale}/mentions-legales` },
         { label: dict.footer.privacyPolicy, href: `/${locale}/politique-confidentialite` },
     ];
-
-    const socialLinks = settings?.socialLinks || {};
+    const socialLinks = {
+        facebook: 'https://www.facebook.com/panndb/?_rdc=1&_rdr#',
+        ...(settings?.socialLinks || {})
+    };
 
     return (
         <footer className="bg-pan-navy text-white">
