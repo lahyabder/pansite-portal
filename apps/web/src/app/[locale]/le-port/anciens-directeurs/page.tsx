@@ -214,21 +214,21 @@ export default async function AnciensDirecteursPage({ params }: { params: Promis
 
                                     {/* Card Content */}
                                     <div className={`w-full md:w-5/12 pl-10 md:pl-0 ${index % 2 === 0 ? 'md:pr-12 lg:pr-16 md:text-right' : 'md:pl-12 lg:pl-16 md:text-left'} text-center md:text-left`}>
-                                        <div className="bg-white rounded-[2.5rem] p-6 shadow-xl shadow-slate-200/50 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 border border-slate-100 flex flex-col sm:flex-row items-center gap-6 overflow-hidden relative">
+                                        <div className="bg-white rounded-[2.5rem] p-6 shadow-xl shadow-slate-200/50 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 border border-slate-100 flex flex-col sm:flex-row items-center gap-6 relative">
                                             
                                             {/* Decorative Background Glow */}
-                                            <div className="absolute -top-20 -right-20 w-40 h-40 bg-pan-gold/10 blur-3xl rounded-full"></div>
+                                            <div className="absolute -top-20 -right-20 w-40 h-40 bg-pan-gold/10 blur-3xl rounded-full pointer-events-none"></div>
                                             
                                             {/* Photo */}
-                                            <div className="relative w-32 h-32 md:w-40 md:h-40 shrink-0">
-                                                <div className="absolute inset-0 bg-pan-navy/5 rounded-full border border-slate-200"></div>
+                                            <div className="relative w-32 h-32 md:w-40 md:h-40 shrink-0 group/img z-10 hover:z-50">
+                                                <div className="absolute inset-0 bg-pan-navy/5 rounded-full border border-slate-200 transition-all duration-500 group-hover/img:rounded-2xl"></div>
                                                 <img 
                                                     src={director.image} 
                                                     alt={locale === 'ar' ? director.nameAr : director.nameFr} 
-                                                    className="w-full h-full object-cover rounded-full shadow-inner border-4 border-white"
+                                                    className="w-full h-full object-cover rounded-full shadow-inner border-4 border-white transition-all duration-500 group-hover/img:rounded-2xl group-hover/img:scale-[1.8] group-hover/img:shadow-2xl cursor-pointer relative"
                                                 />
                                                 {director.isFeu && (
-                                                    <div className="absolute -bottom-2 inset-x-0 flex justify-center">
+                                                    <div className="absolute -bottom-2 inset-x-0 flex justify-center z-20 transition-all duration-500 group-hover/img:translate-y-4 group-hover/img:scale-110">
                                                         <span className="bg-yellow-400 text-slate-900 text-[10px] font-black uppercase px-3 py-1 rounded-full shadow-md">
                                                             {getFeuLabel()}
                                                         </span>
