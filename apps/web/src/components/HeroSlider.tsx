@@ -42,7 +42,7 @@ export function HeroSlider({ dict, locale, slides, settings }: HeroSliderProps) 
     }, [items.length]);
 
     return (
-        <section id="hero" className="relative bg-pan-navy text-white overflow-hidden min-h-[600px] lg:min-h-[800px] flex items-center">
+        <section id="hero" className="relative bg-pan-navy text-white overflow-hidden min-h-[500px] md:min-h-[650px] lg:min-h-[800px] flex items-center">
             {/* Background Images */}
             {items.map((item, index) => (
                 <div
@@ -63,19 +63,19 @@ export function HeroSlider({ dict, locale, slides, settings }: HeroSliderProps) 
             
             <div className="absolute inset-0 bg-gradient-to-t from-pan-navy via-pan-navy/20 to-transparent lg:bg-gradient-to-r lg:from-pan-navy lg:to-transparent" />
 
-            <div className="relative max-w-7xl mx-auto px-6 py-32 w-full z-10">
+            <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-20 md:py-24 lg:py-32 w-full z-10">
                 <div className="max-w-4xl">
                     <div className="w-16 h-1 bg-pan-gold rounded-full mb-8 animate-in slide-in-from-left duration-700" />
-                    <h1 className="text-4xl sm:text-6xl lg:text-8xl font-black leading-[1.1] tracking-tighter mb-8 animate-in slide-in-from-bottom duration-700">
+                    <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-8xl font-black leading-[1.1] tracking-tighter mb-6 md:mb-8 animate-in slide-in-from-bottom duration-700">
                         {t(items[current].title, locale)}
                     </h1>
-                    <p className="text-lg sm:text-2xl text-pan-light/80 leading-relaxed mb-12 max-w-2xl font-medium animate-in slide-in-from-bottom delay-150 duration-700">
+                    <p className="text-base sm:text-xl md:text-2xl text-pan-light/80 leading-relaxed mb-8 md:mb-12 max-w-2xl font-medium animate-in slide-in-from-bottom delay-150 duration-700">
                         {t(items[current].subtitle, locale)}
                     </p>
                     <div className="flex flex-wrap gap-4 animate-in slide-in-from-bottom delay-300 duration-700">
                         <Link
                             href={items[current].href || `/${locale}/le-port`}
-                            className="inline-flex items-center gap-2 px-8 sm:px-10 py-3 sm:py-4 bg-pan-gold text-pan-navy font-bold rounded-2xl hover:bg-white transition-all duration-300 shadow-2xl shadow-pan-gold/20 hover:-translate-y-1"
+                            className="inline-flex items-center gap-2 px-6 sm:px-8 md:px-10 py-3 md:py-4 bg-pan-gold text-pan-navy font-bold rounded-2xl hover:bg-white transition-all duration-300 shadow-2xl shadow-pan-gold/20 hover:-translate-y-1"
                         >
                             {items[current].cta || dict.hero.cta}
                             <span aria-hidden="true" className="text-lg">{locale === 'ar' ? '←' : '→'}</span>
@@ -91,7 +91,7 @@ export function HeroSlider({ dict, locale, slides, settings }: HeroSliderProps) 
             </div>
 
             {/* Pagination Indicators */}
-            <div className="absolute bottom-12 left-6 lg:left-12 flex gap-4 z-20">
+            <div className="absolute bottom-8 md:bottom-12 left-4 md:left-6 lg:left-12 flex gap-3 md:gap-4 z-20">
                 {items.map((_, index) => (
                     <button
                         key={index}

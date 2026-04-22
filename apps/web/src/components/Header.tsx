@@ -79,7 +79,7 @@ export function Header({ locale, dict, menu, settings }: HeaderProps) {
     return (
         <>
             {/* ─── Top Info Bar ─── */}
-            <div className="bg-pan-navy text-white text-xs hidden lg:block">
+            <div className="bg-pan-navy text-white text-xs hidden md:block">
                 <div className="max-w-7xl mx-auto px-6 flex items-center justify-between h-9">
                     <div className="flex items-center gap-6">
                         {settings?.contactPhones?.[0] && (
@@ -117,14 +117,14 @@ export function Header({ locale, dict, menu, settings }: HeaderProps) {
             {/* ─── Main Header ─── */}
             <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-pan-gray-100 shadow-sm">
                 <div className="max-w-7xl mx-auto px-6">
-                    <div className="flex items-center justify-between h-16 lg:h-[72px]">
+                    <div className="flex items-center justify-between h-14 md:h-16 lg:h-[72px]">
                         {/* Logo */}
                         <Link href={`/${locale}`} className="flex items-center gap-3 group shrink-0">
-                            <Image src="/logo-horizontal.png" alt={t(settings?.siteName, locale) || "PAN"} width={160} height={40} priority className="h-8 lg:h-10 w-auto object-contain" />
+                            <Image src="/logo-horizontal.png" alt={t(settings?.siteName, locale) || "PAN"} width={160} height={40} priority className="h-7 md:h-8 lg:h-10 w-auto object-contain" />
                         </Link>
 
                         {/* Desktop Nav */}
-                        <nav className="hidden lg:flex items-center gap-0.5 xl:gap-1 lg:mx-2 xl:mx-4" translate="no">
+                        <nav className="hidden md:flex items-center gap-0.5 lg:gap-0.5 xl:gap-1 mx-1 md:mx-1.5 lg:mx-2 xl:mx-4" translate="no">
                             {navItems.map((group) => (
                                 <div
                                     key={group.href}
@@ -134,7 +134,7 @@ export function Header({ locale, dict, menu, settings }: HeaderProps) {
                                 >
                                     <Link
                                         href={group.href}
-                                        className={`px-1.5 xl:px-3 py-2 text-[10px] xl:text-[13px] font-medium rounded-lg transition-all duration-200 flex items-center gap-1 whitespace-nowrap ${isActive(group.href)
+                                        className={`px-1 md:px-1.5 xl:px-3 py-2 text-[9px] md:text-[10px] xl:text-[13px] font-medium rounded-lg transition-all duration-200 flex items-center gap-1 whitespace-nowrap ${isActive(group.href)
                                             ? 'text-pan-sky bg-pan-pale'
                                             : 'text-pan-gray-600 hover:text-pan-navy hover:bg-pan-gray-50'
                                             }`}
@@ -199,7 +199,7 @@ export function Header({ locale, dict, menu, settings }: HeaderProps) {
 
                             <button
                                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                                className="lg:hidden p-2 text-pan-gray-600 hover:text-pan-navy hover:bg-pan-gray-50 rounded-lg transition-all"
+                                className="md:hidden p-2 text-pan-gray-600 hover:text-pan-navy hover:bg-pan-gray-50 rounded-lg transition-all"
                                 aria-label="Toggle menu"
                             >
                                 <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
@@ -244,7 +244,7 @@ export function Header({ locale, dict, menu, settings }: HeaderProps) {
 
                     {/* Mobile Nav */}
                     {mobileMenuOpen && (
-                        <nav className="lg:hidden pb-4 border-t border-pan-gray-100 pt-4" translate="no">
+                        <nav className="md:hidden pb-4 border-t border-pan-gray-100 pt-4" translate="no">
                             <div className="flex flex-col gap-0.5 max-h-[70vh] overflow-y-auto">
                                 {navItems.map((group) => (
                                     <div key={group.href}>

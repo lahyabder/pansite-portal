@@ -1,0 +1,11 @@
+{
+  "items": [
+    {"href": "/", "label": {"ar": "الرئيسية", "fr": "Accueil", "en": "Home", "es": "Inicio"}},
+    {"href": "/le-port", "label": {"ar": "الميناء", "fr": "Le Port", "en": "The Port", "es": "El Puerto"}},
+    {"href": "/le-port/anciens-directeurs", "label": {"ar": "المدراء السابقون", "fr": "Anciens Directeurs", "en": "Former Directors", "es": "Anteriores Directores"}},
+    {"href": "/infrastructures", "label": {"ar": "البنية التحتية", "fr": "Infrastructures", "en": "Infrastructure", "es": "Infraestructuras"}},
+    {"href": "/services", "label": {"ar": "الخدمات", "fr": "Services", "en": "Services", "es": "Servicios"}},
+    {"href": "/medias", "label": {"ar": "المكتبة الوسائطية", "fr": "Médiathèque", "en": "Media Library", "es": "Mediateca"}},
+    {"href": "/contact", "label": {"ar": "اتصل بنا", "fr": "Contact", "en": "Contact", "es": "Contacto"}}
+  ]
+}

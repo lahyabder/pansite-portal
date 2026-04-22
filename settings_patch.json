@@ -1,0 +1,26 @@
+{
+  "siteName": {
+    "ar": "ميناء نواذيبو المستقل",
+    "fr": "Port Autonome de Nouadhibou",
+    "en": "Port Autonome de Nouadhibou",
+    "es": "Puerto Autónomo de Nouadhibou"
+  },
+  "slogan": {
+    "ar": "يعد ميناء نواذيبو المستقل فاعلاً رئيسياً في التنمية الاقتصادية لموريتانيا، حيث يقدم خدمات مينائية ذات جودة عالمية.",
+    "fr": "Le Port Autonome de Nouadhibou est un acteur majeur du développement économique de la Mauritanie, offrant des services portuaires de qualité internationale.",
+    "en": "The Port Autonome de Nouadhibou is a key player in Mauritania's economic development, offering world-class port services.",
+    "es": "El Puerto Autónomo de Nouadhibou es un actor principal en el desarrollo económico de Mauritania, ofreciendo servicios portuarios de clase mundial."
+  },
+  "address": {
+    "ar": "ص.ب 236، نواذيبو، موريتانيا",
+    "fr": "BP 236, Nouadhibou, Mauritanie",
+    "en": "BP 236, Nouadhibou, Mauritania",
+    "es": "BP 236, Nouadhibou, Mauritania"
+  },
+  "copyright": {
+    "ar": "جميع الحقوق محفوظة.",
+    "fr": "Tous droits réservés.",
+    "en": "All rights reserved.",
+    "es": "Todos los derechos reservados."
+  }
+}

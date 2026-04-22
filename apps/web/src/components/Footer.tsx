@@ -36,17 +36,14 @@ export function Footer({ locale, dict, menu, settings }: FooterProps) {
         { label: dict.footer.legalNotice, href: `/${locale}/mentions-legales` },
         { label: dict.footer.privacyPolicy, href: `/${locale}/politique-confidentialite` },
     ];
-    const socialLinks = {
-        facebook: 'https://www.facebook.com/panndb/?_rdc=1&_rdr#',
-        ...(settings?.socialLinks || {})
-    };
+    const socialLinks = settings?.socialLinks || {};
 
     return (
         <footer className="bg-pan-navy text-white">
-            <div className="max-w-7xl mx-auto px-6 pt-16 pb-12">
-                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-12 md:pt-16 pb-10 md:pb-12">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10 lg:gap-8">
                     {/* About / Logo */}
-                    <div className="lg:col-span-1">
+                    <div className="sm:col-span-2 lg:col-span-1">
                         <div className="flex items-center gap-3 mb-6 bg-white p-3 rounded-xl w-fit">
                             <Image src="/logo-horizontal.png" alt={t(settings?.siteName, locale) || 'PAN'} width={180} height={48} className="h-12 w-auto object-contain transition-opacity hover:opacity-80" />
                         </div>
@@ -138,7 +135,7 @@ export function Footer({ locale, dict, menu, settings }: FooterProps) {
             </div>
 
             <div className="border-t border-white/5 bg-black/10">
-                <div className="max-w-7xl mx-auto px-6 py-8">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 md:py-8">
                     <div className="flex flex-col md:flex-row items-center justify-between gap-6">
                         <div className="flex flex-col items-center md:items-start gap-1 text-[10px] text-pan-light/30 uppercase font-black tracking-widest">
                             <p>© {new Date().getFullYear()} {t(settings?.siteName, locale) || 'PAN'} - {t(settings?.copyright, locale) || dict.footer.rights}</p>

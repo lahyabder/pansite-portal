@@ -59,14 +59,14 @@ function HeroBlock({ content, locale }: { content: any; locale: Locale }) {
 function TextImageBlock({ content, locale }: { content: any; locale: Locale }) {
     const isReversed = content.imagePosition === 'right';
     return (
-        <section className="py-24 bg-white">
-            <div className="max-w-7xl mx-auto px-6">
-                <div className={`grid lg:grid-cols-2 gap-16 items-center ${isReversed ? 'lg:flex-row-reverse' : ''}`}>
+        <section className="py-16 md:py-24 bg-white">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6">
+                <div className={`grid md:grid-cols-2 gap-8 md:gap-16 items-center ${isReversed ? 'lg:flex-row-reverse' : ''}`}>
                     <div className={isReversed ? 'lg:order-last' : ''}>
                         <h2 className="text-3xl font-black text-pan-navy mb-6">{t(content.title, locale)}</h2>
                         <div className="prose prose-lg text-pan-gray-600 leading-relaxed" dangerouslySetInnerHTML={{ __html: t(content.text, locale) }} />
                     </div>
-                    <div className="relative h-[500px] rounded-3xl overflow-hidden shadow-2xl">
+                    <div className="relative h-[280px] md:h-[400px] lg:h-[500px] rounded-3xl overflow-hidden shadow-2xl">
                         <Image src={content.image} alt="" fill className="object-cover" />
                     </div>
                 </div>
@@ -77,12 +77,12 @@ function TextImageBlock({ content, locale }: { content: any; locale: Locale }) {
 
 function FeaturesBlock({ content, locale }: { content: any; locale: Locale }) {
     return (
-        <section className="py-24 bg-pan-pale">
-            <div className="max-w-7xl mx-auto px-6">
+        <section className="py-16 md:py-24 bg-pan-pale">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6">
                 <div className="text-center mb-16">
                     <h2 className="text-3xl font-black text-pan-navy">{t(content.title, locale)}</h2>
                 </div>
-                <div className="grid md:grid-cols-3 gap-8">
+                <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
                     {content.items?.map((item: any, i: number) => (
                         <div key={i} className="bg-white p-8 rounded-3xl shadow-sm hover:shadow-xl transition-shadow border border-pan-gray-100">
                             <h3 className="text-xl font-bold text-pan-navy mb-4">{t(item.title, locale)}</h3>
@@ -97,8 +97,8 @@ function FeaturesBlock({ content, locale }: { content: any; locale: Locale }) {
 
 function CTABlock({ content, locale }: { content: any; locale: Locale }) {
     return (
-        <section className="py-16 bg-pan-navy">
-            <div className="max-w-5xl mx-auto px-6 bg-pan-blue/20 rounded-[2.5rem] p-12 text-center border border-white/10 backdrop-blur-md">
+        <section className="py-12 md:py-16 bg-pan-navy">
+            <div className="max-w-5xl mx-auto px-4 sm:px-6 bg-pan-blue/20 rounded-[2rem] md:rounded-[2.5rem] p-8 md:p-12 text-center border border-white/10 backdrop-blur-md">
                 <h2 className="text-3xl md:text-4xl font-black text-white mb-6 font-display">{t(content.title, locale)}</h2>
                 <p className="text-pan-light/70 text-lg mb-10 max-w-xl mx-auto">{t(content.subtitle, locale)}</p>
                 <Link href={content.href || '#'} className="inline-flex items-center gap-2 px-10 py-5 bg-pan-gold text-pan-navy font-black rounded-2xl hover:bg-white transition-all duration-300">

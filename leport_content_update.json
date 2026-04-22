@@ -1,0 +1,39 @@
+{
+  "blocks": [
+    {
+      "id": "block_le_port",
+      "type": "custom_page_data",
+      "order": 0,
+      "isActive": true,
+      "content": {
+        "dg_word": {
+          "title": {
+            "fr": "Mot du Directeur Général",
+            "ar": "كلمة المدير العام",
+            "en": "Word of the Director General",
+            "es": "Palabras del Director General"
+          },
+          "name": {
+            "fr": "Ahmed Ould Sid’Ahmed Ould DIÉ",
+            "ar": "أحمد ولد سيد أحمد ولد اج",
+            "en": "Ahmed Ould Sid’Ahmed Ould DIÉ",
+            "es": "Ahmed Ould Sid’Ahmed Ould DIÉ"
+          },
+          "role": {
+            "fr": "Directeur Général",
+            "ar": "المدير العام",
+            "en": "Director General",
+            "es": "Director General"
+          },
+          "image": "/images/dg.png",
+          "content": {
+            "fr": "C’est avec un profond sens de responsabilité et une vision résolument tournée vers l’avenir que je vous souhaite la bienvenue sur le site officiel du Port Autonome de Nouadhibou.\n\nInstitution stratégique au cœur des dynamiques économiques de la Mauritanie, le Port Autonome de Nouadhibou incarne un carrefour essentiel d’échanges, de logistique et de développement, au service des opérateurs nationaux et internationaux. Par sa position géographique privilégiée et la diversité de ses activités, il constitue un levier majeur pour la croissance, l’attractivité et l’ouverture de notre pays sur le monde.\n\nDans un contexte marqué par des transformations rapides des chaînes logistiques mondiales et des exigences accrues en matière de compétitivité, de transparence et de performance, notre ambition est claire : faire du Port Autonome de Nouadhibou une plateforme portuaire moderne, efficace et durable, répondant aux standards internationaux les plus exigeants.\n\nÀ travers ce site, nous avons souhaité offrir un espace accessible, fiable et interactif, permettant à nos partenaires, usagers et visiteurs d’accéder à l’ensemble des informations utiles, des services proposés, ainsi qu’aux actualités et opportunités liées à notre port. Il s’inscrit dans notre volonté de modernisation, de digitalisation de nos services et de renforcement de la relation avec nos parties prenantes.\n\nNous demeurons pleinement engagés dans une démarche d’amélioration continue, fondée sur l’innovation, la qualité de service, la sécurité et le respect de l’environnement. Cette dynamique s’appuie avant tout sur le professionnalisme de nos équipes et sur la confiance de nos partenaires, que nous remercions pour leur accompagnement constant.\n\nJe vous invite à découvrir ce portail et à suivre, à travers lui, les évolutions et les ambitions du Port Autonome de Nouadhibou.",
+            "ar": "بإحساس عميق بالمسؤولية وبرؤية واضحة تتجه نحو المستقبل، يسعدني أن أرحب بكم في الموقع الرسمي لميناء نواذيبو المستقل.\n\nيشكّل ميناء نواذيبو المستقل مؤسسة استراتيجية في صميم الديناميكيات الاقتصادية لموريتانيا، ويجسّد نقطة التقاء محورية للتبادل والخدمات اللوجستية والتنمية، في خدمة الفاعلين الوطنيين والدوليين. وبفضل موقعه الجغرافي المتميز وتنوع أنشطته، يعد رافعة أساسية لتعزيز النمو وجاذبية البلاد وانفتاحها على العالم.\n\nوفي سياق يشهد تحولات متسارعة في سلاسل الإمداد العالمية، وتزايدًا في متطلبات التنافسية والشفافية والأداء، فإن طموحنا واضح: العمل على ترسيخ مكانة ميناء نواذيبو المستقل كمنصة مينائية حديثة، فعالة ومستدامة، تستجيب لأعلى المعايير الدولية.\n\nومن خلال هذا الموقع، حرصنا على توفير فضاء رقمي متاح وموثوق وتفاعلي، يمكّن شركاءنا ومستخدمينا وزوارنا من الاطلاع على مختلف المعلومات والخدمات، إلى جانب متابعة مستجدات وأنشطة الميناء. ويأتي ذلك في إطار توجهنا نحو تحديث الإدارة، ورقمنة الخدمات، وتعزيز العلاقة مع مختلف الأطراف المعنية.\n\nونظل ملتزمين بنهج التحسين المستمر، القائم على الابتكار وجودة الخدمات والسلامة واحترام البيئة. وترتكز هذه الديناميكية على كفاءة فرق العمل، وعلى الثقة التي يضعها فينا شركاؤنا، والتي نتقدم لهم بخالص الشكر والتقدير عليها.\n\nأدعوكم إلى استكشاف هذا الموقع، ومتابعة ما يحمله من تطورات وطموحات تخص ميناء نواذيبو المستقل.",
+            "en": "With a deep sense of responsibility and a forward-looking vision, I am pleased to welcome you to the official website of the Autonomous Port of Nouadhibou.\n\nAs a strategic institution at the heart of Mauritania’s economic dynamics, the Autonomous Port of Nouadhibou stands as a vital hub for trade, logistics, and development, serving both national and international stakeholders. Owing to its privileged geographical location and the diversity of its activities, it represents a key driver of growth, attractiveness, and the country’s openness to the world.\n\nIn a context marked by rapid transformations in global supply chains and increasing demands for competitiveness, transparency, and performance, our ambition is clear: to position the Autonomous Port of Nouadhibou as a modern, efficient, and sustainable port platform that meets the highest international standards.\n\nThrough this website, we have sought to provide an accessible, reliable, and interactive digital space, enabling our partners, users, and visitors to access comprehensive information, discover our services, and stay informed about the latest developments and opportunities related to the port. This initiative reflects our commitment to modernization, digital transformation, and strengthening engagement with all stakeholders.\n\nWe remain fully committed to a continuous improvement approach, grounded in innovation, service quality, safety, and environmental responsibility. This dynamic is driven above all by the professionalism of our teams and the trust of our partners, to whom we extend our sincere appreciation.\n\nI invite you to explore this platform and follow, through it, the developments and ambitions of the Autonomous Port of Nouadhibou.",
+            "es": "Con un profundo sentido de responsabilidad y una visión claramente orientada hacia el futuro, me complace darles la bienvenida al sitio web oficial del Puerto Autónomo de Nuadibú.\n\nComo institución estratégica en el corazón de las dinámicas económicas de Mauritania, el Puerto Autónomo de Nuadibú representa un punto clave para el comercio, la logística y el desarrollo, al servicio de los actores nacionales e internacionales. Gracias a su ubicación geográfica privilegiada y a la diversidad de sus actividades, constituye un motor esencial para el crecimiento, la atracción de inversiones y la apertura del país al mundo.\n\nEn un contexto marcado por rápidas transformaciones en las cadenas logísticas globales y por exigencias crecientes en términos de competitividad, transparencia y desempeño, nuestra ambición es clara: consolidar al Puerto Autónomo de Nuadibú como una plataforma portuaria moderna, eficiente y sostenible, que responda a los más altos estándares internacionales.\n\nA través de este sitio, hemos querido ofrecer un espacio digital accesible, fiable e interactivo, que permita a nuestros socios, usuarios y visitantes acceder a información completa, conocer nuestros servicios y seguir las novedades y oportunidades relacionadas con el puerto. Esta iniciativa se inscribe en nuestra voluntad de modernización, digitalización de los servicios y fortalecimiento de la relación con nuestras partes interesadas.\n\nSeguimos plenamente comprometidos con un enfoque de mejora continua, basado en la innovación, la calidad del servicio, la seguridad y el respeto al medio ambiente. Esta dinámica se apoya, ante todo, en la profesionalidad de nuestros equipos y en la confianza de nuestros socios, a quienes expresamos nuestro más sincero agradecimiento.\n\nLes invito a descubrir este portal y a seguir, a través de él, las evoluciones y ambiciones del Puerto Autónomo de Nuadibú."
+          }
+        }
+      }
+    }
+  ]
+}

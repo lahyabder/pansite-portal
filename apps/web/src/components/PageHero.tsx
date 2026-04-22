@@ -19,7 +19,7 @@ export function PageHero({ title, subtitle, locale = 'fr', breadcrumbs }: PageHe
                 }} />
             </div>
 
-            <div className="relative max-w-7xl mx-auto px-6 py-16 sm:py-20">
+            <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-16 md:py-20">
                 {/* Breadcrumbs */}
                 {breadcrumbs && breadcrumbs.length > 0 && (
                     <nav className="mb-6" aria-label="Breadcrumb" translate="no">
@@ -48,10 +48,10 @@ export function PageHero({ title, subtitle, locale = 'fr', breadcrumbs }: PageHe
                 )}
 
                 <div className="w-16 h-1 bg-pan-gold rounded-full mb-6" />
-                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-4">
+                <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight mb-4">
                     {title}
                 </h1>
-                <p className="text-lg text-pan-light/80 max-w-2xl leading-relaxed">
+                <p className="text-base md:text-lg text-pan-light/80 max-w-2xl leading-relaxed">
                     {subtitle}
                 </p>
             </div>

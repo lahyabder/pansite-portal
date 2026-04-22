@@ -74,11 +74,11 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
                 ]}
             />
 
-            <section className="py-16 bg-pan-gray-50">
-                <div className="max-w-5xl mx-auto px-6">
-                    <div className="grid lg:grid-cols-5 gap-10">
+            <section className="py-12 md:py-16 bg-pan-gray-50">
+                <div className="max-w-5xl mx-auto px-4 sm:px-6">
+                    <div className="grid md:grid-cols-5 gap-8 md:gap-10">
                         {/* Contact form */}
-                        <div className="lg:col-span-3 bg-white rounded-2xl p-8 border border-pan-gray-100 shadow-sm">
+                        <div className="md:col-span-3 bg-white rounded-2xl p-6 md:p-8 border border-pan-gray-100 shadow-sm">
                             <h2 className="text-xl font-bold text-pan-navy mb-6">
                                 {labels.sendMessage}
                             </h2>
@@ -140,7 +140,7 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
                         </div>
 
                         {/* Contact info sidebar */}
-                        <div className="lg:col-span-2 space-y-6">
+                        <div className="md:col-span-2 space-y-6">
                             <div className="bg-white rounded-2xl p-6 border border-pan-gray-100">
                                 <h3 className="font-semibold text-pan-navy mb-4 text-sm uppercase tracking-wider">
                                     {labels.contactInfo}

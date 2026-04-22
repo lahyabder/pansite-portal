@@ -45,10 +45,10 @@ export default async function LePortPage({ params }: { params: Promise<{ locale:
             <section className="py-16 lg:py-24 bg-white relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-1/3 h-full bg-pan-pale/30 -z-10 skew-x-12 translate-x-20" />
                 
-                <div className="max-w-7xl mx-auto px-6">
-                    <div className="grid lg:grid-cols-12 gap-10 lg:gap-16 items-center">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6">
+                    <div className="grid md:grid-cols-12 gap-8 md:gap-10 lg:gap-16 items-center">
                         {/* Image Column */}
-                        <div className="lg:col-span-5 relative">
+                        <div className="md:col-span-5 relative">
                             <div className="relative aspect-[4/5] lg:aspect-[4/5] rounded-[2rem] lg:rounded-[3rem] overflow-hidden shadow-2xl z-10 border-4 lg:border-8 border-white">
                                 <Image 
                                     src={(pageData as any).dg_word?.image || "/images/dg.png"} 
@@ -68,7 +68,7 @@ export default async function LePortPage({ params }: { params: Promise<{ locale:
                         </div>
 
                         {/* Text Column */}
-                        <div className="lg:col-span-7 space-y-6 lg:space-y-8">
+                        <div className="md:col-span-7 space-y-6 lg:space-y-8">
                             <div>
                                 <span className="inline-block px-4 py-1.5 bg-pan-navy/5 text-pan-navy text-[10px] font-black uppercase tracking-[0.3em] rounded-full mb-4 lg:mb-6">
                                     {dict.pages.port.title}
@@ -100,9 +100,9 @@ export default async function LePortPage({ params }: { params: Promise<{ locale:
                 </div>
             </section>
 
-            <section className="py-20 bg-white">
-                <div className="max-w-7xl mx-auto px-6">
-                    <div className="grid lg:grid-cols-2 gap-16 items-start">
+            <section className="py-14 md:py-20 bg-white">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6">
+                    <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-start">
                         {/* Role & Strategic Vision */}
                         <div className="space-y-8">
                             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-pan-navy/5 text-pan-navy text-xs font-bold uppercase tracking-wider">
@@ -174,13 +174,13 @@ export default async function LePortPage({ params }: { params: Promise<{ locale:
             </section>
 
             {/* Equipment Highlights */}
-            <section className="py-20 bg-pan-pale/30 border-y border-pan-navy/5">
-                <div className="max-w-7xl mx-auto px-6">
+            <section className="py-14 md:py-20 bg-pan-pale/30 border-y border-pan-navy/5">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6">
                     <div className="text-center mb-12">
                         <h2 className="text-3xl font-bold text-pan-navy">{pageData.equipment.title}</h2>
                     </div>
-                    <div className="grid lg:grid-cols-5 gap-12 items-center">
-                        <div className="lg:col-span-3 grid sm:grid-cols-2 gap-6">
+                    <div className="grid md:grid-cols-5 gap-8 md:gap-12 items-center">
+                        <div className="md:col-span-3 grid sm:grid-cols-2 gap-4 md:gap-6">
                             {pageData.equipment.list.map((item: string, i: number) => (
                                 <div key={i} className="flex items-center gap-4 p-5 rounded-2xl bg-white shadow-sm border border-pan-navy/5">
                                     <div className="w-10 h-10 rounded-xl bg-pan-gold/10 flex items-center justify-center text-pan-gold shrink-0">
@@ -192,7 +192,7 @@ export default async function LePortPage({ params }: { params: Promise<{ locale:
                                 </div>
                             ))}
                         </div>
-                        <div className="lg:col-span-2 relative h-[400px] w-full rounded-3xl overflow-hidden shadow-xl">
+                        <div className="md:col-span-2 relative h-64 md:h-[300px] lg:h-[400px] w-full rounded-3xl overflow-hidden shadow-xl">
                             <Image 
                                 src="/images/port/equipments-real.jpg" 
                                 alt={pageData.equipment.title} 
@@ -205,15 +205,15 @@ export default async function LePortPage({ params }: { params: Promise<{ locale:
             </section>
 
             {/* ═══ Premium History Section (Museum Style) ═══ */}
-            <section className="py-32 bg-pan-navy relative overflow-hidden">
+            <section className="py-20 md:py-32 bg-pan-navy relative overflow-hidden">
                 {/* Decorative Elements */}
                 <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-pan-gold/40 to-transparent" />
                 <div className="absolute -top-64 -right-64 w-[600px] h-[600px] bg-pan-blue/10 rounded-full blur-[120px]" />
                 <div className="absolute -bottom-64 -left-64 w-[600px] h-[600px] bg-pan-gold/5 rounded-full blur-[120px]" />
 
-                <div className="max-w-7xl mx-auto px-6 relative z-10">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
                     {/* Header */}
-                    <div className="flex flex-col items-center text-center mb-24">
+                    <div className="flex flex-col items-center text-center mb-12 md:mb-24">
                         <span className="inline-block px-4 py-1.5 bg-pan-gold/10 text-pan-gold text-[10px] font-black uppercase tracking-[0.3em] rounded-full border border-pan-gold/20 mb-6">
                             Est. 1955
                         </span>
@@ -232,7 +232,7 @@ export default async function LePortPage({ params }: { params: Promise<{ locale:
                         {/* Connecting Line */}
                         <div className="absolute top-[4.5rem] left-0 right-0 h-px bg-gradient-to-r from-transparent via-pan-gold/50 to-transparent hidden lg:block" />
                         
-                        <div className="grid gap-12 lg:gap-6 lg:grid-cols-4 relative group/timeline">
+                        <div className="grid gap-8 md:gap-12 md:grid-cols-2 lg:gap-6 lg:grid-cols-4 relative group/timeline">
                             {pageData.history.milestones.map((milestone: any, idx: number) => (
                                 <div key={idx} className="relative z-10 flex flex-col items-center group/item">
                                     {/* Vertical line for mobile */}
@@ -304,9 +304,9 @@ export default async function LePortPage({ params }: { params: Promise<{ locale:
             </section>
 
             {/* Impact & Services */}
-            <section className="py-24 bg-pan-navy text-white relative">
-                <div className="max-w-7xl mx-auto px-6">
-                    <div className="grid lg:grid-cols-2 gap-20">
+            <section className="py-16 md:py-24 bg-pan-navy text-white relative">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6">
+                    <div className="grid md:grid-cols-2 gap-10 md:gap-20">
                         <div className="space-y-8">
                             <h2 className="text-3xl font-bold text-pan-gold">{pageData.impact.title}</h2>
                             <p className="text-xl text-pan-light/80 leading-relaxed font-light">
@@ -367,14 +367,14 @@ export default async function LePortPage({ params }: { params: Promise<{ locale:
             {/* Dynamic CMS Content */}
             {items.length > 0 && (
                 <section className="py-24 bg-pan-gray-50 border-t border-pan-navy/5">
-                    <div className="max-w-7xl mx-auto px-6">
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6">
                         <div className="mb-12">
                             <h2 className="text-3xl font-bold text-pan-navy mb-4">
                                 {dict.content.categories['le-port']}
                             </h2>
                             <div className="h-1 w-20 bg-pan-gold rounded-full" />
                         </div>
-                        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
                             {items.map((item) => (
                                 <ContentCard key={item.id} item={item} locale={locale} dict={dict} />
                             ))}

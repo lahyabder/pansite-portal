@@ -70,15 +70,15 @@ export default async function HomePage({
                     const displayStats = block.content?.items || [];
                     if (displayStats.length === 0) return null;
                     return (
-                        <section key={`block-${bIdx}`} className="relative z-10 py-16">
-                            <div className="max-w-7xl mx-auto px-6">
-                                <div className="bg-white rounded-3xl shadow-2xl overflow-hidden grid grid-cols-2 lg:grid-cols-4 border border-pan-gray-100 divide-x divide-pan-gray-50 rtl:divide-x-reverse">
+                        <section key={`block-${bIdx}`} className="relative z-10 py-10 md:py-16">
+                            <div className="max-w-7xl mx-auto px-4 sm:px-6">
+                                <div className="bg-white rounded-3xl shadow-2xl overflow-hidden grid grid-cols-2 md:grid-cols-4 border border-pan-gray-100 divide-x divide-pan-gray-50 rtl:divide-x-reverse">
                                     {displayStats.map((stat: any, i: number) => (
-                                        <div key={i} className="p-10 text-center group hover:bg-pan-navy transition-all duration-500">
+                                        <div key={i} className="p-5 md:p-8 lg:p-10 text-center group hover:bg-pan-navy transition-all duration-500">
                                             <div className="w-14 h-14 bg-pan-pale rounded-2xl mx-auto flex items-center justify-center text-pan-blue mb-6 group-hover:bg-pan-gold group-hover:text-pan-navy group-hover:rotate-12 transition-all duration-500">
                                                 <BarChartIcon i={i} />
                                             </div>
-                                            <div className="text-4xl lg:text-5xl font-black text-pan-navy mb-2 group-hover:text-white transition-colors">
+                                            <div className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-black text-pan-navy mb-2 group-hover:text-white transition-colors">
                                                 {stat.value}
                                                 {stat.unit && <span className="text-lg font-bold opacity-40 ms-1 uppercase">{stat.unit}</span>}
                                             </div>
@@ -97,28 +97,28 @@ export default async function HomePage({
                     const servicesList = block.content?.items || [];
                     if (servicesList.length === 0) return null;
                     return (
-                        <section key={`block-${bIdx}`} className="py-32 bg-pan-pale/50">
-                            <div className="max-w-7xl mx-auto px-6">
-                                <div className="flex flex-col items-center text-center mb-20">
+                        <section key={`block-${bIdx}`} className="py-16 md:py-24 lg:py-32 bg-pan-pale/50">
+                            <div className="max-w-7xl mx-auto px-4 sm:px-6">
+                                <div className="flex flex-col items-center text-center mb-10 md:mb-16 lg:mb-20">
                                     <span className="text-pan-gold font-black uppercase tracking-[0.3em] text-[10px] mb-4">
                                         {t(block.content?.subtitle, locale) || 'Portail Services'}
                                     </span>
-                                    <h2 className="text-4xl lg:text-5xl font-black text-pan-navy mb-6">
+                                    <h2 className="text-3xl md:text-4xl lg:text-5xl font-black text-pan-navy mb-6">
                                         {t(block.content?.title, locale) || dict.quickAccess}
                                     </h2>
                                     <div className="w-20 h-1 bg-pan-navy rounded-full" />
                                 </div>
-                                <div className="grid grid-cols-2 md:grid-cols-5 gap-6">
+                                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6">
                                     {servicesList.map((qs: any, i: number) => {
                                         const IconComp = IconMap[qs.icon] || Ship;
                                         return (
                                             <Link
                                                 href={qs.href?.startsWith('http') ? qs.href : `/${locale}${qs.href?.startsWith('/') ? '' : '/'}${qs.href}`}
                                                 key={i}
-                                                className="group bg-white p-10 rounded-3xl shadow-sm hover:shadow-2xl border border-pan-gray-100 hover:border-pan-navy transition-all duration-500 flex flex-col items-center justify-center text-center hover:-translate-y-2"
+                                                className="group bg-white p-5 md:p-7 lg:p-10 rounded-3xl shadow-sm hover:shadow-2xl border border-pan-gray-100 hover:border-pan-navy transition-all duration-500 flex flex-col items-center justify-center text-center hover:-translate-y-2"
                                             >
-                                                <div className="w-20 h-20 rounded-2xl bg-pan-pale flex items-center justify-center text-pan-navy mb-8 group-hover:bg-pan-navy group-hover:text-white transition-all duration-500">
-                                                    <IconComp className="w-10 h-10" />
+                                                <div className="w-14 h-14 md:w-16 md:h-16 lg:w-20 lg:h-20 rounded-2xl bg-pan-pale flex items-center justify-center text-pan-navy mb-4 md:mb-6 lg:mb-8 group-hover:bg-pan-navy group-hover:text-white transition-all duration-500">
+                                                    <IconComp className="w-7 h-7 md:w-8 md:h-8 lg:w-10 lg:h-10" />
                                                 </div>
                                                 <h3 className="text-sm font-black uppercase tracking-wider text-pan-navy group-hover:text-pan-gold transition-colors">
                                                     {t(qs.title, locale)}
@@ -134,14 +134,14 @@ export default async function HomePage({
 
                 if (block.type === 'latest_news') {
                     return (
-                        <section key={`block-${bIdx}`} className="py-32 bg-white relative overflow-hidden">
-                            <div className="max-w-7xl mx-auto px-6">
-                                <div className="flex items-end justify-between mb-20">
+                        <section key={`block-${bIdx}`} className="py-16 md:py-24 lg:py-32 bg-white relative overflow-hidden">
+                            <div className="max-w-7xl mx-auto px-4 sm:px-6">
+                                <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-10 md:mb-16 lg:mb-20 gap-6">
                                     <div className="max-w-2xl">
                                         <span className="text-pan-gold font-black uppercase tracking-[0.3em] text-[10px] mb-4 block">
                                             {t(block.content?.subtitle, locale) || 'Actualités & Presse'}
                                         </span>
-                                        <h2 className="text-4xl lg:text-6xl font-black text-pan-navy mb-8">
+                                        <h2 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-black text-pan-navy mb-4 md:mb-8">
                                             {t(block.content?.title, locale) || dict.news.title}
                                         </h2>
                                         <p className="text-lg text-pan-gray-400 font-medium">
@@ -157,13 +157,13 @@ export default async function HomePage({
                                     </Link>
                                 </div>
             
-                                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
+                                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-10">
                                     {latestContent.map((article) => (
                                         <article
                                             key={article.id}
                                             className="group bg-white rounded-3xl overflow-hidden border border-pan-gray-100 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2"
                                         >
-                                            <div className="h-64 bg-pan-navy relative overflow-hidden">
+                                            <div className="h-48 md:h-56 lg:h-64 bg-pan-navy relative overflow-hidden">
                                                 <div className="absolute inset-0 bg-pan-navy/20 group-hover:bg-transparent transition-all duration-500 z-10" />
                                                 
                                                 {article.images?.[0] || article.coverImage ? (
@@ -185,12 +185,12 @@ export default async function HomePage({
                                                     </span>
                                                 </div>
                                             </div>
-                                            <div className="p-8">
+                                            <div className="p-5 md:p-6 lg:p-8">
                                                 <div className="flex items-center gap-3 text-[10px] font-black text-pan-gray-300 uppercase tracking-widest mb-4">
                                                     <Calendar className="w-3.5 h-3.5" />
                                                     {article.publishedAt && formatDate(article.publishedAt, locale)}
                                                 </div>
-                                                <h3 className="text-2xl font-black text-pan-navy mb-4 group-hover:text-pan-gold transition-colors line-clamp-2">
+                                                <h3 className="text-lg md:text-xl lg:text-2xl font-black text-pan-navy mb-3 md:mb-4 group-hover:text-pan-gold transition-colors line-clamp-2">
                                                     {t(article.title, locale)}
                                                 </h3>
                                                 <p className="text-pan-gray-400 text-sm leading-relaxed mb-8 line-clamp-3 font-medium">

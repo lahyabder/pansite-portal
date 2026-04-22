@@ -59,8 +59,8 @@ export default async function ServicesPage({ params }: { params: Promise<{ local
                 ]}
             />
 
-            <section className="py-20 bg-white border-b border-pan-gray-100">
-                <div className="max-w-4xl mx-auto px-6 text-center">
+            <section className="py-12 md:py-20 bg-white border-b border-pan-gray-100">
+                <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
                     <h2 className="text-3xl md:text-4xl font-bold text-pan-navy mb-6">
                         {dict.services.title}
                     </h2>
@@ -70,9 +70,9 @@ export default async function ServicesPage({ params }: { params: Promise<{ local
                 </div>
             </section>
 
-            <section className="py-20 bg-pan-gray-50">
-                <div className="max-w-7xl mx-auto px-6">
-                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <section className="py-12 md:py-20 bg-pan-gray-50">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6">
+                    <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
                         {services.map((service: any, index: number) => {
                             const Icon = ICON_MAP[service.icon] || Anchor;
                             return (

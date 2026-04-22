@@ -35,7 +35,7 @@ export default async function InfrastructuresPage({ params }: { params: Promise<
 
             {/* Interactive Map Section */}
             <section className="py-12 -mt-20 relative z-20 overflow-hidden">
-                <div className="max-w-7xl mx-auto px-6">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6">
                     <div className="bg-white/80 backdrop-blur-xl rounded-[2.5rem] p-4 lg:p-8 shadow-2xl shadow-pan-navy/10 border border-white/40">
                         <div className="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-6">
                             <div>
@@ -57,31 +57,31 @@ export default async function InfrastructuresPage({ params }: { params: Promise<
             </section>
 
             {/* Detailed Cards Section */}
-            <section className="py-24 pb-32">
-                <div className="max-w-7xl mx-auto px-6">
+            <section className="py-16 md:py-24 pb-20 md:pb-32">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6">
                     <QuaisGrid dict={dict} quais={pageData.quais} />
                 </div>
             </section>
 
             {/* Zones Section with Modern Aesthetic */}
-            <section className="py-24 bg-pan-navy relative overflow-hidden">
+            <section className="py-16 md:py-24 bg-pan-navy relative overflow-hidden">
                 <div className="absolute inset-0 opacity-10">
                     <div className="absolute inset-0" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '48px 48px' }} />
                 </div>
                 <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-pan-sky/20 rounded-full blur-[120px] -mr-64 -mt-64 text-white" />
                 
-                <div className="max-w-7xl mx-auto px-6 relative z-10">
-                    <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-12 mb-20">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
+                    <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8 md:gap-12 mb-12 md:mb-20">
                         <div className="max-w-xl">
-                            <h2 className="text-4xl sm:text-5xl font-bold text-white mb-6 leading-tight">{pageData.zones.title}</h2>
+                            <h2 className="text-3xl md:text-4xl sm:text-5xl font-bold text-white mb-4 md:mb-6 leading-tight">{pageData.zones.title}</h2>
                             <p className="text-pan-light/60 text-lg">Des espaces spécialisés conçus pour optimiser chaque maillon de la chaîne logistique et industrielle du port.</p>
                         </div>
                         <div className="h-0.5 w-32 bg-pan-gold hidden lg:block" />
                     </div>
 
-                    <div className="grid lg:grid-cols-3 gap-8">
+                    <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
                         {pageData.zones.items.map((zone: any, i: number) => (
-                            <div key={i} className="group p-10 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-md hover:bg-white/10 transition-all duration-500">
+                            <div key={i} className="group p-6 md:p-10 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-md hover:bg-white/10 transition-all duration-500">
                                 <div className="text-pan-gold font-black text-2xl mb-4 group-hover:scale-110 transition-transform origin-left">{zone.area}</div>
                                 <h3 className="text-2xl font-bold text-white mb-4">{zone.name}</h3>
                                 <p className="text-pan-light/50 leading-relaxed group-hover:text-pan-light/80 transition-colors uppercase text-xs font-bold tracking-widest">{zone.purpose}</p>
@@ -99,14 +99,14 @@ export default async function InfrastructuresPage({ params }: { params: Promise<
             {/* Dynamic CMS Content */}
             {items.length > 0 && (
                 <section className="py-24 bg-pan-gray-50 border-t border-pan-navy/5">
-                    <div className="max-w-7xl mx-auto px-6">
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6">
                         <div className="mb-12">
                             <h2 className="text-3xl font-bold text-pan-navy mb-4">
                                 {dict.content.categories['infrastructure']}
                             </h2>
                             <div className="h-1 w-20 bg-pan-gold rounded-full" />
                         </div>
-                        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
                             {items.map((item) => (
                                 <ContentCard key={item.id} item={item} locale={locale} dict={dict} />
                             ))}

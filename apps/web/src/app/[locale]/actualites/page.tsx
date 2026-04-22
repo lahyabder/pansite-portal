@@ -28,8 +28,8 @@ export default async function ActualitesPage({
                     { label: dict.content.categories.actualite },
                 ]}
             />
-            <section className="py-16 bg-pan-gray-50">
-                <div className="max-w-7xl mx-auto px-6">
+            <section className="py-10 md:py-16 bg-pan-gray-50">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6">
                     <ContentList
                         locale={locale}
                         dict={dict}
