@@ -41,7 +41,7 @@ export default function Sidebar() {
 
     // Clear session cookie
     document.cookie = 'pan-admin-session=; path=/; max-age=0';
-    window.location.href = '/login';
+    window.location.href = '/admin/login';
   };
 
   return (

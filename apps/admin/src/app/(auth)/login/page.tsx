@@ -30,7 +30,7 @@ export default function LoginPage() {
 
     // Set a session cookie so the middleware can detect authentication
     document.cookie = 'pan-admin-session=1; path=/; max-age=86400; SameSite=Lax';
-    window.location.href = '/';
+    window.location.href = '/admin/';
   };
 
   return (
