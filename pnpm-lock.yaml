@@ -24,6 +24,9 @@ importers:
       '@pan/shared':
         specifier: workspace:*
         version: link:../../packages/shared
+      '@supabase/supabase-js':
+        specifier: ^2.99.2
+        version: 2.99.2
       lucide-react:
         specifier: ^0.477.0
         version: 0.477.0(react@19.2.3)
@@ -40,9 +43,6 @@ importers:
         specifier: 19.2.3
         version: 19.2.3(react@19.2.3)
     devDependencies:
-      '@supabase/supabase-js':
-        specifier: ^2.99.2
-        version: 2.99.2
       '@tailwindcss/postcss':
         specifier: ^4
         version: 4.2.1
