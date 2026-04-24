@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 import { useState } from 'react';
 import { useAdminLang } from '@/lib/AdminLangContext';
+import { signOutAction } from '@/app/auth-actions';
 
 const MENU_ITEMS = [
   { id: 'dashboard', label: { fr: 'Tableau de Bord', ar: 'لوحة القيادة' }, icon: LayoutDashboard, href: '/' },
@@ -73,11 +74,17 @@ export default function Sidebar() {
       </nav>
 
       <div className="p-4 mt-auto">
-        <button className="w-full flex items-center gap-4 px-4 py-3 rounded-xl text-slate-400 hover:bg-red-500/10 hover:text-red-400 transition-all">
-          <LogOut className="w-5 h-5 shrink-0" />
-          {!collapsed && <span className="font-outfit font-medium whitespace-nowrap">{lang === 'ar' ? 'تسجيل الخروج' : 'Déconnexion'}</span>}
-        </button>
+        <form action={signOutAction}>
+          <button
+            type="submit"
+            className="w-full flex items-center gap-4 px-4 py-3 rounded-xl text-slate-400 hover:bg-red-500/10 hover:text-red-400 transition-all"
+          >
+            <LogOut className="w-5 h-5 shrink-0" />
+            {!collapsed && <span className="font-outfit font-medium whitespace-nowrap">{lang === 'ar' ? 'تسجيل الخروج' : 'Déconnexion'}</span>}
+          </button>
+        </form>
       </div>
     </aside>
   );
 }
+

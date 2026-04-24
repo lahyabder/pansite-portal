@@ -1,19 +1,34 @@
 'use client';
 
 import { useState } from 'react';
+import { createClient } from '@supabase/supabase-js';
 import { Ship, Lock, Mail, ArrowRight, RefreshCw, AlertCircle } from 'lucide-react';
 
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+);
+
 export default function LoginPage() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    // Simple mock login for now or integrate Supabase Auth
-    setTimeout(() => {
-      window.location.href = '/';
-    }, 1500);
+    setError(null);
+
+    const { error } = await supabase.auth.signInWithPassword({ email, password });
+
+    if (error) {
+      setError('Email ou mot de passe incorrect.');
+      setLoading(false);
+      return;
+    }
+
+    window.location.href = '/';
   };
 
   return (
@@ -33,9 +48,11 @@ export default function LoginPage() {
                  <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest pl-2">Email Administrateur</label>
                  <div className="relative">
                     <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-600" />
-                    <input 
-                      type="email" 
+                    <input
+                      type="email"
                       required
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
                       placeholder="admin@pan.mr"
                       className="w-full pl-12 pr-4 py-4 bg-slate-950/50 border border-slate-800 rounded-2xl text-sm text-white outline-none focus:border-sky-500/50 transition-all"
                     />
@@ -46,9 +63,11 @@ export default function LoginPage() {
                  <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest pl-2">Mot de Passe</label>
                  <div className="relative">
                     <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-600" />
-                    <input 
-                      type="password" 
+                    <input
+                      type="password"
                       required
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
                       placeholder="••••••••"
                       className="w-full pl-12 pr-4 py-4 bg-slate-950/50 border border-slate-800 rounded-2xl text-sm text-white outline-none focus:border-sky-500/50 transition-all"
                     />
@@ -57,12 +76,12 @@ export default function LoginPage() {
 
               {error && (
                 <div className="flex items-center gap-2 p-3 bg-red-500/10 border border-red-500/20 rounded-xl text-red-500 text-xs font-bold">
-                   <AlertCircle className="w-4 h-4" />
+                   <AlertCircle className="w-4 h-4 shrink-0" />
                    {error}
                 </div>
               )}
 
-              <button 
+              <button
                 type="submit"
                 disabled={loading}
                 className="w-full flex items-center justify-center gap-3 py-4 bg-white text-slate-950 rounded-2xl font-black text-sm hover:scale-[1.02] active:scale-[0.98] transition-all shadow-xl shadow-white/10 disabled:opacity-50"
