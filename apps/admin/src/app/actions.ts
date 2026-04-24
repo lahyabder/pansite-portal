@@ -2,7 +2,17 @@
 
 import { revalidatePath } from 'next/cache';
 import { getSupabaseAdmin } from '@pan/shared';
+import { createClient } from '@supabase/supabase-js';
 import OpenAI from 'openai';
+
+// Supabase admin client with service role for Auth Admin API
+function getSupabaseAuthAdmin() {
+    return createClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.SUPABASE_SERVICE_ROLE_KEY!,
+        { auth: { autoRefreshToken: false, persistSession: false } }
+    );
+}
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
@@ -341,4 +351,51 @@ RÈGLES STRICTES ET OBLIGATOIRES DE TRADUCTION :
         console.error("Erreur de traduction globale:", error);
         throw new Error("La traduction intelligente a échoué.");
     }
+}
+
+// ─── User Management Actions ──────────────────────────────────────────────────
+
+export async function listUsersAction() {
+    const supabase = getSupabaseAuthAdmin();
+    const { data, error } = await supabase.auth.admin.listUsers({ perPage: 100 });
+    if (error) throw new Error(error.message);
+    return data.users.map(u => ({
+        id: u.id,
+        email: u.email ?? '',
+        role: (u.user_metadata?.role as string) ?? 'admin',
+        name: (u.user_metadata?.name as string) ?? '',
+        createdAt: u.created_at,
+        lastSignIn: u.last_sign_in_at,
+    }));
+}
+
+export async function createEditorUserAction(email: string, password: string, name: string) {
+    const supabase = getSupabaseAuthAdmin();
+    const { data, error } = await supabase.auth.admin.createUser({
+        email,
+        password,
+        email_confirm: true,
+        user_metadata: { role: 'editor', name },
+    });
+    if (error) throw new Error(error.message);
+    revalidatePath('/users');
+    return data.user;
+}
+
+export async function deleteUserAction(userId: string) {
+    const supabase = getSupabaseAuthAdmin();
+    const { error } = await supabase.auth.admin.deleteUser(userId);
+    if (error) throw new Error(error.message);
+    revalidatePath('/users');
+    return true;
+}
+
+export async function updateUserRoleAction(userId: string, role: 'admin' | 'editor') {
+    const supabase = getSupabaseAuthAdmin();
+    const { error } = await supabase.auth.admin.updateUserById(userId, {
+        user_metadata: { role },
+    });
+    if (error) throw new Error(error.message);
+    revalidatePath('/users');
+    return true;
 }

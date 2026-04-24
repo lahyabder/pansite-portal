@@ -20,7 +20,7 @@ export default function LoginPage() {
     setLoading(true);
     setError(null);
 
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
 
     if (error) {
       setError('Email ou mot de passe incorrect.');
@@ -28,8 +28,10 @@ export default function LoginPage() {
       return;
     }
 
-    // Set a session cookie so the middleware can detect authentication
+    // Store session + role cookies for middleware and sidebar
+    const role = data.user?.user_metadata?.role ?? 'admin';
     document.cookie = 'pan-admin-session=1; path=/; max-age=86400; SameSite=Lax';
+    document.cookie = `pan-admin-role=${role}; path=/; max-age=86400; SameSite=Lax`;
     window.location.href = '/admin/';
   };
 

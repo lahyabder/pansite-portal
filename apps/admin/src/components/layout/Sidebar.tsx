@@ -9,25 +9,43 @@ import {
   Settings, 
   ChevronLeft,
   Ship,
-  LogOut
+  LogOut,
+  Users,
+  Shield,
+  Newspaper,
 } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useAdminLang } from '@/lib/AdminLangContext';
 import { createClient } from '@supabase/supabase-js';
 
-const MENU_ITEMS = [
-  { id: 'dashboard', label: { fr: 'Tableau de Bord', ar: 'لوحة القيادة' }, icon: LayoutDashboard, href: '/' },
-  { id: 'contents', label: { fr: 'Actualités & Contenus', ar: 'الأخبار والمحتوى' }, icon: FileText, href: '/contents' },
-  { id: 'pages', label: { fr: 'Pages Statiques', ar: 'الصفحات الثابتة' }, icon: LayoutDashboard, href: '/pages' },
-  { id: 'media', label: { fr: 'Médiathèque', ar: 'مكتبة الوسائط' }, icon: ImageIcon, href: '/media' },
-  { id: 'settings', label: { fr: 'Paramètres Généraux', ar: 'الإعدادات العامة' }, icon: Settings, href: '/settings' },
+const ALL_MENU_ITEMS = [
+  { id: 'dashboard', label: { fr: 'Tableau de Bord', ar: 'لوحة القيادة' }, icon: LayoutDashboard, href: '/', adminOnly: true },
+  { id: 'contents', label: { fr: 'Actualités & Contenus', ar: 'الأخبار والمحتوى' }, icon: FileText, href: '/contents', adminOnly: false },
+  { id: 'pages', label: { fr: 'Pages Statiques', ar: 'الصفحات الثابتة' }, icon: LayoutDashboard, href: '/pages', adminOnly: true },
+  { id: 'media', label: { fr: 'Médiathèque', ar: 'مكتبة الوسائط' }, icon: ImageIcon, href: '/media', adminOnly: true },
+  { id: 'users', label: { fr: 'Utilisateurs', ar: 'المستخدمون' }, icon: Users, href: '/users', adminOnly: true },
+  { id: 'settings', label: { fr: 'Paramètres', ar: 'الإعدادات' }, icon: Settings, href: '/settings', adminOnly: true },
 ];
+
+function getCookie(name: string): string {
+  if (typeof document === 'undefined') return '';
+  const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+  return match ? match[2] : '';
+}
 
 export default function Sidebar() {
   const pathname = usePathname();
   const [collapsed, setCollapsed] = useState(false);
   const [loggingOut, setLoggingOut] = useState(false);
+  const [role, setRole] = useState<'admin' | 'editor'>('admin');
   const { lang } = useAdminLang();
+
+  useEffect(() => {
+    const r = getCookie('pan-admin-role');
+    if (r === 'editor') setRole('editor');
+  }, []);
+
+  const menuItems = ALL_MENU_ITEMS.filter(item => !item.adminOnly || role === 'admin');
 
   const handleLogout = async () => {
     setLoggingOut(true);
@@ -39,8 +57,8 @@ export default function Sidebar() {
       await supabase.auth.signOut();
     } catch {}
 
-    // Clear session cookie
     document.cookie = 'pan-admin-session=; path=/; max-age=0';
+    document.cookie = 'pan-admin-role=; path=/; max-age=0';
     window.location.href = '/admin/login';
   };
 
@@ -51,7 +69,7 @@ export default function Sidebar() {
       } ${lang === 'ar' ? 'border-l border-white/5' : 'border-r border-white/5'}`}
     >
       <div className="p-6 flex items-center justify-between">
-        <div className={`flex items-center gap-3 transition-opacity ${collapsed ? 'opacity-0' : 'opacity-100'}`}>
+        <div className={`flex items-center gap-3 transition-opacity ${collapsed ? 'opacity-0 w-0 overflow-hidden' : 'opacity-100'}`}>
           <div className="w-10 h-10 bg-sky-500 rounded-xl flex items-center justify-center shadow-lg shadow-sky-500/20 shrink-0">
             <Ship className="text-white w-6 h-6" />
           </div>
@@ -65,8 +83,22 @@ export default function Sidebar() {
         </button>
       </div>
 
-      <nav className="flex-1 px-4 py-6 space-y-2">
-        {MENU_ITEMS.map((item) => {
+      {/* Role badge */}
+      {!collapsed && (
+        <div className="px-6 pb-4">
+          <div className={`flex items-center gap-2 px-3 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-wider w-fit ${
+            role === 'admin'
+              ? 'bg-amber-500/10 text-amber-400 border border-amber-500/20'
+              : 'bg-sky-500/10 text-sky-400 border border-sky-500/20'
+          }`}>
+            {role === 'admin' ? <Shield className="w-3 h-3" /> : <Newspaper className="w-3 h-3" />}
+            {role === 'admin' ? 'Super Admin' : 'Éditeur Actualités'}
+          </div>
+        </div>
+      )}
+
+      <nav className="flex-1 px-4 py-2 space-y-1">
+        {menuItems.map((item) => {
           const active = pathname === item.href || (item.href !== '/' && pathname.startsWith(item.href));
           return (
             <Link
