@@ -4,15 +4,18 @@ import type { NextRequest } from 'next/server';
 export function middleware(request: NextRequest) {
     const { pathname } = request.nextUrl;
 
-    // Allow login page and static files
-    if (pathname.startsWith('/login') || pathname.startsWith('/_next') || pathname.startsWith('/api')) {
+    // Allow login page and Next.js internals
+    if (
+        pathname.startsWith('/login') ||
+        pathname.startsWith('/_next') ||
+        pathname.startsWith('/api') ||
+        pathname.includes('.')
+    ) {
         return NextResponse.next();
     }
 
-    // Check for Supabase session cookie
-    const hasSession = request.cookies.getAll().some(
-        (cookie) => cookie.name.startsWith('sb-') && cookie.name.endsWith('-auth-token')
-    );
+    // Check for our session cookie (set client-side after successful Supabase login)
+    const hasSession = request.cookies.has('pan-admin-session');
 
     if (!hasSession) {
         return NextResponse.redirect(new URL('/login', request.url));
@@ -22,5 +25,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-    matcher: ['/((?!_next/static|_next/image|favicon.ico|.*\\..*).*)'],
+    matcher: ['/((?!_next/static|_next/image|favicon.ico).*)'],
 };

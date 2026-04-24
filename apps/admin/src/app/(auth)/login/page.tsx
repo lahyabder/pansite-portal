@@ -28,6 +28,8 @@ export default function LoginPage() {
       return;
     }
 
+    // Set a session cookie so the middleware can detect authentication
+    document.cookie = 'pan-admin-session=1; path=/; max-age=86400; SameSite=Lax';
     window.location.href = '/';
   };
 

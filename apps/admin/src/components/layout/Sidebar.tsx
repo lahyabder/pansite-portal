@@ -6,16 +6,14 @@ import {
   LayoutDashboard, 
   FileText, 
   Image as ImageIcon, 
-  Languages, 
   Settings, 
-  Menu as MenuIcon,
   ChevronLeft,
   Ship,
   LogOut
 } from 'lucide-react';
 import { useState } from 'react';
 import { useAdminLang } from '@/lib/AdminLangContext';
-import { signOutAction } from '@/app/auth-actions';
+import { createClient } from '@supabase/supabase-js';
 
 const MENU_ITEMS = [
   { id: 'dashboard', label: { fr: 'Tableau de Bord', ar: 'لوحة القيادة' }, icon: LayoutDashboard, href: '/' },
@@ -28,7 +26,23 @@ const MENU_ITEMS = [
 export default function Sidebar() {
   const pathname = usePathname();
   const [collapsed, setCollapsed] = useState(false);
+  const [loggingOut, setLoggingOut] = useState(false);
   const { lang } = useAdminLang();
+
+  const handleLogout = async () => {
+    setLoggingOut(true);
+    try {
+      const supabase = createClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+      );
+      await supabase.auth.signOut();
+    } catch {}
+
+    // Clear session cookie
+    document.cookie = 'pan-admin-session=; path=/; max-age=0';
+    window.location.href = '/login';
+  };
 
   return (
     <aside 
@@ -64,7 +78,7 @@ export default function Sidebar() {
                   : 'text-slate-400 hover:bg-white/5 hover:text-white'
               }`}
             >
-              <item.icon className={`w-5 h-5 transition-transform group-hover:scale-110 shrink-0`} />
+              <item.icon className="w-5 h-5 transition-transform group-hover:scale-110 shrink-0" />
               {!collapsed && (
                 <span className="font-outfit whitespace-nowrap">{item.label[lang]}</span>
               )}
@@ -74,17 +88,21 @@ export default function Sidebar() {
       </nav>
 
       <div className="p-4 mt-auto">
-        <form action={signOutAction}>
-          <button
-            type="submit"
-            className="w-full flex items-center gap-4 px-4 py-3 rounded-xl text-slate-400 hover:bg-red-500/10 hover:text-red-400 transition-all"
-          >
-            <LogOut className="w-5 h-5 shrink-0" />
-            {!collapsed && <span className="font-outfit font-medium whitespace-nowrap">{lang === 'ar' ? 'تسجيل الخروج' : 'Déconnexion'}</span>}
-          </button>
-        </form>
+        <button
+          onClick={handleLogout}
+          disabled={loggingOut}
+          className="w-full flex items-center gap-4 px-4 py-3 rounded-xl text-slate-400 hover:bg-red-500/10 hover:text-red-400 transition-all disabled:opacity-50"
+        >
+          <LogOut className={`w-5 h-5 shrink-0 ${loggingOut ? 'animate-pulse' : ''}`} />
+          {!collapsed && (
+            <span className="font-outfit font-medium whitespace-nowrap">
+              {loggingOut 
+                ? (lang === 'ar' ? 'جاري الخروج...' : 'Déconnexion...') 
+                : (lang === 'ar' ? 'تسجيل الخروج' : 'Déconnexion')}
+            </span>
+          )}
+        </button>
       </div>
     </aside>
   );
 }
-
