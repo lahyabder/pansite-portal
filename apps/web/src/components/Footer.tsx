@@ -3,7 +3,7 @@ import Image from 'next/image';
 import type { Locale, SiteSettings, Menu } from '@/shared_lib';
 import { t } from '@/shared_lib';
 import type { Dictionary } from '@/lib/dictionaries';
-import { Facebook } from 'lucide-react';
+import { Facebook, Linkedin } from 'lucide-react';
 
 interface FooterProps {
     locale: Locale;
@@ -36,7 +36,10 @@ export function Footer({ locale, dict, menu, settings }: FooterProps) {
         { label: dict.footer.legalNotice, href: `/${locale}/mentions-legales` },
         { label: dict.footer.privacyPolicy, href: `/${locale}/politique-confidentialite` },
     ];
-    const socialLinks = settings?.socialLinks || {};
+    const socialLinks = {
+        linkedin: 'https://www.linkedin.com/in/port-autonome-ndb-a6365a405/',
+        ...(settings?.socialLinks || {})
+    };
 
     return (
         <footer className="bg-pan-navy text-white">
@@ -63,6 +66,8 @@ export function Footer({ locale, dict, menu, settings }: FooterProps) {
                                     >
                                         {platform.toLowerCase() === 'facebook' ? (
                                             <Facebook className="w-4 h-4" />
+                                        ) : platform.toLowerCase() === 'linkedin' ? (
+                                            <Linkedin className="w-4 h-4" />
                                         ) : (
                                             <span className="text-[10px] font-black uppercase tracking-tighter">{platform.slice(0, 2)}</span>
                                         )}
