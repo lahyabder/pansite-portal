@@ -1,10 +1,32 @@
 'use client';
 
-import { Bell, Search, User, Globe } from 'lucide-react';
+import { useState, useRef, useEffect } from 'react';
+import { Bell, Search, User, Globe, LogOut, ShieldAlert } from 'lucide-react';
 import { useAdminLang } from '@/lib/AdminLangContext';
+import { signOutAction } from '@/app/auth-actions';
 
 export default function Header() {
   const { lang, toggleLang } = useAdminLang();
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [loggingOut, setLoggingOut] = useState(false);
+  const [globalLoggingOut, setGlobalLoggingOut] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setDropdownOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const handleLogout = async (scope: 'local' | 'global') => {
+    if (scope === 'local') setLoggingOut(true);
+    if (scope === 'global') setGlobalLoggingOut(true);
+    await signOutAction(scope);
+  };
 
   return (
     <header className="h-20 glass border-0 border-b border-white/5 px-8 flex items-center justify-between sticky top-0 z-40">
@@ -34,14 +56,48 @@ export default function Header() {
 
         <div className="h-8 w-[1px] bg-white/5"></div>
 
-        <div className="flex items-center gap-3 pl-2">
+        <div className="relative flex items-center gap-3 pl-2" ref={dropdownRef}>
           <div className={`${lang === 'ar' ? 'text-left' : 'text-right'}`}>
             <p className="text-sm font-bold text-white leading-none">{lang === 'ar' ? 'مدير النظام' : 'Admin User'}</p>
             <p className="text-[10px] font-medium text-sky-500 mt-1 uppercase tracking-wider">{lang === 'ar' ? 'مدير عام' : 'Super Admin'}</p>
           </div>
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-sky-500 to-indigo-600 flex items-center justify-center border border-white/20 shadow-lg shadow-sky-500/20 shrink-0">
+          <button 
+            onClick={() => setDropdownOpen(!dropdownOpen)}
+            className="w-10 h-10 rounded-xl bg-gradient-to-br from-sky-500 to-indigo-600 flex items-center justify-center border border-white/20 shadow-lg shadow-sky-500/20 shrink-0 hover:scale-105 transition-transform cursor-pointer"
+          >
             <User className="text-white w-6 h-6" />
-          </div>
+          </button>
+
+          {dropdownOpen && (
+            <div className={`absolute top-14 ${lang === 'ar' ? 'left-0' : 'right-0'} w-64 glass border border-white/10 rounded-2xl shadow-2xl p-2 z-50 animate-fade-in`}>
+              <div className="px-4 py-3 border-b border-white/5 mb-2">
+                <p className="text-sm font-bold text-white">{lang === 'ar' ? 'مدير النظام' : 'Admin User'}</p>
+                <p className="text-xs text-slate-400 mt-1">{lang === 'ar' ? 'مدير عام' : 'Super Admin'}</p>
+              </div>
+              
+              <button 
+                onClick={() => handleLogout('local')}
+                disabled={loggingOut || globalLoggingOut}
+                className="w-full flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-slate-300 hover:text-white hover:bg-white/5 rounded-xl transition-colors disabled:opacity-50"
+              >
+                <LogOut className={`w-4 h-4 ${loggingOut ? 'animate-pulse' : ''}`} />
+                {loggingOut 
+                  ? (lang === 'ar' ? 'جاري الخروج...' : 'Déconnexion...') 
+                  : (lang === 'ar' ? 'تسجيل الخروج' : 'Déconnexion')}
+              </button>
+
+              <button 
+                onClick={() => handleLogout('global')}
+                disabled={loggingOut || globalLoggingOut}
+                className="w-full flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-red-400 hover:text-red-300 hover:bg-red-500/10 rounded-xl transition-colors disabled:opacity-50 mt-1"
+              >
+                <ShieldAlert className={`w-4 h-4 ${globalLoggingOut ? 'animate-pulse' : ''}`} />
+                {globalLoggingOut 
+                  ? (lang === 'ar' ? 'جاري الخروج...' : 'Déconnexion globale...') 
+                  : (lang === 'ar' ? 'الخروج من كل الأجهزة' : 'Déconnexion globale')}
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </header>

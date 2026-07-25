@@ -1,4 +1,33 @@
+import type { Metadata } from 'next';
 import type { Locale } from '@/shared_lib';
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+    const { locale: localeParam } = await params;
+    const locale = (['ar', 'fr', 'en', 'es'].includes(localeParam) ? localeParam : 'fr') as Locale;
+    const { getDictionary } = await import('@/lib/dictionaries');
+    const dict = await getDictionary(locale);
+    
+    const descriptions = {
+        fr: "Restez informé des derniers appels d'offres, consultations et marchés publics émis par le Port Autonome de Nouadhibou pour ses projets de développement.",
+        ar: "ابق على اطلاع بآخر إعلانات المناقصات والاستشارات والصفقات العمومية الصادرة عن ميناء نواذيبو المستقل لمشاريعه التنموية ومشترياته.",
+        en: "Stay informed about the latest calls for tenders, consultations, and public contracts issued by the Autonomous Port of Nouadhibou for its development.",
+        es: "Manténgase informado sobre las últimas licitaciones, consultas y contratos públicos emitidos por el Puerto Autónomo de Nuadibú para sus proyectos."
+    };
+
+    return {
+        title: dict.nav.tenders,
+        description: descriptions[locale] || descriptions.fr,
+        alternates: {
+            canonical: `/${locale}/appels-offres`,
+            languages: {
+                fr: '/fr/appels-offres',
+                ar: '/ar/appels-offres',
+                en: '/en/appels-offres',
+                es: '/es/appels-offres',
+            },
+        },
+    };
+}
 import { getDictionary } from '@/lib/dictionaries';
 import { PageHero } from '@/components/PageHero';
 import { FileText, Download, Clock, CheckCircle, AlertCircle } from 'lucide-react';

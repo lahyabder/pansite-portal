@@ -42,7 +42,7 @@ export function ContentCard({ item, locale, dict }: ContentCardProps) {
     const categoryName = dict.content.categories[item.category] || item.category;
 
     return (
-        <Link href={`/${locale}/${categoryRoute[item.category] || 'actualites'}/${item.slug}`} className="block h-full group">
+        <Link href={`/${locale}/${categoryRoute[item.category] || 'actualites'}/${item.slug}`} className="block h-full group focus:outline-none focus-visible:ring-4 focus-visible:ring-pan-sky focus-visible:ring-offset-2 rounded-2xl">
             <article className="bg-white rounded-2xl overflow-hidden border border-pan-gray-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex flex-col h-full">
                 {/* Card header */}
             <div className="h-44 bg-gradient-to-br from-pan-blue to-pan-sky relative overflow-hidden flex items-center justify-center">
@@ -83,9 +83,13 @@ export function ContentCard({ item, locale, dict }: ContentCardProps) {
                         />
                     )
                 ) : (
-                    <div className="absolute inset-0 bg-pan-navy/5 flex items-center justify-center text-white/50 text-5xl">
-                        📄
-                    </div>
+                    <Image
+                        src="/images/hero/hero-1.jpg"
+                        alt="Port Autonome de Nouadhibou"
+                        fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        className="object-cover group-hover:scale-110 transition-all duration-700 opacity-80"
+                    />
                 )}
                 
                 {item.priority === 'urgent' && (

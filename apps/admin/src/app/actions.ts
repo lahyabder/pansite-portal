@@ -2,12 +2,28 @@
 
 import { revalidatePath } from 'next/cache';
 import { getSupabaseAdmin } from '@pan/shared';
-import { createClient } from '@supabase/supabase-js';
+import { createClient as createSupabaseClient } from '@supabase/supabase-js';
 import OpenAI from 'openai';
+
+import { createClient } from '@/utils/supabase/server';
+
+async function checkAuth() {
+    const supabase = await createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) throw new Error("Unauthorized");
+    return user;
+}
+
+async function checkAdminAuth() {
+    const user = await checkAuth();
+    if (user.user_metadata?.role !== 'admin') throw new Error("Unauthorized: admin role required");
+    return user;
+}
+
 
 // Supabase admin client with service role for Auth Admin API
 function getSupabaseAuthAdmin() {
-    return createClient(
+    return createSupabaseClient(
         process.env.NEXT_PUBLIC_SUPABASE_URL!,
         process.env.SUPABASE_SERVICE_ROLE_KEY!,
         { auth: { autoRefreshToken: false, persistSession: false } }
@@ -21,6 +37,8 @@ const openai = new OpenAI({
 // ─── Pages Actions ───────────────────────────────────────────────────────────
 
 export async function getAllPagesAction() {
+    await checkAuth();
+
     const { data, error } = await getSupabaseAdmin()
         .from('pages')
         .select('*')
@@ -34,6 +52,8 @@ export async function getAllPagesAction() {
 }
 
 export async function getPageByIdAction(id: string) {
+    await checkAuth();
+
     const { data, error } = await getSupabaseAdmin()
         .from('pages')
         .select('*')
@@ -44,6 +64,8 @@ export async function getPageByIdAction(id: string) {
 }
 
 export async function createPageAction(data: any) {
+    await checkAuth();
+
     const { data: page, error } = await getSupabaseAdmin()
         .from('pages')
         .insert([data])
@@ -56,6 +78,8 @@ export async function createPageAction(data: any) {
 }
 
 export async function updatePageAction(id: string, data: any) {
+    await checkAuth();
+
     const { error } = await getSupabaseAdmin()
         .from('pages')
         .update(data)
@@ -69,6 +93,8 @@ export async function updatePageAction(id: string, data: any) {
 }
 
 export async function deleteContentAction(id: string) {
+    await checkAuth();
+
     const { error } = await getSupabaseAdmin()
         .from('contents')
         .update({ deleted_at: new Date().toISOString() })
@@ -80,6 +106,8 @@ export async function deleteContentAction(id: string) {
 }
 
 export async function deletePageAction(id: string) {
+    await checkAuth();
+
     const { error } = await getSupabaseAdmin()
         .from('pages')
         .delete()
@@ -93,6 +121,8 @@ export async function deletePageAction(id: string) {
 // ─── Media Actions ───────────────────────────────────────────────────────────
 
 export async function getAllMediaAction() {
+    await checkAuth();
+
     const { data, error } = await getSupabaseAdmin()
         .from('media_assets')
         .select('*')
@@ -106,6 +136,8 @@ export async function getAllMediaAction() {
 }
 
 export async function deleteMediaAction(id: string) {
+    await checkAuth();
+
     const { error } = await getSupabaseAdmin()
         .from('media_assets')
         .delete()
@@ -117,6 +149,8 @@ export async function deleteMediaAction(id: string) {
 }
 
 export async function uploadAssetAction(formData: FormData) {
+    await checkAuth();
+
     const file = formData.get('file') as File;
     if (!file) throw new Error('Aucun fichier sélectionné');
 
@@ -143,6 +177,8 @@ export async function uploadAssetAction(formData: FormData) {
 }
 
 export async function getMediaUploadUrlAction(filename: string, fileType: string, fileSize: number) {
+    await checkAuth();
+
     const ext = filename.split('.').pop();
     const uniqueFilename = `${Date.now()}-${Math.round(Math.random() * 1000)}.${ext}`;
 
@@ -171,6 +207,8 @@ export async function getMediaUploadUrlAction(filename: string, fileType: string
 }
 
 export async function saveMediaMetadataAction(metadata: any) {
+    await checkAuth();
+
     const mediaRecord = {
         filename: metadata.filename,
         url: metadata.publicUrl,
@@ -194,6 +232,8 @@ export async function saveMediaMetadataAction(metadata: any) {
 // ─── Settings Actions ──────────────────────────────────────────────────────────
 
 export async function getSettingsAction() {
+    await checkAuth();
+
     const { data, error } = await getSupabaseAdmin()
         .from('site_settings')
         .select('*')
@@ -203,6 +243,8 @@ export async function getSettingsAction() {
 }
 
 export async function updateSettingsAction(data: any) {
+    await checkAdminAuth();
+
     const { error } = await getSupabaseAdmin()
         .from('site_settings')
         .update(data)
@@ -215,6 +257,8 @@ export async function updateSettingsAction(data: any) {
 // ─── Menu Actions ────────────────────────────────────────────────────────────
 
 export async function getMenuAction(location: string) {
+    await checkAuth();
+
     const { data, error } = await getSupabaseAdmin()
         .from('menus')
         .select('*')
@@ -225,6 +269,8 @@ export async function getMenuAction(location: string) {
 }
 
 export async function updateMenuAction(id: string, data: any) {
+    await checkAdminAuth();
+
     const { error } = await getSupabaseAdmin()
         .from('menus')
         .update(data)
@@ -235,6 +281,8 @@ export async function updateMenuAction(id: string, data: any) {
 }
 
 export async function createMenuAction(data: any) {
+    await checkAdminAuth();
+
     const { data: menu, error } = await getSupabaseAdmin()
         .from('menus')
         .insert([data])
@@ -248,6 +296,8 @@ export async function createMenuAction(data: any) {
 // ─── AI Actions ──────────────────────────────────────────────────────────────
 
 export async function translateContentAction(text: string, targetLanguage: string) {
+    await checkAuth();
+
     if (!process.env.OPENAI_API_KEY) {
         throw new Error("Clé API OpenAI non configurée");
     }
@@ -291,6 +341,8 @@ Le nom du Directeur Général doit TOUJOURS être traduit exactement comme suit,
 }
 
 export async function translateFullContentAction(payload: any, sourceLang: string) {
+    await checkAuth();
+
     if (!process.env.OPENAI_API_KEY) {
         throw new Error("Clé API OpenAI non configurée");
     }
@@ -356,6 +408,8 @@ RÈGLES STRICTES ET OBLIGATOIRES DE TRADUCTION :
 // ─── User Management Actions ──────────────────────────────────────────────────
 
 export async function listUsersAction() {
+    await checkAdminAuth();
+
     const supabase = getSupabaseAuthAdmin();
     const { data, error } = await supabase.auth.admin.listUsers({ perPage: 100 });
     if (error) throw new Error(error.message);
@@ -370,6 +424,8 @@ export async function listUsersAction() {
 }
 
 export async function createEditorUserAction(email: string, password: string, name: string) {
+    await checkAdminAuth();
+
     const supabase = getSupabaseAuthAdmin();
     const { data, error } = await supabase.auth.admin.createUser({
         email,
@@ -383,6 +439,8 @@ export async function createEditorUserAction(email: string, password: string, na
 }
 
 export async function deleteUserAction(userId: string) {
+    await checkAdminAuth();
+
     const supabase = getSupabaseAuthAdmin();
     const { error } = await supabase.auth.admin.deleteUser(userId);
     if (error) throw new Error(error.message);
@@ -391,6 +449,8 @@ export async function deleteUserAction(userId: string) {
 }
 
 export async function updateUserRoleAction(userId: string, role: 'admin' | 'editor') {
+    await checkAdminAuth();
+
     const supabase = getSupabaseAuthAdmin();
     const { error } = await supabase.auth.admin.updateUserById(userId, {
         user_metadata: { role },

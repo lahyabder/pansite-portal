@@ -1,4 +1,33 @@
+import type { Metadata } from 'next';
 import type { Locale } from '@/shared_lib';
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+    const { locale: localeParam } = await params;
+    const locale = (['ar', 'fr', 'en', 'es'].includes(localeParam) ? localeParam : 'fr') as Locale;
+    const { getDictionary } = await import('@/lib/dictionaries');
+    const dict = await getDictionary(locale);
+    
+    const descriptions = {
+        fr: "Découvrez notre gamme complète de services portuaires : manutention, transbordement, entreposage, et assistance logistique au Port Autonome de Nouadhibou.",
+        ar: "اكتشف مجموعتنا الشاملة من الخدمات المينائية في ميناء نواذيبو المستقل: الشحن والتفريغ، المسافنة، التخزين، والمساعدة اللوجستية المتكاملة لعملائنا.",
+        en: "Discover our comprehensive range of port services: handling, transshipment, warehousing, and logistics assistance at the Autonomous Port of Nouadhibou.",
+        es: "Descubra nuestra completa gama de servicios portuarios: manipulación, transbordo, almacenamiento y asistencia logística en el Puerto de Nuadibú."
+    };
+
+    return {
+        title: dict.nav.services,
+        description: descriptions[locale] || descriptions.fr,
+        alternates: {
+            canonical: `/${locale}/services`,
+            languages: {
+                fr: '/fr/services',
+                ar: '/ar/services',
+                en: '/en/services',
+                es: '/es/services',
+            },
+        },
+    };
+}
 import { getDictionary } from '@/lib/dictionaries';
 import { PageHero } from '@/components/PageHero';
 import { Package, RefreshCw, Box, Truck, Anchor, Layout, Info } from 'lucide-react';
@@ -107,15 +136,24 @@ export default async function ServicesPage({ params }: { params: Promise<{ local
                                                 </ul>
                                             )}
                                             
-                                            <Link
-                                                href={`/${locale}/services/${service.slug}`}
-                                                className="w-full justify-center text-pan-sky font-bold text-sm bg-pan-pale group-hover:bg-pan-sky group-hover:text-white py-3 px-6 rounded-xl transition-all duration-300 inline-flex items-center gap-2 group/btn"
-                                            >
-                                                {dict.common.learnMore}
-                                                <span className="transition-transform duration-300 group-hover/btn:translate-x-1 rtl:group-hover/btn:-translate-x-1">
-                                                    {locale === 'ar' ? '←' : '→'}
-                                                </span>
-                                            </Link>
+                                            {service.slug === 'manutention' || service.slug === 'le-port' ? (
+                                                <button
+                                                    className="w-full justify-center text-pan-gray-400 font-bold text-sm bg-pan-gray-50 py-3 px-6 rounded-xl cursor-not-allowed inline-flex items-center gap-2"
+                                                    disabled
+                                                >
+                                                    {dict.common?.comingSoon || (locale === 'ar' ? 'قريباً' : 'Bientôt')}
+                                                </button>
+                                            ) : (
+                                                <Link
+                                                    href={`/${locale}/services/${service.slug}`}
+                                                    className="w-full justify-center text-pan-sky font-bold text-sm bg-pan-pale group-hover:bg-pan-sky group-hover:text-white py-3 px-6 rounded-xl transition-all duration-300 inline-flex items-center gap-2 group/btn"
+                                                >
+                                                    {dict.common?.learnMore || (locale === 'ar' ? 'اكتشف المزيد' : 'En savoir plus')}
+                                                    <span className="transition-transform duration-300 group-hover/btn:translate-x-1 rtl:group-hover/btn:-translate-x-1">
+                                                        {locale === 'ar' ? '←' : '→'}
+                                                    </span>
+                                                </Link>
+                                            )}
                                         </div>
                                     </div>
                                 </div>

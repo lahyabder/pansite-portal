@@ -1,4 +1,33 @@
+import type { Metadata } from 'next';
 import type { Locale } from '@/shared_lib';
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+    const { locale: localeParam } = await params;
+    const locale = (['ar', 'fr', 'en', 'es'].includes(localeParam) ? localeParam : 'fr') as Locale;
+    const { getDictionary } = await import('@/lib/dictionaries');
+    const dict = await getDictionary(locale);
+    
+    const descriptions = {
+        fr: "Consultez en temps réel le programme des escales, les navires attendus et les mouvements maritimes actuels au Port Autonome de Nouadhibou (PAN).",
+        ar: "اطلع في الوقت الفعلي على برنامج رسو السفن، والسفن المتوقعة، والحركات البحرية الحالية في ميناء نواذيبو المستقل لضمان تتبع دقيق لعملياتك.",
+        en: "Check in real-time the stopovers schedule, expected vessels, and current maritime movements at the Autonomous Port of Nouadhibou (PAN).",
+        es: "Consulte en tiempo real el programa de escalas, los buques esperados y los movimientos marítimos actuales en el Puerto Autónomo de Nuadibú (PAN)."
+    };
+
+    return {
+        title: dict.nav.stopovers,
+        description: descriptions[locale] || descriptions.fr,
+        alternates: {
+            canonical: `/${locale}/escales`,
+            languages: {
+                fr: '/fr/escales',
+                ar: '/ar/escales',
+                en: '/en/escales',
+                es: '/es/escales',
+            },
+        },
+    };
+}
 import { getDictionary } from '@/lib/dictionaries';
 import { PageHero } from '@/components/PageHero';
 import { getPublishedContents, t, formatDate } from '@/shared_lib';

@@ -66,9 +66,9 @@ export function HeroSlider({ dict, locale, slides, settings }: HeroSliderProps) 
             <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-20 md:py-24 lg:py-32 w-full z-10">
                 <div className="max-w-4xl">
                     <div className="w-16 h-1 bg-pan-gold rounded-full mb-8 animate-in slide-in-from-left duration-700" />
-                    <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-8xl font-black leading-[1.1] tracking-tighter mb-6 md:mb-8 animate-in slide-in-from-bottom duration-700">
+                    <h2 className="text-3xl sm:text-5xl md:text-6xl lg:text-8xl font-black leading-[1.1] tracking-tighter mb-6 md:mb-8 animate-in slide-in-from-bottom duration-700">
                         {t(items[current].title, locale)}
-                    </h1>
+                    </h2>
                     <p className="text-base sm:text-xl md:text-2xl text-pan-light/80 leading-relaxed mb-8 md:mb-12 max-w-2xl font-medium animate-in slide-in-from-bottom delay-150 duration-700">
                         {t(items[current].subtitle, locale)}
                     </p>

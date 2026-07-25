@@ -1,4 +1,33 @@
+import type { Metadata } from 'next';
 import type { Locale } from '@/shared_lib';
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+    const { locale: localeParam } = await params;
+    const locale = (['ar', 'fr', 'en', 'es'].includes(localeParam) ? localeParam : 'fr') as Locale;
+    const { getDictionary } = await import('@/lib/dictionaries');
+    const dict = await getDictionary(locale);
+    
+    const descriptions = {
+        fr: "Plongez dans la médiathèque du Port Autonome de Nouadhibou. Découvrez nos galeries photos et vidéos illustrant le dynamisme de nos activités portuaires.",
+        ar: "تصفح المكتبة الوسائطية لميناء نواذيبو المستقل. اكتشف معارض الصور والفيديو التي تبرز حيوية ونشاط عملياتنا المينائية وتطور بنيتنا التحتية.",
+        en: "Dive into the media library of the Autonomous Port of Nouadhibou. Discover our photo and video galleries illustrating the dynamism of our port activities.",
+        es: "Sumérjase en la mediateca del Puerto Autónomo de Nuadibú. Descubra nuestras galerías de fotos y videos que ilustran el dinamismo de nuestras actividades."
+    };
+
+    return {
+        title: dict.nav.media,
+        description: descriptions[locale] || descriptions.fr,
+        alternates: {
+            canonical: `/${locale}/medias`,
+            languages: {
+                fr: '/fr/medias',
+                ar: '/ar/medias',
+                en: '/en/medias',
+                es: '/es/medias',
+            },
+        },
+    };
+}
 import { getDictionary } from '@/lib/dictionaries';
 import { PageHero } from '@/components/PageHero';
 import { Camera, Play, Maximize2, ExternalLink, ImageIcon } from 'lucide-react';

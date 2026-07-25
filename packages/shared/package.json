@@ -15,7 +15,11 @@
         "build": "tsc --noEmit"
     },
     "devDependencies": {
-        "typescript": "^5",
-        "@types/node": "^20.0.0"
+        "@types/node": "^20.0.0",
+        "typescript": "^5"
+    },
+    "dependencies": {
+        "@supabase/ssr": "^0.10.3",
+        "@supabase/supabase-js": "^2.105.4"
     }
 }

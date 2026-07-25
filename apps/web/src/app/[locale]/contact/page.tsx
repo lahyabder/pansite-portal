@@ -1,11 +1,41 @@
+import type { Metadata } from 'next';
 import type { Locale } from '@/shared_lib';
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+    const { locale: localeParam } = await params;
+    const locale = (['ar', 'fr', 'en', 'es'].includes(localeParam) ? localeParam : 'fr') as Locale;
+    const { getDictionary } = await import('@/lib/dictionaries');
+    const dict = await getDictionary(locale);
+    
+    const descriptions = {
+        fr: "Contactez le Port Autonome de Nouadhibou pour toute demande d'information, réclamation ou rendez-vous. Notre équipe est à votre disposition pour vous aider.",
+        ar: "اتصل بميناء نواذيبو المستقل لأي طلب معلومات، شكوى أو تحديد موعد. فريقنا مستعد دائماً للرد على استفساراتكم وتقديم الدعم اللوجستي المطلوب.",
+        en: "Contact the Autonomous Port of Nouadhibou for any information request, complaint, or appointment. Our team is at your disposal to help you.",
+        es: "Contacte al Puerto Autónomo de Nuadibú para cualquier solicitud de información, queja o cita. Nuestro equipo está a su disposición para ayudarle."
+    };
+
+    return {
+        title: dict.nav.contact,
+        description: descriptions[locale] || descriptions.fr,
+        alternates: {
+            canonical: `/${locale}/contact`,
+            languages: {
+                fr: '/fr/contact',
+                ar: '/ar/contact',
+                en: '/en/contact',
+                es: '/es/contact',
+            },
+        },
+    };
+}
+import { getSiteSettings } from '@/shared_lib';
 import { getDictionary } from '@/lib/dictionaries';
 import { PageHero } from '@/components/PageHero';
-
 export default async function ContactPage({ params }: { params: Promise<{ locale: string }> }) {
     const { locale: lp } = await params;
     const locale = (['ar', 'fr', 'en', 'es'].includes(lp) ? lp : 'fr') as Locale;
     const dict = await getDictionary(locale);
+    const settings = await getSiteSettings();
 
     const labels = {
         ar: {
@@ -132,7 +162,7 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
                                 </div>
                                 <button
                                     type="submit"
-                                    className="w-full sm:w-auto px-8 py-3 bg-pan-sky text-white font-semibold rounded-xl hover:bg-pan-blue transition-colors shadow-md hover:shadow-lg"
+                                    className="w-full sm:w-auto px-8 py-3 bg-pan-sky text-white font-semibold rounded-xl hover:bg-pan-blue transition-colors shadow-md hover:shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-pan-sky focus-visible:ring-offset-2"
                                 >
                                     {labels.send}
                                 </button>
@@ -162,7 +192,7 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
                                         </svg>
                                         <div>
                                             <div className="font-medium text-pan-navy">{labels.phone}</div>
-                                            <div className="mt-1"><span dir="ltr" className="inline-block">{dict.footer.phone}</span></div>
+                                            <div className="mt-1"><span dir="ltr" className="inline-block"><a href={`tel:${(settings?.contactPhones?.[0] || dict.footer.phone).replace(/\s/g, '')}`} className="hover:text-pan-sky transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-pan-sky focus-visible:ring-offset-2 rounded-sm px-1 -mx-1">{settings?.contactPhones?.[0] || dict.footer.phone}</a></span></div>
                                             <div className="text-pan-gray-400 text-xs"><span dir="ltr" className="inline-block">Fax: {dict.footer.fax}</span></div>
                                         </div>
                                     </li>
@@ -172,7 +202,7 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
                                         </svg>
                                         <div>
                                             <div className="font-medium text-pan-navy">Email</div>
-                                            <div className="mt-1">{dict.footer.email}</div>
+                                            <div className="mt-1"><a href={`mailto:${settings?.contactEmails?.[0] || dict.footer.email}`} className="hover:text-pan-sky transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-pan-sky focus-visible:ring-offset-2 rounded-sm px-1 -mx-1">{settings?.contactEmails?.[0] || dict.footer.email}</a></div>
                                         </div>
                                     </li>
                                 </ul>

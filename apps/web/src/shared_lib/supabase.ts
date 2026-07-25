@@ -13,15 +13,32 @@ export function getSupabase(): SupabaseClient {
         const url = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
         const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
         
+        // Check consent for telemetry (Amplitude)
+        const hasConsent = typeof window !== 'undefined' 
+            ? localStorage.getItem('pan_cookie_consent') === 'accepted'
+            : false;
+        
         if (!url || !key) {
             // During static generation (build), we return a dummy client to avoid crashing.
             // In a real environment, this would log a warning.
-            _supabase = createClient('https://placeholder-project.supabase.co', 'placeholder-key');
+            _supabase = createClient('https://placeholder-project.supabase.co', 'placeholder-key', {
+                auth: { telemetry: hasConsent }
+            });
         } else {
-            _supabase = createClient(url, key);
+            _supabase = createClient(url, key, {
+                auth: { telemetry: hasConsent }
+            });
         }
     }
     return _supabase;
+}
+
+/**
+ * Re-initialize the public client (e.g. after cookie consent is granted)
+ * so that the next getSupabase() call creates a new client with telemetry enabled.
+ */
+export function reinitSupabaseClient() {
+    _supabase = null;
 }
 
 /**

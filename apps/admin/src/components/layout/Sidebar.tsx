@@ -14,9 +14,9 @@ import {
   Shield,
   Newspaper,
 } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useAdminLang } from '@/lib/AdminLangContext';
-import { createClient } from '@supabase/supabase-js';
+import { signOutAction } from '@/app/auth-actions';
 
 const ALL_MENU_ITEMS = [
   { id: 'dashboard', label: { fr: 'Tableau de Bord', ar: 'لوحة القيادة' }, icon: LayoutDashboard, href: '/', adminOnly: true },
@@ -27,39 +27,17 @@ const ALL_MENU_ITEMS = [
   { id: 'settings', label: { fr: 'Paramètres', ar: 'الإعدادات' }, icon: Settings, href: '/settings', adminOnly: true },
 ];
 
-function getCookie(name: string): string {
-  if (typeof document === 'undefined') return '';
-  const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
-  return match ? match[2] : '';
-}
-
-export default function Sidebar() {
+export default function Sidebar({ role = 'admin' }: { role?: 'admin' | 'editor' }) {
   const pathname = usePathname();
   const [collapsed, setCollapsed] = useState(false);
   const [loggingOut, setLoggingOut] = useState(false);
-  const [role, setRole] = useState<'admin' | 'editor'>('admin');
   const { lang } = useAdminLang();
-
-  useEffect(() => {
-    const r = getCookie('pan-admin-role');
-    if (r === 'editor') setRole('editor');
-  }, []);
 
   const menuItems = ALL_MENU_ITEMS.filter(item => !item.adminOnly || role === 'admin');
 
   const handleLogout = async () => {
     setLoggingOut(true);
-    try {
-      const supabase = createClient(
-        process.env.NEXT_PUBLIC_SUPABASE_URL!,
-        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-      );
-      await supabase.auth.signOut();
-    } catch {}
-
-    document.cookie = 'pan-admin-session=; path=/; max-age=0';
-    document.cookie = 'pan-admin-role=; path=/; max-age=0';
-    window.location.href = '/admin/login';
+    await signOutAction();
   };
 
   return (

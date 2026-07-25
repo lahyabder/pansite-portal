@@ -1,4 +1,33 @@
+import type { Metadata } from 'next';
 import type { Locale } from '@/shared_lib';
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+    const { locale: localeParam } = await params;
+    const locale = (['ar', 'fr', 'en', 'es'].includes(localeParam) ? localeParam : 'fr') as Locale;
+    const { getDictionary } = await import('@/lib/dictionaries');
+    const dict = await getDictionary(locale);
+    
+    const descriptions = {
+        fr: "Bienvenue au Port Autonome de Nouadhibou (PAN), hub logistique et maritime stratégique de la Mauritanie offrant des services portuaires de classe mondiale.",
+        ar: "مرحباً بكم في ميناء نواذيبو المستقل (PAN)، المركز اللوجستي والبحري الاستراتيجي في موريتانيا، والذي يقدم خدمات مينائية وبحرية ذات معايير عالمية.",
+        en: "Welcome to the Autonomous Port of Nouadhibou (PAN), Mauritania's strategic maritime and logistics hub offering world-class port services.",
+        es: "Bienvenido al Puerto Autónomo de Nuadibú (PAN), el centro logístico y marítimo estratégico de Mauritania que ofrece servicios de clase mundial."
+    };
+
+    return {
+        title: dict.nav.home,
+        description: descriptions[locale] || descriptions.fr,
+        alternates: {
+            canonical: `/${locale}`,
+            languages: {
+                fr: '/fr',
+                ar: '/ar',
+                en: '/en',
+                es: '/es',
+            },
+        },
+    };
+}
 import { t, formatDate, getSiteSettings, getPageBySlug, getLatestContents } from '@/shared_lib';
 import { getDictionary } from '@/lib/dictionaries';
 import Link from 'next/link';
@@ -49,8 +78,8 @@ export default async function HomePage({
 
     return (
         <div className="relative">
+            <h1 className="sr-only">{dict.hero.title || 'Port Autonome de Nouadhibou'}</h1>
             <AlertBar locale={locale} dict={dict} />
-
 
 
             {sortedBlocks.map((block: any, bIdx: number) => {

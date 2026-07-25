@@ -1,38 +1,23 @@
 'use client';
 
 import { useState } from 'react';
-import { createClient } from '@supabase/supabase-js';
 import { Ship, Lock, Mail, ArrowRight, RefreshCw, AlertCircle } from 'lucide-react';
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
+import { signInAction } from '@/app/auth-actions';
 
 export default function LoginPage() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleLogin = async (formData: FormData) => {
     setLoading(true);
     setError(null);
 
-    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+    const result = await signInAction(formData);
 
-    if (error) {
-      setError('Email ou mot de passe incorrect.');
+    if (result?.error) {
+      setError(result.error);
       setLoading(false);
-      return;
     }
-
-    // Store session + role cookies for middleware and sidebar
-    const role = data.user?.user_metadata?.role ?? 'admin';
-    document.cookie = 'pan-admin-session=1; path=/; max-age=86400; SameSite=Lax';
-    document.cookie = `pan-admin-role=${role}; path=/; max-age=86400; SameSite=Lax`;
-    window.location.href = '/admin/';
   };
 
   return (
@@ -47,16 +32,15 @@ export default function LoginPage() {
         </div>
 
         <div className="glass-card rounded-[2.5rem] p-10 space-y-8">
-           <form onSubmit={handleLogin} className="space-y-6">
+           <form action={handleLogin} className="space-y-6">
               <div className="space-y-2">
                  <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest pl-2">Email Administrateur</label>
                  <div className="relative">
                     <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-600" />
                     <input
+                      name="email"
                       type="email"
                       required
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
                       placeholder="admin@pan.mr"
                       className="w-full pl-12 pr-4 py-4 bg-slate-950/50 border border-slate-800 rounded-2xl text-sm text-white outline-none focus:border-sky-500/50 transition-all"
                     />
@@ -68,10 +52,9 @@ export default function LoginPage() {
                  <div className="relative">
                     <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-600" />
                     <input
+                      name="password"
                       type="password"
                       required
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
                       placeholder="••••••••"
                       className="w-full pl-12 pr-4 py-4 bg-slate-950/50 border border-slate-800 rounded-2xl text-sm text-white outline-none focus:border-sky-500/50 transition-all"
                     />

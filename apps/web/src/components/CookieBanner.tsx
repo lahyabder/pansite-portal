@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { reinitSupabaseClient } from '@/shared_lib/supabase';
 
 export function CookieBanner() {
     const [isVisible, setIsVisible] = useState(false);
@@ -15,6 +16,8 @@ export function CookieBanner() {
     const acceptCookies = () => {
         localStorage.setItem('pan_cookie_consent', 'accepted');
         setIsVisible(false);
+        // Reinitialize Supabase client so telemetry is enabled now that consent is given
+        reinitSupabaseClient();
     };
 
     const declineCookies = () => {
@@ -36,13 +39,13 @@ export function CookieBanner() {
                 <div className="flex items-center gap-3 shrink-0">
                     <button
                         onClick={declineCookies}
-                        className="px-5 py-2.5 text-sm font-medium text-pan-gray-600 hover:text-pan-gray-900 bg-pan-gray-100 hover:bg-pan-gray-200 rounded-lg transition-colors"
+                        className="px-5 py-2.5 text-sm font-medium text-pan-gray-600 hover:text-pan-gray-900 bg-pan-gray-100 hover:bg-pan-gray-200 rounded-lg transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-pan-blue focus-visible:ring-offset-2"
                     >
                         Refuser
                     </button>
                     <button
                         onClick={acceptCookies}
-                        className="px-5 py-2.5 text-sm font-medium text-white bg-pan-blue hover:bg-pan-navy rounded-lg transition-colors flex items-center justify-center min-w-[120px]"
+                        className="px-5 py-2.5 text-sm font-medium text-white bg-pan-blue hover:bg-pan-navy rounded-lg transition-colors flex items-center justify-center min-w-[120px] focus:outline-none focus-visible:ring-2 focus-visible:ring-pan-blue focus-visible:ring-offset-2"
                     >
                         Accepter
                     </button>
