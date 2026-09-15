@@ -1,3 +1,4 @@
+import { redirect } from "next/navigation";
 import Sidebar from "@/components/layout/Sidebar";
 import Header from "@/components/layout/Header";
 import { AdminLangProvider } from "@/lib/AdminLangContext";
@@ -6,7 +7,12 @@ import { createClient } from "@/utils/supabase/server";
 export default async function AdminShellLayout({ children }: { children: React.ReactNode }) {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
-  const role = (user?.user_metadata?.role as 'admin' | 'editor') || 'admin';
+
+  if (!user) {
+    redirect('/login');
+  }
+
+  const role = (user.user_metadata?.role as 'admin' | 'editor') || 'admin';
 
   return (
     <AdminLangProvider>
