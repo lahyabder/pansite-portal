@@ -41,7 +41,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
             default: title,
         },
         description,
-        metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'),
+        metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://www.pan.mr'),
         alternates: {
             languages: {
                 fr: '/fr', ar: '/ar', en: '/en', es: '/es',

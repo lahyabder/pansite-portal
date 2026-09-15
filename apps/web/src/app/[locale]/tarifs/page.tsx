@@ -3,8 +3,20 @@ import { getDictionary } from '@/lib/dictionaries';
 import { PageHero } from '@/components/PageHero';
 import { getPublishedContents } from '@/shared_lib';
 import { ContentCard } from '@/components/ContentCard';
+import type { Metadata } from 'next';
 
 export const revalidate = 60;
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+    const { locale: lp } = await params;
+    const locale = (['ar', 'fr', 'en', 'es'].includes(lp) ? lp : 'fr') as Locale;
+    const dict = await getDictionary(locale);
+
+    return {
+        title: dict.pages.tariffs.title,
+    };
+}
+
 
 export default async function TarifsPage({ params }: { params: Promise<{ locale: string }> }) {
     const { locale: lp } = await params;

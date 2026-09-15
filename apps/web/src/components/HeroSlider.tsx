@@ -53,7 +53,7 @@ export function HeroSlider({ dict, locale, slides, settings }: HeroSliderProps) 
                 >
                     <Image
                         src={item.image}
-                        alt=""
+                        alt={t(item.title, locale) || "Hero Image"}
                         fill
                         priority={index === 0}
                         className="object-cover scale-105"

@@ -49,7 +49,7 @@ function HeroBlock({ content, locale }: { content: any; locale: Locale }) {
             </div>
             {content.image && (
                 <div className="absolute inset-0 opacity-40">
-                    <Image src={content.image} alt="" fill className="object-cover" />
+                    <Image src={content.image} alt={t(content.title, locale) || "Hero Background"} fill className="object-cover" />
                 </div>
             )}
         </section>
@@ -67,7 +67,7 @@ function TextImageBlock({ content, locale }: { content: any; locale: Locale }) {
                         <div className="prose prose-lg text-pan-gray-600 leading-relaxed" dangerouslySetInnerHTML={{ __html: t(content.text, locale) }} />
                     </div>
                     <div className="relative h-[280px] md:h-[400px] lg:h-[500px] rounded-3xl overflow-hidden shadow-2xl">
-                        <Image src={content.image} alt="" fill className="object-cover" />
+                        <Image src={content.image} alt={t(content.title, locale) || "Illustration"} fill className="object-cover" />
                     </div>
                 </div>
             </div>
