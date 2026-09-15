@@ -49,6 +49,9 @@ export default async function PrivacyPolicyPage({ params }: { params: Promise<{ 
 
                 <h2>4. Droits des utilisateurs</h2>
                 <p>Vous avez le droit de demander l&apos;accès, la rectification ou la suppression de vos données en nous contactant à <strong>contact@pan.mr</strong>.</p>
+
+                <h2>5. Base Légale et Conservation</h2>
+                <p>Le traitement de vos données est fondé sur votre consentement explicite et sur notre intérêt légitime à vous fournir des services de qualité. Les données sont conservées pendant une durée maximale de 3 ans après votre dernier contact, sauf obligation légale contraire.</p>
             </>
         ),
         ar: (
@@ -69,6 +72,9 @@ export default async function PrivacyPolicyPage({ params }: { params: Promise<{ 
 
                 <h2>4. حقوق المستخدمين</h2>
                 <p>لديك الحق في طلب الوصول إلى بياناتك أو تصحيحها أو حذفها عبر الاتصال بنا على <strong>contact@pan.mr</strong>.</p>
+
+                <h2>5. الأساس القانوني ومدة الاحتفاظ بالبيانات</h2>
+                <p>تستند معالجة بياناتك إلى موافقتك الصريحة ومصلحتنا المشروعة في تقديم خدمات عالية الجودة لك. يتم الاحتفاظ بالبيانات لمدة أقصاها 3 سنوات بعد آخر اتصال لك، ما لم ينص القانون على خلاف ذلك.</p>
             </div>
         ),
         en: (
@@ -89,6 +95,9 @@ export default async function PrivacyPolicyPage({ params }: { params: Promise<{ 
 
                 <h2>4. User Rights</h2>
                 <p>You have the right to request access, rectification, or deletion of your data by contacting us at <strong>contact@pan.mr</strong>.</p>
+
+                <h2>5. Legal Basis and Retention</h2>
+                <p>The processing of your data is based on your explicit consent and our legitimate interest in providing you with quality services. Data is kept for a maximum of 3 years after your last contact, unless otherwise required by law.</p>
             </>
         ),
         es: (
@@ -109,6 +118,9 @@ export default async function PrivacyPolicyPage({ params }: { params: Promise<{ 
 
                 <h2>4. Derechos de los usuarios</h2>
                 <p>Usted tiene derecho a solicitar el acceso, la rectificación o la eliminación de sus datos contactándonos en <strong>contact@pan.mr</strong>.</p>
+
+                <h2>5. Base legal y retención</h2>
+                <p>El procesamiento de sus datos se basa en su consentimiento explícito y en nuestro interés legítimo en brindarle servicios de calidad. Los datos se conservan durante un máximo de 3 años después de su último contacto, a menos que la ley exija lo contrario.</p>
             </>
         )
     }[locale];

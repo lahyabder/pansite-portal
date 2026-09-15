@@ -97,9 +97,28 @@ export default async function LocaleLayout({
     const jsonLd = {
         '@context': 'https://schema.org',
         '@type': 'Organization',
-        name: t(settings?.siteName, locale),
+        name: t(settings?.siteName, locale) || 'Port Autonome de Nouadhibou',
         url: process.env.NEXT_PUBLIC_SITE_URL || 'https://www.pan.mr',
         logo: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://www.pan.mr'}/icon.png`,
+        address: {
+            '@type': 'PostalAddress',
+            streetAddress: 'BP 236',
+            addressLocality: 'Nouadhibou',
+            addressCountry: 'MR'
+        },
+        contactPoint: {
+            '@type': 'ContactPoint',
+            telephone: '+222 45 74 51 06',
+            contactType: 'customer service',
+            email: 'contact@pan.mr',
+            availableLanguage: ['Arabic', 'French', 'English', 'Spanish']
+        },
+        sameAs: [
+            settings?.socialLinks?.facebook,
+            settings?.socialLinks?.twitter,
+            settings?.socialLinks?.linkedin,
+            settings?.socialLinks?.youtube
+        ].filter(Boolean)
     };
 
     return (
