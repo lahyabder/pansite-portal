@@ -27,6 +27,8 @@ export function generateStaticParams() {
     return [{ locale: 'fr' }, { locale: 'ar' }, { locale: 'en' }, { locale: 'es' }];
 }
 
+import { headers } from 'next/headers';
+
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
     const { locale: localeParam } = await params;
     const locale = (['ar', 'en', 'es'].includes(localeParam) ? localeParam : 'fr') as Locale;
@@ -34,6 +36,10 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 
     const title = t(settings?.siteName, locale) || 'Port Autonome de Nouadhibou';
     const description = settings?.seoGlobal?.defaultDescription || t(settings?.slogan, locale);
+
+    const headersList = await headers();
+    const currentPath = headersList.get('x-current-path') || '/';
+    const pathWithoutLocale = currentPath.replace(/^\/(ar|fr|en|es)/, '');
 
     return {
         title: {
@@ -44,16 +50,27 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
         metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://www.pan.mr'),
         alternates: {
             languages: {
-                fr: '/fr', ar: '/ar', en: '/en', es: '/es',
+                fr: `/fr${pathWithoutLocale}`,
+                ar: `/ar${pathWithoutLocale}`,
+                en: `/en${pathWithoutLocale}`,
+                es: `/es${pathWithoutLocale}`,
             },
         },
         openGraph: {
             type: 'website',
             locale,
-            url: `/${locale}`,
+            url: `/${locale}${pathWithoutLocale}`,
             title,
             description,
             siteName: title,
+            images: [
+                {
+                    url: '/images/hero/hero-1.jpg',
+                    width: 1200,
+                    height: 630,
+                    alt: title,
+                },
+            ],
         },
     };
 }

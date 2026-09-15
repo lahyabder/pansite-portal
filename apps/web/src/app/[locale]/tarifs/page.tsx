@@ -14,6 +14,11 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 
     return {
         title: dict.pages.tariffs.title,
+        description: dict.pages.tariffs.subtitle,
+        openGraph: {
+            title: dict.pages.tariffs.title,
+            description: dict.pages.tariffs.subtitle,
+        },
     };
 }
 
@@ -91,8 +96,8 @@ export default async function TarifsPage({ params }: { params: Promise<{ locale:
                         &quot;{footerLabels.quote}&quot;
                     </p>
                     <div className="flex flex-wrap justify-center gap-4">
-                        <button className="px-8 py-3 bg-white/10 text-white font-bold rounded-xl border border-white/20 hover:bg-white/20 transition-all">{footerLabels.download}</button>
-                        <button className="px-8 py-3 bg-pan-gold text-pan-navy font-bold rounded-xl hover:bg-white transition-all">{footerLabels.contact}</button>
+                        <a href="/documents/tarifs.pdf" target="_blank" rel="noopener noreferrer" className="px-8 py-3 bg-white/10 text-white font-bold rounded-xl border border-white/20 hover:bg-white/20 transition-all text-center inline-block">{footerLabels.download}</a>
+                        <a href={`/${locale}/contact`} className="px-8 py-3 bg-pan-gold text-pan-navy font-bold rounded-xl hover:bg-white transition-all text-center inline-block">{footerLabels.contact}</a>
                     </div>
                 </div>
             </section>

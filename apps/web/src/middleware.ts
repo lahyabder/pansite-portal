@@ -48,7 +48,13 @@ export function middleware(request: NextRequest) {
         (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
     );
 
-    if (hasLocale) return;
+    if (hasLocale) {
+        const requestHeaders = new Headers(request.headers);
+        requestHeaders.set('x-current-path', pathname);
+        return NextResponse.next({
+            request: { headers: requestHeaders }
+        });
+    }
 
     // Redirect to default locale
     const locale = getLocale(request);

@@ -4,9 +4,27 @@ import { PageHero } from '@/components/PageHero';
 import { getPublishedContents, getPageBySlug, resolveLocalized } from '@/shared_lib';
 import { ContentCard } from '@/components/ContentCard';
 import Image from 'next/image';
+import type { Metadata } from 'next';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+    const { locale: lp } = await params;
+    const locale = (['ar', 'fr', 'en', 'es'].includes(lp) ? lp : 'fr') as Locale;
+    const dict = await getDictionary(locale);
+    const dbPage = await getPageBySlug('le-port');
+    const resolvedTitle = dbPage?.title ? resolveLocalized(dbPage.title, locale) : dict.pages.port.title;
+
+    return {
+        title: resolvedTitle,
+        description: dict.pages.port.subtitle,
+        openGraph: {
+            title: resolvedTitle,
+            description: dict.pages.port.subtitle,
+        },
+    };
+}
 
 export default async function LePortPage({ params }: { params: Promise<{ locale: string }> }) {
     const { locale: lp } = await params;
