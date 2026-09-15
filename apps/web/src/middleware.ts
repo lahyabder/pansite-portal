@@ -23,6 +23,17 @@ function getLocale(request: NextRequest): string {
 
 export function middleware(request: NextRequest) {
     const { pathname } = request.nextUrl;
+    const hostname = request.headers.get('host') || '';
+    const protocol = request.headers.get('x-forwarded-proto') || 'http';
+
+    // Force HTTPS and www in production for pan.mr
+    if (process.env.NODE_ENV === 'production' && (hostname === 'pan.mr' || (hostname === 'www.pan.mr' && protocol === 'http'))) {
+        const url = request.nextUrl.clone();
+        url.host = 'www.pan.mr';
+        url.protocol = 'https:';
+        url.port = '';
+        return NextResponse.redirect(url, 301);
+    }
 
     // Redirect localized admin paths (e.g., /fr/admin) to the base admin path (/admin)
     if (pathname.match(new RegExp(`^/(${locales.join('|')})/admin(/.*)?$`))) {
