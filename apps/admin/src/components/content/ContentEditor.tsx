@@ -96,20 +96,28 @@ export default function ContentEditor({ initialData, id, onSave, onDelete }: Con
   };
 
   const handleSave = async () => {
+    if (uploadingImage || uploadingGallery) {
+      alert('Veuillez patienter, le téléchargement de l\'image est en cours.');
+      return;
+    }
+
     setSaving(true);
     try {
       let payload = { ...content };
 
       if (autoTranslate) {
+        setTranslating(true);
         payload = await translateFullContentAction(payload, activeLang);
+        setTranslating(false);
       }
 
       await onSave(payload);
+      // We don't setSaving(false) here so the button stays spinning while router transitions
       router.push('/contents');
     } catch (err: any) {
       alert('Erreur lors de la sauvegarde : ' + err.message);
-    } finally {
       setSaving(false);
+      setTranslating(false);
     }
   };
 
@@ -195,11 +203,11 @@ export default function ContentEditor({ initialData, id, onSave, onDelete }: Con
 
           <button 
             onClick={handleSave}
-            disabled={saving}
+            disabled={saving || uploadingImage || uploadingGallery}
             className="flex items-center gap-2 px-6 py-2.5 bg-white text-slate-950 rounded-xl font-black text-sm hover:scale-105 active:scale-95 transition-all shadow-xl shadow-white/10 disabled:opacity-50"
           >
             {saving ? <RefreshCw className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
-            {saving ? 'Enregistrement...' : 'Enregistrer'}
+            {translating ? 'Traduction (IA)...' : saving ? 'Enregistrement...' : 'Enregistrer'}
           </button>
         </div>
       </header>
