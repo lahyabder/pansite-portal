@@ -33,7 +33,7 @@ export function CookieBanner() {
             <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
                 <div className="flex-1">
                     <p className="text-sm text-pan-gray-600 leading-relaxed">
-                        Pour vous offrir la meilleure expérience possible sur notre site, le Port Autonome de Nouadhibou utilise des cookies. Ces cookies nous aident à comprendre comment vous utilisez notre site (analytique) et à en améliorer les performances. En cliquant sur &quot;Accepter&quot;, vous consentez à l&apos;utilisation de tous les cookies de notre site web.
+                        Pour vous offrir la meilleure expérience possible sur notre site, le Port Autonome de Nouadhibou (PAN) utilise des cookies. Ces cookies nous aident à comprendre comment vous utilisez notre site (analytique) et à en améliorer les performances. En cliquant sur &quot;Accepter&quot;, vous consentez à l&apos;utilisation de tous les cookies de notre site web.
                     </p>
                 </div>
                 <div className="flex items-center gap-3 shrink-0">

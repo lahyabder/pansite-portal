@@ -28,7 +28,7 @@ export default function LoginPage() {
               <Ship className="text-white w-10 h-10" />
            </div>
            <h1 className="font-outfit text-3xl font-black text-white px-10">PAN COMMAND CENTER</h1>
-           <p className="text-slate-500 font-medium">Port Autonome de Nouadhibou</p>
+           <p className="text-slate-500 font-medium">Port Autonome de Nouadhibou (PAN)</p>
         </div>
 
         <div className="glass-card rounded-[2.5rem] p-10 space-y-8">

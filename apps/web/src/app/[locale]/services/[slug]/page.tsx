@@ -50,7 +50,7 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
         description: t(service.description, locale),
         provider: {
             '@type': 'Organization',
-            name: 'Port Autonome de Nouadhibou',
+            name: 'Port Autonome de Nouadhibou (PAN)',
         },
         areaServed: {
             '@type': 'Place',

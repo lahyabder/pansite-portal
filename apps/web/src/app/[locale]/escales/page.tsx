@@ -10,7 +10,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     const descriptions = {
         fr: "Consultez en temps réel le programme des escales, les navires attendus et les mouvements maritimes actuels au Port Autonome de Nouadhibou (PAN).",
         ar: "اطلع في الوقت الفعلي على برنامج رسو السفن، والسفن المتوقعة، والحركات البحرية الحالية في ميناء نواذيبو المستقل لضمان تتبع دقيق لعملياتك.",
-        en: "Check in real-time the stopovers schedule, expected vessels, and current maritime movements at the Autonomous Port of Nouadhibou (PAN).",
+        en: "Check in real-time the stopovers schedule, expected vessels, and current maritime movements at the Port Autonome de Nouadhibou (PAN).",
         es: "Consulte en tiempo real el programa de escalas, los buques esperados y los movimientos marítimos actuales en el Puerto Autónomo de Nuadibú (PAN)."
     };
 

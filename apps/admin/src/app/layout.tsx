@@ -14,7 +14,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "PAN Command Center | Port Autonome de Nouadhibou",
+  title: "PAN Command Center | Port Autonome de Nouadhibou (PAN)",
   description: "Ultimate control panel for the PAN digital ecosystem",
 };
 

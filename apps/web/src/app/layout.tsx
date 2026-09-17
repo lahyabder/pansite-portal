@@ -16,11 +16,11 @@ const notoArabic = Noto_Sans_Arabic({
 
 export const metadata: Metadata = {
   title: {
-    default: 'Port Autonome de Nouadhibou | PAN',
+    default: 'Port Autonome de Nouadhibou (PAN) | PAN',
     template: '%s | PAN',
   },
   description:
-    "Site officiel du Port Autonome de Nouadhibou — Porte d'entrée stratégique de la Mauritanie sur l'Atlantique.",
+    "Site officiel du Port Autonome de Nouadhibou (PAN) — Porte d'entrée stratégique de la Mauritanie sur l'Atlantique.",
   keywords: ['port', 'Nouadhibou', 'Mauritanie', 'PAN', 'maritime', 'logistique'],
   icons: {
     icon: '/favicon.ico',

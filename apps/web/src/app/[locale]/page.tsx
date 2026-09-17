@@ -10,7 +10,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     const descriptions = {
         fr: "Bienvenue au Port Autonome de Nouadhibou (PAN), hub logistique et maritime stratégique de la Mauritanie offrant des services portuaires de classe mondiale.",
         ar: "مرحباً بكم في ميناء نواذيبو المستقل (PAN)، المركز اللوجستي والبحري الاستراتيجي في موريتانيا، والذي يقدم خدمات مينائية وبحرية ذات معايير عالمية.",
-        en: "Welcome to the Autonomous Port of Nouadhibou (PAN), Mauritania's strategic maritime and logistics hub offering world-class port services.",
+        en: "Welcome to the Port Autonome de Nouadhibou (PAN), Mauritania's strategic maritime and logistics hub offering world-class port services.",
         es: "Bienvenido al Puerto Autónomo de Nuadibú (PAN), el centro logístico y marítimo estratégico de Mauritania que ofrece servicios de clase mundial."
     };
 
@@ -78,7 +78,7 @@ export default async function HomePage({
 
     return (
         <div className="relative">
-            <h1 className="sr-only">{dict.hero.title || 'Port Autonome de Nouadhibou'}</h1>
+            <h1 className="sr-only">{dict.hero.title || 'Port Autonome de Nouadhibou (PAN)'}</h1>
             <AlertBar locale={locale} dict={dict} />
 
 

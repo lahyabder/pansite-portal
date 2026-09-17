@@ -8,9 +8,9 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     const dict = await getDictionary(locale);
     
     const descriptions = {
-        fr: "Restez informé des derniers appels d'offres, consultations et marchés publics émis par le Port Autonome de Nouadhibou pour ses projets de développement.",
+        fr: "Restez informé des derniers appels d'offres, consultations et marchés publics émis par le Port Autonome de Nouadhibou (PAN) pour ses projets de développement.",
         ar: "ابق على اطلاع بآخر إعلانات المناقصات والاستشارات والصفقات العمومية الصادرة عن ميناء نواذيبو المستقل لمشاريعه التنموية ومشترياته.",
-        en: "Stay informed about the latest calls for tenders, consultations, and public contracts issued by the Autonomous Port of Nouadhibou for its development.",
+        en: "Stay informed about the latest calls for tenders, consultations, and public contracts issued by the Port Autonome de Nouadhibou (PAN) for its development.",
         es: "Manténgase informado sobre las últimas licitaciones, consultas y contratos públicos emitidos por el Puerto Autónomo de Nuadibú para sus proyectos."
     };
 

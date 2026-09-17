@@ -1,6 +1,6 @@
-# 🚢 PAN — Port Autonome de Nouadhibou
+# 🚢 PAN — Port Autonome de Nouadhibou (PAN)
 
-Site web officiel et back-office d'administration du **Port Autonome de Nouadhibou** (Mauritanie).
+Site web officiel et back-office d'administration du **Port Autonome de Nouadhibou (PAN)** (Mauritanie).
 
 ## Architecture
 
@@ -241,4 +241,4 @@ const dict = getDictionary(locale);
 
 ---
 
-© 2025 Port Autonome de Nouadhibou
+© 2025 Port Autonome de Nouadhibou (PAN)

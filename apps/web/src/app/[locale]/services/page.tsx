@@ -8,9 +8,9 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     const dict = await getDictionary(locale);
     
     const descriptions = {
-        fr: "Découvrez notre gamme complète de services portuaires : manutention, transbordement, entreposage, et assistance logistique au Port Autonome de Nouadhibou.",
+        fr: "Découvrez notre gamme complète de services portuaires : manutention, transbordement, entreposage, et assistance logistique au Port Autonome de Nouadhibou (PAN).",
         ar: "اكتشف مجموعتنا الشاملة من الخدمات المينائية في ميناء نواذيبو المستقل: الشحن والتفريغ، المسافنة، التخزين، والمساعدة اللوجستية المتكاملة لعملائنا.",
-        en: "Discover our comprehensive range of port services: handling, transshipment, warehousing, and logistics assistance at the Autonomous Port of Nouadhibou.",
+        en: "Discover our comprehensive range of port services: handling, transshipment, warehousing, and logistics assistance at the Port Autonome de Nouadhibou (PAN).",
         es: "Descubra nuestra completa gama de servicios portuarios: manipulación, transbordo, almacenamiento y asistencia logística en el Puerto de Nuadibú."
     };
 

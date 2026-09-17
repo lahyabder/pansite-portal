@@ -304,9 +304,9 @@ const dictionaries: Record<Locale, Dictionary> = {
             searchPlaceholder: 'Rechercher sur le site...',
         },
         hero: {
-            title: 'Port Autonome de Nouadhibou',
+            title: 'Port Autonome de Nouadhibou (PAN)',
             subtitle:
-                'Le Port Autonome de Nouadhibou est la principale infrastructure portuaire de Mauritanie, offrant des services maritimes et logistiques de qualité pour soutenir le commerce international et le développement économique de la région.',
+                'Le Port Autonome de Nouadhibou (PAN) est la principale infrastructure portuaire de Mauritanie, offrant des services maritimes et logistiques de qualité pour soutenir le commerce international et le développement économique de la région.',
             cta: 'Découvrir nos services',
             ctaSecondary: 'Nous contacter',
         },
@@ -361,7 +361,7 @@ const dictionaries: Record<Locale, Dictionary> = {
         },
         news: {
             title: 'Actualités',
-            subtitle: 'Les dernières nouvelles du Port Autonome de Nouadhibou.',
+            subtitle: 'Les dernières nouvelles du Port Autonome de Nouadhibou (PAN).',
             readMore: 'Lire la suite',
             viewAll: 'Toutes les actualités',
         },
@@ -414,7 +414,7 @@ const dictionaries: Record<Locale, Dictionary> = {
         pages: {
             port: {
                 title: 'Le Port',
-                subtitle: 'Découvrez l\'histoire et l\'évolution du Port Autonome de Nouadhibou, ainsi que son impact socio-économique sur la région.',
+                subtitle: 'Découvrez l\'histoire et l\'évolution du Port Autonome de Nouadhibou (PAN), ainsi que son impact socio-économique sur la région.',
                 dg_word: {
                     title: 'Mot du Directeur Général',
                     name: 'Ahmed Ould Sid’Ahmed Ould DIÉ',
@@ -473,16 +473,16 @@ Je vous prie, chers ineternautes, usagers ou autres, d’y accéder le plus fré
                 },
                 impact: {
                     title: 'Intégration Socio-Économique',
-                    description: 'Le Port Autonome de Nouadhibou est un moteur de développement régional et national.',
+                    description: 'Le Port Autonome de Nouadhibou (PAN) est un moteur de développement régional et national.',
                     items: [
-                        { title: 'Premier employeur de Nouadhibou', description: 'Le Port Autonome de Nouadhibou est le plus grand employeur de la région, offrant des milliers d\'emplois directs et indirects.' },
+                        { title: 'Premier employeur de Nouadhibou', description: 'Le Port Autonome de Nouadhibou (PAN) est le plus grand employeur de la région, offrant des milliers d\'emplois directs et indirects.' },
                         { title: '80% des exportations liées à la pêche', description: 'Le port joue un rôle crucial dans l\'économie nationale en facilitant la majorité des exportations de produits de la pêche.' },
                         { title: '+50 partenaires privés', description: 'Un réseau étendu de partenaires commerciaux et industriels contribue au dynamisme économique du port.' },
                     ],
                 },
                 governance: {
                     title: 'Gouvernance',
-                    description: 'Découvrez la structure organisationnelle et les instances dirigeantes du Port Autonome de Nouadhibou.',
+                    description: 'Découvrez la structure organisationnelle et les instances dirigeantes du Port Autonome de Nouadhibou (PAN).',
                     board: {
                         title: 'Conseil d’Administration',
                         headerRole: 'Rôle',
@@ -508,7 +508,7 @@ Je vous prie, chers ineternautes, usagers ou autres, d’y accéder le plus fré
                 },
                 directors: {
                     title: 'Directeurs Généraux',
-                    subtitle: 'Découvrez les dirigeants qui ont façonné l\'histoire et le développement du Port Autonome de Nouadhibou à travers les décennies.',
+                    subtitle: 'Découvrez les dirigeants qui ont façonné l\'histoire et le développement du Port Autonome de Nouadhibou (PAN) à travers les décennies.',
                     deceased: 'Feu',
                 },
             },
@@ -703,7 +703,7 @@ Je vous prie, chers ineternautes, usagers ou autres, d’y accéder le plus fré
         },
         footer: {
             description:
-                "Le Port Autonome de Nouadhibou est un acteur majeur du développement économique de la Mauritanie, offrant des services portuaires de qualité internationale.",
+                "Le Port Autonome de Nouadhibou (PAN) est un acteur majeur du développement économique de la Mauritanie, offrant des services portuaires de qualité internationale.",
             quickLinks: 'Liens rapides',
             services: 'Services',
             legal: 'Informations légales',
@@ -712,7 +712,7 @@ Je vous prie, chers ineternautes, usagers ou autres, d’y accéder le plus fré
             phone: '+222 45 74 51 06',
             fax: '+222 45 74 51 07',
             email: 'contact@pan.mr',
-            rights: '© 2025 Port Autonome de Nouadhibou. Tous droits réservés.',
+            rights: '© 2025 Port Autonome de Nouadhibou (PAN). Tous droits réservés.',
             legalNotice: 'Mentions légales',
             privacyPolicy: 'Politique de confidentialité',
             termsOfUse: 'Conditions d\'utilisation',
@@ -1198,9 +1198,9 @@ Je vous prie, chers ineternautes, usagers ou autres, d’y accéder le plus fré
             searchPlaceholder: 'Search the site...',
         },
         hero: {
-            title: 'Nouadhibou Autonomous Port',
+            title: 'Port Autonome de Nouadhibou (PAN)',
             subtitle:
-                'The Nouadhibou Autonomous Port is the main port infrastructure of Mauritania, offering quality maritime and logistics services to support international trade and regional economic development.',
+                'The Port Autonome de Nouadhibou (PAN) is the main port infrastructure of Mauritania, offering quality maritime and logistics services to support international trade and regional economic development.',
             cta: 'Discover our services',
             ctaSecondary: 'Contact us',
         },
@@ -1255,7 +1255,7 @@ Je vous prie, chers ineternautes, usagers ou autres, d’y accéder le plus fré
         },
         news: {
             title: 'News',
-            subtitle: 'Latest news from the Nouadhibou Autonomous Port.',
+            subtitle: 'Latest news from the Port Autonome de Nouadhibou (PAN).',
             readMore: 'Read more',
             viewAll: 'View all news',
         },
@@ -1308,12 +1308,12 @@ Je vous prie, chers ineternautes, usagers ou autres, d’y accéder le plus fré
         pages: {
             port: {
                 title: 'The Port',
-                subtitle: 'Discover the history and evolution of the Nouadhibou Autonomous Port, as well as its socio-economic impact on the region.',
+                subtitle: 'Discover the history and evolution of the Port Autonome de Nouadhibou (PAN), as well as its socio-economic impact on the region.',
                 dg_word: {
-                    title: 'Welcome to the Autonomous Port of Nouadhibou',
+                    title: 'Welcome to the Port Autonome de Nouadhibou (PAN)',
                     name: 'Ahmed Ould Sid’Ahmed Ould DIÉ',
                     role: 'Director General - PAN',
-                    content: `The Nouadhibou Autonomous Port (PAN) is a forward-looking institution, equipped with a deep understanding of the challenges and a thoughtful integration of contextual requirements to achieve its goals.
+                    content: `The Port Autonome de Nouadhibou (PAN) is a forward-looking institution, equipped with a deep understanding of the challenges and a thoughtful integration of contextual requirements to achieve its goals.
 
 Administered under the banner of strong competitiveness and managed to reliably satisfy national and international operators, PAN also stands as a hub for trade, logistics, and progressive ideas.
 
@@ -1331,7 +1331,7 @@ I warmly invite you, dear internet users, partners, and visitors, to browse it a
                 },
                 role: {
                     title: 'Strategic Role',
-                    description: 'The Nouadhibou Autonomous Port (PAN) is located in a naturally protected bay. It is the pivot for all fishing activities and the engine of development for Nouadhibou.',
+                    description: 'The Port Autonome de Nouadhibou (PAN) is located in a naturally protected bay. It is the pivot for all fishing activities and the engine of development for Nouadhibou.',
                     points: [
                         "Gateway for the country's economic capital.",
                         'Service center for transport, industry, and international trade.',
@@ -1367,16 +1367,16 @@ I warmly invite you, dear internet users, partners, and visitors, to browse it a
                 },
                 impact: {
                     title: 'Socio-Economic Integration',
-                    description: 'The Autonomous Port of Nouadhibou is an engine of regional and national development.',
+                    description: 'The Port Autonome de Nouadhibou (PAN) is an engine of regional and national development.',
                     items: [
-                        { title: 'First employer of Nouadhibou', description: 'The Nouadhibou Autonomous Port is the region\'s largest employer, offering thousands of direct and indirect jobs.' },
+                        { title: 'First employer of Nouadhibou', description: 'The Port Autonome de Nouadhibou (PAN) is the region\'s largest employer, offering thousands of direct and indirect jobs.' },
                         { title: '80% of exports related to fishing', description: 'The port plays a crucial role in the national economy by facilitating the majority of fishing product exports.' },
                         { title: '+50 private partners', description: 'An extensive network of commercial and industrial partners contributes to the port\'s economic dynamism.' },
                     ],
                 },
                 governance: {
                     title: 'Governance',
-                    description: 'Discover the organizational structure and governing bodies of the Nouadhibou Autonomous Port.',
+                    description: 'Discover the organizational structure and governing bodies of the Port Autonome de Nouadhibou (PAN).',
                     board: {
                         title: 'Board of Directors',
                         headerRole: 'Role',
@@ -1402,7 +1402,7 @@ I warmly invite you, dear internet users, partners, and visitors, to browse it a
                 },
                 directors: {
                     title: 'General Directors',
-                    subtitle: 'Discover the leaders who have shaped the history and development of the Nouadhibou Autonomous Port through the decades.',
+                    subtitle: 'Discover the leaders who have shaped the history and development of the Port Autonome de Nouadhibou (PAN) through the decades.',
                     deceased: 'Late',
                 },
             },
@@ -1559,7 +1559,7 @@ I warmly invite you, dear internet users, partners, and visitors, to browse it a
         },
         footer: {
             description:
-                "The Nouadhibou Autonomous Port is a major player in Mauritania's economic development, offering world-class port services.",
+                "The Port Autonome de Nouadhibou (PAN) is a major player in Mauritania's economic development, offering world-class port services.",
             quickLinks: 'Quick Links',
             services: 'Services',
             legal: 'Legal Information',
@@ -1568,7 +1568,7 @@ I warmly invite you, dear internet users, partners, and visitors, to browse it a
             phone: '+222 45 74 51 06',
             fax: '+222 45 74 51 07',
             email: 'contact@pan.mr',
-            rights: '© 2025 Nouadhibou Autonomous Port. All rights reserved.',
+            rights: '© 2025 Port Autonome de Nouadhibou (PAN). All rights reserved.',
             legalNotice: 'Legal Notice',
             privacyPolicy: 'Privacy Policy',
             termsOfUse: 'Terms of Use',
@@ -1609,7 +1609,7 @@ I warmly invite you, dear internet users, partners, and visitors, to browse it a
             searchPlaceholder: 'Buscar en el sitio...',
         },
         hero: {
-            title: 'Puerto Autónomo de Nouadhibou',
+            title: 'Port Autonome de Nouadhibou (PAN)',
             subtitle:
                 'Puerta estratégica de Mauritania en el Atlántico. Centro comercial principal para el África Occidental.',
             cta: 'Descubra nuestros servicios',
@@ -1666,7 +1666,7 @@ I warmly invite you, dear internet users, partners, and visitors, to browse it a
         },
         news: {
             title: 'Noticias',
-            subtitle: 'Últimas noticias del Puerto Autónomo de Nouadhibou.',
+            subtitle: 'Últimas noticias del Port Autonome de Nouadhibou (PAN).',
             readMore: 'Leer más',
             viewAll: 'Todas las noticias',
         },
@@ -1719,7 +1719,7 @@ I warmly invite you, dear internet users, partners, and visitors, to browse it a
         pages: {
             port: {
                 title: 'El Puerto',
-                subtitle: 'Descubra la historia y la evolución del Puerto Autónomo de Nouadhibou, así como su impacto socioeconómico en la región.',
+                subtitle: 'Descubra la historia y la evolución del Port Autonome de Nouadhibou (PAN), así como su impacto socioeconómico en la región.',
                 dg_word: {
                     title: 'Bienvenido al Puerto Autónomo de Nuadibú',
                     name: 'Ahmed Ould Sid’Ahmed Ould DIÉ',
@@ -1742,7 +1742,7 @@ Les invito, queridos internautas, usuarios y otros visitantes, a navegarlo con l
                 },
                 role: {
                     title: 'Papel Estratégico',
-                    description: 'El Puerto Autónomo de Nouadhibou (PAN) se encuentra en una bahía protegida naturalmente. Es el eje de todas las actividades pesqueras y el motor del desarrollo de Nouadhibou.',
+                    description: 'El Port Autonome de Nouadhibou (PAN) se encuentra en una bahía protegida naturalmente. Es el eje de todas las actividades pesqueras y el motor del desarrollo de Nouadhibou.',
                     points: [
                         'Puerta de entrada y salida de la capital económica del país.',
                         'Centro de servicios para el transporte, la industria y el comercio internacional.',
@@ -1778,16 +1778,16 @@ Les invito, queridos internautas, usuarios y otros visitantes, a navegarlo con l
                 },
                 impact: {
                     title: 'Integración Socioeconómica',
-                    description: 'El Puerto Autónomo de Nouadhibou es un motor del desarrollo regional y nacional.',
+                    description: 'El Port Autonome de Nouadhibou (PAN) es un motor del desarrollo regional y nacional.',
                     items: [
-                        { title: 'Primer empleador de Nouadhibou', description: 'El Puerto Autónomo de Nouadhibou es el mayor empleador de la región, ofreciendo miles de empleos directos e indirectos.' },
+                        { title: 'Primer empleador de Nouadhibou', description: 'El Port Autonome de Nouadhibou (PAN) es el mayor empleador de la región, ofreciendo miles de empleos directos e indirectos.' },
                         { title: '80% de las exportaciones vinculadas a la pesca', description: 'El puerto desempeña un papel crucial en la economía nacional al facilitar la mayoría de las exportaciones de productos pesqueros.' },
                         { title: '+50 socios privados', description: 'Una extensa red de socios comerciales e industriales contribuye al dinamismo económico del puerto.' },
                     ],
                 },
                 governance: {
                     title: 'Gobernanza',
-                    description: 'Descubra la estructura organizativa y los órganos rectores del Puerto Autónomo de Nouadhibou.',
+                    description: 'Descubra la estructura organizativa y los órganos rectores del Port Autonome de Nouadhibou (PAN).',
                     board: {
                         title: 'Consejo de Administración',
                         headerRole: 'Papel',
@@ -1813,7 +1813,7 @@ Les invito, queridos internautas, usuarios y otros visitantes, a navegarlo con l
                 },
                 directors: {
                     title: 'Directores Generales',
-                    subtitle: 'Descubra a los líderes que han forجاد la historia y el desarrollo del Puerto Autónomo de Nouadhibou a lo largo de las décadas.',
+                    subtitle: 'Descubra a los líderes que han forجاد la historia y el desarrollo del Port Autonome de Nouadhibou (PAN) a lo largo de las décadas.',
                     deceased: 'Difunto',
                 },
             },
@@ -1970,7 +1970,7 @@ Les invito, queridos internautas, usuarios y otros visitantes, a navegarlo con l
         },
         footer: {
             description:
-                'El Puerto Autónomo de Nouadhibou es un actor principal en el desarrollo económico de Mauritania, ofreciendo servicios portuarios de clase mundial.',
+                'El Port Autonome de Nouadhibou (PAN) es un actor principal en el desarrollo económico de Mauritania, ofreciendo servicios portuarios de clase mundial.',
             quickLinks: 'Enlaces rápidos',
             services: 'Servicios',
             legal: 'Información legal',
@@ -1979,7 +1979,7 @@ Les invito, queridos internautas, usuarios y otros visitantes, a navegarlo con l
             phone: '+222 45 74 51 06',
             fax: '+222 45 74 51 07',
             email: 'contact@pan.mr',
-            rights: '© 2025 Puerto Autónomo de Nouadhibou. Todos los derechos reservados.',
+            rights: '© 2025 Port Autonome de Nouadhibou (PAN). Todos los derechos reservados.',
             legalNotice: 'Aviso legal',
             privacyPolicy: 'Política de privacidad',
             termsOfUse: 'Condiciones de uso',

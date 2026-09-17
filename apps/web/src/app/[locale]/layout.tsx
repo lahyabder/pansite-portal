@@ -34,7 +34,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     const locale = (['ar', 'en', 'es'].includes(localeParam) ? localeParam : 'fr') as Locale;
     const settings = await getSiteSettings();
 
-    const title = t(settings?.siteName, locale) || 'Port Autonome de Nouadhibou';
+    const title = t(settings?.siteName, locale) || 'Port Autonome de Nouadhibou (PAN)';
     const description = settings?.seoGlobal?.defaultDescription || t(settings?.slogan, locale);
 
     const headersList = await headers();
@@ -97,7 +97,7 @@ export default async function LocaleLayout({
     const jsonLd = {
         '@context': 'https://schema.org',
         '@type': 'Organization',
-        name: t(settings?.siteName, locale) || 'Port Autonome de Nouadhibou',
+        name: t(settings?.siteName, locale) || 'Port Autonome de Nouadhibou (PAN)',
         url: process.env.NEXT_PUBLIC_SITE_URL || 'https://www.pan.mr',
         logo: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://www.pan.mr'}/icon.png`,
         address: {

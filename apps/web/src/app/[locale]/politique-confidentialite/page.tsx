@@ -34,7 +34,7 @@ export default async function PrivacyPolicyPage({ params }: { params: Promise<{ 
         fr: (
             <>
                 <h2>1. Collecte des données</h2>
-                <p>Le Port Autonome de Nouadhibou collecte des données à caractère personnel via des formulaires de contact, des requêtes de services et l&apos;utilisation de cookies à des fins d&apos;analyse de trafic (Matomo/Google Analytics).</p>
+                <p>Le Port Autonome de Nouadhibou (PAN) collecte des données à caractère personnel via des formulaires de contact, des requêtes de services et l&apos;utilisation de cookies à des fins d&apos;analyse de trafic (Matomo/Google Analytics).</p>
 
                 <h2>2. Utilisation des données</h2>
                 <p>Les données sont utilisées exclusivement pour :</p>
@@ -80,7 +80,7 @@ export default async function PrivacyPolicyPage({ params }: { params: Promise<{ 
         en: (
             <>
                 <h2>1. Data Collection</h2>
-                <p>The Nouadhibou Autonomous Port collects personal data via contact forms, service requests, and the use of cookies for traffic analysis purposes (Matomo/Google Analytics).</p>
+                <p>The Port Autonome de Nouadhibou (PAN) collects personal data via contact forms, service requests, and the use of cookies for traffic analysis purposes (Matomo/Google Analytics).</p>
 
                 <h2>2. Use of Data</h2>
                 <p>The data is used exclusively for:</p>
@@ -103,7 +103,7 @@ export default async function PrivacyPolicyPage({ params }: { params: Promise<{ 
         es: (
             <>
                 <h2>1. Recopilación de datos</h2>
-                <p>El Puerto Autónomo de Nouadhibou recopila datos personales a través de formularios de contacto, solicitudes de servicios y el uso de cookies con fines de análisis de tráfico (Matomo/Google Analytics).</p>
+                <p>El Port Autonome de Nouadhibou (PAN) recopila datos personales a través de formularios de contacto, solicitudes de servicios y el uso de cookies con fines de análisis de tráfico (Matomo/Google Analytics).</p>
 
                 <h2>2. Uso de los datos</h2>
                 <p>Los datos se utilizan exclusivamente para:</p>

@@ -85,7 +85,7 @@ export function ContentCard({ item, locale, dict }: ContentCardProps) {
                 ) : (
                     <Image
                         src="/images/hero/hero-1.jpg"
-                        alt="Port Autonome de Nouadhibou"
+                        alt="Port Autonome de Nouadhibou (PAN)"
                         fill
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                         className="object-cover group-hover:scale-110 transition-all duration-700 opacity-80"

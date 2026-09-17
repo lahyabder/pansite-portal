@@ -45,7 +45,7 @@ export default async function MentionsLegalesPage({ params }: { params: Promise<
 
                 <h2>Propriété Intellectuelle</h2>
                 <p>
-                    Tous les éléments graphiques, textuels, logos, photos et vidéos figurant sur le site <strong>pan.mr</strong> sont la propriété exclusive du Port Autonome de Nouadhibou, à l&apos;exception des marques, logos ou contenus appartenant à d&apos;autres sociétés partenaires ou auteurs.
+                    Tous les éléments graphiques, textuels, logos, photos et vidéos figurant sur le site <strong>pan.mr</strong> sont la propriété exclusive du Port Autonome de Nouadhibou (PAN), à l&apos;exception des marques, logos ou contenus appartenant à d&apos;autres sociétés partenaires ou auteurs.
                 </p>
                 <p>
                     Toute reproduction, modification, publication, adaptation de tout ou partie des éléments du site, quel que soit le moyen ou le procédé utilisé, est interdite sans autorisation écrite préalable.
@@ -53,7 +53,7 @@ export default async function MentionsLegalesPage({ params }: { params: Promise<
 
                 <h2>Limitation de Responsabilité</h2>
                 <p>
-                    Les informations contenues sur ce site sont aussi précises que possibles et le site est périodiquement remis à jour. Toutefois, d&apos;éventuelles inexactitudes ou omissions peuvent survenir. Le Port Autonome de Nouadhibou ne pourra être tenu responsable des dommages directs et indirects causés au matériel de l&apos;utilisateur lors de l&apos;accès au site.
+                    Les informations contenues sur ce site sont aussi précises que possibles et le site est périodiquement remis à jour. Toutefois, d&apos;éventuelles inexactitudes ou omissions peuvent survenir. Le Port Autonome de Nouadhibou (PAN) ne pourra être tenu responsable des dommages directs et indirects causés au matériel de l&apos;utilisateur lors de l&apos;accès au site.
                 </p>
             </>
         ),
@@ -87,7 +87,7 @@ export default async function MentionsLegalesPage({ params }: { params: Promise<
             <>
                 <h2>Site Publisher</h2>
                 <p>
-                    <strong>Nouadhibou Autonomous Port (PAN)</strong><br />
+                    <strong>Port Autonome de Nouadhibou (PAN)</strong><br />
                     Public Industrial and Commercial Establishment (EPIC)<br />
                     BP 236, Nouadhibou, Mauritania<br />
                     Phone: +222 45 74 51 06<br />
@@ -97,7 +97,7 @@ export default async function MentionsLegalesPage({ params }: { params: Promise<
 
                 <h2>Intellectual Property</h2>
                 <p>
-                    All graphic, textual elements, logos, photos, and videos appearing on the <strong>pan.mr</strong> site are the exclusive property of the Nouadhibou Autonomous Port, except for brands, logos, or content belonging to other partner companies or authors.
+                    All graphic, textual elements, logos, photos, and videos appearing on the <strong>pan.mr</strong> site are the exclusive property of the Port Autonome de Nouadhibou (PAN), except for brands, logos, or content belonging to other partner companies or authors.
                 </p>
                 <p>
                     Any reproduction, modification, publication, adaptation of all or part of the site elements, regardless of the medium or process used, is prohibited without prior written authorization.
@@ -105,7 +105,7 @@ export default async function MentionsLegalesPage({ params }: { params: Promise<
 
                 <h2>Limitation of Liability</h2>
                 <p>
-                    The information contained on this site is as accurate as possible and the site is periodically updated. However, inaccuracies or omissions may occur. The Nouadhibou Autonomous Port cannot be held responsible for direct or indirect damage caused to the user&apos;s equipment when accessing the site.
+                    The information contained on this site is as accurate as possible and the site is periodically updated. However, inaccuracies or omissions may occur. The Port Autonome de Nouadhibou (PAN) cannot be held responsible for direct or indirect damage caused to the user&apos;s equipment when accessing the site.
                 </p>
             </>
         ),
@@ -113,7 +113,7 @@ export default async function MentionsLegalesPage({ params }: { params: Promise<
             <>
                 <h2>Editor del sitio</h2>
                 <p>
-                    <strong>Puerto Autónomo de Nouadhibou (PAN)</strong><br />
+                    <strong>Port Autonome de Nouadhibou (PAN)</strong><br />
                     Establecimiento Público de Carácter Industrial y Comercial (EPIC)<br />
                     BP 236, Nouadhibou, Mauritania<br />
                     Teléfono: +222 45 74 51 06<br />
@@ -123,7 +123,7 @@ export default async function MentionsLegalesPage({ params }: { params: Promise<
 
                 <h2>Propiedad Intelectual</h2>
                 <p>
-                    Todos los elementos gráficos, textuales, logotipos, fotos y videos que aparecen en el sitio <strong>pan.mr</strong> son propiedad exclusiva del Puerto Autónomo de Nouadhibou, a excepción de las marcas, logotipos o contenidos pertenecientes a otras empresas asociadas o autores.
+                    Todos los elementos gráficos, textuales, logotipos, fotos y videos que aparecen en el sitio <strong>pan.mr</strong> son propiedad exclusiva del Port Autonome de Nouadhibou (PAN), a excepción de las marcas, logotipos o contenidos pertenecientes a otras empresas asociadas o autores.
                 </p>
                 <p>
                     Cualquier reproducción, modificación, publicación, adaptación de todo o parte de los elementos del sitio, independientemente del medio o proceso utilizado, está prohibida sin autorización previa por escrito.
@@ -131,7 +131,7 @@ export default async function MentionsLegalesPage({ params }: { params: Promise<
 
                 <h2>Limitación de Responsabilidad</h2>
                 <p>
-                    La información contenida en este sitio es lo más precisa posible y el sitio se actualiza periódicamente. Sin embargo, pueden ocurrir inexactitudes u omisiones. El Puerto Autónomo de Nouadhibou no se hace responsable de los daños directos e indirectos causados al equipo del usuario al acceder al sitio.
+                    La información contenida en este sitio es lo más precisa posible y el sitio se actualiza periódicamente. Sin embargo, pueden ocurrir inexactitudes u omisiones. El Port Autonome de Nouadhibou (PAN) no se hace responsable de los daños directos e indirectos causados al equipo del usuario al acceder al sitio.
                 </p>
             </>
         )

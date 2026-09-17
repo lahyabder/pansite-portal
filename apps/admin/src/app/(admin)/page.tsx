@@ -25,7 +25,7 @@ export default function DashboardPage() {
       <header className="flex items-center justify-between">
         <div>
           <h1 className="font-outfit text-4xl font-black text-white">Salut, Admin 👋</h1>
-          <p className="text-slate-400 mt-2 font-medium">Bienvenue sur le centre de commande du Port Autonome de Nouadhibou.</p>
+          <p className="text-slate-400 mt-2 font-medium">Bienvenue sur le centre de commande du Port Autonome de Nouadhibou (PAN).</p>
         </div>
         <div className="flex gap-4">
           <Link 
