@@ -10,7 +10,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     const descriptions = {
         fr: "Explorez les infrastructures modernes du Port Autonome de Nouadhibou (PAN) : quais commerciaux, terminal pétrolier, et équipements de pointe pour vos navires.",
         ar: "استكشف البنية التحتية الحديثة لميناء نواذيبو المستقل: الأرصفة التجارية، المحطة البترولية، والمعدات المتطورة لضمان كفاءة وأمان عمليات سفنك.",
-        en: "Explore the modern infrastructures of the Port Autonome de Nouadhibou (PAN): commercial quays, oil terminal, and cutting-edge equipment for your vessels.",
+        en: "Explore the modern infrastructures of the Autonomous Port of Nouadhibou: commercial quays, oil terminal, and cutting-edge equipment for your vessels.",
         es: "Explore las infraestructuras modernas del Puerto Autónomo de Nuadibú: muelles comerciales, terminal petrolera y equipos de última generación."
     };
 
