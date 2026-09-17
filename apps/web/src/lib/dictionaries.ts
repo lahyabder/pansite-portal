@@ -1198,9 +1198,9 @@ Je vous prie, chers ineternautes, usagers ou autres, d’y accéder le plus fré
             searchPlaceholder: 'Search the site...',
         },
         hero: {
-            title: 'Autonomous Port of Nouadhibou',
+            title: 'Autonomous The Port of Nouadhibou',
             subtitle:
-                'The Autonomous Port of Nouadhibou is the main port infrastructure of Mauritania, offering quality maritime and logistics services to support international trade and regional economic development.',
+                'The Autonomous The Port of Nouadhibou is the main port infrastructure of Mauritania, offering quality maritime and logistics services to support international trade and regional economic development.',
             cta: 'Discover our services',
             ctaSecondary: 'Contact us',
         },

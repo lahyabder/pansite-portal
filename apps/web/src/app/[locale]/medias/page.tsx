@@ -10,7 +10,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     const descriptions = {
         fr: "Plongez dans la médiathèque du Port Autonome de Nouadhibou (PAN). Découvrez nos galeries photos et vidéos illustrant le dynamisme de nos activités portuaires.",
         ar: "تصفح المكتبة الوسائطية لميناء نواذيبو المستقل. اكتشف معارض الصور والفيديو التي تبرز حيوية ونشاط عملياتنا المينائية وتطور بنيتنا التحتية.",
-        en: "Dive into the media library of the Autonomous Port of Nouadhibou. Discover our photo and video galleries illustrating the dynamism of our port activities.",
+        en: "Dive into the media library of the Autonomous The Port of Nouadhibou. Discover our photo and video galleries illustrating the dynamism of our port activities.",
         es: "Sumérjase en la mediateca del Puerto Autónomo de Nuadibú. Descubra nuestras galerías de fotos y videos que ilustran el dinamismo de nuestras actividades."
     };
 

@@ -10,7 +10,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     const descriptions = {
         fr: "Contactez le Port Autonome de Nouadhibou (PAN) pour toute demande d'information, réclamation ou rendez-vous. Notre équipe est à votre disposition pour vous aider.",
         ar: "اتصل بميناء نواذيبو المستقل لأي طلب معلومات، شكوى أو تحديد موعد. فريقنا مستعد دائماً للرد على استفساراتكم وتقديم الدعم اللوجستي المطلوب.",
-        en: "Contact the Autonomous Port of Nouadhibou for any information request, complaint, or appointment. Our team is at your disposal to help you.",
+        en: "Contact the Autonomous The Port of Nouadhibou for any information request, complaint, or appointment. Our team is at your disposal to help you.",
         es: "Contacte al Puerto Autónomo de Nuadibú para cualquier solicitud de información, queja o cita. Nuestro equipo está a su disposición para ayudarle."
     };
 
