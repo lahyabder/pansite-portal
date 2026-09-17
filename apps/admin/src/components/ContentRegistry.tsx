@@ -73,18 +73,18 @@ export default function ContentRegistry() {
     <div className="space-y-8">
       <header className="flex items-center justify-between">
         <div>
-          <h1 className="font-outfit text-3xl font-black text-white">Registre de Contenu</h1>
-          <p className="text-slate-400 mt-2 font-medium">Gérez les textes statiques et les traductions globales du site.</p>
+          <h1 className="font-outfit text-3xl font-black text-slate-900">Registre de Contenu</h1>
+          <p className="text-slate-500 mt-2 font-medium">Gérez les textes statiques et les traductions globales du site.</p>
         </div>
         
         <div className="flex items-center gap-4">
-          <div className="flex items-center gap-1 p-1 bg-slate-900 border border-slate-800 rounded-xl">
+          <div className="flex items-center gap-1 p-1 bg-white border border-gray-200 rounded-xl">
             {LOCALES.map(loc => (
               <button
                 key={loc.id}
                 onClick={() => setActiveLang(loc.id)}
                 className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
-                  activeLang === loc.id ? 'bg-sky-500 text-white shadow-lg shadow-sky-500/20' : 'text-slate-500 hover:text-slate-300'
+                  activeLang === loc.id ? 'bg-sky-500 text-white shadow-lg shadow-sky-500/20' : 'text-slate-500 hover:text-slate-700'
                 }`}
               >
                 {loc.id.toUpperCase()}
@@ -96,7 +96,7 @@ export default function ContentRegistry() {
             onClick={handleSave}
             disabled={saving}
             className={`flex items-center gap-2 px-6 py-2.5 rounded-xl font-black text-sm transition-all shadow-xl active:scale-95 disabled:opacity-50 ${
-              saved ? 'bg-emerald-500 text-white shadow-emerald-500/20' : 'bg-white text-slate-950 shadow-white/10 hover:scale-105'
+              saved ? 'bg-emerald-500 text-slate-900 shadow-emerald-500/20' : 'bg-slate-900 text-white shadow-slate-300/50 hover:scale-105'
             }`}
           >
             {saving ? <RefreshCw className="w-4 h-4 animate-spin" /> : saved ? <Check className="w-4 h-4" /> : <Save className="w-4 h-4" />}
@@ -108,8 +108,8 @@ export default function ContentRegistry() {
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
         <aside className="space-y-6">
           <div className="glass-card p-6 rounded-3xl space-y-4">
-            <h3 className="text-xs font-black text-slate-500 uppercase tracking-widest border-b border-white/5 pb-3">Informations</h3>
-            <div className="flex gap-3 text-slate-400">
+            <h3 className="text-xs font-black text-slate-500 uppercase tracking-widest border-b border-gray-200 pb-3">Informations</h3>
+            <div className="flex gap-3 text-slate-500">
                <AlertCircle className="w-5 h-5 text-sky-500 shrink-0" />
                <p className="text-[11px] leading-relaxed">
                  Toute modification ici écrasera les textes par défaut du site pour la langue <b>{activeLang.toUpperCase()}</b>.
@@ -119,7 +119,7 @@ export default function ContentRegistry() {
           </div>
           
           <div className="glass-card p-6 rounded-3xl">
-             <h3 className="text-xs font-black text-slate-500 uppercase tracking-widest border-b border-white/5 pb-3 mb-4">Recherche</h3>
+             <h3 className="text-xs font-black text-slate-500 uppercase tracking-widest border-b border-gray-200 pb-3 mb-4">Recherche</h3>
              <div className="relative">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-600" />
                 <input 
@@ -127,7 +127,7 @@ export default function ContentRegistry() {
                   placeholder="Filtrer les clés..."
                   value={search}
                   onChange={e => setSearch(e.target.value)}
-                  className="w-full pl-9 pr-3 py-2 bg-slate-950/50 border border-slate-800 rounded-xl text-xs text-white outline-none focus:border-sky-500/50 transition-all"
+                  className="w-full pl-9 pr-3 py-2 bg-white/50 border border-gray-200 rounded-xl text-xs text-slate-900 outline-none focus:border-sky-500/50 transition-all"
                 />
              </div>
           </div>
@@ -135,12 +135,12 @@ export default function ContentRegistry() {
 
         <div className="lg:col-span-3 space-y-4">
           <div className="glass-card rounded-3xl overflow-hidden">
-             <div className="p-6 bg-white/5 font-black text-[10px] text-slate-500 uppercase tracking-widest flex justify-between">
+             <div className="p-6 bg-gray-100 font-black text-[10px] text-slate-500 uppercase tracking-widest flex justify-between">
                 <span>Clé du Dictionnaire</span>
                 <span>Texte de Remplacement</span>
              </div>
              
-             <div className="divide-y divide-white/5 max-h-[600px] overflow-y-auto">
+             <div className="divide-y divide-gray-200 max-h-[600px] overflow-y-auto">
                 {loading ? (
                    <div className="p-12 text-center text-slate-600 font-bold">Initialisation du registre...</div>
                 ) : entries.filter(e => e.key.includes(search)).length === 0 ? (
@@ -156,7 +156,7 @@ export default function ContentRegistry() {
                             next[idx].key = e.target.value;
                             setEntries(next);
                           }}
-                          className="w-full bg-slate-900/50 border border-slate-800 rounded-xl px-3 py-2 text-xs font-mono text-sky-400 outline-none focus:border-sky-500/50"
+                          className="w-full bg-white/50 border border-gray-200 rounded-xl px-3 py-2 text-xs font-mono text-sky-600 outline-none focus:border-sky-500/50"
                         />
                      </div>
                      <div className="flex-1">
@@ -167,7 +167,7 @@ export default function ContentRegistry() {
                             next[idx].value = e.target.value;
                             setEntries(next);
                           }}
-                          className="w-full bg-slate-900/50 border border-slate-800 rounded-xl px-3 py-2 text-sm text-slate-300 outline-none focus:border-sky-500/50 min-h-[40px] max-h-[200px]"
+                          className="w-full bg-white/50 border border-gray-200 rounded-xl px-3 py-2 text-sm text-slate-700 outline-none focus:border-sky-500/50 min-h-[40px] max-h-[200px]"
                           dir={activeLang === 'ar' ? 'rtl' : 'ltr'}
                         />
                      </div>
@@ -181,10 +181,10 @@ export default function ContentRegistry() {
                 ))}
              </div>
 
-             <div className="p-4 bg-white/[0.02] border-t border-white/5">
+             <div className="p-4 bg-white/[0.02] border-t border-gray-200">
                 <button 
                   onClick={() => setEntries([...entries, {key: '', value: ''}])}
-                  className="flex items-center gap-2 px-4 py-2 bg-slate-900 text-slate-400 rounded-xl font-bold text-xs hover:text-white transition-colors"
+                  className="flex items-center gap-2 px-4 py-2 bg-white text-slate-500 rounded-xl font-bold text-xs hover:text-slate-900 transition-colors"
                 >
                   <Plus className="w-4 h-4" />
                   Ajouter une Surcharge

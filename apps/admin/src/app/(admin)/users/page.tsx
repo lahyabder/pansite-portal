@@ -95,8 +95,8 @@ export default function UsersPage() {
             {toast && (
                 <div className={`fixed top-6 right-6 z-50 flex items-center gap-3 px-5 py-4 rounded-2xl shadow-2xl border text-sm font-bold animate-fade-in ${
                     toast.type === 'success'
-                        ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400'
-                        : 'bg-red-500/10 border-red-500/20 text-red-400'
+                        ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-600'
+                        : 'bg-red-500/10 border-red-500/20 text-red-600'
                 }`}>
                     {toast.type === 'success' ? <CheckCircle className="w-4 h-4" /> : <AlertCircle className="w-4 h-4" />}
                     {toast.msg}
@@ -106,11 +106,11 @@ export default function UsersPage() {
             {/* Header */}
             <div className="flex items-center justify-between">
                 <div>
-                    <h1 className="font-outfit text-4xl font-black text-white flex items-center gap-3">
-                        <Users className="w-9 h-9 text-sky-400" />
+                    <h1 className="font-outfit text-4xl font-black text-slate-900 flex items-center gap-3">
+                        <Users className="w-9 h-9 text-sky-600" />
                         Gestion des Utilisateurs
                     </h1>
-                    <p className="text-slate-400 mt-2 font-medium">Créez et gérez les comptes éditeurs spécialisés en actualités</p>
+                    <p className="text-slate-500 mt-2 font-medium">Créez et gérez les comptes éditeurs spécialisés en actualités</p>
                 </div>
                 <button
                     onClick={() => setShowForm(true)}
@@ -125,20 +125,20 @@ export default function UsersPage() {
             <div className="grid grid-cols-2 gap-4">
                 <div className="glass-card p-5 rounded-2xl flex items-center gap-4">
                     <div className="w-12 h-12 bg-amber-500/10 rounded-xl flex items-center justify-center">
-                        <Shield className="w-6 h-6 text-amber-400" />
+                        <Shield className="w-6 h-6 text-amber-600" />
                     </div>
                     <div>
-                        <div className="font-bold text-white text-sm">Super Admin</div>
-                        <div className="text-slate-400 text-xs mt-0.5">Accès complet à toute la plateforme</div>
+                        <div className="font-bold text-slate-900 text-sm">Super Admin</div>
+                        <div className="text-slate-500 text-xs mt-0.5">Accès complet à toute la plateforme</div>
                     </div>
                 </div>
                 <div className="glass-card p-5 rounded-2xl flex items-center gap-4">
                     <div className="w-12 h-12 bg-sky-500/10 rounded-xl flex items-center justify-center">
-                        <Newspaper className="w-6 h-6 text-sky-400" />
+                        <Newspaper className="w-6 h-6 text-sky-600" />
                     </div>
                     <div>
-                        <div className="font-bold text-white text-sm">Éditeur Actualités</div>
-                        <div className="text-slate-400 text-xs mt-0.5">Accès limité: Actualités & Contenus uniquement</div>
+                        <div className="font-bold text-slate-900 text-sm">Éditeur Actualités</div>
+                        <div className="text-slate-500 text-xs mt-0.5">Accès limité: Actualités & Contenus uniquement</div>
                     </div>
                 </div>
             </div>
@@ -148,13 +148,13 @@ export default function UsersPage() {
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
                     <div className="glass-card rounded-3xl p-8 w-full max-w-md space-y-6 animate-fade-in">
                         <div className="flex items-center justify-between">
-                            <h2 className="text-xl font-black text-white">Créer un Éditeur Actualités</h2>
-                            <button onClick={() => setShowForm(false)} className="p-2 hover:bg-white/5 rounded-xl text-slate-400 hover:text-white transition-colors">
+                            <h2 className="text-xl font-black text-slate-900">Créer un Éditeur Actualités</h2>
+                            <button onClick={() => setShowForm(false)} className="p-2 hover:bg-gray-100 rounded-xl text-slate-500 hover:text-slate-900 transition-colors">
                                 <X className="w-5 h-5" />
                             </button>
                         </div>
 
-                        <div className="p-3 bg-sky-500/10 border border-sky-500/20 rounded-xl text-sky-400 text-xs font-bold flex items-center gap-2">
+                        <div className="p-3 bg-sky-500/10 border border-sky-500/20 rounded-xl text-sky-600 text-xs font-bold flex items-center gap-2">
                             <Newspaper className="w-4 h-4 shrink-0" />
                             Cet utilisateur aura accès uniquement à la section "Actualités & Contenus"
                         </div>
@@ -167,7 +167,7 @@ export default function UsersPage() {
                                     value={form.name}
                                     onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
                                     placeholder="Mohamed Ould Ahmed"
-                                    className="w-full px-4 py-3 bg-slate-950/50 border border-slate-800 rounded-xl text-sm text-white outline-none focus:border-sky-500/50 transition-all"
+                                    className="w-full px-4 py-3 bg-white/50 border border-gray-200 rounded-xl text-sm text-slate-900 outline-none focus:border-sky-500/50 transition-all"
                                 />
                             </div>
                             <div>
@@ -177,7 +177,7 @@ export default function UsersPage() {
                                     value={form.email}
                                     onChange={e => setForm(f => ({ ...f, email: e.target.value }))}
                                     placeholder="editeur@pan.mr"
-                                    className="w-full px-4 py-3 bg-slate-950/50 border border-slate-800 rounded-xl text-sm text-white outline-none focus:border-sky-500/50 transition-all"
+                                    className="w-full px-4 py-3 bg-white/50 border border-gray-200 rounded-xl text-sm text-slate-900 outline-none focus:border-sky-500/50 transition-all"
                                 />
                             </div>
                             <div>
@@ -188,9 +188,9 @@ export default function UsersPage() {
                                         value={form.password}
                                         onChange={e => setForm(f => ({ ...f, password: e.target.value }))}
                                         placeholder="Min. 8 caractères"
-                                        className="w-full px-4 py-3 pr-12 bg-slate-950/50 border border-slate-800 rounded-xl text-sm text-white outline-none focus:border-sky-500/50 transition-all"
+                                        className="w-full px-4 py-3 pr-12 bg-white/50 border border-gray-200 rounded-xl text-sm text-slate-900 outline-none focus:border-sky-500/50 transition-all"
                                     />
-                                    <button type="button" onClick={() => setShowPass(v => !v)} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-white transition-colors">
+                                    <button type="button" onClick={() => setShowPass(v => !v)} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-900 transition-colors">
                                         {showPass ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                                     </button>
                                 </div>
@@ -198,7 +198,7 @@ export default function UsersPage() {
                         </div>
 
                         <div className="flex gap-3">
-                            <button onClick={() => setShowForm(false)} className="flex-1 py-3 bg-slate-800 text-slate-300 rounded-xl font-bold text-sm hover:bg-slate-700 transition-colors">
+                            <button onClick={() => setShowForm(false)} className="flex-1 py-3 bg-gray-50 text-slate-700 rounded-xl font-bold text-sm hover:bg-gray-100 transition-colors">
                                 Annuler
                             </button>
                             <button
@@ -216,12 +216,12 @@ export default function UsersPage() {
 
             {/* Users Table */}
             <div className="glass-card rounded-3xl overflow-hidden">
-                <div className="px-8 py-5 border-b border-white/5 flex items-center justify-between">
-                    <h2 className="font-bold text-white flex items-center gap-2">
+                <div className="px-8 py-5 border-b border-gray-200 flex items-center justify-between">
+                    <h2 className="font-bold text-slate-900 flex items-center gap-2">
                         <div className="w-2 h-2 rounded-full bg-sky-500 animate-pulse" />
                         {users.length} utilisateur{users.length > 1 ? 's' : ''}
                     </h2>
-                    <button onClick={load} disabled={loading} className="p-2 hover:bg-white/5 rounded-xl text-slate-400 hover:text-white transition-colors">
+                    <button onClick={load} disabled={loading} className="p-2 hover:bg-gray-100 rounded-xl text-slate-500 hover:text-slate-900 transition-colors">
                         <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
                     </button>
                 </div>
@@ -233,37 +233,37 @@ export default function UsersPage() {
                 ) : users.length === 0 ? (
                     <div className="p-16 text-center text-slate-500 font-medium">Aucun utilisateur trouvé</div>
                 ) : (
-                    <div className="divide-y divide-white/5">
+                    <div className="divide-y divide-gray-200">
                         {users.map(user => (
                             <div key={user.id} className="px-8 py-5 flex items-center justify-between hover:bg-white/2 transition-colors group">
                                 <div className="flex items-center gap-4">
                                     <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${
                                         user.role === 'admin'
-                                            ? 'bg-amber-500/10 text-amber-400'
-                                            : 'bg-sky-500/10 text-sky-400'
+                                            ? 'bg-amber-500/10 text-amber-600'
+                                            : 'bg-sky-500/10 text-sky-600'
                                     }`}>
                                         {user.role === 'admin' ? <Shield className="w-5 h-5" /> : <Newspaper className="w-5 h-5" />}
                                     </div>
                                     <div>
-                                        <div className="font-bold text-white text-sm">{user.name || '—'}</div>
-                                        <div className="text-slate-400 text-xs mt-0.5">{user.email}</div>
+                                        <div className="font-bold text-slate-900 text-sm">{user.name || '—'}</div>
+                                        <div className="text-slate-500 text-xs mt-0.5">{user.email}</div>
                                     </div>
                                 </div>
 
                                 <div className="flex items-center gap-6 text-xs text-slate-500">
                                     <div className="hidden md:block">
                                         <div>Créé le</div>
-                                        <div className="text-slate-400 font-medium">{formatDate(user.createdAt)}</div>
+                                        <div className="text-slate-500 font-medium">{formatDate(user.createdAt)}</div>
                                     </div>
                                     <div className="hidden md:block">
                                         <div>Dernière connexion</div>
-                                        <div className="text-slate-400 font-medium">{formatDate(user.lastSignIn)}</div>
+                                        <div className="text-slate-500 font-medium">{formatDate(user.lastSignIn)}</div>
                                     </div>
 
                                     <span className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border ${
                                         user.role === 'admin'
-                                            ? 'bg-amber-500/10 text-amber-400 border-amber-500/20'
-                                            : 'bg-sky-500/10 text-sky-400 border-sky-500/20'
+                                            ? 'bg-amber-500/10 text-amber-600 border-amber-500/20'
+                                            : 'bg-sky-500/10 text-sky-600 border-sky-500/20'
                                     }`}>
                                         {user.role === 'admin' ? 'Super Admin' : 'Éditeur'}
                                     </span>
@@ -272,7 +272,7 @@ export default function UsersPage() {
                                         <button
                                             onClick={() => handleToggleRole(user.id, user.role)}
                                             disabled={isPending}
-                                            className="px-3 py-1.5 bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white rounded-lg text-xs font-bold transition-all"
+                                            className="px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-slate-500 hover:text-slate-900 rounded-lg text-xs font-bold transition-all"
                                             title="Changer le rôle"
                                         >
                                             Changer rôle
@@ -280,7 +280,7 @@ export default function UsersPage() {
                                         <button
                                             onClick={() => handleDelete(user.id, user.email)}
                                             disabled={isPending}
-                                            className="p-2 hover:bg-red-500/10 text-slate-500 hover:text-red-400 rounded-lg transition-colors"
+                                            className="p-2 hover:bg-red-500/10 text-slate-500 hover:text-red-600 rounded-lg transition-colors"
                                             title="Supprimer"
                                         >
                                             <Trash2 className="w-4 h-4" />

@@ -37,9 +37,9 @@ export function AutoJsonEditor({ label, value, onChange, activeLang, depth = 0 }
               type="text"
               value={value[activeLang] || ''}
               onChange={(e) => onChange({ ...value, [activeLang]: e.target.value })}
-              className="flex-1 bg-slate-900 border border-white/10 rounded-xl px-4 py-2 text-sm text-sky-400 outline-none"
+              className="flex-1 bg-white border border-gray-300 rounded-xl px-4 py-2 text-sm text-sky-600 outline-none"
             />
-            <div className="w-10 h-10 bg-slate-800 rounded-xl flex items-center justify-center shrink-0 border border-white/5">
+            <div className="w-10 h-10 bg-gray-50 rounded-xl flex items-center justify-center shrink-0 border border-gray-200">
                 <ImageIcon className="w-4 h-4 text-sky-500" />
             </div>
           </div>
@@ -47,14 +47,14 @@ export function AutoJsonEditor({ label, value, onChange, activeLang, depth = 0 }
           <textarea
             value={value[activeLang] || ''}
             onChange={(e) => onChange({ ...value, [activeLang]: e.target.value })}
-            className="w-full min-h-[100px] bg-slate-900 border border-white/10 rounded-xl px-4 py-3 text-sm text-white outline-none focus:border-sky-500/50 transition-colors"
+            className="w-full min-h-[100px] bg-white border border-gray-300 rounded-xl px-4 py-3 text-sm text-slate-900 outline-none focus:border-sky-500/50 transition-colors"
           />
         ) : (
           <input
             type="text"
             value={value[activeLang] || ''}
             onChange={(e) => onChange({ ...value, [activeLang]: e.target.value })}
-            className="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white outline-none focus:border-sky-500/50 transition-colors"
+            className="w-full bg-white border border-gray-300 rounded-xl px-4 py-2.5 text-sm text-slate-900 outline-none focus:border-sky-500/50 transition-colors"
           />
         )}
       </div>
@@ -72,7 +72,7 @@ export function AutoJsonEditor({ label, value, onChange, activeLang, depth = 0 }
           type="text"
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          className="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-slate-300 outline-none"
+          className="w-full bg-white border border-gray-300 rounded-xl px-4 py-2.5 text-sm text-slate-700 outline-none"
         />
       </div>
     );
@@ -81,12 +81,12 @@ export function AutoJsonEditor({ label, value, onChange, activeLang, depth = 0 }
   // Handle Array
   if (Array.isArray(value)) {
     return (
-      <div className={`mb-6 p-4 rounded-2xl border ${depth === 0 ? 'border-sky-500/20 bg-sky-500/[0.02]' : 'border-white/5 bg-black/20'}`}>
+      <div className={`mb-6 p-4 rounded-2xl border ${depth === 0 ? 'border-sky-500/20 bg-sky-500/[0.02]' : 'border-gray-200 bg-black/20'}`}>
         <div 
           className="flex items-center justify-between cursor-pointer select-none mb-4"
           onClick={() => setIsExpanded(!isExpanded)}
         >
-          <h4 className="text-xs font-bold text-sky-400 flex items-center gap-2 uppercase tracking-widest">
+          <h4 className="text-xs font-bold text-sky-600 flex items-center gap-2 uppercase tracking-widest">
             {isExpanded ? <ChevronDown className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
             Liste: {label.replace(/_/g, ' ')} ({value.length})
           </h4>
@@ -109,7 +109,7 @@ export function AutoJsonEditor({ label, value, onChange, activeLang, depth = 0 }
               onChange([...value, clearObj(proto)]);
               setIsExpanded(true);
             }}
-            className="p-1 px-3 bg-sky-500/10 text-sky-500 hover:bg-sky-500 hover:text-white rounded-lg transition-colors flex items-center gap-1 text-[10px] font-bold"
+            className="p-1 px-3 bg-sky-500/10 text-sky-500 hover:bg-sky-500 hover:text-slate-900 rounded-lg transition-colors flex items-center gap-1 text-[10px] font-bold"
           >
             <Plus className="w-3 h-3" /> Ajouter
           </button>
@@ -118,14 +118,14 @@ export function AutoJsonEditor({ label, value, onChange, activeLang, depth = 0 }
         {isExpanded && (
           <div className="space-y-4">
             {value.map((item, idx) => (
-              <div key={idx} className="relative p-4 border border-white/5 bg-slate-950/50 rounded-xl group/item">
+              <div key={idx} className="relative p-4 border border-gray-200 bg-white/50 rounded-xl group/item">
                 <button 
                   onClick={() => {
                     const next = [...value];
                     next.splice(idx, 1);
                     onChange(next);
                   }}
-                  className="absolute top-2 right-2 p-1.5 bg-red-500/10 text-red-500 opacity-0 group-hover/item:opacity-100 hover:bg-red-500 hover:text-white rounded-lg transition-all"
+                  className="absolute top-2 right-2 p-1.5 bg-red-500/10 text-red-500 opacity-0 group-hover/item:opacity-100 hover:bg-red-500 hover:text-slate-900 rounded-lg transition-all"
                 >
                   <Trash2 className="w-3.5 h-3.5" />
                 </button>
@@ -145,7 +145,7 @@ export function AutoJsonEditor({ label, value, onChange, activeLang, depth = 0 }
               </div>
             ))}
             {value.length === 0 && (
-              <div className="text-center p-4 border border-dashed border-white/10 rounded-xl text-slate-500 text-xs">
+              <div className="text-center p-4 border border-dashed border-gray-300 rounded-xl text-slate-500 text-xs">
                 La liste est vide.
               </div>
             )}
@@ -160,19 +160,19 @@ export function AutoJsonEditor({ label, value, onChange, activeLang, depth = 0 }
     const keys = Object.keys(value);
     // If it's a structural wrapper without actual data just skip wrapper visually? No, render it as section.
     return (
-      <div className={`mb-6 p-4 rounded-2xl border ${depth === 0 ? 'border-pan-gold/20 bg-pan-gold/[0.02]' : 'border-white/5 bg-black/20'}`}>
+      <div className={`mb-6 p-4 rounded-2xl border ${depth === 0 ? 'border-pan-gold/20 bg-pan-gold/[0.02]' : 'border-gray-200 bg-black/20'}`}>
          <div 
           className="flex items-center gap-2 cursor-pointer select-none mb-4"
           onClick={() => setIsExpanded(!isExpanded)}
         >
-          {isExpanded ? <ChevronDown className="w-4 h-4 text-slate-400" /> : <ChevronRight className="w-4 h-4 text-slate-400" />}
-          <h4 className={`text-xs font-bold uppercase tracking-widest ${depth === 0 ? 'text-pan-gold' : 'text-slate-300'}`}>
+          {isExpanded ? <ChevronDown className="w-4 h-4 text-slate-500" /> : <ChevronRight className="w-4 h-4 text-slate-500" />}
+          <h4 className={`text-xs font-bold uppercase tracking-widest ${depth === 0 ? 'text-pan-gold' : 'text-slate-700'}`}>
             Section: {label.replace(/_/g, ' ')}
           </h4>
         </div>
         
         {isExpanded && (
-          <div className="pl-4 border-l-2 border-white/5 ml-2 space-y-4">
+          <div className="pl-4 border-l-2 border-gray-200 ml-2 space-y-4">
             {keys.map((k) => (
               <AutoJsonEditor 
                 key={k} 

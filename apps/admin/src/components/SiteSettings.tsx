@@ -63,15 +63,15 @@ export default function SiteSettings() {
     <div className="space-y-10 pb-20">
       <header className="flex items-center justify-between">
         <div>
-          <h1 className="font-outfit text-3xl font-black text-white">Paramètres Globaux</h1>
-          <p className="text-slate-400 mt-2 font-medium">Configurez l'identité visuelle et les métadonnées de votre écosystème.</p>
+          <h1 className="font-outfit text-3xl font-black text-slate-900">Paramètres Globaux</h1>
+          <p className="text-slate-500 mt-2 font-medium">Configurez l'identité visuelle et les métadonnées de votre écosystème.</p>
         </div>
         
         <button 
           onClick={handleSave}
           disabled={saving}
           className={`flex items-center gap-2 px-8 py-3 rounded-2xl font-black text-sm transition-all shadow-xl active:scale-95 disabled:opacity-50 ${
-            saved ? 'bg-emerald-500 text-white shadow-emerald-500/20' : 'bg-white text-slate-950 shadow-white/10 hover:scale-105'
+            saved ? 'bg-emerald-500 text-slate-900 shadow-emerald-500/20' : 'bg-slate-900 text-white shadow-slate-300/50 hover:scale-105'
           }`}
         >
           {saving ? <RefreshCw className="w-4 h-4 animate-spin" /> : saved ? <Check className="w-4 h-4" /> : <Save className="w-4 h-4" />}
@@ -83,9 +83,9 @@ export default function SiteSettings() {
         <div className="lg:col-span-2 space-y-8">
            {/* Section 1: Branding */}
            <section className="glass-card rounded-[2.5rem] p-10 space-y-8">
-              <div className="flex items-center gap-4 text-sky-400">
+              <div className="flex items-center gap-4 text-sky-600">
                  <Layout className="w-6 h-6" />
-                 <h2 className="text-xl font-bold text-white">Identité & Branding</h2>
+                 <h2 className="text-xl font-bold text-slate-900">Identité & Branding</h2>
               </div>
               
               <div className="grid md:grid-cols-2 gap-8">
@@ -95,7 +95,7 @@ export default function SiteSettings() {
                       type="text" 
                       value={settings.siteName?.fr || ''}
                       onChange={e => setSettings({...settings, siteName: {...settings.siteName, fr: e.target.value}})}
-                      className="w-full bg-slate-950/50 border border-slate-800 rounded-2xl px-4 py-3 text-sm text-white outline-none focus:border-sky-500/50 transition-all font-medium"
+                      className="w-full bg-white/50 border border-gray-200 rounded-2xl px-4 py-3 text-sm text-slate-900 outline-none focus:border-sky-500/50 transition-all font-medium"
                     />
                  </div>
                  <div className="space-y-4">
@@ -104,37 +104,37 @@ export default function SiteSettings() {
                       type="text" 
                       value={settings.slogan?.fr || ''}
                       onChange={e => setSettings({...settings, slogan: {...settings.slogan, fr: e.target.value}})}
-                      className="w-full bg-slate-950/50 border border-slate-800 rounded-2xl px-4 py-3 text-sm text-white outline-none focus:border-sky-500/50 transition-all font-medium"
+                      className="w-full bg-white/50 border border-gray-200 rounded-2xl px-4 py-3 text-sm text-slate-900 outline-none focus:border-sky-500/50 transition-all font-medium"
                     />
                  </div>
               </div>
 
-              <div className="pt-6 border-t border-white/5 grid md:grid-cols-2 gap-10">
+              <div className="pt-6 border-t border-gray-200 grid md:grid-cols-2 gap-10">
                  <div className="space-y-4">
                     <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Logo Principal (URL)</label>
                     <div className="flex items-center gap-4">
-                       <div className="w-16 h-16 bg-slate-950 rounded-2xl border border-white/5 flex items-center justify-center p-2 shrink-0 overflow-hidden">
+                       <div className="w-16 h-16 bg-white rounded-2xl border border-gray-200 flex items-center justify-center p-2 shrink-0 overflow-hidden">
                           {settings.logo ? <img src={settings.logo} className="w-full h-full object-contain" /> : <Camera className="w-6 h-6 text-slate-800" />}
                        </div>
                        <input 
                          type="text" 
                          value={settings.logo || ''}
                          onChange={e => setSettings({...settings, logo: e.target.value})}
-                         className="flex-1 bg-slate-950/50 border border-slate-800 rounded-xl px-4 py-2 text-[10px] font-mono text-sky-400 outline-none"
+                         className="flex-1 bg-white/50 border border-gray-200 rounded-xl px-4 py-2 text-[10px] font-mono text-sky-600 outline-none"
                        />
                     </div>
                  </div>
                  <div className="space-y-4">
                     <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Favicon (URL)</label>
                     <div className="flex items-center gap-4">
-                       <div className="w-16 h-16 bg-slate-950 rounded-2xl border border-white/5 flex items-center justify-center p-2 shrink-0">
+                       <div className="w-16 h-16 bg-white rounded-2xl border border-gray-200 flex items-center justify-center p-2 shrink-0">
                           {settings.favicon ? <img src={settings.favicon} className="w-8 h-8 object-contain" /> : <Globe className="w-6 h-6 text-slate-800" />}
                        </div>
                        <input 
                          type="text" 
                          value={settings.favicon || ''}
                          onChange={e => setSettings({...settings, favicon: e.target.value})}
-                         className="flex-1 bg-slate-950/50 border border-slate-800 rounded-xl px-4 py-2 text-[10px] font-mono text-sky-400 outline-none"
+                         className="flex-1 bg-white/50 border border-gray-200 rounded-xl px-4 py-2 text-[10px] font-mono text-sky-600 outline-none"
                        />
                     </div>
                  </div>
@@ -143,9 +143,9 @@ export default function SiteSettings() {
 
            {/* Section 2: Contact */}
            <section className="glass-card rounded-[2.5rem] p-10 space-y-8">
-              <div className="flex items-center gap-4 text-emerald-400">
+              <div className="flex items-center gap-4 text-emerald-600">
                  <Mail className="w-6 h-6" />
-                 <h2 className="text-xl font-bold text-white">Coordonnées & Contact</h2>
+                 <h2 className="text-xl font-bold text-slate-900">Coordonnées & Contact</h2>
               </div>
 
               <div className="grid md:grid-cols-2 gap-8">
@@ -162,12 +162,12 @@ export default function SiteSettings() {
                                  next[i] = e.target.value;
                                  setSettings({...settings, contactPhones: next});
                               }}
-                              className="flex-1 bg-slate-950/50 border border-slate-800 rounded-xl px-4 py-2 text-sm text-white outline-none"
+                              className="flex-1 bg-white/50 border border-gray-200 rounded-xl px-4 py-2 text-sm text-slate-900 outline-none"
                             />
                             <button onClick={() => setSettings({...settings, contactPhones: settings.contactPhones.filter((_:any,idx:any)=>idx!==i)})} className="p-2 text-slate-700 hover:text-red-500 transition-colors"><Trash2 className="w-4 h-4" /></button>
                          </div>
                        ))}
-                       <button onClick={() => setSettings({...settings, contactPhones: [...(settings.contactPhones || []), '']})} className="text-[10px] font-bold text-sky-500 hover:text-sky-400 flex items-center gap-1"><Plus className="w-3 h-3" /> Ajouter</button>
+                       <button onClick={() => setSettings({...settings, contactPhones: [...(settings.contactPhones || []), '']})} className="text-[10px] font-bold text-sky-500 hover:text-sky-600 flex items-center gap-1"><Plus className="w-3 h-3" /> Ajouter</button>
                     </div>
                  </div>
                  <div className="space-y-4">
@@ -183,22 +183,22 @@ export default function SiteSettings() {
                                  next[i] = e.target.value;
                                  setSettings({...settings, contactEmails: next});
                               }}
-                              className="flex-1 bg-slate-950/50 border border-slate-800 rounded-xl px-4 py-2 text-sm text-white outline-none"
+                              className="flex-1 bg-white/50 border border-gray-200 rounded-xl px-4 py-2 text-sm text-slate-900 outline-none"
                             />
                             <button onClick={() => setSettings({...settings, contactEmails: settings.contactEmails.filter((_:any,idx:any)=>idx!==i)})} className="p-2 text-slate-700 hover:text-red-500 transition-colors"><Trash2 className="w-4 h-4" /></button>
                          </div>
                        ))}
-                       <button onClick={() => setSettings({...settings, contactEmails: [...(settings.contactEmails || []), '']})} className="text-[10px] font-bold text-sky-500 hover:text-sky-400 flex items-center gap-1"><Plus className="w-3 h-3" /> Ajouter</button>
+                       <button onClick={() => setSettings({...settings, contactEmails: [...(settings.contactEmails || []), '']})} className="text-[10px] font-bold text-sky-500 hover:text-sky-600 flex items-center gap-1"><Plus className="w-3 h-3" /> Ajouter</button>
                     </div>
                  </div>
               </div>
 
-              <div className="pt-6 border-t border-white/5 space-y-4">
+              <div className="pt-6 border-t border-gray-200 space-y-4">
                  <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest flex items-center gap-2"><MapPin className="w-3 h-3" /> Adresse Physique (FR)</label>
                  <textarea 
                     value={settings.address?.fr || ''}
                     onChange={e => setSettings({...settings, address: {...settings.address, fr: e.target.value}})}
-                    className="w-full bg-slate-950/50 border border-slate-800 rounded-2xl px-4 py-3 text-sm text-white outline-none focus:border-sky-500/50 transition-all font-medium min-h-[100px]"
+                    className="w-full bg-white/50 border border-gray-200 rounded-2xl px-4 py-3 text-sm text-slate-900 outline-none focus:border-sky-500/50 transition-all font-medium min-h-[100px]"
                  />
               </div>
            </section>
@@ -208,7 +208,7 @@ export default function SiteSettings() {
            <section className="glass-card rounded-[2.5rem] p-10 space-y-8">
               <div className="flex items-center gap-4 text-amber-500">
                  <Share2 className="w-6 h-6" />
-                 <h2 className="text-xl font-bold text-white">Réseaux Sociaux</h2>
+                 <h2 className="text-xl font-bold text-slate-900">Réseaux Sociaux</h2>
               </div>
               <div className="space-y-6">
                 {['facebook', 'twitter', 'linkedin', 'instagram', 'youtube'].map(network => (
@@ -219,7 +219,7 @@ export default function SiteSettings() {
                        value={settings.socialLinks?.[network] || ''}
                        onChange={e => setSettings({...settings, socialLinks: {...settings.socialLinks, [network]: e.target.value}})}
                        placeholder={`URL ${network}...`}
-                       className="w-full bg-slate-950/50 border border-slate-800 rounded-xl px-4 py-2 text-[10px] font-mono text-slate-400 outline-none focus:border-sky-500/50"
+                       className="w-full bg-white/50 border border-gray-200 rounded-xl px-4 py-2 text-[10px] font-mono text-slate-500 outline-none focus:border-sky-500/50"
                      />
                   </div>
                 ))}
@@ -229,7 +229,7 @@ export default function SiteSettings() {
            <section className="glass-card rounded-[2.5rem] p-10 space-y-8">
               <div className="flex items-center gap-4 text-pink-500">
                  <Layout className="w-6 h-6" />
-                 <h2 className="text-xl font-bold text-white">Textes du Pied de Page</h2>
+                 <h2 className="text-xl font-bold text-slate-900">Textes du Pied de Page</h2>
               </div>
               <div className="space-y-6">
                  <div className="space-y-2">
@@ -237,7 +237,7 @@ export default function SiteSettings() {
                     <textarea 
                       value={settings.slogan?.fr || ''}
                       onChange={e => setSettings({...settings, slogan: {...settings.slogan, fr: e.target.value}})}
-                      className="w-full bg-slate-950/50 border border-slate-800 rounded-xl px-4 py-2 text-[12px] text-slate-400 outline-none focus:border-sky-500/50 h-24"
+                      className="w-full bg-white/50 border border-gray-200 rounded-xl px-4 py-2 text-[12px] text-slate-500 outline-none focus:border-sky-500/50 h-24"
                     />
                  </div>
                  <div className="space-y-2">
@@ -247,7 +247,7 @@ export default function SiteSettings() {
                       value={settings.copyright?.fr || ''}
                       onChange={e => setSettings({...settings, copyright: {...settings.copyright, fr: e.target.value}})}
                       placeholder="ex: Tous droits réservés"
-                      className="w-full bg-slate-950/50 border border-slate-800 rounded-xl px-4 py-2 text-[12px] text-slate-400 outline-none focus:border-sky-500/50"
+                      className="w-full bg-white/50 border border-gray-200 rounded-xl px-4 py-2 text-[12px] text-slate-500 outline-none focus:border-sky-500/50"
                     />
                  </div>
               </div>

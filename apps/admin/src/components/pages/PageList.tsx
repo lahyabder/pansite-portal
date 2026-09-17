@@ -54,11 +54,11 @@ export default function PageList() {
             placeholder="Rechercher des pages..." 
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-12 pr-4 py-3 bg-slate-900 border border-slate-800 rounded-2xl text-sm focus:border-sky-500/50 transition-all outline-none"
+            className="w-full pl-12 pr-4 py-3 bg-white border border-gray-200 rounded-2xl text-sm focus:border-sky-500/50 transition-all outline-none"
           />
         </div>
         <div className="flex gap-3">
-          <button onClick={load} className="p-3 bg-slate-900 border border-slate-800 rounded-2xl text-slate-400 hover:text-white transition-colors">
+          <button onClick={load} className="p-3 bg-white border border-gray-200 rounded-2xl text-slate-500 hover:text-slate-900 transition-colors">
             <RefreshCw className={`w-5 h-5 ${loading ? 'animate-spin' : ''}`} />
           </button>
           <Link 
@@ -74,14 +74,14 @@ export default function PageList() {
       <div className="glass-card rounded-3xl overflow-hidden">
         <table className="w-full text-left">
           <thead>
-            <tr className="border-b border-white/5 bg-white/5">
+            <tr className="border-b border-gray-200 bg-gray-100">
               <th className="px-6 py-4 text-[10px] font-black text-slate-500 uppercase tracking-widest">Titre & Slug</th>
               <th className="px-6 py-4 text-[10px] font-black text-slate-500 uppercase tracking-widest">Statut</th>
               <th className="px-6 py-4 text-[10px] font-black text-slate-500 uppercase tracking-widest">Dernière Modif</th>
               <th className="px-6 py-4 text-right text-[10px] font-black text-slate-500 uppercase tracking-widest">Actions</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-white/5">
+          <tbody className="divide-y divide-gray-200">
             {loading && pages.length === 0 ? (
               <tr>
                 <td colSpan={4} className="px-6 py-12 text-center text-slate-500 font-medium">Chargement du hub des pages...</td>
@@ -94,11 +94,11 @@ export default function PageList() {
               <tr key={page.id} className="hover:bg-white/[0.02] transition-colors group">
                 <td className="px-6 py-5">
                   <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 bg-slate-800 rounded-xl flex items-center justify-center">
+                    <div className="w-10 h-10 bg-gray-50 rounded-xl flex items-center justify-center">
                       <FileText className="w-5 h-5 text-sky-500" />
                     </div>
                     <div>
-                      <p className="font-bold text-white text-sm">{page.title?.fr || page.slug}</p>
+                      <p className="font-bold text-slate-900 text-sm">{page.title?.fr || page.slug}</p>
                       <p className="text-xs text-slate-500 mt-0.5 font-mono">/{page.slug}</p>
                     </div>
                   </div>
@@ -113,21 +113,21 @@ export default function PageList() {
                   </span>
                 </td>
                 <td className="px-6 py-5">
-                  <p className="text-sm text-slate-400 font-medium">{formatDate(page.updated_at, 'fr')}</p>
+                  <p className="text-sm text-slate-500 font-medium">{formatDate(page.updated_at, 'fr')}</p>
                 </td>
                 <td className="px-6 py-5 text-right">
                   <div className="flex items-center justify-end gap-2">
                     <a 
                       href={`https://pan.afrikyia.com/fr/${page.slug === 'home' ? '' : page.slug}`} 
                       target="_blank"
-                      className="p-2 hover:bg-white/5 rounded-lg text-slate-500 hover:text-sky-400 transition-colors"
+                      className="p-2 hover:bg-gray-100 rounded-lg text-slate-500 hover:text-sky-600 transition-colors"
                       title="Aperçu"
                     >
                       <ExternalLink className="w-4 h-4" />
                     </a>
                     <Link 
                       href={`/pages/${page.id}/edit`}
-                      className="p-2 hover:bg-white/5 rounded-lg text-slate-500 hover:text-white transition-colors"
+                      className="p-2 hover:bg-gray-100 rounded-lg text-slate-500 hover:text-slate-900 transition-colors"
                       title="Éditer"
                     >
                       <Pencil className="w-4 h-4" />

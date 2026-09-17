@@ -91,12 +91,12 @@ export default function PageEditor({ initialData, id }: PageEditorProps) {
   return (
     <div className="flex flex-col h-[calc(100vh-160px)] -m-8">
       {/* ─── Editor Header ─── */}
-      <header className="h-20 glass border-0 border-b border-white/5 px-8 flex items-center justify-between shrink-0">
+      <header className="h-20 glass border-0 border-b border-gray-200 px-8 flex items-center justify-between shrink-0">
         <div className="flex items-center gap-6">
-          <Link href="/pages" className="p-2 hover:bg-white/5 rounded-xl text-slate-400 transition-colors">
+          <Link href="/pages" className="p-2 hover:bg-gray-100 rounded-xl text-slate-500 transition-colors">
             <ChevronLeft className="w-5 h-5" />
           </Link>
-          <div className="h-8 w-[1px] bg-white/5"></div>
+          <div className="h-8 w-[1px] bg-gray-100"></div>
           <div>
             <div className="flex items-center gap-3">
               <input 
@@ -104,21 +104,21 @@ export default function PageEditor({ initialData, id }: PageEditorProps) {
                 value={page.title?.[activeLang] || ''} 
                 onChange={e => setPage({ ...page, title: { ...page.title, [activeLang]: e.target.value } })}
                 placeholder="Nom de la page..."
-                className="bg-transparent border-none outline-none font-outfit text-xl font-black text-white placeholder:text-slate-700 min-w-[300px]"
+                className="bg-transparent border-none outline-none font-outfit text-xl font-black text-slate-900 placeholder:text-slate-400 min-w-[300px]"
               />
-              <span className="px-2 py-0.5 rounded-md bg-white/5 text-[10px] font-black text-slate-500 border border-white/5 uppercase">/{page.slug || 'slug'}</span>
+              <span className="px-2 py-0.5 rounded-md bg-gray-100 text-[10px] font-black text-slate-500 border border-gray-200 uppercase">/{page.slug || 'slug'}</span>
             </div>
           </div>
         </div>
 
         <div className="flex items-center gap-6">
-          <div className="flex items-center gap-1 p-1 bg-slate-900 border border-slate-800 rounded-xl">
+          <div className="flex items-center gap-1 p-1 bg-white border border-gray-200 rounded-xl">
             {LOCALES.map(loc => (
               <button
                 key={loc.id}
                 onClick={() => setActiveLang(loc.id)}
                 className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
-                  activeLang === loc.id ? 'bg-sky-500 text-white shadow-lg shadow-sky-500/20' : 'text-slate-500 hover:text-slate-300'
+                  activeLang === loc.id ? 'bg-sky-500 text-white shadow-lg shadow-sky-500/20' : 'text-slate-500 hover:text-slate-700'
                 }`}
               >
                 {loc.id.toUpperCase()}
@@ -129,7 +129,7 @@ export default function PageEditor({ initialData, id }: PageEditorProps) {
           <button 
             onClick={handleSave}
             disabled={saving}
-            className="flex items-center gap-2 px-6 py-2.5 bg-white text-slate-950 rounded-xl font-black text-sm hover:scale-105 active:scale-95 transition-all shadow-xl shadow-white/10 disabled:opacity-50"
+            className="flex items-center gap-2 px-6 py-2.5 bg-slate-900 text-white rounded-xl font-black text-sm hover:scale-105 active:scale-95 transition-all shadow-xl shadow-slate-300/50 disabled:opacity-50"
           >
             {saving ? <RefreshCw className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
             {saving ? 'Enregistrement...' : 'Publier les Modifications'}
@@ -139,15 +139,15 @@ export default function PageEditor({ initialData, id }: PageEditorProps) {
 
       <div className="flex flex-1 min-h-0">
         {isCmsFormPage ? (
-          <main className="flex-1 bg-slate-950/50 p-12 overflow-y-auto">
+          <main className="flex-1 bg-white/50 p-12 overflow-y-auto">
              <div className="max-w-4xl mx-auto space-y-6">
-               <div className="bg-slate-900 border border-white/5 p-8 md:p-12 rounded-[2.5rem] shadow-2xl">
-                 <div className="flex items-center gap-4 mb-8 pb-8 border-b border-white/5">
+               <div className="bg-white border border-gray-200 p-8 md:p-12 rounded-[2.5rem] shadow-2xl">
+                 <div className="flex items-center gap-4 mb-8 pb-8 border-b border-gray-200">
                    <div className="w-12 h-12 rounded-2xl bg-sky-500/10 flex items-center justify-center">
                      <Layout className="w-6 h-6 text-sky-500" />
                    </div>
                    <div>
-                     <h2 className="text-2xl font-bold text-white">Éditeur de Page Structurée</h2>
+                     <h2 className="text-2xl font-bold text-slate-900">Éditeur de Page Structurée</h2>
                      <p className="text-slate-500 text-sm mt-1">Modifiez directement les textes et images des sections fixes.</p>
                    </div>
                  </div>
@@ -168,17 +168,17 @@ export default function PageEditor({ initialData, id }: PageEditorProps) {
         ) : (
           <>
         {/* ─── Block Library ─── */}
-        <aside className="w-80 border-r border-white/5 p-6 space-y-8 overflow-y-auto">
+        <aside className="w-80 border-r border-gray-200 p-6 space-y-8 overflow-y-auto">
           <div>
             <h3 className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-4">Ressources</h3>
             <div className="grid grid-cols-2 gap-3">
-              <div className="glass-card p-4 rounded-2xl flex flex-col items-center justify-center gap-2 cursor-pointer hover:bg-white/5 transition-colors group">
-                <ImageIcon className="w-6 h-6 text-indigo-400 group-hover:scale-110 transition-transform" />
-                <span className="text-[10px] font-bold text-slate-400">Médiathèque</span>
+              <div className="glass-card p-4 rounded-2xl flex flex-col items-center justify-center gap-2 cursor-pointer hover:bg-gray-100 transition-colors group">
+                <ImageIcon className="w-6 h-6 text-indigo-600 group-hover:scale-110 transition-transform" />
+                <span className="text-[10px] font-bold text-slate-500">Médiathèque</span>
               </div>
-              <div className="glass-card p-4 rounded-2xl flex flex-col items-center justify-center gap-2 cursor-pointer hover:bg-white/5 transition-colors group text-emerald-400">
+              <div className="glass-card p-4 rounded-2xl flex flex-col items-center justify-center gap-2 cursor-pointer hover:bg-gray-100 transition-colors group text-emerald-600">
                 <Globe className="w-6 h-6 group-hover:scale-110 transition-transform" />
-                <span className="text-[10px] font-bold text-slate-400">SEO</span>
+                <span className="text-[10px] font-bold text-slate-500">SEO</span>
               </div>
             </div>
           </div>
@@ -190,13 +190,13 @@ export default function PageEditor({ initialData, id }: PageEditorProps) {
                 <button
                   key={block.type}
                   onClick={() => addBlock(block.type)}
-                  className="w-full flex items-center gap-4 p-4 rounded-2xl border border-white/5 bg-white/[0.02] hover:bg-white/5 text-left transition-all group"
+                  className="w-full flex items-center gap-4 p-4 rounded-2xl border border-gray-200 bg-white/[0.02] hover:bg-gray-100 text-left transition-all group"
                 >
-                  <div className="w-10 h-10 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center shrink-0 group-hover:border-sky-500/50 transition-colors">
-                    <block.icon className="w-5 h-5 text-slate-400 group-hover:text-sky-400 transition-colors" />
+                  <div className="w-10 h-10 rounded-xl bg-white border border-gray-200 flex items-center justify-center shrink-0 group-hover:border-sky-500/50 transition-colors">
+                    <block.icon className="w-5 h-5 text-slate-500 group-hover:text-sky-600 transition-colors" />
                   </div>
                   <div>
-                    <p className="text-sm font-bold text-white leading-none">{block.label}</p>
+                    <p className="text-sm font-bold text-slate-900 leading-none">{block.label}</p>
                     <p className="text-[10px] text-slate-500 mt-1">{block.desc}</p>
                   </div>
                 </button>
@@ -206,11 +206,11 @@ export default function PageEditor({ initialData, id }: PageEditorProps) {
         </aside>
 
         {/* ─── Visual Canvas ─── */}
-        <main className="flex-1 bg-slate-950/50 p-12 overflow-y-auto">
+        <main className="flex-1 bg-white/50 p-12 overflow-y-auto">
           <div className="max-w-4xl mx-auto space-y-6">
             {page.blocks.length === 0 && (
-              <div className="aspect-video border-2 border-dashed border-white/5 rounded-3xl flex flex-col items-center justify-center text-center p-12 animate-pulse">
-                <div className="w-20 h-20 bg-white/5 rounded-3xl flex items-center justify-center mb-6">
+              <div className="aspect-video border-2 border-dashed border-gray-200 rounded-3xl flex flex-col items-center justify-center text-center p-12 animate-pulse">
+                <div className="w-20 h-20 bg-gray-100 rounded-3xl flex items-center justify-center mb-6">
                   <Plus className="w-10 h-10 text-slate-700" />
                 </div>
                 <h3 className="text-xl font-bold text-slate-600">Votre page est vide</h3>
@@ -221,8 +221,8 @@ export default function PageEditor({ initialData, id }: PageEditorProps) {
             {page.blocks.map((block: any, idx: number) => (
               <div 
                 key={block.id} 
-                className={`relative group bg-slate-900 border transition-all rounded-3xl overflow-hidden ${
-                  activeBlockIndex === idx ? 'border-sky-500 shadow-2xl shadow-sky-500/10' : 'border-white/5'
+                className={`relative group bg-white border transition-all rounded-3xl overflow-hidden ${
+                  activeBlockIndex === idx ? 'border-sky-500 shadow-2xl shadow-sky-500/10' : 'border-gray-200'
                 }`}
                 onMouseEnter={() => setActiveBlockIndex(idx)}
               >
@@ -230,10 +230,10 @@ export default function PageEditor({ initialData, id }: PageEditorProps) {
                 <div className={`absolute top-4 right-4 flex items-center gap-2 transition-opacity z-20 ${
                   activeBlockIndex === idx ? 'opacity-100' : 'opacity-0'
                 }`}>
-                  <button className="p-2 bg-slate-800 rounded-lg text-slate-400 hover:text-white transition-colors cursor-grab active:cursor-grabbing">
+                  <button className="p-2 bg-gray-50 rounded-lg text-slate-500 hover:text-slate-900 transition-colors cursor-grab active:cursor-grabbing">
                     <GripVertical className="w-4 h-4" />
                   </button>
-                  <button className="p-2 bg-slate-800 rounded-lg text-slate-400 hover:text-white transition-colors">
+                  <button className="p-2 bg-gray-50 rounded-lg text-slate-500 hover:text-slate-900 transition-colors">
                     <Settings className="w-4 h-4" />
                   </button>
                   <button 
@@ -242,7 +242,7 @@ export default function PageEditor({ initialData, id }: PageEditorProps) {
                       newBlocks.splice(idx, 1);
                       setPage({ ...page, blocks: newBlocks });
                     }}
-                    className="p-2 bg-red-500/10 rounded-lg text-red-500 hover:bg-red-500 hover:text-white transition-all"
+                    className="p-2 bg-red-500/10 rounded-lg text-red-500 hover:bg-red-500 hover:text-slate-900 transition-all"
                   >
                     <Trash2 className="w-4 h-4" />
                   </button>
@@ -257,7 +257,7 @@ export default function PageEditor({ initialData, id }: PageEditorProps) {
                    {block.type === 'hero' && (
                      <div className="space-y-6">
                         {(block.content.slides || [{}]).map((slide: any, sIdx: number) => (
-                           <div key={sIdx} className="p-6 bg-white/5 rounded-2xl border border-white/5 space-y-4">
+                           <div key={sIdx} className="p-6 bg-gray-100 rounded-2xl border border-gray-200 space-y-4">
                               <div className="flex justify-between items-center mb-2">
                                  <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Slide #{sIdx + 1}</span>
                                  {(block.content.slides?.length > 1) && (
@@ -265,7 +265,7 @@ export default function PageEditor({ initialData, id }: PageEditorProps) {
                                       const next = [...page.blocks];
                                       next[idx].content.slides = next[idx].content.slides.filter((_:any,i:any)=>i!==sIdx);
                                       setPage({...page, blocks: next});
-                                   }} className="text-red-500 hover:text-red-400 p-1"><Trash2 className="w-3.5 h-3.5" /></button>
+                                   }} className="text-red-500 hover:text-red-600 p-1"><Trash2 className="w-3.5 h-3.5" /></button>
                                  )}
                               </div>
                               <textarea 
@@ -277,7 +277,7 @@ export default function PageEditor({ initialData, id }: PageEditorProps) {
                                   setPage({ ...page, blocks: next });
                                 }}
                                 placeholder="Titre de la slide..."
-                                className="w-full bg-transparent border-none outline-none text-2xl font-black text-white placeholder:text-slate-800 resize-none h-12"
+                                className="w-full bg-transparent border-none outline-none text-2xl font-black text-slate-900 placeholder:text-slate-800 resize-none h-12"
                               />
                               <div className="flex items-center gap-2">
                                 <input 
@@ -290,9 +290,9 @@ export default function PageEditor({ initialData, id }: PageEditorProps) {
                                     setPage({ ...page, blocks: next });
                                   }}
                                   placeholder="Coller l'URL ou chemin de l'image..."
-                                  className="flex-1 bg-slate-900 border border-white/10 rounded-xl px-4 py-3 text-xs text-sky-400 outline-none focus:border-sky-500/50 focus:text-sky-300 transition-colors"
+                                  className="flex-1 bg-white border border-gray-300 rounded-xl px-4 py-3 text-xs text-sky-600 outline-none focus:border-sky-500/50 focus:text-sky-300 transition-colors"
                                 />
-                                <div className="w-11 h-11 bg-slate-800 rounded-xl flex items-center justify-center border border-white/5">
+                                <div className="w-11 h-11 bg-gray-50 rounded-xl flex items-center justify-center border border-gray-200">
                                   <svg className="w-4 h-4 text-sky-500" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
                                   </svg>
@@ -307,7 +307,7 @@ export default function PageEditor({ initialData, id }: PageEditorProps) {
                               next[idx].content.slides.push({ title: { fr: '' }, subtitle: { fr: '' }, image: '' });
                               setPage({...page, blocks: next});
                            }}
-                           className="w-full py-3 bg-white/5 border border-dashed border-white/10 rounded-2xl text-[10px] font-black text-slate-500 hover:text-white uppercase tracking-widest"
+                           className="w-full py-3 bg-gray-100 border border-dashed border-gray-300 rounded-2xl text-[10px] font-black text-slate-500 hover:text-slate-900 uppercase tracking-widest"
                         >
                            <Plus className="w-3 h-3 mx-auto mb-1" />
                            Ajouter une Slide
@@ -318,7 +318,7 @@ export default function PageEditor({ initialData, id }: PageEditorProps) {
                    {block.type === 'stats' && (
                      <div className="grid grid-cols-2 gap-4">
                         {(block.content.items || []).map((stat: any, sIdx: number) => (
-                          <div key={sIdx} className="bg-white/5 border border-white/5 rounded-2xl p-4 space-y-3 relative group">
+                          <div key={sIdx} className="bg-gray-100 border border-gray-200 rounded-2xl p-4 space-y-3 relative group">
                              <button onClick={() => {
                                 const next = [...page.blocks];
                                 next[idx].content.items = next[idx].content.items.filter((_:any,i:any)=>i!==sIdx);
@@ -330,20 +330,20 @@ export default function PageEditor({ initialData, id }: PageEditorProps) {
                                    if (!next[idx].content.items) next[idx].content.items = [];
                                    next[idx].content.items[sIdx].value = e.target.value;
                                    setPage({...page, blocks: next});
-                                }} className="bg-slate-950/50 border border-white/5 rounded-lg px-2 py-1 text-xs text-sky-400 font-bold" />
+                                }} className="bg-white/50 border border-gray-200 rounded-lg px-2 py-1 text-xs text-sky-600 font-bold" />
                                 <input value={stat.unit || ''} placeholder="Unit (ex: T)" onChange={e => {
                                    const next = [...page.blocks];
                                    if (!next[idx].content.items) next[idx].content.items = [];
                                    next[idx].content.items[sIdx].unit = e.target.value;
                                    setPage({...page, blocks: next});
-                                }} className="bg-slate-950/50 border border-white/5 rounded-lg px-2 py-1 text-xs text-slate-500" />
+                                }} className="bg-white/50 border border-gray-200 rounded-lg px-2 py-1 text-xs text-slate-500" />
                              </div>
                              <input value={stat.label?.[activeLang] || ''} placeholder="Libellé..." onChange={e => {
                                 const next = [...page.blocks];
                                 if (!next[idx].content.items) next[idx].content.items = [];
                                 next[idx].content.items[sIdx].label = { ...next[idx].content.items[sIdx].label, [activeLang]: e.target.value };
                                 setPage({...page, blocks: next});
-                             }} className="w-full bg-transparent border-none text-[10px] font-black text-white uppercase tracking-widest outline-none" />
+                             }} className="w-full bg-transparent border-none text-[10px] font-black text-slate-900 uppercase tracking-widest outline-none" />
                           </div>
                         ))}
                         <button onClick={() => {
@@ -351,7 +351,7 @@ export default function PageEditor({ initialData, id }: PageEditorProps) {
                             if (!next[idx].content.items) next[idx].content.items = [];
                             next[idx].content.items.push({ value: '', unit: '', label: { fr: '' } });
                             setPage({...page, blocks: next});
-                        }} className="col-span-2 py-4 border border-dashed border-white/5 rounded-2xl flex items-center justify-center text-slate-700 hover:text-slate-400 transition-colors">
+                        }} className="col-span-2 py-4 border border-dashed border-gray-200 rounded-2xl flex items-center justify-center text-slate-700 hover:text-slate-500 transition-colors">
                            <Plus className="w-5 h-5" />
                         </button>
                      </div>
@@ -365,18 +365,18 @@ export default function PageEditor({ initialData, id }: PageEditorProps) {
                               if (!next[idx].content) next[idx].content = {};
                               next[idx].content.subtitle = { ...next[idx].content.subtitle, [activeLang]: e.target.value };
                               setPage({...page, blocks: next});
-                           }} className="bg-slate-950/50 outline-none border border-white/5 rounded-xl px-4 py-2 text-xs text-sky-400" />
+                           }} className="bg-white/50 outline-none border border-gray-200 rounded-xl px-4 py-2 text-xs text-sky-600" />
                            <input value={block.content.title?.[activeLang] || ''} placeholder="Grand Titre (ex: Accès Rapide)" onChange={e => {
                               const next = [...page.blocks];
                               if (!next[idx].content) next[idx].content = {};
                               next[idx].content.title = { ...next[idx].content.title, [activeLang]: e.target.value };
                               setPage({...page, blocks: next});
-                           }} className="bg-slate-950/50 outline-none border border-white/5 rounded-xl px-4 py-2 text-xs text-white uppercase" />
+                           }} className="bg-white/50 outline-none border border-gray-200 rounded-xl px-4 py-2 text-xs text-slate-900 uppercase" />
                         </div>
                         
                         <div className="grid grid-cols-2 gap-4">
                            {(block.content.items || []).map((srv: any, sIdx: number) => (
-                              <div key={sIdx} className="bg-white/5 border border-white/5 rounded-2xl p-4 space-y-3 relative group">
+                              <div key={sIdx} className="bg-gray-100 border border-gray-200 rounded-2xl p-4 space-y-3 relative group">
                                  <button onClick={() => {
                                     const next = [...page.blocks];
                                     next[idx].content.items = next[idx].content.items.filter((_:any,i:any)=>i!==sIdx);
@@ -387,19 +387,19 @@ export default function PageEditor({ initialData, id }: PageEditorProps) {
                                     if (!next[idx].content.items) next[idx].content.items = [];
                                     next[idx].content.items[sIdx].icon = e.target.value;
                                     setPage({...page, blocks: next});
-                                 }} className="w-full bg-slate-950/50 border border-white/5 rounded-lg px-2 py-2 text-xs text-sky-400 font-bold" />
+                                 }} className="w-full bg-white/50 border border-gray-200 rounded-lg px-2 py-2 text-xs text-sky-600 font-bold" />
                                  <input value={srv.title?.[activeLang] || ''} placeholder="Libellé du Service..." onChange={e => {
                                     const next = [...page.blocks];
                                     if (!next[idx].content.items) next[idx].content.items = [];
                                     next[idx].content.items[sIdx].title = { ...next[idx].content.items[sIdx].title, [activeLang]: e.target.value };
                                     setPage({...page, blocks: next});
-                                 }} className="w-full bg-transparent border-none text-xs font-black text-white outline-none" />
+                                 }} className="w-full bg-transparent border-none text-xs font-black text-slate-900 outline-none" />
                                  <input value={srv.href || ''} placeholder="Lien (/services)" onChange={e => {
                                     const next = [...page.blocks];
                                     if (!next[idx].content.items) next[idx].content.items = [];
                                     next[idx].content.items[sIdx].href = e.target.value;
                                     setPage({...page, blocks: next});
-                                 }} className="w-full bg-slate-950/50 border border-white/5 rounded-lg px-2 py-2 text-[10px] text-slate-400" />
+                                 }} className="w-full bg-white/50 border border-gray-200 rounded-lg px-2 py-2 text-[10px] text-slate-500" />
                               </div>
                            ))}
                            <button onClick={() => {
@@ -407,7 +407,7 @@ export default function PageEditor({ initialData, id }: PageEditorProps) {
                                if (!next[idx].content.items) next[idx].content.items = [];
                                next[idx].content.items.push({ icon: 'Ship', title: { fr: '' }, href: '/' });
                                setPage({...page, blocks: next});
-                           }} className="py-4 border border-dashed border-white/5 rounded-2xl flex items-center justify-center text-slate-700 hover:text-slate-400 transition-colors">
+                           }} className="py-4 border border-dashed border-gray-200 rounded-2xl flex items-center justify-center text-slate-700 hover:text-slate-500 transition-colors">
                               <Plus className="w-5 h-5" />
                            </button>
                         </div>
@@ -415,7 +415,7 @@ export default function PageEditor({ initialData, id }: PageEditorProps) {
                    )}
 
                    {block.type === 'latest_news' && (
-                     <div className="space-y-4 bg-white/5 p-6 rounded-2xl border border-white/5">
+                     <div className="space-y-4 bg-gray-100 p-6 rounded-2xl border border-gray-200">
                         <div className="space-y-2">
                            <label className="text-[10px] font-black text-slate-500 uppercase">Titre Surligné (ex: Actualités & Presse)</label>
                            <input 
@@ -426,7 +426,7 @@ export default function PageEditor({ initialData, id }: PageEditorProps) {
                                 next[idx].content.subtitle = { ...next[idx].content.subtitle, [activeLang]: e.target.value };
                                 setPage({ ...page, blocks: next });
                              }}
-                             className="w-full bg-slate-950/50 outline-none border border-white/5 rounded-xl px-4 py-2 text-sm text-sky-400"
+                             className="w-full bg-white/50 outline-none border border-gray-200 rounded-xl px-4 py-2 text-sm text-sky-600"
                            />
                         </div>
                         <div className="space-y-2">
@@ -439,7 +439,7 @@ export default function PageEditor({ initialData, id }: PageEditorProps) {
                                 next[idx].content.title = { ...next[idx].content.title, [activeLang]: e.target.value };
                                 setPage({ ...page, blocks: next });
                              }}
-                             className="w-full bg-slate-950/50 outline-none border border-white/5 rounded-xl px-4 py-2 text-sm text-white"
+                             className="w-full bg-white/50 outline-none border border-gray-200 rounded-xl px-4 py-2 text-sm text-slate-900"
                            />
                         </div>
                         <div className="space-y-2">
@@ -452,7 +452,7 @@ export default function PageEditor({ initialData, id }: PageEditorProps) {
                                 next[idx].content.description = { ...next[idx].content.description, [activeLang]: e.target.value };
                                 setPage({ ...page, blocks: next });
                              }}
-                             className="w-full bg-slate-950/50 outline-none border border-white/5 rounded-xl px-4 py-2 text-sm text-slate-400 h-20"
+                             className="w-full bg-white/50 outline-none border border-gray-200 rounded-xl px-4 py-2 text-sm text-slate-500 h-20"
                            />
                         </div>
                      </div>
@@ -468,7 +468,7 @@ export default function PageEditor({ initialData, id }: PageEditorProps) {
                             setPage({ ...page, blocks: next });
                           }}
                           placeholder="Commencez à écrire..."
-                          className="w-full bg-transparent border-none outline-none text-lg text-slate-400 placeholder:text-slate-800 min-h-[200px] resize-y"
+                          className="w-full bg-transparent border-none outline-none text-lg text-slate-500 placeholder:text-slate-800 min-h-[200px] resize-y"
                         />
                      </div>
                    )}

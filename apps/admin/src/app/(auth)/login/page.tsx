@@ -21,13 +21,13 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 flex items-center justify-center p-6 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]">
+    <div className="min-h-screen bg-white flex items-center justify-center p-6 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]">
       <div className="w-full max-w-md space-y-8 animate-fade-in">
         <div className="text-center space-y-4">
            <div className="w-20 h-20 bg-sky-500 rounded-[2rem] mx-auto flex items-center justify-center shadow-2xl shadow-sky-500/20">
-              <Ship className="text-white w-10 h-10" />
+              <Ship className="text-slate-900 w-10 h-10" />
            </div>
-           <h1 className="font-outfit text-3xl font-black text-white px-10">PAN COMMAND CENTER</h1>
+           <h1 className="font-outfit text-3xl font-black text-slate-900 px-10">PAN COMMAND CENTER</h1>
            <p className="text-slate-500 font-medium">Port Autonome de Nouadhibou (PAN)</p>
         </div>
 
@@ -42,7 +42,7 @@ export default function LoginPage() {
                       type="email"
                       required
                       placeholder="admin@pan.mr"
-                      className="w-full pl-12 pr-4 py-4 bg-slate-950/50 border border-slate-800 rounded-2xl text-sm text-white outline-none focus:border-sky-500/50 transition-all"
+                      className="w-full pl-12 pr-4 py-4 bg-white/50 border border-gray-200 rounded-2xl text-sm text-slate-900 outline-none focus:border-sky-500/50 transition-all"
                     />
                  </div>
               </div>
@@ -56,7 +56,7 @@ export default function LoginPage() {
                       type="password"
                       required
                       placeholder="••••••••"
-                      className="w-full pl-12 pr-4 py-4 bg-slate-950/50 border border-slate-800 rounded-2xl text-sm text-white outline-none focus:border-sky-500/50 transition-all"
+                      className="w-full pl-12 pr-4 py-4 bg-white/50 border border-gray-200 rounded-2xl text-sm text-slate-900 outline-none focus:border-sky-500/50 transition-all"
                     />
                  </div>
               </div>
@@ -71,7 +71,7 @@ export default function LoginPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full flex items-center justify-center gap-3 py-4 bg-white text-slate-950 rounded-2xl font-black text-sm hover:scale-[1.02] active:scale-[0.98] transition-all shadow-xl shadow-white/10 disabled:opacity-50"
+                className="w-full flex items-center justify-center gap-3 py-4 bg-slate-900 text-white rounded-2xl font-black text-sm hover:scale-[1.02] active:scale-[0.98] transition-all shadow-xl shadow-slate-300/50 disabled:opacity-50"
               >
                 {loading ? <RefreshCw className="w-5 h-5 animate-spin" /> : <ArrowRight className="w-5 h-5" />}
                 {loading ? 'Authentification...' : 'Accéder au Hub'}

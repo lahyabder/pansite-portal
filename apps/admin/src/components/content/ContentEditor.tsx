@@ -132,12 +132,12 @@ export default function ContentEditor({ initialData, id, onSave, onDelete }: Con
   return (
     <div className="flex flex-col h-[calc(100vh-160px)] -m-8 relative">
       {/* ─── Editor Header ─── */}
-      <header className="h-20 glass border-0 border-b border-white/5 px-8 flex items-center justify-between shrink-0">
+      <header className="h-20 glass border-0 border-b border-gray-200 px-8 flex items-center justify-between shrink-0">
         <div className="flex items-center gap-6">
-          <Link href="/contents" className="p-2 hover:bg-white/5 rounded-xl text-slate-400 transition-colors">
+          <Link href="/contents" className="p-2 hover:bg-gray-100 rounded-xl text-slate-500 transition-colors">
             <ChevronLeft className="w-5 h-5" />
           </Link>
-          <div className="h-8 w-[1px] bg-white/5"></div>
+          <div className="h-8 w-[1px] bg-gray-100"></div>
           <div>
             <div className="flex items-center gap-3">
               <input 
@@ -145,22 +145,22 @@ export default function ContentEditor({ initialData, id, onSave, onDelete }: Con
                 value={content.title?.[activeLang] || ''} 
                 onChange={e => setLocalizedValue('title', e.target.value)}
                 placeholder="Titre de l'article..."
-                className="bg-transparent border-none outline-none font-outfit text-xl font-black text-white placeholder:text-slate-700 min-w-[300px]"
+                className="bg-transparent border-none outline-none font-outfit text-xl font-black text-slate-900 placeholder:text-slate-400 min-w-[300px]"
                 dir={activeLang === 'ar' ? 'rtl' : 'ltr'}
               />
-              <span className="px-2 py-0.5 rounded-md bg-white/5 text-[10px] font-black text-slate-500 border border-white/5 uppercase">/{content.slug || 'slug-placeholder'}</span>
+              <span className="px-2 py-0.5 rounded-md bg-gray-100 text-[10px] font-black text-slate-500 border border-gray-200 uppercase">/{content.slug || 'slug-placeholder'}</span>
             </div>
           </div>
         </div>
 
         <div className="flex items-center gap-6">
-          <div className="flex items-center gap-1 p-1 bg-slate-900 border border-slate-800 rounded-xl">
+          <div className="flex items-center gap-1 p-1 bg-white border border-gray-200 rounded-xl">
             {LOCALES.map(loc => (
               <button
                 key={loc.id}
                 onClick={() => setActiveLang(loc.id)}
                 className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
-                  activeLang === loc.id ? 'bg-sky-500 text-white shadow-lg shadow-sky-500/20' : 'text-slate-500 hover:text-slate-300'
+                  activeLang === loc.id ? 'bg-sky-500 text-white shadow-lg shadow-sky-500/20' : 'text-slate-500 hover:text-slate-700'
                 }`}
               >
                 {loc.id.toUpperCase()}
@@ -168,7 +168,7 @@ export default function ContentEditor({ initialData, id, onSave, onDelete }: Con
             ))}
           </div>
 
-          <label className="flex items-center gap-2 cursor-pointer bg-slate-900 border border-slate-800 px-3 py-1.5 rounded-xl text-xs font-bold text-indigo-400 hover:bg-slate-800 transition-colors">
+          <label className="flex items-center gap-2 cursor-pointer bg-white border border-gray-200 px-3 py-1.5 rounded-xl text-xs font-bold text-indigo-600 hover:bg-gray-50 transition-colors">
             <input 
               type="checkbox" 
               checked={autoTranslate} 
@@ -194,7 +194,7 @@ export default function ContentEditor({ initialData, id, onSave, onDelete }: Con
                 }
               }}
               disabled={saving}
-              className="flex items-center justify-center w-10 h-10 bg-red-500/10 text-red-500 rounded-xl hover:bg-red-500 hover:text-white transition-all border border-red-500/20 disabled:opacity-50"
+              className="flex items-center justify-center w-10 h-10 bg-red-500/10 text-red-500 rounded-xl hover:bg-red-500 hover:text-slate-900 transition-all border border-red-500/20 disabled:opacity-50"
               title="Supprimer cet article"
             >
               <Trash2 className="w-4 h-4" />
@@ -204,7 +204,7 @@ export default function ContentEditor({ initialData, id, onSave, onDelete }: Con
           <button 
             onClick={handleSave}
             disabled={saving || uploadingImage || uploadingGallery}
-            className="flex items-center gap-2 px-6 py-2.5 bg-white text-slate-950 rounded-xl font-black text-sm hover:scale-105 active:scale-95 transition-all shadow-xl shadow-white/10 disabled:opacity-50"
+            className="flex items-center gap-2 px-6 py-2.5 bg-slate-900 text-white rounded-xl font-black text-sm hover:scale-105 active:scale-95 transition-all shadow-xl shadow-slate-300/50 disabled:opacity-50"
           >
             {saving ? <RefreshCw className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
             {translating ? 'Traduction (IA)...' : saving ? 'Enregistrement...' : 'Enregistrer'}
@@ -212,50 +212,50 @@ export default function ContentEditor({ initialData, id, onSave, onDelete }: Con
         </div>
       </header>
 
-      <div className="flex flex-1 min-h-0 bg-slate-950/50">
+      <div className="flex flex-1 min-h-0 bg-white/50">
         <main className="flex-1 p-8 lg:p-12 overflow-y-auto w-full">
           <div className="max-w-4xl mx-auto space-y-10">
             {/* META Settings */}
             <div className="flex gap-4">
-              <div className="flex-1 p-6 bg-slate-900 rounded-2xl border border-white/5">
+              <div className="flex-1 p-6 bg-white rounded-2xl border border-gray-200">
                 <label className="block text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2">Slug (URL)</label>
                 <input 
                   type="text"
                   value={content.slug}
                   onChange={e => setContent({ ...content, slug: e.target.value })}
-                  className="w-full bg-slate-950 border border-white/10 text-white px-3 py-2 rounded-lg outline-none focus:border-sky-500 transition-colors"
+                  className="w-full bg-white border border-gray-300 text-slate-900 px-3 py-2 rounded-lg outline-none focus:border-sky-500 transition-colors"
                 />
               </div>
-              <div className="flex-1 p-6 bg-slate-900 rounded-2xl border border-white/5">
+              <div className="flex-1 p-6 bg-white rounded-2xl border border-gray-200">
                 <label className="block text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2">Catégorie</label>
                 <select
                   value={content.category}
                   onChange={e => setContent({ ...content, category: e.target.value })}
-                  className="w-full bg-slate-950 border border-white/10 text-white px-3 py-2 rounded-lg outline-none focus:border-sky-500 transition-colors"
+                  className="w-full bg-white border border-gray-300 text-slate-900 px-3 py-2 rounded-lg outline-none focus:border-sky-500 transition-colors"
                 >
                   <option value="actualite">Actualité</option>
                   <option value="communique">Communiqué</option>
                   <option value="evenement">Évènement</option>
                 </select>
               </div>
-              <div className="flex-1 p-6 bg-slate-900 rounded-2xl border border-white/5">
+              <div className="flex-1 p-6 bg-white rounded-2xl border border-gray-200">
                 <label className="block text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2">Statut</label>
                 <select
                   value={content.status}
                   onChange={e => setContent({ ...content, status: e.target.value })}
-                  className="w-full bg-slate-950 border border-white/10 text-white px-3 py-2 rounded-lg outline-none focus:border-sky-500 transition-colors"
+                  className="w-full bg-white border border-gray-300 text-slate-900 px-3 py-2 rounded-lg outline-none focus:border-sky-500 transition-colors"
                 >
                   <option value="draft">Brouillon (Draft)</option>
                   <option value="published">Publié (Published)</option>
                 </select>
               </div>
-              <div className="flex-1 p-6 bg-slate-900 rounded-2xl border border-white/5">
+              <div className="flex-1 p-6 bg-white rounded-2xl border border-gray-200">
                 <label className="block text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2">Date de publication</label>
                 <input 
                   type="date"
                   value={content.publishedAt?.substring(0, 10) || ''}
                   onChange={e => setContent({ ...content, publishedAt: e.target.value })}
-                  className="w-full bg-slate-950 border border-white/10 text-white px-3 py-2 rounded-lg outline-none focus:border-sky-500 transition-colors"
+                  className="w-full bg-white border border-gray-300 text-slate-900 px-3 py-2 rounded-lg outline-none focus:border-sky-500 transition-colors"
                   style={{ colorScheme: 'dark' }}
                 />
               </div>
@@ -264,7 +264,7 @@ export default function ContentEditor({ initialData, id, onSave, onDelete }: Con
 
 
             {/* Corps du texte */}
-            <div className="p-8 bg-slate-900 border border-white/5 rounded-3xl relative">
+            <div className="p-8 bg-white border border-gray-200 rounded-3xl relative">
               <div className="flex justify-between items-center mb-4">
                 <label className="flex items-center gap-2 text-[10px] font-black text-emerald-500 uppercase tracking-widest">
                   <FileText className="w-3 h-3" /> Corps de l'article (Body)
@@ -273,23 +273,23 @@ export default function ContentEditor({ initialData, id, onSave, onDelete }: Con
               <textarea 
                 value={content.body?.[activeLang] || ''}
                 onChange={e => setLocalizedValue('body', e.target.value)}
-                className="w-full bg-transparent font-sans text-lg text-slate-300 min-h-[400px] outline-none resize-y leading-relaxed"
+                className="w-full bg-transparent font-sans text-lg text-slate-700 min-h-[400px] outline-none resize-y leading-relaxed"
                 placeholder="Rédigez votre article ici..."
                 dir={activeLang === 'ar' ? 'rtl' : 'ltr'}
               />
             </div>
 
             {/* Media */}
-            <div className="p-8 bg-slate-900 border border-white/5 rounded-3xl">
+            <div className="p-8 bg-white border border-gray-200 rounded-3xl">
               <label className="flex items-center gap-2 text-[10px] font-black text-amber-500 uppercase tracking-widest mb-4">
                 <ImageIcon className="w-3 h-3" /> Image de Couverture
               </label>
               
               <div className="flex flex-col md:flex-row gap-4 mb-4 items-center">
                 <label className="flex-shrink-0 relative cursor-pointer group">
-                  <div className="flex items-center gap-2 px-6 py-3 bg-slate-950 border border-white/10 rounded-xl hover:bg-slate-800 transition-colors">
+                  <div className="flex items-center gap-2 px-6 py-3 bg-white border border-gray-300 rounded-xl hover:bg-gray-50 transition-colors">
                     {uploadingImage ? <RefreshCw className="w-4 h-4 animate-spin text-sky-500" /> : <ImageIcon className="w-4 h-4 text-sky-500" />}
-                    <span className="text-sm font-bold text-white whitespace-nowrap">
+                    <span className="text-sm font-bold text-slate-900 whitespace-nowrap">
                       {uploadingImage ? 'Téléchargement...' : 'Uploader une image'}
                     </span>
                   </div>
@@ -309,14 +309,14 @@ export default function ContentEditor({ initialData, id, onSave, onDelete }: Con
                     type="text"
                     value={content.coverImage || ''}
                     onChange={e => setContent({ ...content, coverImage: e.target.value })}
-                    className="w-full bg-slate-950/50 border border-white/5 text-slate-300 pl-20 pr-4 py-3 rounded-xl outline-none focus:border-sky-500 transition-colors text-sm"
+                    className="w-full bg-white/50 border border-gray-200 text-slate-700 pl-20 pr-4 py-3 rounded-xl outline-none focus:border-sky-500 transition-colors text-sm"
                     placeholder="https://..."
                   />
                 </div>
               </div>
 
               {content.coverImage && (
-                <div className="mt-4 rounded-xl overflow-hidden border border-white/10 relative h-64 bg-slate-950 flex items-center justify-center">
+                <div className="mt-4 rounded-xl overflow-hidden border border-gray-300 relative h-64 bg-white flex items-center justify-center">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={content.coverImage} alt="Cover Preview" className="max-h-full max-w-full object-contain" />
                 </div>
@@ -324,16 +324,16 @@ export default function ContentEditor({ initialData, id, onSave, onDelete }: Con
             </div>
 
             {/* Gallery */}
-            <div className="p-8 bg-slate-900 border border-white/5 rounded-3xl">
+            <div className="p-8 bg-white border border-gray-200 rounded-3xl">
               <label className="flex items-center gap-2 text-[10px] font-black text-amber-500 uppercase tracking-widest mb-4">
                 <ImageIcon className="w-3 h-3" /> Galerie d'images (Optionnel)
               </label>
               
               <div className="flex flex-col mb-4 items-start">
                 <label className="relative cursor-pointer group">
-                  <div className="flex items-center gap-2 px-6 py-3 bg-slate-950 border border-white/10 rounded-xl hover:bg-slate-800 transition-colors">
+                  <div className="flex items-center gap-2 px-6 py-3 bg-white border border-gray-300 rounded-xl hover:bg-gray-50 transition-colors">
                     {uploadingGallery ? <RefreshCw className="w-4 h-4 animate-spin text-sky-500" /> : <ImageIcon className="w-4 h-4 text-sky-500" />}
-                    <span className="text-sm font-bold text-white whitespace-nowrap">
+                    <span className="text-sm font-bold text-slate-900 whitespace-nowrap">
                       {uploadingGallery ? 'Téléchargement...' : 'Ajouter des images supplémentaires'}
                     </span>
                   </div>
@@ -352,13 +352,13 @@ export default function ContentEditor({ initialData, id, onSave, onDelete }: Con
               {content.images && content.images.length > 0 && (
                 <div className="mt-4 grid grid-cols-2 md:grid-cols-4 gap-4">
                   {content.images.map((img: string, i: number) => (
-                    <div key={i} className="relative group rounded-xl overflow-hidden border border-white/10 aspect-square bg-slate-950">
+                    <div key={i} className="relative group rounded-xl overflow-hidden border border-gray-300 aspect-square bg-white">
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img src={img} alt={`Gallery ${i}`} className="w-full h-full object-cover" />
                       <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                         <button
                           onClick={() => removeGalleryImage(i)}
-                          className="p-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors"
+                          className="p-2 bg-red-500 text-slate-900 rounded-lg hover:bg-red-600 transition-colors"
                           title="Supprimer cette image"
                         >
                           <Trash2 className="w-4 h-4" />
